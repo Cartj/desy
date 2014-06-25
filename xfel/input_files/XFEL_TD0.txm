@@ -1,0 +1,255 @@
+!------------------------------------------------------------------------
+!  20 April 2011
+!------------------------------------------------------------------------
+
+!------------------------------------------------------------------------
+!  Beam line TD0 (Dump X0)
+!------------------------------------------------------------------------
+
+!----------------------------------------------------------------------------
+!  Horizontal kick:                  to the left (to positive x)
+!  Arc:
+!    Vertical   deflection (septa):  upwards     (to positive y)
+!    Vertical   deflection (dipole): downwards   (to negative y)
+!    Horizontal deflection (dipole): to the left (to positive x)
+!    Vertical   deflection (dipole): downwards   (to negative y)
+!  To dump:
+!    Vertical deflection (dipole):   downwards   (to negative y)
+!----------------------------------------------------------------------------
+
+!  TLD kickers (KS): Kick in horizontal directon
+
+cur_KS_matlab = -6.19103484e-5
+cur_KS_mad    = -cur_KS_matlab
+ang_KS_mad    = 2*asin(0.5*cur_KS_mad*LEN_KS)
+arc_KS_mad    = ang_KS_mad / cur_KS_mad
+
+!LEN_KS =  1
+NUM_KS  =  8
+ANG_KS_TLD     = ang_KS_mad
+ANG_KS_TLD_tot = NUM_KS * ANG_KS_TLD     ! 0.4953e-03 mrad
+
+!  RBEND model of kickers is used for survey
+!TL.KS.1:  Hkicker, L = LEN_KS, Kick = ANG_KS_TLD
+!Kick_KS: Line = (D0125, TL.KS.1, D0125)     ! L = 0.75 m
+
+TLD.BPMA: MONITOR
+TLD.BPMD: MONITOR
+TLD.BPMW: MONITOR
+TLD.OTRC: MARKER
+TLD.OTRD: MARKER
+TLD.TORA: MARKER
+TLD.TORC: MARKER
+TLD.SCRW: MARKER
+TLD.BHM:  MARKER
+
+TLD.CFX: HKICKER, L=0.1
+TLD.CFY: VKICKER, L=0.1
+TLD.CNX: HKICKER, L=0.3
+TLD.CNY: VKICKER, L=0.3
+
+TLD.DUWINDOW: MARKER
+TLD.DUSTART:  MARKER
+TLD.STARTCT:  MARKER
+
+!  TLD vertical septa
+
+LEN_BZ   = 1.0
+
+!CUR_TLD1  =-0.0055
+!ANG_TLD1  = 2 * asin(0.5 * LEN_BZ * CUR_TLD1)
+!ARC_TLD1  = ANG_TLD1 / CUR_TLD1
+ANG_TLD1    =  -0.005500006932
+ARC_TLD1    = LEN_BZ/sin(ANG_TLD1)*ANG_TLD1
+E12_TLD1  = 0.5 * ANG_TLD1
+TILT_TLD1 = -(12.5823302221 / 180.0) * pi   ! for 20 mm at 1st septum 
+
+TLD.BZ.1: Sbend, L = ARC_TLD1, ANGLE = ANG_TLD1,   &
+                 E1= 0.0, E2= ANG_TLD1,       &
+                 TILT = 1.570796327 + TILT_TLD1
+
+! Three nontilted septa:
+
+CUR_TLD2  = -0.00549987897129556
+ANG_TLD2  = 2 * asin(0.5 * LEN_BZ * CUR_TLD2)
+ARC_TLD2  = ANG_TLD2 / CUR_TLD2
+E12_TLD2  = 0.5 * ANG_TLD2
+
+TLD.BZ.2: Sbend, L = ARC_TLD2, ANGLE = ANG_TLD2,     &
+                 E1 = E12_TLD2, E2 = E12_TLD2,       &
+                 TILT = 1.570796327
+
+
+!  Three vertical dipoles
+
+LEN_BD   = 1.0
+
+CUR_TLD3 = 0.00714502003227491
+ANG_TLD3 = 2 * asin(0.5 * LEN_BD * CUR_TLD3)
+ARC_TLD3 = ANG_TLD3 / CUR_TLD3
+E12_TLD3 = 0.5 * ANG_TLD3
+
+TLD.BD.3: Sbend, L = ARC_TLD3, ANGLE = ANG_TLD3,  &
+                 E1 = E12_TLD3, E2 = E12_TLD3,    &
+                 TILT = 1.570796327
+
+CUR_TLD4 = 0.00835475542717171
+ANG_TLD4 = 2 * asin(0.5 * LEN_BD * CUR_TLD4)
+ARC_TLD4 = ANG_TLD4 / CUR_TLD4
+E12_TLD4 = 0.5 * ANG_TLD4
+
+TLD.BD.4: Sbend, L = ARC_TLD4, ANGLE = ANG_TLD4,  &
+                 E1 = E12_TLD4, E2 = E12_TLD4,    &
+                 TILT = 1.570796327
+
+
+!  TLD horizontal dipoles
+
+CUR_TLD5 =-0.0066964006791768
+ANG_TLD5 = 2 * asin(0.5 * LEN_BD * CUR_TLD5)
+ARC_TLD5 = ANG_TLD5 / CUR_TLD5
+E12_TLD5 = 0.5 * ANG_TLD5
+
+TLD.BD.5: Sbend, L = ARC_TLD5, ANGLE = ANG_TLD5,  &
+                 E1 = E12_TLD5, E2 = E12_TLD5
+
+
+DL1: Drift, L  = 8.75-1.1;
+DL2: Drift, L  = 8.20-0.4-1.3-6+2.52;
+DL3: Drift, L  = 0.5373491248539632-0.325;
+DL4: Drift, L  = 6.3-0.6+0.29;
+DL5: Drift, L  = 0.493993232065036-0.325;
+DL6: Drift, L  = 6.1-0.6+0.29-1-1+0.05;
+DL7: Drift, L  = 0.487174183509399-0.325+1-0.3;
+DL8: Drift, L  = 10.042396104859254-0.6-0.325+0.29;
+DL9: Drift, L  = 2.4-0.6+0.29;
+DL10: Drift, L = 1.508536281503847;
+DL11: Drift, L = 5.750000001343736-0.325;
+DL12: Drift, L = 12.069139883497630-0.6-0.325+0.29;
+DL13: Drift, L = 6.583740527435534-0.6+0.29;
+DL14: Drift, L = 1.45-0.325;
+DL15: Drift, L = 6.988894383436330-0.6-0.325+0.29;
+DL16: Drift, L = 9.786541983348771-0.6+0.29-0.0773+0.2475+0.0829-0.0056;
+
+D2880: Drift, L=2.880
+D2800: Drift, L=2.8
+D0308: Drift, L=0.308
+D0492: Drift, L=0.492
+D0408: Drift, L=0.408
+D0545: Drift, L=0.545
+D0482: Drift, L=0.482
+D03218: Drift, L=0.3218
+D1900: DRIFT, L=1.900
+
+TLD.QF.1:  Quadrupole, L = 0.5, K1 = -0.182275499195015;
+TLD.QF.2:  Quadrupole, L = 0.5, K1 = +0.359498564445412;
+TLD.QF.3:  Quadrupole, L = 0.5, K1 = -0.352946818513642;
+TLD.QF.4:  Quadrupole, L = 0.5, K1 = +0.358245974133173;
+TLD.QF.5:  Quadrupole, L = 0.5, K1 = -0.328128822050118;
+TLD.QF.6:  Quadrupole, L = 0.5, K1 = +0.174190011804145;
+TLD.QF.7:  Quadrupole, L = 0.5, K1 = -0.115173062728419;
+! April 2013: beta_x,y = 100km at exit window TLD.DUWINDOW
+TLD.QF.8:  Quadrupole, L = 0.5, K1 = +2.090070E-02
+TLD.QF.9:  Quadrupole, L = 0.5, K1 = -4.751294E-03
+
+TLD.SA.1: Sextupole, L = 0.3, K2 = +2.9652440356734,      &
+          TILT = +(23.0 / 180.0) * pi
+TLD.SA.2: Sextupole, L = 0.3, K2 = -5.27026735990458,     &
+          TILT = +(18.5 / 180.0) * pi
+TLD.SA.3: Sextupole, L = 0.3, K2 = -8.85682184936872,     &
+          TILT = +(36.0 / 180.0) * pi
+
+
+
+TLD1: Line = (TLD.BZ.2, D0500, TLD.BZ.2, D0500, TLD.BZ.2,            &
+           DL1,TLD.TORA, D0400, TLD.OTRC, D0400, TLD.BPMA, D0300, &
+           TLD.QF.1, D2580, TLD.CFY,D2400,TLD.CFX,         &
+           DL2, TLD.BD.3, D0500, TLD.BD.3, D0500, TLD.BD.5, &
+           DL3, D0100, TLD.BPMA, D0225, TLD.QF.2, D0170, TLD.CFX, D0040, & 
+           DL4, TLD.SA.1,                                   &
+           DL5, D0100, TLD.BPMA, D0225, TLD.QF.3, D0170, TLD.CFY, D0040, & 
+           DL6, D0700, TLD.BPMA, D0200, TLD.CFX,  D0150, TLD.SA.2,        &
+           DL7, D0200,           D0225, TLD.QF.4, D0170,   D0100, D0040, & 
+           DL8, D0100, TLD.BPMA, D0225, TLD.QF.5, D0170, TLD.CFY, D0040, & 
+           DL9, TLD.SA.3,                                   &
+           DL10,TLD.BD.5,                                   &
+           DL11, D0100, TLD.BPMA, D0225, TLD.QF.6, D0170, TLD.CFX, D0040, & 
+           DL12, D0100, TLD.BPMA, D0225, TLD.QF.7, D0170, TLD.CFY, D0040, & 
+           DL13, TLD.BD.4,                                  &
+           DL14, D0100, TLD.BPMA, D0225, TLD.QF.8, D0170, TLD.CFX, D0040, & 
+           DL15, D0100, TLD.BPMA, D0225, TLD.QF.9, D0170, TLD.CFY, D0040, &
+           DL16)
+
+
+
+!  Vertical arc to dump
+
+TLD.SWEEP.1: RBEND, L=0.64, ANGLE=0, TILT=-1.570796326795
+TLD.SWEEP.2: RBEND, L=0.64, ANGLE=0
+
+LEN_BV     = 2.5
+ANG_BV_DEG = (14 / 6)
+ANG_BV     = ANG_BV_DEG * 3.14159265 / 180
+CUR_BV     = 2 * sin(0.5 * ANG_BV) / LEN_BV
+ARC_BV     = ANG_BV / CUR_BV
+E12_BV     = 0.5 * ANG_BV
+
+TLD.BV.1: Sbend, L = ARC_BV, ANGLE = ANG_BV,  &
+          E1 = E12_BV, E2 = E12_BV,           &
+          TILT = 1.570796326795
+
+
+!  Quadrupoles and sextupoles with 100 mm aperture
+
+TLD.QK.1: Quadrupole, L = 1.0, K1 = -0.190953463750134  ! dispersion
+TLD.SK.1: Sextupole,  L = 0.3, K2 = 1.9, TILT = 1.570796326795
+
+TLD.QK.2: Quadrupole, L = 1.0, K1 = +1.952630E-01  
+
+D24727: DRIFT,L=2.4727-0.6+0.3-2.0227
+D31577: DRIFT,L=3.1577
+
+TLD2: Line = (TLD.BV.1, D0500, TLD.BV.1, D0500, TLD.BV.1,  &
+              D0650, TLD.QK.1, D0300,                      &
+              TLD.SK.1, D0215, TLD.BPMD, D0835, TLD.CNX,&
+              D0150, TLD.CNY, D31577, TLD.BPMD, D0215, TLD.SK.1, &
+              D0300, TLD.QK.1, D0650,                      & 
+              TLD.BV.1, D0500, TLD.BV.1, D0500, TLD.BV.1,  &
+              D06117, TLD.BPMD, D01883, TLD.QK.2,   &
+              D0400, TLD.QK.2,   &
+              D0400, TLD.QK.2,   & 
+              D0400, TLD.QK.2)
+
+
+!D5626: DRIFT, L=11.8815310827077 - 8.218+0.011+0.0287
+!
+!TLD3: Line = (D0092, D0150, TLD.BPMD, D0150,D0408,              &
+!              TLD.SWEEP.1, D0500, TLD.SWEEP.2,                  &
+!              D0545, D01075, TLD.TORC, D01075,                  &
+!              D0482, TLD.BPMD, D0200, TLD.OTRD, D0465, TLD.BHM, &
+!              D5626, TLD.BPMW, D03218, TLD.SCRW,                 &
+!              TLD.DUWINDOW, D1950, TLD.STARTCT, D2000, TLD.DUSTART, TLD.END)
+
+TLD3: Line = (D0092, D0150, TLD.BPMD, D0150,D0408,              &
+              TLD.SWEEP.1, D0500, TLD.SWEEP.2,                  &
+              D07321,D00899, TLD.BPMD, D0200, TLD.OTRD,&
+              D04501,TLD.TORC, D01149, D0200,TLD.BHM, &
+              D3870, TLD.BPMW, D03218, TLD.SCRW,                 &
+              TLD.DUWINDOW,D19041,TLD.STARTCT,D2000,TLD.DUSTART,TLD.END)
+
+
+!TLD3: Line = (D0092, D0150, TLD.BPMD, D0150,D0408,              &
+!              TLD.SWEEP.1, D0500, TLD.SWEEP.2,                  &
+!              D07321, TLD.TORC, D05899,                  &
+!              TLD.BPMD, D0200, TLD.OTRD, D0465, TLD.BHM, &
+!              D3670, TLD.BPMW, D03218, TLD.SCRW,                 &
+!              TLD.DUWINDOW,D19041,TLD.STARTCT,D2000,TLD.DUSTART,TLD.END)
+
+TLD: LINE = (TLD1, TLD2, TLD3)
+
+!TD0:   LINE=(TL1, TL2, TLD)
+
+
+
+
+

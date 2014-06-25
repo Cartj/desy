@@ -1,0 +1,125 @@
+
+
+!------------------ Diagniostcis ----------------------------------
+I1DIAU   : LINE= (D0100, I1.QI.3, D010849, D0100, I1.EOD,  &
+                 D0200, I1.CIY, D0100, &
+                 D0200, D0003, I1.CIX, D01975, I1.BPMF, D02025, &
+                 I1.QI.4, D0070)
+
+diafodo: line=( D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIY,D0150,I1.BPMA,D0150,&
+                   I1.QI.7,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIX,D0150,I1.BPMA,D0150,&
+                   I1.QI.8,D0105,I1.KAX,D0285)
+
+I1DIACORE: LINE = (I1.TDSA,D0070,&
+                   I1.QI.5,D0122,D0175,I1.KAX,D0105,&
+                   I1.QI.6,D0105,I1.KAX,D0285,I1.START.DIA,D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIY,D0150,I1.BPMA,D0150,&
+                   I1.QI.7,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIX,D0150,I1.BPMA,D0150,&
+                   I1.QI.8,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125, &
+                   D0150,I1.CIY,D0050,D0150,&
+                   I1.QI.9,D0220,I1.BPMA,D0380,I1.OTRC,D0200)
+
+I1DIAD1 : LINE =  (D0100,I1.QI.11,D0100,D01817,I1.TORA,D00183,D0350,I1.BPMA,&
+                   D0100, D0300, I1.QI.12, D0150,  &
+                   D0400, I1.START.I1D)
+
+I1DIAD2: LINE =      (I1.BB.0, &
+                      D0200, D0200, D0040,D0100, &
+                      D0200, I1.CIY, D0100, I1.QI.13, D0150, I1.BPMA, &
+                      D0200, I1.BSEC, D0950, I1.CIX,&
+                      D0150, I1.VCBSHUT,D0200,I1.QI.14)
+
+I1DIA : LINE = (I1DIAU, I1DIACORE, I1DIAD1, I1DIAD2)
+
+
+
+
+#----------------- Laser Heater -----------------------------------
+#----------------- laser heater Quadrupole ------------------------
+I1.QI.1: Quadrupole, L=0.2, K1=-9.321360E-02
+I1.QI.2: Quadrupole, L=0.2, K1= 8.875443E-01
+#----------------- Laser Heater Magnets ---------------------------
+l_bl  = 0.2;
+ang_lh = -0.099484
+arc_lh = (l_bl * ang_lh) / sin(ang_lh);
+
+I1.BL.1.1: sbend, l = arc_lh, angle = ang_lh,   e1 = 0,   e2 = ang_lh
+I1.BL.1.2: sbend, l = arc_lh, angle = -ang_lh,   e1 = -ang_lh,   e2 = 0
+I1.BL.3: sbend, l = arc_lh, angle = -ang_lh,   e1 = 0,   e2 = -ang_lh
+I1.BL.4: sbend, l = arc_lh, angle = ang_lh,   e1 = ang_lh,   e2 = 0
+
+
+I1LH1     : LINE= (D12744,D02739,D0100,I1.QI.1, D0130, D0170, D0150, D0150, D00785, I1.QI.2, D0100)
+
+
+DELTALH  = 0.100
+CD0100I: DRIFT, L = DELTALH / cos(ang_lh)
+D0043 :  DRIFT, L=0.043
+D00002:  DRIFT, L=0.0002
+D0064 :  DRIFT, L=0.064
+D01087:  DRIFT, L=0.1087
+D019625: DRIFT, L=0.19625
+D027175: DRIFT, L=0.27175
+D00785:  DRIFT, L=0.0785
+D010849: DRIFT, L=0.10849
+
+D0003:  DRIFT, L=0.003
+D01975: DRIFT, L=0.1975
+D02025: DRIFT, L=0.2025
+D0122:  DRIFT, L=0.122
+D0260:  DRIFT, L=0.260
+D0035:  DRIFT, L=0.035
+D01817: DRIFT, L=0.1817
+D00183: DRIFT, L=0.0183
+D02739: DRIFT, L=0.2739
+D00835: DRIFT, L=0.0835
+
+# Undulator with natural focusing--------------------------------------------
+# 15.06.2012: Model using analytical matrix.
+#    Period = 74 mm
+#    Gap    = 32 - ?? mm  => Field  = 0.28 - 0.1 T
+EnerLH  = 0.13;
+gammaLH = EnerLH / EMASS;
+bbetaLH = 1 / sqrt(1 - 1/(gammaLH^2));
+LundLH    = 0.074;
+NundLH    = 0.74 / LundLH;    ! = 10
+LundLH_10= LundLH * 10;
+BundLH    = 0.28;
+KundLH    = 0.934*LundLH*100*BundLH;
+kQundLH   = (2 * pi * KundLH) / (LundLH * gammaLH * bbetaLH);
+OmegaLH   = kQundLH / sqrt(2);
+
+I1.UNDU: MATRIX, L = LundLH_10,          &
+   RM(1,1) = 1.0,                          &
+   RM(1,2) = LundLH_10,                    &
+   RM(1,3) = 0.0,                          &
+   RM(2,2) = 1.0,                          &
+   RM(3,3) = cos(OmegaLH*LundLH_10),        &
+   RM(3,4) = sin(OmegaLH*LundLH_10)/OmegaLH, &
+   RM(4,3) =-sin(OmegaLH*LundLH_10)*OmegaLH, &
+   RM(4,4) = cos(OmegaLH*LundLH_10)
+
+
+
+I1.UNDULATOR: Line = (D0030,I1.UNDU,D0030)
+
+I1LH2     : LINE = (D0043, 1*(I1.BL.1.1), CD0100I, 1*(I1.BL.1.2), D019625,
+                 D027175, D0064, D0100, I1.UNDULATOR, D0100, D0064,D0128, 1*(I1.BL.3), CD0100I, 1*(I1.BL.4), D0043)
+
+I1LH : LINE=(I1LH1, I1LH2)
+
+!----------------- Injector from gun to ACC1 ----------------------
+I1.SOLA: SOLENOID, L=0
+I1.SOLB: SOLENOID, L=0
+I1.CKXY:   KICKER, L=0.050
+I1.KDC:  VKICKER, L=0.200
+!Definition of Collimator ---------------------------------
+I1.DCCOL:   ECOL, XSIZE=0.02, YSIZE = 0.02
+
+I1U = (I1.SOLA, D0276, I1.SOLB, D03236, D0100, D0050, I1.CKXY, I1.KDC, D0100, D0015,
+       D0300, D0300, I1.CKXY, D0100, D0020,  D0020, I1.DCCOL, D0200, D0100, D0045, I1.CKXY, D04488)
+
+I1 = (I1U, L0, I1LH, I1DIA, I1DLG, I1BC0, I1PS, L1U)

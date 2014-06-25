@@ -1,0 +1,663 @@
+!----------------------------------------------------------------------------
+!  Last work: 07 May      2012 
+!  Last work: 29 March    2012 
+!  Last work: 08 February 2012 
+!  Last work: 16 December 2011 
+!----------------------------------------------------------------------------
+
+!----------------------------------------------------------------------------
+! TMP info:
+! Feb 2013:  Setting of Sase3 quads is for <beta>=15m and 17.5 GeV
+!            => Setting of matching quads in T2B.
+! Feb 2013:  4 screens & WS stations: space of 600 mm is reserved,
+!            OTRB is position of screen
+! 08.02.2012:  First T2.QF.1 is moved from concrete downstream for 0.5 m
+! Nov 2012:    Last quads of FODO (T2.QF.2d) has an individual PS.
+! Feb 2013:    Due to this additional matching quad (T2.QF.2d) 
+!              the QF quads are re-numbered: T2.QF.2d=T2.QF.2 and etc. 
+! Feb 2013:    Setting of Sase1 quads is for <beta>=32m and 17.5 GeV
+!              => Setting of matching quads in T2B.
+! Feb 2013:    4 screens & WS stations: space of 600 mm is reserved, 
+!              OTRB is position of screen  
+! Feb 2013:    QFSEC is used for QF quads (except T2.QFH.2).
+! May 2012:   CLTS in TL section, in XFEL_TD2.txm
+! Feb 2013:   4 screens & WS stations: space of 600 mm is reserved,
+!             OTRB is position of screen
+! Feb 2013:   QFSEC is used for QF quads (where is possible).
+!----------------------------------------------------------------------------
+
+D00046: DRIFT, L=0.0046
+D01047: DRIFT, L=0.1047
+D01848: DRIFT, L=0.1848
+D13847: DRIFT, L=1.3847
+D05857: DRIFT, L=0.5857
+D01044:DRIFT, L=0.1044
+D07705:DRIFT, L=0.7705
+
+TL.VCV100: DRIFT, L = 0.085 ! 100 mm diameter valve
+TL.VCB100: DRIFT, L = 0.180 ! 100 mm bellow
+TL.VCABSA: DRIFT, L = 0.610 ! Absorber and pump cross in front of Septum
+TL.VCSTEP:  MARKER          ! Transition 40 to 100
+
+TL.TORA: MARKER
+TL.DCM: MARKER
+TL.CRD: MARKER
+TL.OTRB: MARKER
+TL.OTRBW: MARKER
+TL.OTRE: MARKER
+
+TL.BPMA: MONITOR
+TL.BPMD: MONITOR
+
+
+TL.BPMI.X1: Monitor
+TL.BPMI.Y1: Monitor
+TL.BPMI.X2: Monitor
+TL.BPMI.Y2: Monitor
+TL.BPMI.X3: Monitor
+TL.BPMI.Y3: Monitor
+TL.BPMI.X4: Monitor
+TL.BPMI.Y4: Monitor
+
+TL.CFX: HKICKER, L = 0.100
+TL.CFY: VKICKER, L = 0.100
+TL.CHX: HKICKER, L = 0.200
+TL.CHY: VKICKER, L = 0.200
+TL.CNX: HKICKER, L = 0.300  !  HERA CH
+TL.CNY: VKICKER, L = 0.300  !  HERA CV
+
+!  IBFB kickers: each kicker consists of 2 segments of 2 m long
+
+TL.KFBX.11: Hkicker, L = 2.0, kick = 0.0
+TL.KFBX.12: Hkicker, L = 2.0, kick = 0.0
+TL.KFBX.21: Hkicker, L = 2.0, kick = 0.0
+TL.KFBX.22: Hkicker, L = 2.0, kick = 0.0
+
+TL.KFBY.11: Vkicker, L = 2.0, kick = 0.0
+TL.KFBY.12: Vkicker, L = 2.0, kick = 0.0
+TL.KFBY.21: Vkicker, L = 2.0, kick = 0.0
+TL.KFBY.22: Vkicker, L = 2.0, kick = 0.0
+
+
+!  30 m FODO cell
+
+TL.QF.1:  Quadrupole, L = 0.50, K1 =  0.1906949
+TL.QFH.1: Quadrupole, L = 0.25, K1 =  0.1906949
+TL.QF.2:  Quadrupole, L = 0.50, K1 = -0.1906949
+TL.QFH.2: Quadrupole, L = 0.25, K1 = -0.1906949
+
+TLFODO_F: Line = (TL.QFH.1, D14500, TL.QF.2, D14500, TL.QFH.1)
+TLFODO_D: Line = (TL.QFH.2, D14500, TL.QF.1, D14500, TL.QFH.2)
+
+!  30 m FODO cell with one QK type quad (HERA quad, 1 m long)
+!  There are 3 QK quadrupoles:
+!    1) TL.QK.1 behind 1st septum to TD0  line
+!    2) TL.QK.2 behind 1st septum to TD1  line
+!    3) TL.QK.2 behind 2d  septum to TD20 line
+
+TL.QK.1:  Quadrupole, L = 1.00, K1 = +0.1906949/2
+TL.QKH.1: Quadrupole, L = 0.50, K1 = +0.1906949/2   ! +0.0953474
+TL.QK.2:  Quadrupole, L = 1.00, K1 = -0.1906949/2
+TL.QKH.2: Quadrupole, L = 0.50, K1 = -0.1906949/2
+
+TLFODO_QK: Line = (TL.QFH.1, D14250, TL.QKH.1,TL.QKH.1, D14250, TL.QFH.1)
+
+! CL to TL section
+!  Matching from second collimation arc to 30 m FODO cell:
+!  L_CLTS = 38.24 m
+!  Mode A: betx = 0.2 m, bety = 3.0 m
+TL.QH.5:  Quadrupole, L = 1.00, k1 = 3.791733E-01 
+TL.QH.6:  Quadrupole, L = 1.00, k1 = 3.565448E-01
+TL.QH.7:  Quadrupole, L = 1.00, k1 = -3.893589E-01
+TL.QH.8:  Quadrupole, L = 1.00, k1 = -5.375339E-02 
+TL.QF.8:  Quadrupole, L = 0.50, k1 = 1.982846E-01
+TL.QF.9:  Quadrupole, L = 0.50, k1 =  -5.835487E-02
+TL.QF.10: Quadrupole, L = 0.50, k1 =  1.265492E-01
+TL.QF.11: Quadrupole, L = 0.50, k1 = -2.141676E-01
+comment
+TL.QH.5:  Quadrupole, L = 1.00, k1 = +3.973405E-01
+TL.QH.6:  Quadrupole, L = 1.00, k1 = +3.999729E-01
+TL.QH.7:  Quadrupole, L = 1.00, k1 = -3.986172E-01
+TL.QH.8:  Quadrupole, L = 1.00, k1 = -6.279563E-02
+TL.QF.8:  Quadrupole, L = 0.50, k1 = +1.824298E-01
+TL.QF.9:  Quadrupole, L = 0.50, k1 = -4.309695E-02
+TL.QF.10: Quadrupole, L = 0.50, k1 = +1.296302E-01
+TL.QF.11: Quadrupole, L = 0.50, k1 = -2.078455E-01
+endcomment
+CLTS: Line = (D0170,TL.CFY, D0490, D0200, TL.CHX,D0170,               &
+              TL.QH.5,D0250,TL.QH.6,D0600,TL.QH.7,D0250,TL.QH.8,D0200,    &
+              BPMISEC(TL.BPMI.Y1), D0170,TL.CHY,D0040,        &
+              D0505,TL.TORA,D0200,TL.DCM,D0800,TL.CRD,D0410,         &
+              BPMISEC(TL.BPMI.X1), D0125,TL.QF.8,D0170,TL.CFX,D0040, &
+              D3215, QFSEC(TL.BPMA,TL.QF.9,TL.CFY),                  &
+              D3715, QFSEC(TL.BPMA,TL.QF.10,TL.CFX),                 &
+              D4585, BPMISEC(TL.BPMI.Y2),                            &
+              D0250,TL.KFBY.11,D0250,TL.QF.11,D0250,TL.KFBY.12,      &
+              D0100,D0170,TL.CFY,                                    & 
+              D2030, D0200,        D0400, D1495,                     &  
+              BPMISEC(TL.BPMI.X2), D0250,TL.KFBX.11,D0250,TL.QFH.1)
+
+
+! IBFB section
+
+IBFB: Line = (TL.QFH.1,D0250,TL.KFBX.12,                    &
+              D0100,D0170,TL.CFX,                           &
+              D4430, D0200,TL.OTRBW,D0400, D4600,            &   ! 1st screen
+              TL.KFBY.21,D0250,TL.QF.2,D0250,TL.KFBY.22,    &
+              D0250, BPMISEC(TL.BPMI.Y3),                   &
+              D0170,TL.CFY,                           & 
+              D3825, D0200,TL.OTRBW,D0400, D4600,            &   ! 2d screen
+              TL.KFBX.21,D0250,TL.QF.1,D0250,TL.KFBX.22,    &
+              D0250, BPMISEC(TL.BPMI.X3),                   &
+              D0170,TL.CFX,                           &
+              D3825, D0200,TL.OTRBW,D0400, D0150,            &   ! 3d screen
+              BPMISEC(TL.BPMI.Y4), D5920,                   &
+              QFSEC(D0000,TL.QF.2,TL.CFY),                  &
+              D7485, BPMISEC(TL.BPMI.X4), D0250)
+
+!  Part of beam line with kickers and septums.
+!  Kickers:
+!    - TL.KS:  for dump line,    horizontal kick
+!    - TL.KL:  for TD1 and TD20, vertical   kick
+!  Model for kickers:
+!    RBEND with zero angle for Twiss functions
+!    RBEND for survey
+
+LEN_KS = 1.0
+LEN_KL = 0.93
+
+!TL.KS.1: Hkicker, L = LEN_KS, KICK = 0.0
+!TL.KL.1: Vkicker, L = LEN_KL, KICK = 0.0
+
+TL.KS.1: Rbend, L = LEN_KS, Angle = 0.0
+Kick_KS: Line = (D0100, TL.KS.1, D0100)          ! L = 1.2 m
+
+TL.KL.1: Rbend, L = LEN_KL, Angle = 0, TILT = pi/2
+TL.KL0.1: Rbend, L = LEN_KL , Angle = 0, TILT = pi/2
+Kick_KL: Line = (D0035, TL.KL.1, D0035)          ! L = 1.00 m
+Kick_KL0: Line = (D0035, TL.KL0.1, D0035)
+
+! Commissioning dipoles for TLD and TD1 beamlines
+TL.BL.1: Hkicker, L = 0.2, kick = 0.0   !+0.889423676e-3   ! 0.326 T at 22 GeV
+TL.CHX.1: Hkicker, L = 0.2, kick = 0.0   !-0.461517676e-3   ! 0.169 T at 22 GeV
+TL.BL.2: Vkicker, L = 0.2, kick = 0.0   !+0.793004e-3      ! 0.291 T at 22 GeV
+TL.CHY.2: Vkicker, L = 0.2, kick = 0.0   !-0.270829e-3      ! 0.100 T at 22 GeV
+
+! HELP elements for survey.
+HELP.KICK1a.TLD:  RBEND, L=0.00001
+HELP.KICK1b.TLD:  RBEND, L=0.00001
+HELP.KICK2a.TLD:  RBEND, L=0.00001
+HELP.KICK2b.TLD:  RBEND, L=0.00001
+HELP.KICK3a.TLD:  RBEND, L=0.00001
+HELP.KICK3b.TLD:  RBEND, L=0.00001
+HELP.KICK1a.TD1:  RBEND, L=0.00001
+HELP.KICK1b.TD1:  RBEND, L=0.00001
+HELP.KICK2a.TD1:  RBEND, L=0.00001
+HELP.KICK2b.TD1:  RBEND, L=0.00001
+HELP.KICK1.TD20: RBEND, L=0.00001
+HELP.KICK2.TD20: RBEND, L=0.00001
+
+TL1: Line = (CLTS, IBFB, D0875, 2*Kick_KS, D0200,2*Kick_KS, D0125,   &
+             HELP.KICK1a.TLD,TL.QF.1,HELP.KICK1b.TLD,                &
+             D0125,2*Kick_KS,D0200,2*Kick_KS, D0875,                &
+             D0170, D0100,TL.BPMA,D0100,D0170,TL.CHX,              &
+             D0135, TL.BL.1, D6500, TL.CHX.1, D0400,                &
+             D0100,TL.BPMA,D0100,D0125,                            &
+             HELP.KICK2a.TLD,TL.QF.2,HELP.KICK2b.TLD,                &
+             D0170,TL.CHX,D0200,TL.CHY,                            &
+             D1480, TL.VCSTEP, D5000, D2300,D01044,                 &
+             D01848, TL.CNX,D0100,TL.CNY,D0100,                      &
+             D0050,TL.BPMD,D0050,D0150,TL.OTRE,D0150,&
+             TL.VCV100,D05857,TL.VCB100,TL.VCABSA,D0250,             &
+             TL.STARTTLD)
+
+TL2: Line = (TLD.START, TLD.BZ.1, D0500,                           &
+             HELP.KICK3a.TLD,TL.QK.1,HELP.KICK3b.TLD, D0500)
+
+TL3: Line = (TLD.BZ.2, D0500, TLD.BZ.2, D0500, TLD.BZ.2, D9425,        &
+             D0100,TL.BPMA,D0100,D0125,TL.QF.2,D0170,TL.CFY,           &
+             D0230, 3*Kick_KL, D0200, 2*Kick_KL, 1*Kick_KL0, D0175,     &
+             TL.BL.2, D6500, TL.CHY.2, D0300,                           &
+             TL.TORA, D0200,TL.BPMA,D0100,D0125,                       &
+             HELP.KICK1a.TD1,TL.QF.1,HELP.KICK1b.TD1,     &
+             D0170,TL.CHX, D0200,TL.CHY,                               &
+             D1480, TL.VCSTEP, D5000, D1200,  &
+             D01047, &
+             TL.CNX,D0100,TL.CNY,D13847,                                &
+             D0050,TL.BPMD,D0050,D0150,TL.OTRE,D0150,&
+             TL.VCV100,D05857,TL.VCB100,TL.VCABSA,D0250,         &
+             TL.STARTT1)             
+
+TL4: Line = (T1.START, T1.BZ.1, D0500,                             &
+             HELP.KICK2a.TD1,TL.QK.2,HELP.KICK2b.TD1,              &
+             D0500, TL.STARTT20, T20.START, T20.BZ.1, D0500)
+
+TL5: Line = (T1.BZ.2, D0500, T1.BZ.2, D0500, T1.BZ.2, D7925,        &
+             D0100,TL.BPMA,D0100, D0125,                            &
+             HELP.KICK1.TD20,TL.QF.1,HELP.KICK1.TD20,               &
+             D0170,TL.CFX, D11370,                                  &
+             TL.CHX,D0170,TL.CHY,D0170, D0100,TL.BPMA,D0100, D0170, &
+             T20.BZ.2, D0500,                                       &
+             HELP.KICK2.TD20,TL.QK.2,HELP.KICK2.TD20,               &
+             D0500, TL.END, T2.START)
+
+TLTD0:  Line = (TL1, TL2)
+TLTD1:  Line = (TL1, TL2, TL3, TL4)
+TLTD20: Line = (TL1, TL2, TL3, TL4, TL5)
+TLTD2:  Line = (TL1, TL2, TL3, TL4, TL5)
+
+!------------------------------------------------------------------------
+! Beam Line TD2: SASE1, XS3, SASE3
+! Beam Line TD2 (T2,SA1,T4,SA3,T4D)
+!------------------------------------------------------------------------
+
+T2.TORA: MARKER
+T2.OTRB: MARKER
+T2.PYR:  MARKER
+
+T2.VCBSHUT: DRIFT, L=0.3
+T2.VCBSTOP: DRIFT, L=0.3
+T2.VCSTEP: MARKER
+
+T2.BSEC: RBEND, L=2, ANGLE=0
+T2.BD.10: RBEND, L=1, ANGLE=0
+
+T2.BPMA: MONITOR
+T2.BPME: MONITOR
+
+T2.CEX: HKICKER, L = 0.100
+T2.CEY: VKICKER, L = 0.100
+T2.CFX: HKICKER, L = 0.100
+T2.CFY: VKICKER, L = 0.100
+T2.CNY: VKICKER, L=0.3
+
+T2.QF.1.1:  Quadrupole, L = 0.50, k1 =  0.1906949
+T2.QFH.1.1: Quadrupole, L = 0.25, k1 =  0.1906949
+T2.QF.1.2:  Quadrupole, L = 0.50, k1 = -0.1906949
+T2.QFH.1.2: Quadrupole, L = 0.25, k1 = -0.1906949
+
+
+! 08.02.2012, move 1 quad from the concrete
+! 30 m FODO
+D6405: DRIFT, L=6.405
+T2A: Line = (T20.BZ.3, D0500, T20.BZ.3, D0500, T20.BZ.3, D9425,          &
+             D0100,T2.BPMA,D0100, D0125,T2.QF.1.1,D0170,T2.CFX, D6405,   & 
+                                                          T2.BD.10,D6500,&
+             D0100,T2.BPMA,D0100, D0125,T2.QF.1.2,D0170,T2.CFY, D13905,  &
+             D0100,T2.BPMA,D0100, D0125,T2.QF.1.1,D0170,T2.CFX, D0200,   &
+                                                       T2.BSEC,D11705,   &
+             D00001, D0100,T2.BPMA,D0100, D0125,T2.QFH.1.2)
+
+
+!  Matching from 30 m FODO to SASE1
+
+T2.QF.2: Quadrupole, L=0.50, K1= -1.652451e-01    
+T2.QF.3: Quadrupole, L=0.50, K1= +1.588459E-01    
+T2.QF.4: Quadrupole, L=0.50, K1= -1.460762E-01    
+T2.QF.5: Quadrupole, L=0.50, K1= +1.337351E-01    
+
+T2.QA.1:  Quadrupole, L=0.1, K1= -6.087568E-01   ! = SA1.QA.1
+T2.QA.2:  Quadrupole, L=0.1, K1=  6.182368E-01   ! = SA1.QA.1
+
+! Firts T2.QF.1 will be moved from concrete
+
+D122482: DRIFT, L=12.2482
+D01568: DRIFT, L=0.1568
+
+T2B: Line = (T2.QFH.1.2,D0170,T2.CFY,  D122482, T2.VCBSHUT, D01568,  D1700 , &
+         QFSEC(T2.BPMA,T2.QF.1.1,T2.CFX), D13365,                &
+         QFSEC(T2.BPMA,T2.QF.1.2,T2.CFY), D13865,                &
+         QFSEC(T2.BPMA,T2.QF.1.1,T2.CFX),D6740, D0200,T2.OTRB,D0400,D6525,&   ! 1st screen
+         QFSEC(T2.BPMA,T2.QF.2,T2.CFY),D6740,D0200,D0400, D6525, &   
+         QFSEC(T2.BPMA,T2.QF.3,T2.CFX),D6740,D0200,T2.OTRB,D0400, D6525, &   ! 2d  screen
+         QFSEC(T2.BPMA,T2.QF.4,T2.CFY),D5140,D0200,T2.OTRB,D0400, D4925, &   ! 3d  screen
+         QFSEC(T2.BPMA,T2.QF.5,T2.CFX),                        &
+         D0200,D87993, T2.PYR, D0300, T2.TORA, D0200, D0100,T2.VCSTEP,D0100, &
+         D0100,T2.BPME,D0100,D0125,T2.QA.1,D0160,T2.CNY, D0150,T2.CEX,D4580,&
+         T2.CNY,D0150,T2.CEX,D0160,T2.QA.2,D0125,D0100,T2.BPME,D021225) 
+
+T2: Line = (T2A, T2B)
+
+
+!----------------------------------------------------------------------------
+!   T4 Beam Transport and Deflection to SASE3 in XS3
+!   ang3:= (1.3182 / 2.0)  * (PI / 180.0)= 0.011503465099895
+!----------------------------------------------------------------------------
+
+T4.START: MARKER
+T4.END:   MARKER
+
+T4.START.T9:  MARKER
+T4.START.ARC: MARKER
+T4.END.ARC:   MARKER
+
+T9.START: MARKER
+T9.END:   MARKER
+T9.BSEC:  RBEND, L=2.0
+
+T4.CEX: HKICKER, L=0.1
+T4.CEY: VKICKER, L=0.1
+T4.CFX: HKICKER, L=0.1
+T4.CFY: VKICKER, L=0.1
+T4.CHX: HKICKER, L=0.2
+T4.CHY: VKICKER, L=0.2
+T4.CNY: VKICKER, L=0.3
+
+
+T4.BPMA: MONITOR
+T4.BPME: MONITOR
+T4.BPMF: MONITOR
+T4.TORA: MARKER
+T4.OTRB: MARKER
+T4.OTRBW: MARKER
+T4.BAM:  MARKER
+
+T4.VCSTEP: MARKER
+
+! Matching from SASE1 to T4LFODO 
+
+T4.QE.3: QUADRUPOLE, L=0.2, K1= +2.721652E-01
+T4.QE.4: QUADRUPOLE, L=0.2, K1= -2.771268E-01
+T4.QE.5: QUADRUPOLE, L=0.2, K1= +2.658086E-01
+T4.QE.6: QUADRUPOLE, L=0.2, K1= -2.550011E-01
+
+D10285: Drift, L = 10.285
+
+T4MATCH1: LINE = (D0990, T4.TORA, D0210, T4.BPMF, D0230, T4.BAM, &
+                  D11613, QESEC(T4.BPMA,T4.QE.3,T4.CEX), &
+                  D13085, QESEC(T4.BPMA,T4.QE.4,T4.CEY), &
+                  D13085, QESEC(T4.BPMA,T4.QE.5,T4.CEX), &
+                  D13085, QESEC(T4.BPMA,T4.QE.6,T4.CEY), &
+                  D10285)
+
+
+! LFODO transport in T4
+
+T4.QE.1: Quadrupole, L=0.2, K1= -0.22976
+T4.QE.2: Quadrupole, L=0.2, K1=  0.22976
+
+T4LFODO: LINE=(D10000,D0450,QESEC(T4.BPMA,T4.QE.2,T4.CEX),D10000, &
+               D10000,D0935,QESEC(T4.BPMA,T4.QE.1,T4.CEY),D10000,D0485)
+
+
+! Deflection arc T4M
+
+!LEN_BE =  2.5
+ANG_T4  = 0.0115035
+ARCLEN_T4 = (0.5 * LEN_BE * ANG_T4) / sin(0.5 * ANG_T4);
+
+T4.BE.1: Sbend, L=ARCLEN_T4, Angle=ANG_T4, E1=ANG_T4/2, E2=ANG_T4/2
+
+T4.QM.1: Quadrupole, L=1.0, K1=  3.03952E-01
+T4.QM.2: Quadrupole, L=1.0, K1= -3.03939E-01
+T4.QH.1: Quadrupole, L=1.0, K1=  3.03952E-01
+T4.QH.2: Quadrupole, L=1.0, K1= -3.03939E-01
+
+T4.SAOX.1: Sextupole, L=0.3, K2= +25.23
+T4.SAOX.2: Sextupole, L=0.3, K2=  +8.91
+
+T4M1: LINE = (D1000, D0145,T4.CHX,                                 &
+              D0040,T4.CHY,D0040,D0050,D0100,T4.BPMA,D0100,  &
+              D0050,D0075,T4.QH.1,D0200,D0200, T4.START.T9)
+ 
+! Variant 2a: (Q2,1.2m,S1,2.5m,Q3,1.85m,S2,1.85m,Q4)
+T4M2: LINE = (T4.START.ARC, T4.BE.1, D0100,                               &
+              D0500,D0025, QMSEC(D0000,T4.QM.2,D0200), D1440,            &
+              D1500,D0025, QMSEC(T4.BPMA,T4.QM.1,T4.CHX), D0640,          &
+              T4.SAOX.1, D2025,                                           &
+              QMSEC(T4.BPMA,T4.QM.2,T4.CHY), D1290,                       &
+              T4.SAOX.2, D1195,                                           &
+              D0040,T4.CHX,D0040,D0050,D0100,T4.BPMA,D0100,               &
+              D0050,D0075,T4.QM.1,D0200,D0200,T4.BE.1,T4.END.ARC, D0100,  &
+              D0500,D0175, QHSEC(T4.BPMA,T4.QH.2,T4.CHY),D1590)
+
+T4M: LINE=(T4M1,T4M2)
+
+
+! Matching from/to T4LFODO
+
+T4.QH.4: QUADRUPOLE, L=1, K1= 0.20188
+T4.QH.3: QUADRUPOLE, L=1, K1=-0.20210
+
+T4MATCH2:LINE=(D7930,D0175,QHSEC(T4.BPMA,T4.QH.4,T4.CHX),D1230,&
+               D0175,QHSEC(T4.BPMA,T4.QH.3,T4.CHY),D8020)
+
+
+! Matching to SASE3
+
+T4.QF.7:  QUADRUPOLE, L = 0.5,  K1 = -1.230164E-01
+T4.QF.8:  QUADRUPOLE, L = 0.5,  K1 = +1.550792E-01
+T4.QF.9:  QUADRUPOLE, L = 0.5,  K1 = -1.605330E-01
+T4.QF.10: QUADRUPOLE, L = 0.5,  K1 = +1.915005E-01
+
+T4.QA.3:  QUADRUPOLE, L = 0.1,  K1 =-1.277193E+00   ! not SA3.QA.1
+T4.QA.4:  QUADRUPOLE, L = 0.1,  K1 =+1.393476E+00   ! not SA3.QA.2
+
+D2359: DRIFT, L = 2.359-0.00059-0.310+0.27129+0.2+0.03775
+
+T4MATCH3: LINE = ( &
+          D0275,T4.OTRBW,D10000,D0175,QESEC(T4.BPMA,T4.QE.2,T4.CEX),&
+          D9860,D10000,D0175,QFSEC(T4.BPMA,T4.QF.7,T4.CFY),&
+          D5240,D0200,T4.OTRBW,D0400,D5025,QFSEC(T4.BPMA,T4.QF.8,T4.CFX), &
+          D5240,D0200,         D0400,D5025,QFSEC(T4.BPMA,T4.QF.9,T4.CFY), &
+          D5240,D0200,T4.OTRBW,D0400,D5025,QFSEC(T4.BPMA,T4.QF.10,T4.CFX),&
+          D2359,D4400,D0400,T4.TORA,D0200,           &
+          D0100,T4.VCSTEP,D0100, &
+          D0100,T4.BPME,D0100,D0125,T4.QA.3,D0160,T4.CNY, D0150,T4.CEX,D4580,&
+          T4.CNY,D0150,T4.CEX,D0160,T4.QA.4,D0125,D0100,T4.BPME,D021225)                   
+                  
+                  
+!                  D0050,    &
+!                  T4.CEX,D0270,T4.BPME,D0100,T4.QA.3,D0100,T4.CEY,D0280,  &
+!                  D5000, D0050,                                           &
+!                  T4.CEX,D0270,T4.BPME,D0100,T4.QA.4,D0100,T4.CEY,D0280)
+
+SA1TT4: LINE = (T4MATCH1, 1 * T4LFODO, T4MATCH2)
+T4TSA3: LINE = (T4MATCH2, 2 * T4LFODO, T4MATCH3)
+T4:     LINE = (T4.START, SA1TT4, T4M, T4TSA3, T4.END)
+
+T9: LINE = (T9.START, D10000, D10000, D10000, T9.BSEC, D1000, T9.END)
+
+!----------------------------------------------------------------------------
+! Beam Dump T4D after SASE3 
+!----------------------------------------------------------------------------
+
+T4D.START: MARKER
+T4D.END:   MARKER
+
+T4D.START.T10: MARKER
+
+T10.START: MARKER
+T10.END:   MARKER
+T10.BSEC:  RBEND, L=2.0
+
+T4D.DUWINDOW: MARKER
+T4D.START.DU: MARKER
+T4D.STARTCT: MARKER
+T4D.DUMP:     MARKER
+
+T4D.BPMA: MONITOR
+T4D.BPMF: MONITOR
+T4D.BPMD: MONITOR
+T4D.BPMW: MONITOR
+T4D.BPME: MONITOR
+T4D.TORA: MARKER
+T4D.TORC: MARKER
+T4D.OTRD: MARKER
+T4D.OTRA: MARKER
+T4D.BAM:  MARKER
+T4D.BHM:  MARKER
+T4D.SCRW: MARKER
+
+T4D.CEX: HKICKER, L=0.1
+T4D.CEY: VKICKER, L=0.1
+T4D.CFX: HKICKER, L=0.1
+T4D.CFY: VKICKER, L=0.1
+T4D.CNX: HKICKER, L=0.3
+T4D.CNY: VKICKER, L=0.3
+
+
+!  Matching section from SASE3 to vertical arc to dump
+
+T4D.QF.1: Quadrupole, L=0.5, K1= -1.801237E-01
+T4D.QF.2: Quadrupole, L=0.5, K1=  8.410147E-02
+T4D.QF.3: Quadrupole, L=0.5, K1=  1.733885E-01
+T4D.QF.4: Quadrupole, L=0.5, K1= -1.921485E-01
+
+T4D.QA.2: Quadrupole, L=0.1, K1=+1.336214E+00
+
+D23831:  Drift, L = 2.3831
+D049987: DRIFT, L = 0.49987+0.0259
+
+SA3TT4D: LINE =(D5000, D00467, D0050, D02723, T4D.BPME, D019375, &
+                SA3.QA.2, D0105, D0230, D000447, D0050, D04778, &
+                D0790, T4D.TORA, D0210, T4D.BPMF, D0230, T4D.BAM,             &
+                D5600, D0200, D23831,                                         &
+                D5600, D0200, D5275, QFSEC(T4D.BPMA,T4D.QF.1,T4D.CFY), D0190, &
+                D5400, D0400, D5075, QFSEC(T4D.BPMA,T4D.QF.2,T4D.CFX), D0190, &
+                D5400, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0800,  &
+                D5600, D0200, D6200, D0475,  &
+                QFSEC(T4D.BPMA,T4D.QF.3,T4D.CFX), D0190,                  &
+                D5075,D0055,T4D.CFY,D0170,T4D.QF.4,D0150,D0130,T4D.BPMF,D0125,&
+                D0095, T4D.TORA, D049987)
+
+
+!  Vertical arc to dump: Deflection downwards (to negative y)
+
+!T4D.ANG = 5.0/180*pi/2=0.043633231
+!LEN_BV = 2.5
+
+ANG_T4D    = 0.043633231  !10 deg arc - 4 bends
+ARCLEN_T4D = (0.5 * LEN_BV * ANG_T4D) / sin(0.5 * ANG_T4D)
+
+T4D.BV.1: SBEND, L = ARCLEN_T4D, ANGLE = ANG_T4D,   &
+                 E1= ANG_T4D/2,  E2= ANG_T4D/2,     &
+                 TILT = 1.570796326795
+
+T4D.BX.1: DRIFT, L=0.5 !RBEND,ANGLE= 0.226892802759E-2,L=0.5
+T4D.BX.2: DRIFT, L=0.5 !RBEND,ANGLE=-0.226892802759E-2,L=0.5
+
+T4D.SWEEP.1: RBEND, ANGLE=0, L=0.64, TILT=-1.570796326795
+T4D.SWEEP.2: RBEND, ANGLE=0, L=0.64
+
+
+!  Sextupoles and quadrupoles with 100 mm aperture
+
+T4D.QK.1: QUADRUPOLE, L=1.0, K1= -1.822536E-01
+T4D.SK.1: SEXTUPOLE,  L=0.3, K2= +2.30979461997958, TILT = 1.570796326795
+
+T4D.QK.6: QUADRUPOLE, L=1.0, K1= -1.870703E-01 
+
+!  Sextupoles between quadrupoles
+T4DM: LINE =(T4D.START.T10,                          & 
+             T4D.BV.1,D0500,T4D.BV.1,                &
+             D1100,D0200,D0300,D0100,D0190,          &
+             -QKSEC(T4D.BPMD,T4D.QK.1,T4D.CNX),      & 
+             D0475, T4D.SK.1, D0825,                 &
+             D0100,T4D.OTRD,D0100,                   &
+             D0775, T4D.SK.1, D0475,                 &
+             QKSEC(T4D.BPMD,T4D.QK.1,T4D.CNY),       & 
+             D0190,D0100,D0300,D0200,D1100,          &
+             T4D.BV.1,D0500,T4D.BV.1,                &
+             D06117, T4D.BPMD, D01883,T4D.QK.6,      &
+             D0400,                T4D.QK.6,         &
+             D0400,                T4D.QK.6,         &
+             D0400,                T4D.QK.6)
+
+comment
+!  Sextupole in the front of quadrupoles
+T4D.SK.1: SEXTUPOLE, L=0.3, K2=+5.62131541924882,    &
+                     TILT = 1.570796326795
+T4DM: LINE =(T4D.START.T10,                          & 
+             T4D.BV.1,D0500,T4D.BV.1,                &
+             D1100,D0200,T4D.SK.1,D0200,D0190,       &
+             -QHSEC(T4D.BPMA,T4D.QH.1,T4D.CHX),      & 
+             D1600,D0100,T4D.OTRA,D0100,D1550,       &
+             QHSEC(T4D.BPMA,T4D.QH.1,T4D.CHY),       & 
+             D0190,D0200,T4D.SK.1,D0200,D1100,       &
+             T4D.BV.1,D0500,T4D.BV.1,                &
+             D06117, T4D.BPMD, D01883, T4D.QK.6,     &
+             D0400,                T4D.QK.6,         &
+             D0400,                T4D.QK.6,         &
+             D0400,                T4D.QK.6)
+endcomment
+
+D04501: drift,l=0.4501
+D19041:drift,l=1.9041
+D0465: drift,l=0.465
+D00899: drift,l=0.0899
+D07321: drift,l=0.7321
+
+T4DD: Line = (D0092, D0150, T4D.BPMD, D0150,D0408,              &
+              T4D.SWEEP.1, D0500, T4D.SWEEP.2,                  &
+              D07321,D00899, T4D.BPMD, D0200, T4D.OTRD,&
+              D04501,T4D.TORC,  D01149, D0200,T4D.BHM, &
+              D3870, T4D.BPMW, D03218, T4D.SCRW,                 &
+              T4D.DUWINDOW,D19041,T4D.STARTCT,D2000,T4D.START.DU,T4D.END)
+
+T4D: LINE=(T4D.START, SA3TT4D, T4DM, T4DD, T4D.END)
+
+T10: LINE=(T10.START, D10000, D10000, D10000, T10.BSEC, D1000, T10.END)
+
+!---------------------------------------------------------------------------
+
+!TD2:   LINE=(TLTD2, T2, SA1, T4, SA3, T4D)
+
+!---------------------------------------------------------------------------
+
+MATCH_CL2TL: SUBROUTINE !----------------------------------------------------------
+use,(CL,CLTS)
+match,beta0=b0_cl.start
+vary,TL.QH.5[K1],step=0.01
+vary,TL.QH.6[K1],step=0.01
+vary,TL.QH.7[K1],step=0.01
+vary,TL.QH.8[K1],step=0.01
+vary,TL.QF.8[K1],step=0.01
+vary,TL.QF.9[K1],step=0.01
+vary,TL.QF.10[K1],step=0.01
+vary,TL.QF.11[K1],step=0.01
+constraint, #e, line=TLFODO_F
+simplex
+migrad
+lmdif
+endmatch
+
+
+use,(cl,clts,ibfb)
+twiss, beta0=b0_cl.start, save
+plot,table=twiss,haxis=s, vaxis=betx,bety, spline,colour=100, &
+     vmin=0,vmax=100
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+
+MATCH_SA1: SUBROUTINE !----------------------------------------------------------
+use,(tltd2,t2,sa1)
+twiss, beta0=b0_tl.start, save
+plot,table=twiss,haxis=s, vaxis=betx,bety, spline,colour=100, &
+     vmin=0,vmax=100
+
+use,(TLTD2,t2)
+match,beta0=b0_tl.start
+vary,T2.QF.3[K1],step=0.01
+vary,T2.QF.4[K1],step=0.01
+vary,T2.QF.5[K1],step=0.01
+vary,T2.QA.1[K1],step=0.01
+vary,T2.QA.2[K1],step=0.01
+constraint, #e, beta0=b0_sa1.start
+simplex
+migrad
+lmdif
+endmatch
+
+
+use,(tltd2,t2,sa1)
+twiss, beta0=b0_tl.start, save
+plot,table=twiss,haxis=s, vaxis=betx,bety, spline,colour=100, &
+     vmin=0,vmax=100
+ENDSUBROUTINE !-----------------------------------------------------------------
+

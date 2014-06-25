@@ -1,0 +1,646 @@
+!------------------------------------------------------------------------
+!  11 Feb 2013
+!------------------------------------------------------------------------
+
+!------------------------------------------------------------------------
+!  Beam Line TD1 (T1,SA2,T3,UN1,T5,UN2,T5D)
+!------------------------------------------------------------------------
+
+!------------------------------------------------------------------------
+!  Vertical kick:         upwards     (to positive y)
+!  Horizontal deflection: to the left (to positive x)
+!  ang_kick_TD1 =  0.523 mrad  (y = 20 mm at 1st septum entrance)
+!  ang_def_TD1  = -2.2859 degree  = -0.03989648137134 rad
+!------------------------------------------------------------------------
+
+!----------------------------------------------------------------------------
+! TMP info:
+! Feb 2013:    Setting of Sase1 quads is for <beta>=32m and 17.5 GeV
+!              => Setting of matching quads in T1D.
+! Feb 2013:    4 screens & WS stations: space of 600 mm is reserved,
+!              OTRB is position of screen
+! Feb 2013:    QFSEC is used for QF quads (except T2.QFH.2).
+!----------------------------------------------------------------------------
+
+
+!March 2013. Fit of TD1 deflection arc for:
+!            - the layout of TD1 kickers of 11.02.2013 (MAD Lattice Version 8.3)
+!            - the trajectory at SASE2 entrance (e-mail 04.03.2013 from Winni).
+!-------------------------------------------------------------------------------------
+! The fit of TD1 deflection is doing in two steps.
+! Step 1:
+!    1) Y  = 0.020 m at the entrance of first  (   tilted) septum.
+!    2) Py = 0       at the entrance of second (nontilted) septum.
+!    from 1)+2) => kick angle of kickers and tilt angle of 1st septum 
+! Step 2:
+!    3) H-angle of three nontilted septa is always kept const.
+!    4) phi_full = -0.039893 (=2.285700532115393 degree)   ! changed, was 2.2859 degree 
+!    5) Y   = 0             at the exit of T1M
+!    6) R56 = 0             at the exit of T1M
+!    7) Dx,Dpx,Dy,Dpy = 0   at the exit of T1M
+!    4)+5)+6)+7) is a fit of 3D geometry => angle of 4 H-dipoles (HH), 
+!                                           angle of 2 H-dipoles (HN, for R56),
+!                                           angle of 2 V-dipoles (HV, dogleg)
+!-------------------------------------------------------------------------------------
+
+
+T1.OTRA: MARKER
+T1.OTRB: MARKER
+T1.OTRBW: MARKER
+T1.TORA: MARKER
+T1.PYR:  MARKER
+
+T1.BSEC: RBEND, L=2, ANGLE=0
+
+T1.BPMA: MONITOR
+T1.BPME: MONITOR
+T1.VCBSHUT: DRIFT, L=0.3
+T1.VCSTEP: MARKER     ! Transition 40 to 10 mm
+
+T1.CFX: HKICKER, L = 0.100
+T1.CFY: VKICKER, L = 0.100
+T1.CEX: HKICKER, L = 0.100
+T1.CEY: VKICKER, L = 0.100
+T1.CNY: VKICKER, L=0.3
+
+!  TD1 deflection arc starting from the entrance of 2d septum
+
+cur_kick_matlab    = +0.10959251095e-3                   ! y=20 mm at 1st septum
+angle_kick_matlab  = 2*asin(0.5*cur_kick_matlab*LEN_KL)  ! 0.1019210352276144e-3 rad
+
+angle_septa_matlab = -0.005500006932315               ! kept always const
+tilt_septa_matlab  = +(12.216139454377 / 180.0) * pi  ! changed due to diff. of Py  
+
+cur_HH_matlab   = -0.00582795620785501
+cur_HN_matlab   = +0.00303654808331367
+cur_HV_matlab   = +0.00191331423981618
+
+!  KL vertical kickers: to TD1/TD20
+
+!LEN_KL = 1.0
+NUM_KL =  5
+ANG_KL_TD1 = angle_kick_matlab
+ANG_KL_TD1_tot = NUM_KL * ANG_KL_TD1   ! 0.523 mrad
+
+
+!  4 septums to TD1
+!  1-st septum is tilted to make py = 0
+!  all septums have maximal possible strength: B_max = 0.4036 T
+!  => angle = -0.0055000069 rad = -0.3151267 deg
+
+!LEN_BZ      = 1.0
+!CUR_BZ_TD1   =-0.0055                               !  B_max = 0.4036 T
+!ANG_BZ_TD1   = 2 * asin(0.5 * LEN_BZ * CUR_BZ_TD1)  ! = -0.0055000069 rad = -0.3151267 deg
+!ARC_BZ_TD1   = ANG_BZ_TD1 / CUR_BZ_TD1
+
+ANG_BZ_TD1   = angle_septa_matlab
+!ARC_BZ_TD1   = LEN_BZ/sin(ANG_BZ_TD1)*ANG_BZ_TD1         ! Winni
+ARC_BZ_TD1   = 0.5*LEN_BZ*ANG_BZ_TD1/sin(0.5*ANG_BZ_TD1)  ! Nina
+E12_BZ_TD1   = ANG_BZ_TD1 / 2
+TILT_BZ1_TD1 = tilt_septa_matlab
+
+T1.BZ.1: Sbend, L  = ARC_BZ_TD1, ANGLE = ANG_BZ_TD1,   &
+                E1 = E12_BZ_TD1, E2 = E12_BZ_TD1, &
+                TILT = TILT_BZ1_TD1
+
+T1.BZ.2: Sbend, L  = ARC_BZ_TD1, ANGLE = ANG_BZ_TD1,   &
+                E1 = E12_BZ_TD1, E2 = E12_BZ_TD1
+
+
+!  4 horizontal dipoles
+CUR_BD1_TD1 = cur_HH_matlab
+CUR_BD2_TD1 = cur_HN_matlab
+CUR_BD3_TD1 = cur_HV_matlab
+
+ANG_BD1_TD1 = 2 * asin(0.5 * LEN_BD * CUR_BD1_TD1)
+ARC_BD1_TD1 = ANG_BD1_TD1 / CUR_BD1_TD1
+E12_BD1_TD1 = ANG_BD1_TD1 / 2
+
+T1.BD.1: Sbend, L  = ARC_BD1_TD1, ANGLE = ANG_BD1_TD1,   &
+                E1 = E12_BD1_TD1, E2 = E12_BD1_TD1
+
+
+!  2 horizontal dipoles for R_56 = 0
+
+ANG_BD2_TD1 = 2 * asin(0.5 * LEN_BD * CUR_BD2_TD1)
+ARC_BD2_TD1 = ANG_BD2_TD1 / CUR_BD2_TD1
+E12_BD2_TD1 = ANG_BD2_TD1 / 2
+
+T1.BD.2: Sbend, L  = ARC_BD2_TD1, ANGLE = ANG_BD2_TD1,   &
+                E1 = E12_BD2_TD1, E2 = E12_BD2_TD1
+
+
+!  2 vertical dipoles
+
+ANG_BD3_TD1 = 2 * asin(0.5 * LEN_BD * CUR_BD3_TD1)
+ARC_BD3_TD1 = ANG_BD3_TD1 / CUR_BD3_TD1
+E12_BD3_TD1 = ANG_BD3_TD1 / 2
+
+T1.BD.3: Sbend, L  = ARC_BD3_TD1,  ANGLE = ANG_BD3_TD1,  &
+                E1 = E12_BD3_TD1,  E2 = E12_BD3_TD1,     &
+                TILT = PI/2
+T1.BD.4: Sbend, L  = ARC_BD3_TD1,  ANGLE = -ANG_BD3_TD1, &
+                E1 = -E12_BD3_TD1, E2 = -E12_BD3_TD1,    &
+                TILT = pi/2
+
+T1.L2:  Drift, L = 1.84067814816517 - 0.325
+T1.L3:  Drift, L = 4.64940475946167 - 0.270
+T1.L4:  Drift, L = 3.21001579387043 - 0.325
+T1.L5:  Drift, L = 4.93473350835321
+T1.L7:  Drift, L = 1.51118177548686 - 0.325
+T1.L8:  Drift, L = 7.48842436400046 - 0.270
+
+T1.QF.1: Quadrupole, L = 0.50, K1 = +0.335839792287861
+T1.QF.2: Quadrupole, L = 0.50, K1 = -0.345977453727884
+T1.QF.3: Quadrupole, L = 0.50, K1 = +0.163825626546874
+T1.QF.4: Quadrupole, L = 0.50, K1 = -0.359881262370443
+T1.QF.5: Quadrupole, L = 0.50, K1 = +0.300186313882921
+T1.QF.6: Quadrupole, L = 0.50, K1 = -0.206556420008381
+
+
+! Sextupoles and Octupoles
+
+T1.SA.1: Sextupole, L = 0.3, K2 = -6.30327045633483,  &
+         TILT= -(5.42066850088011 / 180.0) * pi;
+T1.SA.2: Sextupole, L = 0.3, K2 = -1.81150020259686,  &
+         TILT= -(18.7327102774767 / 180.0) * pi;
+T1.OA.1: Octupole,  L = 0.3, K3 = -103.673100544363,  &
+         TILT= -(9.35051312868253 / 180.0) * pi;
+T1.OA.2: Octupole,  L = 0.3, K3 = -128.141350359014,  &
+         TILT= -(15.9451262063528 / 180.0) * pi;
+
+T1M: Line = (T1.BZ.2,D0500,T1.BZ.2,D0500,T1.BZ.2,D4750,                &
+             T1.TORA,D0500,T1.OTRA,D1675,                              &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.1,D0170,T1.CFX, D1230,    &
+             T1.OA.1, T1.L2,                                           &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.2,D0170,T1.CFY, T1.L3,    &
+             T1.BD.2, D0865, T1.SA.1, T1.L4,                           &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.3,D0170,T1.CFX, D0230,    &
+             T1.OA.2, T1.L5, T1.BD.2, D0175,                           &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.4,D0170,T1.CFY, D3340,    &
+             T1.SA.2, T1.L7,                                           &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.5,D0170,T1.CFX, T1.L8,    &
+             T1.BD.1,D0500,T1.BD.1,D0500,T1.BD.1,D0500,T1.BD.1, D0175, &
+             D0100,T1.BPMA,D0100,D0125,T1.QF.6,D0170,T1.CFY, D0230,    &
+             T1.BD.3,                                                  &
+             D3520, D0100,T1.BPMA,D0100,D0170,T1.CFX,                  &
+             D3520, D0100,T1.BPMA,D0100,D0170,T1.CFY,                  &
+             D3520, T1.BD.4)
+
+
+!  Matching section from T1M to SASE2
+
+T1.QF.7:   Quadrupole, L=0.50, K1= +1.823974E-01
+T1.QF.8:   Quadrupole, L=0.50, K1= -1.766956E-01
+T1.QF.9:   Quadrupole, L=0.50, K1= +1.354062E-01
+T1.QF.10:  Quadrupole, L=0.50, K1= -1.287010E-01
+T1.QF.11:  Quadrupole, L=0.50, K1= +1.224194E-01
+T1.QF.12:  Quadrupole, L=0.50, K1= -1.321378E-01
+T1.QF.13:  Quadrupole, L=0.50, K1= +1.254170E-01
+
+T1.QA.1:  Quadrupole, L=0.1, K1= -6.087568E-01   ! = SA2.QA.1
+T1.QA.2:  Quadrupole, L=0.1, K1=  6.182368E-01   ! = SA2.QA.1
+
+
+D44882: DRIFT, L=4.4882
+D01168: DRIFT, L=0.1168
+D17018: DRIFT, L=1.7018
+D6865: DRIFT, L=6.865
+
+T1D: Line = (D0175,  &
+        QFSEC(T1.BPMA,T1.QF.7,T1.CFX), &
+           D2000,T1.BSEC,D6865,               &
+        QFSEC(T1.BPMA,T1.QF.8,T1.CFY), &
+           D0460,D6030,D0200,T1.OTRB,D0400, D6275, &   ! 1st screen
+        QFSEC(T1.BPMA,T1.QF.9,T1.CFX), &
+           D44882,T1.VCBSHUT,D17018,D0200,D0400, D6275,  &   
+        QFSEC(T1.BPMA,T1.QF.10,T1.CFY), &
+           D6490, D0200,T1.OTRBW,D0400, D6275,         &   ! 2d  screen
+        QFSEC(T1.BPMA,T1.QF.11,T1.CFX), &
+           D6490, D0200,T1.OTRBW,D0400, D6275,         &    ! 3rd  screen
+        QFSEC(T1.BPMA,T1.QF.12,T1.CFY), &
+           D5190, D0200,T1.OTRBW,D0400, D4975,         &   ! 4th  screen
+        QFSEC(T1.BPMA,T1.QF.13,T1.CFX),                      &
+           D0160,D9421375,T1.PYR,D0300,T1.TORA,D0200,D0100,T1.VCSTEP,D0100, &
+           D0100,T1.BPME,D0100,D0125,T1.QA.1,D0160,T1.CNY, D0150,T1.CEX,D4580,&
+           T1.CNY,D0150,T1.CEX,D0160,T1.QA.2,D0125,D0100,T1.BPME,D021225)      
+             
+T1:  Line = (T1M, T1D, T1.END)
+
+
+!---------------------------------------------------------------------------
+! T3 Beam transport and Arc in XS2
+! ang2:= (2.5073 / 2.0)  * (PI / 180.0)= 0.021880320167627
+!---------------------------------------------------------------------------
+
+T3.START: MARKER
+T3.END:   MARKER
+
+T3.START.T6:  MARKER
+T3.START.ARC: MARKER
+T3.END.ARC:   MARKER
+
+T6.START: MARKER
+T6.END:   MARKER
+T6.BSEC:  RBEND, L=2.0
+
+T3.CEX: HKICKER, L=0.1
+T3.CEY: VKICKER, L=0.1
+T3.CHX: HKICKER, L=0.2
+T3.CHY: VKICKER, L=0.2
+
+T3.BPMA: MONITOR
+T3.BPME: MONITOR
+T3.BPMF: MONITOR
+T3.TORA: MARKER
+T3.BAM : MARKER
+
+
+! Matching from SASE2 to T3LFODO
+
+T3.QE.3: QUADRUPOLE, L=0.2, K1= +2.721652E-01
+T3.QE.4: QUADRUPOLE, L=0.2, K1= -2.771268E-01
+T3.QE.5: QUADRUPOLE, L=0.2, K1= +2.658086E-01
+T3.QE.6: QUADRUPOLE, L=0.2, K1= -2.550011E-01
+
+T3MATCH1: LINE = (D0990, T3.TORA, D0210, T3.BPMF, D0230, T3.BAM, &
+                  D11613, QESEC(T3.BPMA,T3.QE.3,T3.CEX), &
+                  D13085, QESEC(T3.BPMA,T3.QE.4,T3.CEY), &
+                  D13085, QESEC(T3.BPMA,T3.QE.5,T3.CEX), &
+                  D13085, QESEC(T3.BPMA,T3.QE.6,T3.CEY), &
+                  D10285)
+
+
+! T3LFODO transport in T3
+
+T3.QE.1:   Quadrupole, L=0.2, K1= +0.22976
+T3.QE.2:   Quadrupole, L=0.2, K1= -0.22976
+
+T3LFODO: LINE=(D10000,D0450,QESEC(T3.BPMA,T3.QE.1,T3.CEX),D10000, &
+               D10000,D0935,QESEC(T3.BPMA,T3.QE.2,T3.CEY),D10000,D0485)
+
+
+! Matching to/from T3M
+
+T3.QH.3: QUADRUPOLE, L=1, K1=+0.20188
+T3.QH.4: QUADRUPOLE, L=1, K1=-0.20210
+
+T3MATCH2: LINE = (D7930,D0175,QHSEC(T3.BPMA,T3.QH.3,T3.CHX),D1230, &
+                  D0175,QHSEC(T3.BPMA,T3.QH.4,T3.CHY),D8020)
+
+
+! Deflection arc T3M
+
+!LEN_BE = 2.5
+ANG_T3  = 0.0218803
+ARCLEN_T3 = (0.5 * LEN_BE * ANG_T3) / sin(0.5 * ANG_T3)
+
+T3.BE.1: Sbend, L = ARCLEN_T3, ANGLE = ANG_T3,  &
+                E1 = ANG_T3/2, E2 = ANG_T3/2
+
+T3.QM.1: Quadrupole, L=1.0, K1= +3.03902E-01
+T3.QM.2: Quadrupole, L=1.0, K1= -3.03944E-01
+T3.QH.1: Quadrupole, L=1.0, K1= +3.03902E-01
+T3.QH.2: Quadrupole, L=1.0, K1= -3.03944E-01
+
+T3.SAOX.1: Sextupole, L=0.3, K2= +13.26
+T3.SAO.2: Sextupole, L=0.3, K2=  +4.71
+
+T3M1: LINE = (D1000,  T3.CHX, D0145,                                &
+              D0040,T3.CHY,D0040,D0050,D0100,T3.BPMA,D0100, &
+              D0050,D0075,T3.QH.1,D0200,D0200, T3.START.T6)
+
+! Variant 2a: (Q2,1.2m,S1,2.5m,Q3,1.85m,S2,1.85m,Q4)
+T3M2: LINE = (T3.START.ARC, T3.BE.1, D0100,                               &
+              D0500,D0025, QMSEC(D0000,T3.QM.2,D0200), D1440,            &
+              D1500,D0025, QMSEC(T3.BPMA,T3.QM.1,T3.CHX), D0640,          &
+              T3.SAOX.1, D2025,                                           &
+              QMSEC(T3.BPMA,T3.QM.2,T3.CHY), D1290,                       &
+              T3.SAO.2, D1195,                                            &
+              D0040,T3.CHX,D0040,D0050,D0100,T3.BPMA,D0100,               &
+              D0050,D0075,T3.QM.1,D0200,D0200,T3.BE.1,T3.END.ARC, D0100,  &
+              D0500,D0175, QHSEC(T3.BPMA,T3.QH.2,T3.CHY),D1590)
+
+T3M: LINE=(T3M1,T3M2)
+
+
+! Matching from T3LFODO to UN1: WITHOUT UN1 UNDULATOR
+
+T3MATCH3: Line = (D3000, T3.TORA, D0191, D0200)
+
+SA2TT3: LINE = (T3MATCH1, 1*T3LFODO, T3MATCH2)
+T3TUN1: LINE = (T3MATCH2, 2*T3LFODO, T3MATCH3)
+
+comment
+! WITH UN1 UNDULATOR (46.691m long)
+T3.QA.3: QUADRUPOLE, L=0.1, K1= SA3.QA.1[K1]
+T3.QA.4: QUADRUPOLE, L=0.1, K1= SA3.QA.2[K1]
+T3.CXA: HKICKER, L=0.055
+T3.CYA: VKICKER, L=0.055
+D0491: DRIFT, L = 0.491
+T3.QF.7:  QUADRUPOLE, L=0.5, K1=+1.716473E-01
+T3.QF.8:  QUADRUPOLE, L=0.5, K1=-1.853786E-01
+T3.QF.9:  QUADRUPOLE, L=0.5, K1=+1.400608E-01
+T3.QF.10: QUADRUPOLE, L=0.5, K1=-1.622211E-01
+T3MATCH3: LINE = (D8000,T3CY,T3.QF.7,D7000,T3CX,T3.QF.8,        &
+                  D8000,T3CY,T3.QF.9,D7000,T3CX,T3.QF.10,       &
+                  D0491,D5000,D0300,T3.TORA,D0180,T3.CXA,D0100, &
+                  T3.QA.3,T3.BPMA,D0150,T3.CYA,D0160,           &
+                  D5000,D0480,T3.CXA,D0100,                     &
+                  T3.QA.4,T3.BPMA,D0150,T3.CYA,D0160)
+SA2TT3: LINE = (T3MATCH1, T3LFODO, T3MATCH2)
+T3TUN1: LINE = (T3MATCH2, T3LFODO, T3MATCH3)
+endcomment
+
+T3: LINE = (T3.START, SA2TT3, T3M, T3TUN1, T3.END)
+T6: LINE = (T6.START, D10000, D10000, D10000, T6.BSEC, D1000, T6.END)
+
+!----------------------------------------------------------------------------
+! T5 Beam transport and Arc in XS4
+! ang4:= -(1.9423 / 2.0)  * (PI / 180.0)=-0.016949765030743
+!----------------------------------------------------------------------------
+
+T5.START: MARKER
+T5.END:   MARKER
+
+T5.START.T8:  MARKER
+T5.START.ARC: MARKER
+T5.END.ARC:   MARKER
+
+T8.START: MARKER
+T8.END:   MARKER
+T8.BSEC:  RBEND, L=2.0
+
+T5.CEX: HKICKER, L=0.1
+T5.CEY: VKICKER, L=0.1
+T5.CHX: HKICKER, L=0.2
+T5.CHY: VKICKER, L=0.2
+
+T5.BPMA: MONITOR
+T5.BPME: MONITOR
+T5.TORA: MARKER
+
+
+! Matching from UN1: WITHOUT UN1 Undulator
+
+T5.QE.3: QUADRUPOLE, L=0.2, K1= -2.575337E-01
+T5.QE.4: QUADRUPOLE, L=0.2, K1= +1.497788E-01
+T5.QE.5: QUADRUPOLE, L=0.2, K1= +1.576622E-01
+T5.QE.6: QUADRUPOLE, L=0.2, K1= -2.533569E-01
+
+D1965: Drift, L = 2.165 - 0.2
+
+T5MATCH1: LINE = (D1000,T5.TORA,D1965,                             &
+                  D9000,D0150,D0175,QESEC(T5.BPMA,T5.QE.3,T5.CEY), &
+                  D9000,D0010,D0175,QESEC(T5.BPMA,T5.QE.4,T5.CEX), &
+                  D9000,D0010,D0175,QESEC(T5.BPMA,T5.QE.5,T5.CEX), &
+                  D9000,D0010,D0175,QESEC(T5.BPMA,T5.QE.6,T5.CEY), D8860)
+
+
+! Matching to/from T5M
+
+T5.QH.3: QUADRUPOLE, L=1, K1=+0.20188
+T5.QH.4: QUADRUPOLE, L=1, K1=-0.20210
+
+T5MATCH2:LINE=(D7930,D0175,QHSEC(T5.BPMA,T5.QH.3,T5.CHX),D1230,&
+               D0175,QHSEC(T5.BPMA,T5.QH.4,T5.CHY),D8020)
+
+
+! Deflection arc T5M
+
+!LEN_BE = 2.5
+ANG_T5  =-0.0169497
+ARCLEN_T5 = (0.5 * LEN_BE * ANG_T5) / sin(0.5 * ANG_T5);
+
+T5.BE.1: Sbend, L = ARCLEN_T5, ANGLE = ANG_T5,   &
+                E1 = ANG_T5/2, E2 = ANG_T5/2
+
+T5.QM.1: Quadrupole, L=1.0, K1= +3.03904E-01
+T5.QM.2: Quadrupole, L=1.0, K1= -3.03946E-01
+T5.QH.1: Quadrupole, L=1.0, K1= +3.03904E-01
+T5.QH.2: Quadrupole, L=1.0, K1= -3.03946E-01
+
+T5.SAOX.1: Sextupole, L=0.3, K2= -17.12
+T5.SAO.2: Sextupole, L=0.3, K2=  -6.07
+
+T5M1: LINE = (D1000, T5.CHX, D0145,                                  &
+              D0040,T5.CHY,D0040,D0050,D0100,T5.BPMA,D0100,  &
+              D0050,D0075,T5.QH.1,D0200,D0200, T5.START.T8)
+
+! Variant 2a: (Q2,1.2m,S1,2.5m,Q3,1.85m,S2,1.85m,Q4)
+T5M2: LINE = (T5.START.ARC, T5.BE.1, D0100,                              &
+              D0500,D0025, QMSEC(D0000,T5.QM.2,D0200), D1440,           &
+              D1500,D0025, QMSEC(T5.BPMA,T5.QM.1,T5.CHX), D0640,         &
+              T5.SAOX.1, D2025,                                          &
+              QMSEC(T5.BPMA,T5.QM.2,T5.CHY), D1290,                      &
+              T5.SAO.2, D1195,                                           &
+              D0040,T5.CHX,D0040,D0050,D0100,T5.BPMA,D0100,              &
+              D0050,D0075,T5.QM.1,D0200,D0200,T5.BE.1,T5.END.ARC, D0100, &
+              D0500,D0175, QHSEC(T5.BPMA,T5.QH.2,T5.CHY),D1590)
+
+
+T5M: LINE=(T5M1,T5M2)
+
+
+! FODO transport T5LFODO
+
+T5.QE.1:   Quadrupole, L=0.2, K1= +0.22976
+T5.QE.2:   Quadrupole, L=0.2, K1= -0.22976
+
+T5LFODO: LINE=(D10000,D0450,QESEC(T5.BPMA,T5.QE.1,T5.CEX),D10000, &
+               D10000,D0935,QESEC(T5.BPMA,T5.QE.2,T5.CEY),D10000,D0485)
+
+
+! Matching from T5LFODO to UN2: WITHOUT UN2
+
+D05336: DRIFT, L=0.5336-0.00034+0.2
+
+T5MATCH3: LINE = (D10000,D0275,D0175,QESEC(T5.BPMA,T5.QE.1,T5.CEX),       &
+                  D10000,D10000,D0760,D0175,QESEC(T5.BPMA,T5.QE.2,T5.CEY),&
+                  D10000,D10000,D0760,D0175,QESEC(T5.BPMA,T5.QE.1,T5.CEX),&
+                  D10000,D0485,D1000,T5.TORA,D05336)
+
+comment
+! WITH UN1&UN2 UNDULATOR: T5MATCH1 & T5MATCH3
+T5.QA.3: QUADRUPOLE, L=0.1, K1= SA3.QA.1[K1]
+T5.QA.4: QUADRUPOLE, L=0.1, K1= SA3.QA.2[K1]
+T5.CXA: HKICKER, L=0.055
+T5.CYA: VKICKER, L=0.055
+T5.QE.3: QUADRUPOLE, L=0.2,  K1=+4.428428E-01
+T5.QE.4: QUADRUPOLE, L=0.2,  K1=-4.657340E-01
+T5.QE.5: QUADRUPOLE, L=0.2,  K1=+3.255343E-01
+T5.QE.6: QUADRUPOLE, L=0.2,  K1=-2.687614E-01
+T5MATCH1: LINE=(D3165,D9000,D0150,T5CY,T5.QE.3,D0150,D9000, &
+                D0150,T5CX,T5.QE.4,D0150,D9000,             &
+                D0150,T5CY,T5.QE.5,D0150,D9000,             &
+                D0150,T5CX,T5.QE.6,D0150,D9000)
+T5.QF.7:  QUADRUPOLE, L=0.5,  K1=+1.139098E-01
+T5.QF.8:  QUADRUPOLE, L=0.5,  K1=-1.466609E-01
+T5.QF.9:  QUADRUPOLE, L=0.5,  K1=+1.694146E-01
+T5.QF.10: QUADRUPOLE, L=0.5,  K1=-1.963240E-01
+D25836:  DRIFT, L = 2.5836
+T5MATCH3: LINE=(D10275,T5CY,T5.QF.7,D13725,T5CX,T5.QF.8,    &
+                D12000,T5CY,T5.QF.9,D12000,T5CX,T5.QF.10,   &
+                D25836,D5000, D0480, T5.CXA, D0100,         &
+                T5.QA.3, T5.BPME, D0150, T5.CYA, D0160,     &
+                D5000, D0480, T5.CXA, D0100,                &
+                T5.QA.4, T5.BPME, D0150, T5.CYA, D0160)
+endcomment
+
+UN1TT5: LINE = (T5MATCH1, T5MATCH2)
+T5TUN2: LINE = (T5MATCH2, T5LFODO, T5MATCH3)
+
+T5: LINE = (T5.START, UN1TT5, T5M, T5TUN2, T5.END)
+T8: LINE = (T8.START, D10000, D10000, D10000, T8.BSEC,D1000, T8.END)
+
+
+!----------------------------------------------------------------------------
+! Beam Dump T5D after UN2
+!----------------------------------------------------------------------------
+
+T5D.START: MARKER
+T5D.END:   MARKER
+T5D.START.T7: MARKER
+
+T7.START: MARKER
+T7.END:   MARKER
+T7.BSEC:  RBEND, L=2.0
+
+T5D.DUWINDOW: MARKER
+T5D.START.DU: MARKER
+T5D.STARTCT: MARKER
+T5D.DUMP:     MARKER
+
+T5D.BPMA: MONITOR
+T5D.BPMF: MONITOR
+T5D.BPMD: MONITOR
+T5D.BPMW: MONITOR
+T5D.TORA: MARKER
+T5D.TORC: MARKER
+T5D.OTRD: MARKER
+T5D.OTRA: MARKER
+T5D.SCRW: MARKER
+T5D.BHM:  MARKER
+
+T5D.CEX: HKICKER, L=0.1
+T5D.CEY: VKICKER, L=0.1
+T5D.CFX: HKICKER, L=0.1
+T5D.CFY: VKICKER, L=0.1
+T5D.CNX: HKICKER, L=0.3
+T5D.CNY: VKICKER, L=0.3
+
+
+!  Section between UN2 and T5DM
+
+T5D.QE.1:  Quadrupole, L=0.2, K1= +0.22976
+
+D14114: Drift, L = 1.4114
+D39886: Drift, L = 3.9886 + 5.6 - 0.2286
+D14823: DRIFT, L=0.4697+0.00427-0.2 + 0.2286
+
+! UN2 UNDULATOR is drift
+T5D.QF.1:  Quadrupole, L=0.5, K1= -1.864179E-01
+T5D.QF.2:  Quadrupole, L=0.5, K1= +7.598366E-02
+T5D.QF.3:  Quadrupole, L=0.5, K1= +1.646959E-01
+T5D.QF.4:  Quadrupole, L=0.5, K1= -1.488627E-01
+
+UN2TT5D: LINE = (D1000, T5D.TORA, D4600, D0200, D6200, D0080, &
+                 D14114, T5D.QE.1, D39886,                    &
+                        D0200, D5875, QFSEC(T5D.BPMA,T5D.QF.1,T5D.CFY), D0190,&
+                 D5400, D0400, D5075, QFSEC(T5D.BPMA,T5D.QF.2,T5D.CFX), D0190,&
+                 D5400, D0200, D6200, D0800, &
+                 D5600, D0200, D6200, D0800, &
+                        D0200, D6200, D0800, &
+                 D5600, D0200, D6200, D0800, &
+                 D5600, D0200, D6200, D0700, D1775, &
+                 QFSEC(T5D.BPMA,T5D.QF.3,T5D.CFX), D0190,&
+                 D5075,D0055,T5D.CFY,D0170,T5D.QF.4,D0150,D0130,T5D.BPMF,D0125,&
+                 D0095, T5D.TORA, D14823)
+
+!  Deflection arc to dump: 10 deg arc - 4 bends
+!  T5D.ANG = 5.0/180*pi/2 = 0.043633231
+
+ANG_T5D    = 0.043633231;  
+ARCLEN_T5D = (0.5 * LEN_BV * ANG_T5D) / sin(0.5 * ANG_T5D);
+
+T5D.BV.1: SBEND, L = ARCLEN_T5D, ANGLE = ANG_T5D, &
+                 E1 = ANG_T5D/2, E2 = ANG_T5D/2,  &
+                 TILT = 1.570796326795
+
+T5D.BX.1: DRIFT, L=0.5   !RBEND,ANGLE= 0.226892802759E-2,L=0.5
+T5D.BX.2: DRIFT, L=0.5   !RBEND,ANGLE=-0.226892802759E-2,L=0.5
+
+T5D.SWEEP.1: RBEND, ANGLE=0, L=0.64, TILT=-1.570796326795
+T5D.SWEEP.2: RBEND, ANGLE=0, L=0.64
+
+!  Quadrupoles and sextupoles with 100 mm aperture
+
+T5D.QK.1: QUADRUPOLE, L=1.0, K1= -1.822536E-01
+T5D.SK.1: SEXTUPOLE,  L=0.3, K2= +2.30979461997958, TILT = 1.570796326795
+
+T5D.QK.6: QUADRUPOLE, L=1.0, K1= -1.882012E-01
+
+T5DM: LINE =(T5D.START.T7,                         &
+             T5D.BV.1,D0500,T5D.BV.1,              &
+             D1100,D0200,D0300,D0100,D0190,     &
+             -QKSEC(T5D.BPMD,T5D.QK.1,T5D.CNX),    &
+             D0475,T5D.SK.1,D0825,                 &
+             D0100,T5D.OTRD,D0100,                 &
+             D0775, T5D.SK.1, D0475,               &
+             QKSEC(T5D.BPMD,T5D.QK.1,T5D.CNY),     &
+             D0190,D0100,D0300,D0200,D1100,     &
+             T5D.BV.1,D0500,T5D.BV.1,              &
+             D06117, T5D.BPMD, D01883, T5D.QK.6,  &
+             D0400,                T5D.QK.6,       & 
+             D0400,                T5D.QK.6,       &
+             D0400,                T5D.QK.6)
+
+comment
+!  Sextupoles in the front of quadrupoles
+T5D.SK.1: SEXTUPOLE, L=0.3, K2=+5.62131541924882, TILT = 1.570796326795
+T5DM: LINE =(T5D.START.T7,                         &
+             T5D.BV.1,D0500,T5D.BV.1,              &
+             D1100,D0200,T5D.SK.1,D0200,D0190,     &
+             -QHSEC(T5D.BPMA,T5D.QH.1,T5D.CHX),    &
+             D1600,D0100,T5D.OTRA,D0100,D1550,     &
+             QHSEC(T5D.BPMA,T5D.QH.1,T5D.CHY),     &
+             D0190,D0200,T5D.SK.1,D0200,D1100,     &
+             T5D.BV.1,D0500,T5D.BV.1,              &
+             D06117, T5D.BPMD, D01883, T5D.QK.6,   &
+             D0400,                T5D.QK.6,       & 
+             D0400,                T5D.QK.6,       &
+             D0400,                T5D.QK.6)
+endcomment
+
+T5DD: Line = (D0092, D0150, T5D.BPMD, D0150,D0408,              &
+              T5D.SWEEP.1, D0500, T5D.SWEEP.2,                  &
+              D07321,D00899, T5D.BPMD, D0200, T5D.OTRD,&
+              D04501,T5D.TORC, D01149, D0200,T5D.BHM, &
+              D3870, T5D.BPMW, D03218, T5D.SCRW,                 &
+              T5D.DUWINDOW,D19041,T5D.STARTCT,D2000,T5D.START.DU,T5D.END)
+
+!T5DD: Line = (D0092, D0150, T5D.BPMD, D0150,D0408,              &
+!              T5D.SWEEP.1, D0500, T5D.SWEEP.2,                  &
+!              D07321, T5D.TORC, D05899,                  &
+!              T5D.BPMD, D0200, T5D.OTRD, D0465, T5D.BHM, &
+!              D3670, T5D.BPMW, D03218, T5D.SCRW,                 &
+!              T5D.DUWINDOW,D19041,T5D.STARTCT,D2000,T5D.START.DU,T5D.END)
+
+!T5DD: Line = (D0092, D0150, T5D.BPMD, D0150,D0408,              &
+!              T5D.SWEEP.1, D0500, T5D.SWEEP.2,                  &
+!              D0545, D01075, T5D.TORC, D01075,                  &
+!              D0482, T5D.BPMD, D0200, T5D.OTRD, D0465, T5D.BHM, &
+!              D5626, T5D.BPMW, D03218, T5D.SCRW,                 &
+!              T5D.DUWINDOW,D1950,T5D.STARTCT,D2000,T5D.START.DU,T5D.END)
+
+
+T5D: LINE=(T5D.START, UN2TT5D, T5DM, T5DD, T5D.END)
+
+T7: LINE=(T7.START, D10000, D10000, D10000, T7.BSEC, D1000, T7.END)
+
+!------------------------------------------------------------------------
+
+!TD1:   Line=(TLTD1, T1, SA2, T3, UN1, T5, UN2, T5D)
+
+!------------------------------------------------------------------------
+

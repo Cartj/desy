@@ -1,0 +1,446 @@
+D0061: DRIFT, L=0.061
+D0159: DRIFT, L=0.159
+D0196: DRIFT, L=0.196
+D0274: DRIFT, L=0.274
+D0325: DRIFT, L=0.325
+D0404: DRIFT, L=0.404
+D2050: DRIFT, L=2.050
+D2490: DRIFT, L=2.490
+
+! LOLA CAVITY FOR DIAGNOSTICS (MAD definition---------------------------=
+B2.TDSB: LCAVITY, L=1.68, PHI0=0,               &
+                VOLT=0,    &
+                FREQ=2800000000.0*1e-6
+!----------------------------------------------------------------------------
+!  Bunch Compressor B2 
+!----------------------------------------------------------------------------
+
+B2.START : MARKER
+B2.END   : MARKER
+B2D.START : MARKER
+B2D.END   : MARKER
+
+B2.START.UP : MARKER
+B2.END.UP   : MARKER
+B2.START.MID : MARKER
+B2.END.MID   : MARKER
+B2.START.DIA : MARKER
+B2.END.DIA   : MARKER
+
+! Definition of Vacuum Components
+B2.VCDST: VCDST
+
+!Definition of Girders ------------------------------------------
+B2.START.G1:  MARKER
+B2.END.G1:    MARKER
+B2.START.G2:  MARKER
+B2.END.G2:    MARKER
+B2.START.G3:  MARKER
+B2.END.G3:    MARKER
+B2.START.G4:  MARKER
+B2.END.G4:    MARKER
+B2.START.G5:  MARKER
+B2.END.G5:    MARKER
+B2.START.G6:  MARKER
+B2.END.G6:    MARKER
+B2.START.G7:  MARKER
+B2.END.G7:    MARKER
+B2.START.G8:  MARKER
+B2.END.G8:    MARKER
+B2.START.G9:  MARKER
+B2.END.G9:    MARKER
+B2.START.G10: MARKER
+B2.END.G10:   MARKER
+B2.START.G11: MARKER
+B2.END.G11:   MARKER
+B2.START.G12: MARKER
+B2.END.G12:   MARKER
+
+
+! Define B2 Chicane--------------------------------------------------------------
+!
+! ANGLE =  0.036651914291881 radian = 2.1 degree
+! lI_B2   = 0.5 m
+! ang_B2  = (lI_B2 / 180.0) * PI = (li_B2 / 180.0) * acos(-1) = 0.036651914291881
+! len_B2  = (ll_B2 * ang_B2) / sin(ang_B2) = 0.500111964449209
+! DELTAL  = 8.5 m
+! CD8900II = DELTAL / cos(ang_B2) = 8.505712489424859 m for 2.1 deg
+
+l_b2  = 0.5
+ang_b2 =   0.041638798924697
+arc_b2=l_b2/sin(ang_b2)*ang_b2
+CD8900D = 8.5 / cos(ang_b2)
+CD8900E = 1.0535 / cos(ang_b2)
+CD8900F = (8.5-1.0535) / cos(ang_b2)
+
+B2.BB.1.1 : SBEND,L=arc_b2,ANGLE= ang_b2, &
+   e1= 0,e2= ang_b2,TILT = 1.570796326795  
+B2.BB.1.2 : SBEND,L=arc_b2,ANGLE=-ang_b2, &
+   e1= -ang_b2,e2=0,TILT = 1.570796326795  
+B2.BB.1.3 : SBEND,L=arc_b2,ANGLE=-ang_b2, &
+   e1= 0,e2=-ang_b2,TILT = 1.570796326795  
+B2.BB.1.4 : SBEND,L=arc_b2,ANGLE= ang_b2, &
+   e1=ang_b2,e2=0,TILT = 1.570796326795
+D89B2A : DRIFT, L=CD8900D
+D89B2B : DRIFT, L=CD8900E
+D89B2C : DRIFT, L=CD8900F
+
+! Steerers and Kickers --------------------------------------------------------------
+B2.CCX: HKICKER, L=0.1
+B2.CCY: VKICKER, L=0.1
+B2D.CCX: HKICKER, L=0.1
+B2D.CCY: VKICKER, L=0.1
+B2D.CFX: HKICKER, L=0.1
+B2D.CFY: VKICKER, L=0.1
+
+B2.CBB.2: VKICKER, L=0.0
+B2.CBB.3: VKICKER, L=0.0
+B2.CBB.4: VKICKER, L=0.0
+
+B2.KDY: VKICKER, L=0.8
+B2.KDX: HKICKER, L=0.8
+
+B2.BPMA: MONITOR
+B2.BPMS: MONITOR
+B2.BPMF: MONITOR
+
+B2.TORA: MARKER
+B2.OTRA: MARKER
+B2.OTRB: MARKER
+B2.OTRS: MARKER
+B2.DCM: MARKER
+B2.BAM: MARKER
+
+B2D.BPMA: MONITOR
+B2D.BPMD: MONITOR
+B2D.TORC: MARKER
+B2D.OTRD: MARKER
+B2D.OTRA: MARKER
+
+B2.SRM:   MARKER
+B2.PYR: MARKER
+B2.EOD:   MARKER
+B2.CRD:   MARKER
+
+B2.COLO:   ECOL, XSIZE=0.02, YSIZE = 0.02
+B2.COLU:   ECOL, XSIZE=0.02, YSIZE = 0.02
+!B2.COL: MARKER
+
+! Quadrupoles at B2 upstream
+B2.QD.1: Quadrupole, L=0.2, K1= 3.615783E-01 
+B2.QD.2: Quadrupole, L=0.2, K1=  4.731834E-01
+B2.QD.3: Quadrupole, L=0.2, K1=-9.297837E-01  
+B2.QD.4: Quadrupole, L=0.2, K1= 2.984905E-01  
+
+! Quadrupoles at B2 downstream
+B2.QDH.6: Quadrupole, L=0.1, K1= 1.352286E-01   
+B2.QDH.7: Quadrupole, L=0.1, K1=-9.257812E-01  
+B2.QDH.8: Quadrupole, L=0.1, K1= 8.743907E-01  
+B2.QDH.9: Quadrupole, L=0.1, K1= -1.686615E+00
+B2.QDH.10: Quadrupole, L=0.1, K1= 1.212304E+00 
+B2.QDH.11: Quadrupole, L=0.1, K1=0.51504 
+B2.QDH.12: Quadrupole, L=0.1, K1=-0.62471 
+B2.QDH.13: Quadrupole, L=0.1, K1=0.47996 
+B2.QDH.14: Quadrupole, L=0.1, K1=-0.79119 
+B2.QDH.15: Quadrupole, L=0.1, K1=-0.54232 
+
+! Define Diagnostic FODO cell quadrupoles
+B2.QDH.16: Quadrupole, L=0.1, K1=1.0566 
+B2.QDH.17: Quadrupole, L=0.1, K1=-1.4912 
+B2.QDH.18: Quadrupole, L=0.1, K1=B2.QDH.16[K1] 
+B2.QDH.19: Quadrupole, L=0.1, K1=B2.QDH.17[K1]  
+
+! Define Diagnostic Section downstream quadrupoles
+B2.QDH.21: Quadrupole, L=0.1, K1=-0.67413 
+B2.QDH.22: Quadrupole, L=0.1, K1=1.5365 
+B2.QDH.23: Quadrupole, L=0.1, K1=-0.29216 
+B2.QDH.24: Quadrupole, L=0.1, K1=-1.503077E-01 
+B2.QDH.25: Quadrupole, L=0.1, K1=-3.930122E-01 
+B2D.QF.31: Quadrupole, L=0.5, K1=-2.326025E+00
+B2D.QE.32: Quadrupole, L=0.2, K1= 1.562758E+00
+B2D.QF.33: Quadrupole, L=0.5, K1=B2D.QF.31[K1]  
+B2D.QF.34: Quadrupole, L=0.5, K1= 2.196237E+00
+B2D.QF.35: Quadrupole, L=0.5, K1= 3.334503E+00 
+
+B2U : LINE = (B2.START.UP, D0100, B2.VCDST, D0100, &
+   B2.START.G1,&
+   D0126,B2.TORA,D0274,B2.BPMA,D0150, &
+   B2.QD.1,D0150,B2.CCY,D0300,B2.DCM,D0350,B2.QD.2,D0150, B2.CCX, &
+   D1050,&
+   B2.END.G1,&
+   D0100,&
+   B2.START.G2,&
+   D0600,B2.BPMA,D0200,B2.QD.3, &
+   D0150,B2.CCY,D0550, &
+   B2.QD.4,D0150,B2.CCX,D0325,B2.OTRA,D0225, &
+   B2.BPMF,D0200,B2.BAM,D0150,B2.END.G2,D0300, B2.END.UP)
+
+B2M   : LINE =(B2.START.MID, D0100, B2.BB.1.1, D89B2A, B2.BB.1.2, B2.CBB.2,&
+               D03975,B2.COLO,D0085,B2.COLU,D03175, D0100, B2.BPMS, D0100, &
+               D0200, B2.OTRS, D0200, D0100, &
+               B2.BB.1.3, B2.CBB.3,D89B2B, B2.SRM, D89B2C,&
+               B2.BB.1.4,B2.CBB.4,&
+               D0100, B2.END.MID)
+
+!------------------------------------------------------------------------
+! Diagnostic section B2 
+!------------------------------------------------------------------------
+DORS_MOD: DRIFT, L=3.4
+DORS_R56: DRIFT, L=2.0
+DORS_RAD: DRIFT, L=3.4
+
+D1000A: DRIFT, L=0.4
+D1000B: DRIFT, L=0.8
+D0100A: DRIFT, L=0.05
+D0200A: DRIFT, L=0.5
+D0300a: DRIFT, L = 7.0
+D0160a: DRIFT, L = 3.5
+D0080a: DRIFT, L = 1.55
+D0025a: DRIFT, L = 0.725
+D0060A: DRIFT, L= 1.6
+
+B2TDS: LINE=(B2.TDSB,D0159,B2.TDSB)
+
+ 
+B2TTDS: LINE=&
+(D0170, B2.START.G3, D0196, B2.TORA, D0404, B2.BPMF,&
+ D0200, QHALF(B2.QDH.6),D0150,B2.CCX, D0150, B2.CCY, D0150, B2.BAM, D0150, &
+ D0600, QHALF(B2.QDH.7), D0600, D0150,B2.CCX, D0150, B2.CCY, D0150, B2.BPMA, &
+ D0150, QHALF(B2.QDH.8), D0100, B2.END.G3, &
+ D4000, &
+ B2.START.G4, D2490, B2.OTRA,D0150, &
+ QHALF(B2.QDH.9), D0100,B2.CCX, D0200, B2.CCY, &
+ D0135,B2.EOD,D0600, B2.BPMA,D0115,B2.QDH.10, B2.QDH.10, &
+ D0110, B2.END.G4, &
+ D0200, B2.START.G5, &
+ B2TDS,D0061)
+
+ 
+B2FODO1: LINE=(QHALF(B2.QDH.11),D0100,B2.CCX,D0140,B2.BPMA,D0380,&
+               B2.END.G5,&
+               D0200,&
+               B2.START.G6,&
+               D0150, B2.PYR, D1350,QHALF(B2.QDH.12),&
+               D0100,B2.CCY,D2200,&
+               QHALF(B2.QDH.13), D0100,B2.END.G6, D0200, B2.START.G7,D1450)
+
+B2FODO2: LINE= &
+           (B2.OTRA,D1600,B2.BPMA,D0150,QHALF(B2.QDh.14),&
+            D0100,B2.CCX,D0900, B2.END.G7, D0200,&
+            B2.START.G8,D2050,B2.BPMA,D0150,QHALF(B2.QDH.15),&
+            D0050,B2.KDY,B2.KDY,D0100)
+
+B2FODO3: LINE= &
+           (B2.OTRA,D0350,B2.END.G8,D0200,B2.START.G9,D0350,B2.CCX, &
+            D0600,B2.BPMA,D0150,QHALF(B2.QDH.16),&
+            D0100,B2.CCY,D1550,&
+            B2.OTRB,D1350,B2.END.G9,D0200,B2.START.G10,&
+            D0050,B2.BPMA,D0150,QHALF(B2.QDH.17),D0050,B2.KDY,B2.KDY,D0025, &
+            B2.OTRB,D0325, B2.CCX,D1250,B2.BPMA,D0150,QHALF(B2.QDH.18),&
+            D0100,B2.CCX,D0100, B2.END.G10, D0200, B2.START.G11,D1250, &
+            B2.OTRB,D0200,D0300, B2.KDX, D0300, &
+            B2.BPMA,D0150,QHALF(B2.QDH.19),&
+            D0100,B2.CCY,D1100,B2.END.G11,D0200,&
+            B2.START.G12,D0250,B2.OTRB)
+
+B2FODO4: LINE=(D0700, D0150, B2.CRD, D0150,D0100,B2.BPMA,D0100, &
+             QHALF(B2.QDH.21),D0800,B2.CCX,D0300,&
+             QHALF(B2.QDH.22),D0100,B2.CCY,D0350, &
+             B2.CCX,D0200,B2.BPMA,D0100,QHALF(B2.QDH.23),D0100,&
+             B2.END.G12,D0400)
+
+
+! Define Diagnostic SPECTROMETER------------------------------------------------------ 
+B2.BG.0 : DRIFT, L=1.6  ! Placeholder in straight line for BG.1
+
+ANG_B2D = 0.20943951023932;  ! 12 deg bend
+ARCLEN_BG= 1.6;
+B2D.BG.1.1 : SBEND, L=ARCLEN_BG, ANGLE= ANG_B2D, &
+             E1= 0, E2= 0, TILT= 1.570796326795 
+B2D.BG.1.2 : SBEND, L=ARCLEN_BG, ANGLE= -ANG_B2D, &
+             E1= 0, E2= 0, TILT= 1.570796326795 
+B2D.DUMP: MARKER
+B2.STARTB2D: MARKER
+
+D011083: DRIFT, L=0.11083
+D028917: DRIFT, L=0.28917
+
+B2SPEC: LINE=(B2D.START, B2D.BG.1.1,D0200,D0380&
+              B2D.CFY,D0190,B2D.QF.31,D0200, B2D.BPMA,&
+              D0900,B2D.CFX,D0300,B2D.QE.32,D0200,B2D.BPMA,&
+              D0200,B2D.CFY,D1000,B2D.QF.33,D0150,&
+              D0200,B2D.OTRA,D0320, D0200,B2D.BG.1.2,&
+              D0400, B2D.CFY,D0150,B2D.BPMA,D0100,D0050,B2D.QF.34,D0050,&
+              D0400, B2D.CFX,D0150,B2D.BPMA,D0100,D0050,B2D.QF.35,D0050,&
+              D0400,D0115,D011083&
+              B2D.OTRD, D0225, B2D.TORC, D0125,B2D.BPMD, &
+              D028917,B2D.DUMP,B2D.END)
+
+! Define Matching to Spectrometer and Linac3
+
+B2TL3: LINE=(B2.BG.0,D0400,D1350,D0125,QHALF(B2.QDH.24),D0100, B2.CCY,D0200,&
+             B2.DCM,D0930,B2.TORA,D0275,B2.BPMA,D0100,QHALF(B2.QDH.25),&
+             D0200,B2.VCDST,D0100)
+
+! Define whole B2 sections
+
+B2DIA    : LINE=(B2.START.DIA, B2TTDS, B2FODO1, B2FODO2, &
+                B2FODO3, B2FODO4, B2.END.DIA, B2.STARTB2D)
+
+B2D: LINE=(B2DIA,B2TL3)
+
+B2: line = (B2.START,B2U,B2M, B2DIA, B2TL3, B2.END)
+
+B2DUMP  : line= (B2U,B2M, B2DIA, B2SPEC)
+
+MATCH_B1MAIN3: SUBROUTINE !==================================
+use,(b1,l2,b2)
+beam,energy=0.7
+match, beta0=B0_b1.start
+vary,b1.qd.20[k1],step=0.1
+vary,b1.qd.21[k1],step=0.1
+vary,b1.qd.22[k1],step=0.1
+vary,L2.Q.A3.1[k1],step=0.1
+vary,L2.Q.A3.2[k1],step=0.1
+!vary,L2.Q.A3.3[k1],step=0.1
+!vary,L2.Q.A3.4[k1],step=0.1
+!vary,L2.Q.A4.1[k1],step=0.1
+!vary,L2.Q.A4.2[k1],step=0.1
+!vary,L2.Q.A4.3[k1],step=0.1
+!vary,L2.Q.A4.4[k1],step=0.1
+vary,L2.Q.A5.1[k1],step=0.1
+vary,L2.Q.A5.2[k1],step=0.1
+vary,L2.Q.A5.3[k1],step=0.1
+vary,L2.Q.A5.4[k1],step=0.1
+vary,b2.qd.1[k1],step=0.1
+vary,b2.qd.2[k1],step=0.1
+vary,b2.qd.3[k1],step=0.1
+vary,b2.qd.4[k1],step=0.1
+constraint,b2.end.mid,beta0=b0_b2.mend
+constraint,b1.qd.21/l2.q.a4.4,betx<100,bety<100
+lmdif,calls=10000
+endmatch
+
+beam,energy=0.7
+twiss,chrom,beta0=b0_b1.start, save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline, colour=100
+ENDSUBROUTINE !=========================================
+
+
+MATCH_B2: SUBROUTINE !===================================================
+use,l2
+beam,energy=0.7
+savebeta,label=BO_b2.start,#e
+twiss,beta0=b0_l2.start
+
+use,b2
+beam,energy =2.4
+match, beta0=B0_b2.start
+vary,b2.qd.1[k1],step=0.1
+vary,b2.qd.2[k1],step=0.1
+vary,b2.qd.3[k1],step=0.1
+vary,b2.qd.4[k1],step=0.1
+constraint,b2.end.mid,beta0=b0_b2.mend
+simplex
+migrad
+endmatch
+
+
+match, beta0=B0_b2.start
+vary,b2.qdh.6[k1],step=0.1
+vary,b2.qdh.7[k1],step=0.1
+vary,b2.qdh.8[k1],step=0.1
+vary,b2.qdh.9[k1],step=0.1
+vary,b2.qdh.10[k1],step=0.1
+constraint,b2.start.g5,beta0=b0_b2.g5start
+simplex
+endmatch
+
+use,(b2,l3)
+beam,energy=2.4
+match, beta0=B0_b2.start
+vary,b2.qdh.24[k1],step=0.1
+vary,b2.qdh.25[k1],step=0.1
+vary,l3.q.a6.1[k1],step=0.1
+vary,l3.q.a6.2[k1],step=0.1
+vary,l3.q.a6.3[k1],step=0.1
+vary,l3.q.a6.4[k1],step=0.1
+constraint,l3.match,beta0=b0_l3.match
+simplex,calls=5000
+lmdif
+endmatch
+
+savebeta,label=b0_l3.start,L3.START.L3
+twiss, beta0=B0_b2.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+ENDSUBROUTINE !=======================================
+
+MATCH_B2TL3: SUBROUTINE !===================================================
+use,(b2,l3)
+beam,energy=2.4
+match, beta0=B0_b2.start
+vary,b2.qdh.24[k1],step=0.1
+vary,b2.qdh.25[k1],step=0.1
+vary,l3.q.a6.1[k1],step=0.1
+vary,l3.q.a6.2[k1],step=0.1
+vary,l3.q.a6.3[k1],step=0.1
+vary,l3.q.a6.4[k1],step=0.1
+constraint,l3.match,beta0=b0_l3.match
+simplex,calls=5000
+lmdif
+endmatch
+
+savebeta,label=b0_l3.start,L3.START.L3
+twiss, beta0=B0_b2.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+ENDSUBROUTINE !=======================================
+
+
+MATCH_B2D: SUBROUTINE !===================================================
+
+use,b2dump  
+beam,energy=2.0 
+match,beta0=b0_b2.start          
+vary, B2D.QF.31[K1],step = 0.1
+constraint, #e, DY=0, Dpy=0
+simplex, calls=5000
+endmatch            
+
+match,beta0=b0_b2.start  
+vary, B2D.QE.32[K1],step = 0.1
+vary, B2D.QF.34[K1],step = 0.1
+vary, B2D.QF.35[K1],step = 0.1
+constraint, #e, betx=20000, bety=20000
+simplex
+migrad
+lmdif
+endmatch
+
+ENDSUBROUTINE !=======================================
+
+
+LIST_B2: SUBROUTINE !========================================
+
+use,b2
+beam,energy=2.0
+twiss,couple,beta0=b0_b2.start, &
+tape="mag_xfelb2.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=0,z0=0,y0=0, &
+phi0=phicor, tape="lay_xfelb2.dat"
+makesequence,label=b2.seq,refer=centre
+
+use,b2dump 
+twiss,couple,beta0=b0_b2.start, &
+tape="mag_xfelb2d.dat",save
+plot,table=twiss,haxis=s,vaxis=betx,bety, &
+     spline,colour=100,vmin=0,vmax=100
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=0,z0=1,y0=0, &
+phi0=phicor, tape="lay_xfelb2d.dat"
+makesequence,label=b2d.seq,refer=centre
+
+ENDSUBROUTINE !=======================================

@@ -1,0 +1,80 @@
+!------------------------------------------------------------------------
+! XFEL Inital BETAS 
+!
+!
+B0_I1.GUN:      BETA0, energy= 0.005, &
+                       betx= 29.171, alfx= 10.955, &
+                       bety= 29.171, alfy= 10.955
+B0_I1.S2E:      BETA0,  betx = 13.85, alfx=  -1.692, & 
+                        bety = 13.85, alfy=  -1.692    
+B0_I1.S2ER:      BETA0,  betx = 13.85, alfx=  1.692, & 
+                        bety = 13.85, alfy=  1.692                         
+B0_I1.LH:      BETA0,  betx = 7.6023, alfx=  2.1034, & 
+                        bety = 15.4207, alfy=  -3.8164
+B0_I1.DOG.FODO: BETA0,  betx = 4.1397, alfx = 0.0,    &
+                        bety = 0.7670, alfy = 0.0
+B0_I1.DOG:      BETA0,  betx = 3.9207, alfx =-2.1498, &
+                        bety = 0.8228, alfy =+0.5681
+B0_L1.START:    BETA0,  energy=0.13, &
+                        betx=   4.346, alfx= -0.4384, &
+                        bety=  13.678, alfy= 0.3385
+B0_B1.START:      BETA0,  energy=0.7, &
+                        betx= 62.541, alfx=-1.431, &
+                        bety= 56.263, alfy=1.700
+B0_B1.MEND  :   BETA0,  energy = 0.7, &
+                        betx =  8.664, alfx=-0.365, &
+                        bety= 8.716, alfy=-0.164
+B0_L2.START:    BETA0,  energy=0.7, &
+                        betx= 8.1469, alfx= -1.0924, &
+                        bety=  27.2828, alfy=  1.5842
+B0_B2.START:      BETA0,  energy=2.4, &
+                        betx=  79.3435, alfx= -3.9027 , &
+                        bety=  87.4996, alfy=   4.1412
+B0_B2.MEND  :   BETA0,  energy=2.4, &
+                        betx = 9.999, alfx=-0.583, &                   
+                        bety=  5.002, alfy= -0.175 
+B0_B2.G5START:   BETA0, energy=2.4, &
+                        betx = 62.905, alfx = 1.042, &
+                        bety = 10.458, alfy =  1.769
+B0_L3.START:    BETA0,  energy=2.4, &
+                        betx=   15.8633, alfx=  0.4840, &
+                        bety=  16.8758, alfy= -0.4812   
+B0_L3.MATCH:    BETA0,  energy=3.2, &
+                        betx=  2.14055E+01  , alfx= -6.799E-01, &
+                        bety=  4.70148E+01, alfy= 1.5024E+00                     
+B0_CL.START:      BETA0,  energy=17.5, &
+                        betx=  50.4817, alfx= -2.3886, &
+                        bety=  93.5537, alfy=  4.8573
+B0_CLARC.START: BETA0,  energy=17.5, &
+                        betx=  0.200, alfx= 0.00, &
+                        bety=  3,      alfy= 0.00
+B0_TL.START:    BETA0,  energy=17.5, &
+                        betx=   0.5184, alfx=  -1.2826, &
+                        bety=  2.9612, alfy= 0.1548
+B0_TLD.START:   BETA0,  energy=17.5, &
+                        betx=  32.146, alfx=  1.134, &
+                        bety=  6.276, alfy= -0.525
+B0_SA2.START:   BETA0,  betx=  36.962, alfx=  1.186, &
+                        bety=  26.836, alfy= -0.864
+B0_T3.START:    BETA0,  betx=  37.614, alfx=  1.202, &
+                        bety=  26.632, alfy= -0.855
+B0_UN1.START:   BETA0,  betx=  21.822, alfx=  1.500, &
+                        bety=  10.104, alfy= -0.714
+B0_T5.START:    BETA0,  betx=  21.863, alfx=  1.506, &
+                        bety=  10.155, alfy= -0.719
+B0_UN2.START:   BETA0,  betx=  21.871, alfx=  1.506 &
+                        bety=  10.167, alfy= -0.718
+B0_T5D.START:   BETA0,  betx=  21.785, alfx=  1.501, &
+                        bety=  10.166, alfy= -0.712
+B0_SA1.START:   BETA0,  betx=  36.962, alfx=  1.186, &
+                        bety=  26.836, alfy= -0.864
+B0_T4.START:    BETA0,  betx=  26.836, alfx= -0.864, &
+                        bety=  36.962, alfy=  1.186
+B0_SA3.START:   BETA0,  betx=  21.199, alfx=  1.472 &
+                        bety=  10.317, alfy= -0.733
+B0_T4D.START:   BETA0,  betx=  21.199, alfx=  1.472, &
+                        bety=  10.317, alfy= -0.733
+
+
+RETURN
+

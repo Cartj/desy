@@ -1,0 +1,139 @@
+!------------------------------------------------------------------------
+!  Beam line TD20: August 2010
+!  Vertical kick:         down         (towards negative y)
+!  Horizontal deflection: to the right (towards negative x)
+!  ang_TD20 = +6.5850 degree = +0.114929931243827 rad
+!  October 2009: Solution with R_56 = 0
+!------------------------------------------------------------------------
+
+! Kicker to T20: the same as for TD1
+
+!LEN_KL   = 1.0
+!NUM_KL =  5
+ANG_KL_TD20 = -0.095e-03       ! kick down
+ANG_KL_TD20_tot = NUM_KL * ANG_KL_TD20   ! 0.475 mrad
+
+!TL.FK.T1: Vkicker, L = 1.0, kick = ANG_KL_TD20
+!Kick_T1:  Line = (D0125, TL.FK.T20, D0125)          ! L = 1.25 m
+
+
+!  TD20 septa
+!  5 septums are used: 2 tilted and 3 untilted
+!  4 septums have maximal possible strength:
+!  L = 1 m, cur = 0.0055, B_max = 0.4036
+!  angle = 0.0055000069 rad = 0.3151267 deg
+!  1-st tilted septum has cur = 0.15 * 0.0055
+
+CUR_BZ1_TD20  = 0.15 * 0.0055
+ANG_BZ1_TD20  = 2 * asin(0.5 * LEN_BZ * CUR_BZ1_TD20)
+ARC_BZ1_TD20  = ANG_BZ1_TD20 / CUR_BZ1_TD20
+E12_BZ1_TD20  = ANG_BZ1_TD20 / 2
+TILT_BZ1_TD20 = (26.22 / 180.0) * PI
+
+T20.BZ.1: Sbend, L = ARC_BZ1_TD20,  ANGLE = ANG_BZ1_TD20,  &
+                 E1 = E12_BZ1_TD20, E2 = E12_BZ1_TD20,     &
+                 TILT = TILT_BZ1_TD20
+
+CUR_BZ2_TD20  = 0.0055
+ANG_BZ2_TD20  = 2 * asin(0.5 * LEN_BZ * CUR_BZ2_TD20)
+ARC_BZ2_TD20  = ANG_BZ2_TD20 / CUR_BZ2_TD20
+TILT_BZ2_TD20 = (16.13953575915 / 180.0) * PI
+
+T20.BZ.2: Sbend, L = ARC_BZ2_TD20,  ANGLE = ANG_BZ2_TD20,  &
+                 E1 = E12_BZ2_TD20, E2 = E12_BZ2_TD20,     &
+                 TILT = TILT_BZ2_Td20
+
+T20.BZ.3: Sbend, L = ARC_BZ2_TD20, ANGLE = ANG_BZ2_TD20,   &
+                 E1 = E12_BZ2_TD20, E2 = E12_BZ2_TD20
+
+
+
+!  Horizontal and vertical dipoles
+
+!LEN_BV = 2.5
+
+CUR_BV1_TD20 =+0.0130267889083361
+ANG_BV1_TD20 = 2 * asin(0.5 * LEN_BV * CUR_BV1_TD20)
+ARC_BV1_TD20 = ANG_BV1_TD20 / CUR_BV1_TD20
+E12_BV1_TD20 = ANG_BV1_TD20 / 2
+
+T20.BV.1: Sbend, L = ARC_BV1_TD20,  ANGLE = ANG_BV1_TD20,   &
+                 E1 = E12_BV1_TD20, E2 = E12_BV1_TD20
+
+CUR_BV2_TD20 =+0.0120167232674249
+ANG_BV2_TD20 = 2 * asin(0.5 * LEN_BV * CUR_BV2_TD20)
+ARC_BV2_TD20 = ANG_BV2_TD20 / CUR_BV2_TD20
+E12_BV2_TD20 = ANG_BV2_TD20 / 2
+
+T20.BV.2: Sbend, L = ARC_BV2_TD20,  ANGLE = ANG_BV2_TD20,   &
+                 E1 = E12_BV2_TD20, E2 = E12_BV2_TD20
+
+CUR_BV3_TD20 =+0.011721431719197
+ANG_BV3_TD20 = 2 * asin(0.5 * LEN_BV * CUR_BV3_TD20)
+ARC_BV3_TD20 = ANG_BV3_TD20 / CUR_BV3_TD20
+E12_BV3_TD20 = ANG_BV3_TD20 /2
+
+T20.BV.3: Sbend, L = ARC_BV3_TD20,  ANGLE = ANG_BV3_TD20,   &
+                 E1 = E12_BV3_TD20, E2 = E12_BV3_TD20
+
+CUR_BD_TD20 =-0.00437893767525018
+ANG_BD_TD20 = 2 * asin(0.5 * LEN_BD * CUR_BD_TD20)
+ARC_BD_TD20 = ANG_BD_TD20 / CUR_BD_TD20
+E12_BD_TD20 = ANG_BD_TD20 / 2
+
+T20.BD.1: Sbend, L  = ARC_BD_TD20, ANGLE = ANG_BD_TD20,     &
+                 E1 = E12_BD_TD20, E2 = E12_BD_TD20,        &
+                 TILT = PI/2
+T20.BD.2: Sbend, L  =  ARC_BD_TD20, ANGLE = -ANG_BD_TD20,   &
+                 E1 = -E12_BD_Td20, E2 = -E12_BD_TD20,      &
+                 TILT = PI/2
+
+! Quadrupoles
+
+T20.QH.1:  Quadrupole, L = 1.0, K1 = +0.305571579643836
+T20.QH.2:  Quadrupole, L = 1.0, K1 = -0.305212163667517
+T20.QH.3:  Quadrupole, L = 1.0, K1 = +0.392245476226327
+T20.QH.4:  Quadrupole, L = 1.0, K1 = -0.167623946248572
+T20.QH.5:  Quadrupole, L = 1.0, K1 = +0.332472709391503
+T20.QH.6:  Quadrupole, L = 1.0, K1 = -0.27712711683188
+T20.QH.7:  Quadrupole, L = 1.0, K1 = +0.243651944401077
+T20.QH.8:  Quadrupole, L = 1.00, K1 = -0.13457155237807
+T20.QH.9:  Quadrupole, L = 1.00, K1 = +0.173018263155445
+T20.QH.10: Quadrupole, L = 1.00, K1 = -0.0496502821987135
+
+T20M: Line = (T20.BZ.3, D0500, T20.BZ.3, D0500, T20.BZ.3, &
+              D8000,    T20.QH.1, D2693, T20.QH.2,        &
+              D3221,    T20.QH.3, D2460,                  &
+              T20.BV.1, D1075,    T20.QH.4,               &
+              D1354,    T20.BV.2, D1848,  T20.QH.5,       &
+              D4020,    T20.QH.6, D33034, T20.QH.7,       &
+              D4495,    T20.BV.3,                         &
+              D0502,    T20.QH.8,                         &
+              D3163,    T20.QH.9,                         &
+              D1084,    T20.QH.10,                        &
+              D0500,    T20.BD.1, D4100, T20.BD.2)
+
+
+!  25.09.2009: TMP matching from T20M to SASE1-like undulator
+!              DOFO lattice
+
+D11300:  Drift, L = 11.300
+D935256: Drift, L =  9.35256
+
+T20.QF.1:  Quadrupole, L=0.50, K1= -1.862057E-01
+T20.QF.2:  Quadrupole, L=0.50, K1= +1.724001E-01
+T20.QF.3:  Quadrupole, L=0.50, K1= -1.388885E-01
+T20.QF.4:  Quadrupole, L=0.50, K1= +1.298659E-01
+T20.QA.1:  Quadrupole, L=0.10, K1= -6.165026E-01
+T20.QA.2:  Quadrupole, L=0.10, K1= +6.206319E-01
+
+T20D: Line = (D1500,   T20.QF.1,    &
+              D11500,  T20.QF.2,    &
+              D11300,  T20.QF.3,    &
+              D935256, T20.QF.4,    &
+              D6100,   T20.QA.1,    & 
+              D6000,   T20.QA.2, D0480)
+
+T20: Line = (T20.START, T20M, T20D, T20.END)
+
+!TD20:  Line=(TL1, TL2, TL3, TL4, TL5, T20)

@@ -1,0 +1,715 @@
+!-------------------------------------------------------------------------
+! XFEL Linear Optics 
+!
+! Version 6.1
+!
+! XFEL Linear Optics 
+! 
+! - no space charge
+! - no cavity wakes
+! - From gun to to dump
+! 
+!
+! SEE END OF FILE FOR SECTION DEFINITIONS
+!
+! 28.03.2005 : Created by W. Decking
+! 31.03.2005 : Undulator beam lines added (WD)
+! 07.04.2005 : Switchyard geometry added  (WD)
+! 24.06.2005 : Injector added             (WD)
+! 24.06.2005 : Linear optics gun to dump  (WD)
+! 27.06.2005 : Doublet focussing in modules abolished  (WD)
+! 19.09.2005 : Single corrector in modules (WD)
+! 07.11.2005 : Added 2nd 3rd harmonic module
+!              Linac starts 5 m behind XTL start
+!              100 modules in main linac
+!              Dump geometry with 8 m free space after last quadrupole
+! 30.11.2005 : Correct machine geometry and starting points of undulators (10 m afte hall)
+! 06.12.2005 : Cavity focussing included (Rosenzweig-Serrafini) and rematch               
+! 10.02.2006 : 	Bug fix in cavity focussing, new b0_inj
+!		XS1TD2 included
+! 13.03.2006 : Simultaneous use for MAD and ELEGANT	
+! 06.07.2006 : Rearrange Switchyard, include compensation kickers, rearrange DUMP0 
+! 22.08.2006 : New Naming Convention, INJ2 deleted
+! 07.09.2006 : New collimation section
+! 08.12.2006 : New T4D, T5D dump sections (gradient dipoles omitted)
+!              New TLD dump section (14deg bend) 
+! 10.12.2006 : UN1 position adjusted
+! 13.03.2007 : Naming of pos./neg. magnets powered in series changed
+! 13.04.2007 : Diagnostic Sections after BC1 and BC2 updated according to Christophers input (WD + CG)
+! 13.04.2007 : BC Chicanes flipped to vertical (WD)
+! 15.06.2007 : Length adjustmnet of B1 section (58 m) and B2 section (85 m) (WD+CG)
+! 17.07.2007 : Implementation of BPMs and Steerers (WD)
+! 20.08.2007 : Implementation of new Collimation Section 
+!              (Isochronous, Bending magnets 2.5 m length, 2.3978 m vert. offset) (WD)
+! 11.09.2007 : Bug Fixing 
+! 02.11.2007 : Magnet types changed in downstream L3 line (WD)
+!              Name change for I1, B1 and B2 diagnostic dumps to I1D B1D B2D
+! 22.11.2007:  Lattice and geometry changed in T3,T4,T5 and T4D, T5D
+!              nonlinear dispersion in T3,T4,T5 and T4D,T5D matched
+! 29.11.2007:  Exchange QE, QH Quadrupole to match with MEA naming
+!              Added CXG, CYG correctors
+! 01.02.2008:  Simplified TLD section, removed collisions
+! 10.04.2008:  Removed UN1 and UN2 section to compare with start-up scenario
+! 06.11.2008:  Length adjustement for shortened cryo components
+! 01.12.2008:  New B1 section inserted
+! 20.01.2009:  Common BEND model for similar magnet types
+! 13.08.2009:  Change of undulator intersection
+!              Remove 5 undulators out of SA2 beamline
+! 06.09.2009:  New injector section
+!               - Start point moved upstream
+!               - 3rd harmonic included
+!               - BC0 included
+!               New BC1 and BC2 section according to G. Weichert drawing
+!               - correct geometry of B1D and B2D, optics not matched
+!               Removed 3rd harmonic section after L1
+!               New Beam Distirbution to TD1 and TD20 (Lambertson Septum)
+!               - moved dogleg upstream by about 20 m
+! 24.09.2009: New injector version (YK)
+! 10.11.2009: Fixed calculation of T5,T7,T8 lines
+! 06.04.2010: - New description of TD1 Switchyard
+!             - Changed Corrector types to match adjacent quadrupole types
+!             - Extended legnth of BC0 chicane center straight to 1.5 m
+!           
+! To Do     :  
+!
+!
+!------------------------------------------------------------------------
+
+! Drift defintions-------------------------------------------------------
+D0000 : DRIFT, L= 0.000
+D00001 : DRIFT, L= 0.0001
+D000013 : DRIFT, L= 0.00013
+D0001 : DRIFT, L= 0.001
+D00022 : DRIFT, L= 0.0022
+D00065: DRIFT, L= 0.0065
+D0010 : DRIFT, L= 0.010
+D00125: DRIFT, L= 0.0125
+D00135: DRIFT, L= 0.0135
+D0015 : DRIFT, L= 0.015
+D0020 : DRIFT, L= 0.020
+D0022 : DRIFT, L= 0.022
+D0025 : DRIFT, L= 0.025
+D00267: DRIFT, L = 0.0267
+D0030 : DRIFT, L= 0.030
+D0033 : DRIFT, L= 0.033
+D0040 : DRIFT, L= 0.040
+D0045 : DRIFT, L= 0.045
+D00475 : DRIFT, L= 0.0475
+D0049 : DRIFT, L= 0.049
+D00494 : DRIFT, L= 0.0494
+D0050 : DRIFT, L= 0.050
+D0055 : DRIFT, L= 0.055
+D0060 : DRIFT, L= 0.060 
+D0065 : DRIFT, L= 0.065 
+D0070 : DRIFT, L= 0.070 
+D0072 : DRIFT, L= 0.072 
+D0075 : DRIFT, L= 0.075 
+D0077 : DRIFT, L= 0.077 
+D0080 : DRIFT, L= 0.080
+D0084 : DRIFT, L= 0.084
+D0090 : DRIFT, L= 0.090
+D0092 : DRIFT, L= 0.092 
+D0093 : DRIFT, L= 0.093
+D0095 : DRIFT, L= 0.095
+D0100 : DRIFT, L= 0.100 
+D0105 : DRIFT, L= 0.105 
+D01075: DRIFT, L= 0.1075
+D0108 : DRIFT, L= 0.108
+D0110 : DRIFT, L= 0.110 
+D01149 : DRIFT, L= 0.1149
+D0115 : DRIFT, L= 0.115
+D0120 : DRIFT, L= 0.120 
+D0125 : DRIFT, L= 0.125
+D012575 : DRIFT, L= 0.12575
+D01275 : DRIFT, L= 0.1275
+D0128 : DRIFT, L= 0.128
+D012955 : DRIFT, L= 0.12955
+D0130 : DRIFT, L= 0.130
+D0135 : DRIFT, L= 0.135
+D0140 : DRIFT, L= 0.140
+D0145 : DRIFT, L= 0.145
+D0150 : DRIFT, L= 0.150
+D01455:  DRIFT, L= 0.1455
+D01475:  DRIFT, L= 0.1475
+D0155 : DRIFT, L= 0.155
+D01566 : DRIFT, L= 0.1566
+D015575:  DRIFT, L= 0.15575
+D0160 : DRIFT, L= 0.160 
+D0165 : DRIFT, L= 0.165 
+D0170 : DRIFT, L= 0.170 
+D0175 : DRIFT, L= 0.175
+D0180:  Drift, L= 0.180 
+D0186 : DRIFT, L= 0.186
+D01883: DRIFT, L= 0.1883
+D0190 : DRIFT, L= 0.190
+D0191 : DRIFT, L=0.191
+D0195 : DRIFT, L= 0.195
+D0200 : DRIFT, L= 0.200
+D0205 : DRIFT, L= 0.205
+D0210:  Drift, L= 0.210
+D021225: DRIFT, L=0.21225
+D0215 : DRIFT, L= 0.215 
+D0220:  DRIFT, L= 0.220 
+D0225 : DRIFT, L= 0.225 
+D0230:  DRIFT, L= 0.230 
+D0236 : DRIFT, L= 0.236
+D0240 : DRIFT, L= 0.240
+D0250 : DRIFT, L= 0.250
+D0262 : DRIFT, L= 0.262
+D0270 : DRIFT, L= 0.270
+D0272 : DRIFT, L= 0.272
+D0275 : DRIFT, L= 0.275
+D02767 : DRIFT, L= 0.2767
+D0280 : DRIFT, L= 0.280
+D0286 : DRIFT, L= 0.286
+D0300:  Drift, L= 0.300
+D0315 : DRIFT, L= 0.315
+D0320 : DRIFT, L= 0.320
+D0340 : DRIFT, L= 0.340
+D03434 : DRIFT, L= 0.3434
+D0345 : DRIFT, L= 0.345
+D0350 : DRIFT, L= 0.350
+D0355 : DRIFT, L= 0.355
+D0360 : DRIFT, L= 0.360
+D0370 : DRIFT, L= 0.370
+D0375 : DRIFT, L= 0.375
+D0380 : DRIFT, L= 0.380
+D0400 : DRIFT, L= 0.400
+D0410 : DRIFT, L= 0.410
+D0420 : DRIFT, L= 0.420
+D0425 : DRIFT, L= 0.425
+D0430 : DRIFT, L= 0.430
+D0434 : DRIFT, L= 0.434
+D0445 : DRIFT, L= 0.445
+D0450 : DRIFT, L= 0.450
+D0460 : DRIFT, L= 0.460
+D0475 : DRIFT, L= 0.475
+D0480 : DRIFT, L= 0.480
+D0485 : DRIFT, L= 0.485
+D0490:  Drift, L = 0.490
+D0500 : DRIFT, L= 0.500
+D0502:  Drift, L= 0.502
+D0505:  Drift, L= 0.505
+D0510:  Drift, L= 0.510
+D0520:  DRIFT, L= 0.520
+D0522 : DRIFT, L= 0.522
+D0550 : DRIFT, L= 0.550
+D05767 : DRIFT, L= 0.5767
+D05996 : DRIFT, L= 0.5996
+D0600:  DRIFT, L= 0.600
+D0610:  Drift, L= 0.610
+D06117: Drift, L=0.6117 
+D0625:  DRIFT, L= 0.625
+D0640:  DRIFT, L= 0.640
+D0645:  DRIFT, L= 0.645
+D0650:  DRIFT, L= 0.650
+D0665:  Drift, L= 0.665
+D0700:  DRIFT, L= 0.700
+D0750:  DRIFT, L= 0.750
+D0760:  DRIFT, L= 0.760
+D0775:  DRIFT, L= 0.775
+D0790: Drift, L = 0.790
+D0800:  DRIFT, L= 0.800
+D0825:  DRIFT, L= 0.825
+D0835 : DRIFT, L= 0.835
+D0865:  Drift, L= 0.865
+D0875:  Drift, L= 0.875
+D08696: DRIFT, L= 0.8696
+D0900:  DRIFT, L= 0.900
+D0930:  DRIFT, L= 0.930
+D0935:  DRIFT, L= 0.935
+D0950:  DRIFT, L= 0.950
+D0975:  DRIFT, L= 0.975
+D0985:  DRIFT, L= 0.985
+D0990:  DRIFT, L= 0.990
+D1000:  DRIFT, L= 1.000
+D1010:  DRIFT, L= 1.010
+D1015:  DRIFT, L= 1.015
+D1050:  DRIFT, L= 1.050
+D1060:  DRIFT, L= 1.060
+D1065:  DRIFT, L= 1.065
+D1055:  DRIFT, L= 1.055
+D1075:  Drift, L= 1.075
+D1084:  Drift, L= 1.084
+D1100:  DRIFT, L= 1.100
+D1105 : DRIFT, L= 1.105
+D1108 : DRIFT, L= 1.108
+D1110:  DRIFT, L= 1.110
+D1130:  DRIFT, L= 1.130
+D1135 : DRIFT, L= 1.135
+D1145:  Drift, L= 1.145
+D1150 : DRIFT, L= 1.150
+D1152 : DRIFT, L= 1.152
+D1195: Drift, L = 1.195
+D1200 : DRIFT, L= 1.200
+D1215 : DRIFT, L= 1.215
+D1230 : DRIFT, L= 1.230
+D1345 : DRIFT, L= 1.345
+D1250 : DRIFT, L= 1.250
+D1290 : DRIFT, L= 1.290
+D1300 : DRIFT, L= 1.300
+D1350 : DRIFT, L= 1.350
+D1354:  Drift, L= 1.354
+D1395 : DRIFT, L= 1.395
+D1400 : DRIFT, L= 1.400
+D1420:  drift, L = 1.42
+D1440: Drift, L = 1.440
+D1450:  drift, L = 1.45
+D1480:  drift, L = 1.48
+D1495:  drift, L=1.495
+D1500 : DRIFT, L= 1.500
+D1540 : DRIFT, L= 1.540
+D1550 : DRIFT, L= 1.550
+D1570:  Drift, L= 1.570
+D1590 : DRIFT, L= 1.590
+D1600 : DRIFT, L= 1.600
+D1636 : DRIFT, L= 1.636
+D1640 : DRIFT, L= 1.640
+D1650 : DRIFT, L= 1.650
+D1665 : DRIFT, L= 1.665
+D1675 : DRIFT, L= 1.675
+D1690:  drift, L= 1.690
+D1695:  drift, L= 1.695
+D1700 : DRIFT, L= 1.700
+D1705 : DRIFT, L= 1.705
+D1713 : DRIFT, L= 1.713
+D1750 : DRIFT, L= 1.750
+D1775 : DRIFT, L= 1.775
+D1800:  drift, L = 1.80
+D1805:  drift, L = 1.805
+D1840:  drift, L = 1.84
+D1848:  Drift, L= 1.848
+D1905 : DRIFT, L= 1.905
+D1925:  DRIFT, L= 1.925
+D1950:  DRIFT, L= 1.950
+D1990 : DRIFT, L= 1.990
+D2000 : DRIFT, L= 2.000
+D2005:  Drift, L= 2.005
+D2025:  DRIFT, L= 2.025
+D2030:  DRIFT, L= 2.030
+D2035:  DRIFT, L= 2.035
+D2060:  Drift, L= 2.060
+D2070:  DRIFT, L= 2.070
+D2100:  drift, L= 2.100
+D2140:  DRIFT, L= 2.140
+D2150:  Drift, L= 2.150
+D2160:  Drift, L= 2.160
+D2165:  DRIFT, L= 2.165
+D2175: Drift, L = 2.175
+D2200:  drift, L= 2.200 
+D2205:  drift, L= 2.205 
+D2235 : DRIFT, L= 2.235
+D2250 : DRIFT, L= 2.250
+D2285 : DRIFT, L= 2.285
+D2300 : DRIFT, L= 2.300
+D2301 : DRIFT, L= 2.301
+D2340 : DRIFT, L= 2.340
+D2350 : DRIFT, L= 2.350
+D2380 : DRIFT, L= 2.380
+D2400 : DRIFT, L= 2.400
+D2425:  DRIFT, L= 2.425
+D2430:  DRIFT, L= 2.430
+D2450 : DRIFT, L= 2.450
+D2460:  Drift, L= 2.460
+D2480:  DRIFT, L= 2.480
+D2500 : DRIFT, L= 2.500
+D2550 : DRIFT, L= 2.550
+D2580 : DRIFT, L= 2.580
+D2680:  Drift, L= 2.680
+D2693:  Drift, L= 2.693
+D2700 : DRIFT, L= 2.700
+D2750 : DRIFT, L= 2.750
+D2771 : DRIFT, L= 2.771
+D2775 : DRIFT, L= 2.775
+D2805:  DRIFT, L= 2.805
+D2900 : DRIFT, L= 2.900
+D2905:  DRIFT, L= 2.905
+D2950:  Drift, L= 2.950
+D2995 : DRIFT, L= 2.995
+D3000 : DRIFT, L= 3.000
+D3080 : DRIFT, L= 3.080
+D3120 : DRIFT, L= 3.120
+D3155:  Drift, L= 3.155
+D3160:  Drift, L= 3.160
+D3163:  Drift, L= 3.163
+D3165:  Drift, L= 3.165
+D3200 : DRIFT, L= 3.200
+D3205 : DRIFT, L= 3.205
+D3215:  Drift, L = 3.215
+D3221:  Drift, L= 3.221
+D3250 : DRIFT, L= 3.250
+D3255:  Drift, L= 3.255
+D3300 : DRIFT, L= 3.300
+D33034: Drift, L= 3.3034
+D3340:  Drift, L= 3.340
+D3380 : DRIFT, L= 3.380
+D3405 : DRIFT, L= 3.405
+D3450 : DRIFT, L= 3.450
+D3500 : DRIFT, L= 3.500
+D3555 : DRIFT, L= 3.555
+D3520:  Drift, L= 3.520
+D3600:  Drift, L= 3.600
+D3650 : DRIFT, L= 3.650
+D3676 : DRIFT, L= 3.676
+D3385 : DRIFT, L= 3.385-0.287
+D3700 : DRIFT, L= 3.700
+D3715:  Drift, L = 3.715
+D3730:  DRIFT, L= 3.730
+D3750 : DRIFT, L= 3.750
+D3755:  Drift, L= 3.755
+D3860 : DRIFT, L= 3.860
+D3870 : DRIFT, L= 3.870
+D3900 : DRIFT, L= 3.900
+D3905:  DRIFT, L= 3.905
+D3825:  DRIFT, L= 3.825
+D3950 : DRIFT, L= 3.950
+D4000 : DRIFT, L= 4.000
+D4020 : DRIFT, L= 4.020
+D4050:  Drift, L= 4.050
+D4055:  Drift, L= 4.055
+D4100:  Drift, L= 4.100
+D4165:  Drift, L= 4.165
+D4190:  Drift, L= 4.190
+D4250 : DRIFT, L= 4.250
+D4260:  Drift, L= 4.260
+D4265:  Drift, L= 4.265
+D4350 : DRIFT, L= 4.350
+D4370:  Drift, L= 4.370
+D4400 : DRIFT, L= 4.400
+D4430 : DRIFT, L= 4.430
+D4450 : DRIFT, L= 4.450
+D4500 : DRIFT, L= 4.500
+D4580 : DRIFT, L= 4.580
+D4585 : DRIFT, L= 4.585
+D4600 : DRIFT, L= 4.600
+D4650:  Drift, L= 4.650
+D4655:  Drift, L= 4.655
+D4495:  Drift, L= 4.495
+D4700 : DRIFT, L= 4.700
+D4705 : DRIFT, L= 4.705
+D4750 : DRIFT, L= 4.750
+D4765:  Drift, L= 4.765
+D4785:  Drift, L= 4.785
+D4800 : DRIFT, L= 4.800
+D4870 : DRIFT, L= 4.870
+D4925 : DRIFT, L= 4.925
+D4975:  Drift, L =  4.975
+D4980 : DRIFT, L= 4.980
+D5000 : DRIFT, L= 5.000
+D5005 : DRIFT, L= 5.005
+D5025 : DRIFT, L= 5.025
+D5075 : DRIFT, L= 5.075
+D5100 : DRIFT, L= 5.100
+D5140:  Drift, L= 5.140
+D5160 : DRIFT, L= 5.160
+D5165:  Drift, L= 5.165
+D5190:  Drift, L =  5.190
+D5200 : DRIFT, L= 5.200
+D5205 : DRIFT, L= 5.205
+D5240:  Drift, L= 5.240
+D5250:  DRIFT, L= 5.250
+D5255:  Drift, L= 5.255
+D5275 : DRIFT, L= 5.275
+D5300 : DRIFT, L= 5.300
+D5400 : DRIFT, L= 5.400
+D5405:  Drift, L= 5.405
+D5415:  Drift, L= 5.415
+D5450 : DRIFT, L= 5.450
+D5500 : DRIFT, L= 5.500
+D5560:  Drift, L= 5.560
+D5585 : DRIFT, L= 5.585
+D5600 : DRIFT, L= 5.600
+D5635 : DRIFT, L= 5.635
+D5650 : DRIFT, L= 5.650
+D5655:  Drift, L= 5.655
+D5675:  Drift, L= 5.675
+D5700 : DRIFT, L= 5.700
+D5750 : DRIFT, L= 5.750
+D5800 : DRIFT, L= 5.800
+D5850:  Drift, L= 5.850
+D5860:  Drift, L= 5.860
+D5875 : DRIFT, L= 5.875
+D5900 : DRIFT, L= 5.900
+D5920 : DRIFT, L= 5.920
+D5950 : DRIFT, L= 5.950
+D6000 : DRIFT, L= 6.000
+D6030:  Drift, L =  6.030
+D6100 : drift, L= 6.100
+D6120: Drift, L = 6.120
+D6200 : drift, L= 6.200
+D6207 : drift, L= 6.207
+D6250 : drift, L= 6.250
+D6275:  Drift, L =  6.275
+D6480:  Drift, L= 6.480
+D6490:  Drift, L =  6.490
+D6500:  Drift, L= 6.500
+D65025: DRIFT, L= 6.5025
+D6525:  Drift, L = 6.525
+D6620 : DRIFT, L= 6.620
+D6635 : DRIFT, L= 6.635
+D6680:  DRIFT, L= 6.680
+D6690:  DRIFT, L= 6.690
+D6870 : DRIFT, L= 6.870
+D6705:  Drift, L= 6.705
+D6740:  Drift, L = 6.740
+D6750:  Drift, L= 6.750
+D6905:  Drift, L= 6.905
+D6925:  DRIFT, L= 6.925
+D6980:  DRIFT, L= 6.980
+D7000:  DRIFT, L= 7.000
+D7200:  DRIFT, L= 7.200
+D7250:  DRIFT, L= 7.250
+D7267:  DRIFT, L= 7.267
+D7425:  Drift, L= 7.425
+D7435:  Drift, L= 7.435
+D7480:  Drift, L= 7.480
+D7485:  Drift, L= 7.485
+D7500:  DRIFT, L= 7.500
+D7685:  Drift, L= 7.685
+D7705:  Drift, L= 7.705
+D7750:  Drift, L= 7.750
+D7905:  Drift, L= 7.905
+D7925:  Drift, L= 7.925
+D7930:  DRIFT, L= 7.930
+D73905: Drift, L= 7.3905
+D71905: Drift, L= 7.1905
+D8000:  DRIFT, L= 8.000
+D8020:  DRIFT, L= 8.020
+D8200:  Drift, L= 8.200
+D8250:  Drift, L= 8.250
+D8430:  DRIFT, L= 8.430
+D8500:  Drift, L= 8.500
+D8667:  DRIFT, L= 8.667
+D8905:  Drift, L= 8.905
+D8405:  DRIFT, L= 8.405
+D84393: Drift, L= 8.4393
+D8750:  Drift, L= 8.750
+D8705:  Drift, L= 8.705
+D87993: Drift, L = 8.7993
+D8805:  Drift, L= 8.805
+D8820 : DRIFT, L= 8.820
+D88393: Drift, L= 8.8393
+D8860 : DRIFT, L= 8.860
+D8870 : DRIFT, L= 8.870
+D9000 : DRIFT, L= 9.000
+D9250:  Drift, L= 9.250
+D92468: DRIFT, L= 9.0999
+D9105 : DRIFT, L= 9.105
+D9382 : DRIFT, L= 9.382
+D9690 : DRIFT, L= 9.690
+D9860 : DRIFT, L= 9.860
+D9425:  Drift, L= 9.425
+D93393: Drift, L= 9.3393
+D9505:  Drift, L= 9.505
+D9750:  Drift, L= 9.750
+!D983325: Drift, L= 9.83325 + 0.118
+D9021375: DRIFT, L= 9.021375
+D9421375: Drift, L= 9.421375
+D9621375: Drift, L= 9.621375
+D9905:  DRIFT, L= 9.905
+D10000: DRIFT, L=10.000
+D10105: Drift, L=10.105
+D10135: Drift, L=10.135
+D10205: DRIFT, L=10.205
+D10485: DRIFT, L=10.485
+D10500: DRIFT, L=10.500
+D10516: Drift, L=10.516
+D10605: DRIFT, L=10.605
+D10505: DRIFT, L=10.505
+D10644: DRIFT, L=10.644
+D10690: DRIFT, L=10.690
+D10865: Drift, L = 10.865
+D11000: DRIFT, L=10.800
+D10870: Drift, L=10.870
+D10905: DRIFT, L=10.905
+D11170: Drift, L=11.170
+D11370: Drift, L=11.370
+D11500: Drift, L=11.500
+D11613: DRIFT, L=11.613
+D11640: Drift, L=11.640
+D11705: Drift, L=11.705
+D11905: Drift, L=11.905
+D12000: DRIFT, L=12.000
+D12200: DRIFT, L=12.200
+D12300: Drift, L=12.300
+D12400: Drift, L=12.400
+D12405: Drift, L=12.405
+D12500: Drift, L=12.500
+D12750: Drift, L=12.750
+D12905: Drift, L=12.905
+D12805: Drift, L=12.805
+D12810: Drift, L=12.810
+D13085: Drift, L=13.085
+D13205: Drift, L=13.205
+D13305: Drift, L=13.305
+D13365: Drift, L = 13.365 
+D13405: Drift, L=13.405
+D13705: Drift, L=13.705
+D13865: Drift, L = 13.865
+D13905: Drift, L=13.905
+D14000: DRIFT, L=14.000
+D14250: Drift, L=14.250
+D14500: Drift, L=14.500
+D20000: DRIFT, L=20.000
+
+
+!D351375: Drift, L =  4.51375-1.000   ! do compensate for BC-0 chicane lengthening
+D31887: Drift, L =  3.1887
+
+!-------------------------------------------------------------------------
+!   Definition of Common Markers
+!-------------------------------------------------------------------------
+CL.START:  Marker
+CL.END:    Marker
+TL.START:  MARKER
+TL.END:    MARKER
+T1.START:  MARKER
+T1.END:    MARKER
+T2.START:  MARKER
+T2.END:    MARKER
+T20.START: MARKER
+T20.END:   MARKER
+TLD.START: MARKER
+TLD.END:   MARKER
+
+TL.STARTT1:  MARKER
+TL.STARTT20: MARKER
+TL.STARTTLD: MARKER
+
+!--------------------------------------------------------------------------
+!	  Definition of Beam Diagnositc Elements
+!--------------------------------------------------------------------------
+
+BAM:  Marker ! Beam Arrival Monitor	l=40.0000
+DCM:  Marker ! Dark Current Monitor	l=80.0000
+OTRC: Marker ! Std, keine Wirescanner, liegende Bloecke, 4 davon offaxis	
+OTRD: Marker ! unklar, 100 mm Rohr, einfacher Schirm, kein Wirescanner, im Dump	
+OTRE: Marker ! unklar, 100 mm Rohr, einfacher Schirm, kein Wirescanner, vor Septum	
+OTRA: Marker ! Std, ohne wirescanner, shorter (200 mm)	 
+OTRB: Marker ! Standard OTR, 4 mit optionalen Wirescannern, Offaxis, full length of 400	
+OTRS: Marker ! Spezial OTR in der Schicane, depends on chamber design, no dummy yet 400 mm length	
+SCRN: Marker ! Schirmstationen Gun, "Zeuthen Design"	
+SCRW: MARKER ! dump window coating
+TORA: Marker ! Toroid with 40 mm inner Diameter	215.0000
+TORB: Marker ! Toroid with 50 mm inner Diameter	
+TORC: Marker ! Toroid with 100 mm inner Diameter	250.0000
+BPMA: Marker ! 40.5 mm button long	200.0000
+BPMB: Marker ! 40.5 mm button without flanges	
+BPMC: Marker ! 78 mm cold button	170.0000
+BPMD: Marker ! 100 mm buttoon	
+BPME: Marker ! 10 mm cavity	120.0000
+BPMF: Marker ! 40.5 mm cavity	255.0000
+BPMW: Marker ! 200 mm button BPM in dump section
+BPMG: Marker ! button BPM in injector diagnsotic cross
+BPMR: Marker ! 78 mm cold reentrant	
+BPMS: Marker ! EBPM	
+SRM : Marker ! Synchrotron light monitor	150.00
+PYR : Marker ! Pyro detector	300.00
+TDSA: Marker ! Transveres Deflecting Structure (Injector)	700.00
+TDSB: Marker ! Transveres Deflecting Structure (BC)	1700.00			
+EOD : Marker ! Electro-optical bunch length detector	250.00
+CRD : Marker ! CTR screen + THz spectrometer	300.00
+BHM : Marker ! Beam halo monitor in dumps
+
+BPMISEC(BPMI): Line = (D0100,D01275,BPMI,D01275,D0100)                ! 255 mm, 40.5 mm, IBFB cavity BPM, 100 mm on both side for bellow
+
+!----------------------------------------------------------------------------
+!   Definition of Magnets
+!----------------------------------------------------------------------------
+
+QA:   Quadrupole, L=0.1 ! Bore = 50 mm, Gmax = 100  T/m
+QI:   Quadrupole, L=0.2 ! Bore = 50 mm, Gmax =   4  T/m
+QD:   Quadrupole, L=0.2 ! Bore = 50 mm, Gmax =  16  T/m
+QE:   Quadrupole, L=0.2 ! Bore = 50 mm, Gmax =  30  T/m
+QF:   Quadrupole, L=0.5 ! Bore = 50 mm, Gmax =  30  T/m
+QH:   Quadrupole, L=1.0 ! Bore = 50 mm, Gmax =  30  T/m
+QH1:  Quadrupole, L=1.0 ! Bore = 50 mm, Gmax =  22  T/m
+QK:   Quadrupole, L=1.0 ! Bore =100 mm, Gmax =  16  T/m
+
+BB:   RBend     , L=0.5 ! Gap  = 50 mm, Bmax = 1.12 T 
+BD:   RBend     , L=1.0 ! Gap  = 50 mm, Bmax = 0.64 T
+BE:   RBend     , L=2.5 ! Gap  = 50 mm, Bmax = 0.64 T
+BG:   SBend     , L=2.0 ! Gap  = 50 mm, Bmax = 1.10 T
+BL:   RBend     , L=0.5 ! Gap  = 50 mm, Bmax = 0.31 T
+BV:   RBend     , L=2.5 ! Gap  = 50 mm, Bmax = 1.28 T
+BZ:   RBend     , L=1.0 ! Gap  = 50 mm, Bmax = 0.40 T, Septum
+BS:   RBend     , L=1.0 ! Gap  = 50 mm, Bmax = 0.40 T, AC Septum
+Sweep:RBend     , L=0.64! Gap  =100 mm, Bmax = 0.80 T
+
+SA:   Sextupole , L=0.3 ! Gap  = 50 mm, Gmax = 2000 T/m^2
+SC:   Sextupole , L=0.1 ! Gap  = 50 mm, Gmax =   50 T/m^2
+
+OO:   Octupole  , L=0.25! Gap  = 50 mm, Gmax =10500 T/m^3 
+
+CI:   Kicker    , L=0.1 ! Gap  = 50 mm, Bmax = 0.01 T 
+CC:   Kicker    , L=0.1 ! Gap  = 50 mm, Bmax = 0.03 T 
+CE:   Kicker    , L=0.1 ! Gap  = 50 mm, Bmax = 0.06 T 
+CF:   Kicker    , L=0.1 ! Gap  = 50 mm, Bmax = 0.15 T 
+CH:   Kicker    , L=0.2 ! Gap  = 50 mm, Bmax = 0.15 T 
+CA:   Kicker    , L=0.05! Gap  = 20 mm, Bmax =       , Undulator Air Coil
+
+
+!----------------------------------------------------------------------------
+!   Definition of Fast Kickers
+!----------------------------------------------------------------------------
+!
+!KFB(X/Y): Kicker   , L=1.0
+!KS(X/Y):  Kicker   , L=0.5
+!KL(X/Y):  Kicker   , L=1.0
+!KDC(X/Y): Kicker   , L=0.2
+!KA(X/Y):  Kicker   , L=0.4
+!KB(X/Y):  KICKER   , L=0.65
+!KD(X/Y):  Kicker   , L=0.8
+!
+!----------------------------------------------------------------------------
+!   Definition of Vacuum Components
+!----------------------------------------------------------------------------
+VCDST: DRIFT, L=1.215  ! Pumpstation around cold sections
+!----------------------------------------------------------------------------
+!   Definition of Standard Magnet Combinations
+!----------------------------------------------------------------------------
+
+QISEC(BPMA,QI,CI): &
+ line = (D0100, BPMA, D0100, D0050, D0045, QI, D0045, D0050, D0015, CI, D0015)   ! Total length  720 mm
+QDSEC(BPMA,QD,CD): &
+ line = (D0100, BPMA, D0100, D0050, D0045, QD, D0045, D0050, D0020, CC, D0020)   ! Total length  730 mm
+QESEC(BPMA,QE,CE): &
+ line = (D0100, BPMA, D0100, D0050, D0075, QE, D0080, D0050, D0030, CE, D0030)   ! Total length  815 mm   325,200,290
+QFSEC(BPMA,QF,CF): &
+ line = (D0100, BPMA, D0100, D0050, D0075, QF, D0080, D0050, D0040, CF, D0040)   ! Total length 1135 mm 
+QHSEC(BPMA,QH,CH): &
+ line = (D0100, BPMA, D0100, D0050, D0075, QH, D0080, D0050, D0040, CH, D0040)   ! Total length 1735 mm
+QMSEC(BPMA,QH,CH): &
+ line = (D0100, BPMA, D0100, D0200, D0075, QH, D0080, D0200, D0040, CH, D0040)   ! Total length 2035 mm
+QKSEC(BPMD,QK,CM): &
+ line = (D0100, BPMD, D0100, D0050, D0075, QK, D0080, D0050, D0040, CM, D0040)   ! Total length 1835 mm 
+ 
+ QSEC(Q,BPM,C):LINE=(D0100,Q,D0100,D0050,BPM,D0050,D0100,C,D0100)
+
+QHALF(Q) : LINE = (D0050,Q,Q,D0050)
+!------------------------------------------------------------------------------
+! Definition of wake field markers
+!------------------------------------------------------------------------------
+LTWAKETDS: DRIFT, L=0.0
+ 
+ 
+ ! SECTION DEFINITIONS  =========================================================
+
+BC : line=(L1, B1, L2, B2)
+LIN: line=(I1, BC, L3, CL)
+LINE1 : LINE=(T1,SA2,T3, UN1, T5, UN2, T5D)
+
+TD2:   LINE=(TL1, TL2, TL3, TL4, TL5, T2, SA1, T4, SA3, T4D) 
+TD0:   LINE=(TL1, TL2, TLD)
+TD1:   Line=(TL1, TL2, TL3, TL4, T1, SA2, T3, UN1, T5, UN2, T5D)
+TD20:  Line=(TL1, TL2, TL3, TL4, TL5, T20)
+TD6:  line=(TL1, TL2, TL3, TL4, T1, SA2, &
+                      SA2TT3,T3M1,t6)
+TD7:  line=(TL1, TL2, TL3, TL4, T1, SA2, T3,UN1,T5,UN2,UN2TT5D,t7)
+TD8:  line=(TL1, TL2, TL3, TL4, T1, SA2, T3,UN1, &
+                      UN1TT5,T5M1, t8)
+TD9:  line=(TL1, TL2, TL3, TL4, TL5, T2, SA1, SA1TT4, T4M1, T9)
+TD10: line=(TL1, TL2, TL3, TL4, TL5, T2, SA1, T4, SA3, SA3TT4D, T10)
+
+
+XFELALL : line= (LIN, TD2)

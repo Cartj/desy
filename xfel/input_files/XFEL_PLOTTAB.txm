@@ -1,0 +1,409 @@
+! PLOT BETA FUNCTIONS OF XFEL -----------------------------------------
+
+PLOTXFEL: SUBROUTINE
+
+title, "XFEL Injector "
+use,I1
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+
+title,"XFEL Gun to Start Linac3 "
+use,(l1,b1,l2,b2)
+beam,energy=0.13
+twiss,couple,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,0,vmax=100,2
+
+title, "XFEL Gun to End Linac3 "
+use,(I1,l1,b1,l2,b2,l3)
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+
+title, "XFEL Collimation Section "
+use,CL
+twiss,couple,beta0=b0_cl.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+
+title, "XFEL Gun to End of Collimation "
+beam,energy=0.005
+use,(I1,l1,b1,l2,b2, L3, CL)
+twiss,couple,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy &
+     spline,vmin=0,-1,vmax=100,1,colour=100
+plot,table=twiss,haxis=s,vaxis=betx,bety,&
+     spline,vmin=0,vmax=500,colour=100
+
+title, "XFEL TD1 (SASE2, UND1, UND2)  "
+settd1twiss
+use,(CL.QFH.4.1,td1)
+savebeta,label=undfree_end,#e
+twiss,couple,line=cl_arcs,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
+vmin=0-1,vmax=100,1
+
+
+title, "XFEL TD2 (SASE1, SASE3) "
+settd2
+use,(CL.QFH.4.1,td2)
+twiss,couple,line=cl_arcs,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
+vmin=0,-1,vmax=100,1
+title, "XFEL Gun to SASE3 "
+use,(I1,l1,b1,l2,b2, L3, CL,td2)
+twiss,couple,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy &
+     spline,vmin=0,-1,vmax=100,1,colour=100
+plot,table=twiss,haxis=s,vaxis=betx,bety,&
+     spline,vmin=0,vmax=500,colour=100
+
+title, "XFEL TLD (XS1 DUMP) "
+use,(CL.QFH.4.1,td0)
+twiss,couple,line=cl_arcs,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
+vmin=0,-1,vmax=100,1
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
+vmin=0,-1,vmax=100e3,1
+
+title, "XFEL Dumpline T4D "
+use,(T4D)
+twiss,couple,line=(SA3SEC1,SA3SEC2),save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100,&
+vmin=0,-0.5,vmax =1000,1
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+
+title, "XFEL Dumpline T5D "
+use,(T3,un1,T5, UN2)
+savebeta,label=un2out,#e
+twiss,line=(sa2sec1,sa2sec2),save
+use,(T5D)
+twiss,couple,beta0=un2out,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100,&
+vmin=0,-0.5,vmax =1000,1
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+
+
+
+ENDSUBROUTINE
+
+! LISTING OF ALL PHYSICAL ELEMENTS ------------------------------------
+
+LISTMAGNEW: SUBROUTINE
+
+set, ycor,-2.75
+set,xcor,0
+set,zcor,23.2
+set,phicor,0
+beam,energy=0.005
+
+title, "XFEL I1 Diagnostic Arm"
+
+use,(I1DARM)
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun, &
+tape="mag_xfeli1darm.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_xfeli1darm.dat"
+
+title, "XFEL I1 to T4D"
+settd2
+use,(lin,td2)
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun, &
+tape="mag_xfeltd2.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_xfeltd2.dat"
+makesequence,label=I1_T4D.seq,refer=centre
+
+title, "XFEL I1 to I1D"
+use,(I1tdump)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_inj1_dump.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=0, tape="lay_inj1_dump.dat"
+makesequence,label=I1_I1D.seq,refer=centre
+
+title, "XFEL I1 to B1D"
+use,(I1,L1,b1dump)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_dia1spec.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=0, tape="lay_dia1spec.dat"
+makesequence,label=I1_B1D.seq,refer=centre
+
+title, "XFEL I1 to B2D"
+use,(I1,L1,B1,L2,b2dump)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_dia2spec.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=0, tape="lay_dia2spec.dat"
+makesequence,label=I1_B2D.seq,refer=centre
+
+title, "XFEL I1 to TLD"
+settd0twiss
+use,(lin,td0) 
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_dump0.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,-1,vmax=300,1
+settd0lay     
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_dump0.dat"
+
+title, "XFEL I1 to T20"
+settd2
+settd20twiss
+use,(lin,td20)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_arc20.dat",save       
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+    spline,colour=100
+settd20lay
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_arc20.dat"
+makesequence,label=I1_T20.seq,refer=centre
+
+title, "XFEL I1 to T5D"
+settd1twiss
+use,(lin,td1)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_td1.dat",save       
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,-1,vmax=300,1
+settd1lay
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_td1.dat"
+makesequence,label=I1_T5D.seq,refer=centre
+
+settd1lay
+use,(lin,td6)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_t6.dat",save       
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_t6.dat"
+
+use,(lin,td7)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_t7.dat",save       
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_t7.dat"
+
+use,(lin,td8)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_t8.dat",save       
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_t8.dat"
+
+settd2
+use,(lin,td9)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_t9.dat",save       
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_t9.dat"
+
+use,(lin,td10)
+twiss,couple,beta0=b0_i1.gun,&
+       tape="mag_t10.dat",save       
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=phicor, tape="lay_t10.dat"
+
+save,file="XFEL.seq"
+
+ENDSUBROUTINE
+
+
+! WRITE SEQUENCES FOR BEAM LINE SECTIONS ------------------------------------
+
+WRITESEQ: SUBROUTINE
+
+title, "XFEL I1"
+use,(I1)
+makesequence,label=I1.seq,refer=centre
+
+title, "XFEL I1D"
+use,(I1D)
+makesequence,label=I1D.seq,refer=centre
+
+title, "XFEL B1"
+use,(B1)
+makesequence,label=B1.seq,refer=centre
+
+title, "XFEL B1D"
+use,(B1DUMP)
+makesequence,label=B1D.seq,refer=centre
+
+title, "XFEL B2"
+use,(B2)
+makesequence,label=B2.seq,refer=centre
+
+title, "XFEL B2D"
+use,(B2D)
+makesequence,label=B2D.seq,refer=centre
+
+title, "XFEL L1"
+use,(L1)
+makesequence,label=L1.seq,refer=centre
+
+title, "XFEL L2"
+use,(L2)
+makesequence,label=L2.seq,refer=centre
+
+title, "XFEL L3"
+use,(L3)
+makesequence,label=L3.seq,refer=centre
+
+title, "XFEL CL"
+use,(CL)
+makesequence,label=CL.seq,refer=centre
+
+title, "XFEL TL1"
+use,(TL1)
+makesequence,label=TL1.seq,refer=centre
+title, "XFEL TL2"
+use,(TL2)
+makesequence,label=TL2.seq,refer=centre
+title, "XFEL TL3"
+use,(TL3)
+makesequence,label=TL3.seq,refer=centre
+
+title, "XFEL TLD"
+use,(TLD)
+makesequence,label=TLD.seq,refer=centre
+
+title, "XFEL T2"
+use,(T2)
+makesequence,label=T2.seq,refer=centre
+
+title, "XFEL T4"
+use,(T4)
+makesequence,label=T4.seq,refer=centre
+
+title, "XFEL T4D"
+use,(T4D)
+makesequence,label=T4D.seq,refer=centre
+
+title, "XFEL SA1"
+use,(SA1)
+makesequence,label=SA1.seq,refer=centre
+
+title, "XFEL SA3"
+use,(SA3)
+makesequence,label=SA3.seq,refer=centre
+
+title, "XFEL T1"
+use,(T1)
+makesequence,label=T1.seq,refer=centre
+
+title, "XFEL T3"
+use,(T3)
+makesequence,label=T3.seq,refer=centre
+
+title, "XFEL T5"
+use,(T5)
+makesequence,label=T5.seq,refer=centre
+
+title, "XFEL UN1"
+use,(UN1)
+makesequence,label=UN1.seq,refer=centre
+
+title, "XFEL SA2"
+use,(SA2)
+makesequence,label=SA2.seq,refer=centre
+
+title, "XFEL UN2"
+use,(UN2)
+makesequence,label=UN2.seq,refer=centre
+
+use,(T5D)
+makesequence,label=T5D.seq,refer=centre
+
+title, "XFEL T6"
+use,(T6)
+makesequence,label=T6.seq,refer=centre
+
+title, "XFEL T7"
+use,(T7)
+makesequence,label=T7.seq,refer=centre
+
+title, "XFEL T8"
+use,(T8)
+makesequence,label=T8.seq,refer=centre
+
+title, "XFEL T9"
+use,(T9)
+makesequence,label=T9.seq,refer=centre
+
+title, "XFEL T10"
+use,(T10)
+makesequence,label=T10.seq,refer=centre
+
+save,file="XFEL_SECTIONS.seq"
+
+ENDSUBROUTINE
+
+PLOTSEQ: SUBROUTINE
+
+title, "XFEL Injector - 22.08.06"
+use,I1.SEQ
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+
+title,"XFEL Bunch Compressor - 22.08.06"
+use,(L1.SEQ,B1.SEQ,L2.SEQ,B2.SEQ)
+beam,energy=0.13
+twiss,couple,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,0,vmax=100,2
+
+
+title, "XFEL Collimation Section - 22.08.06"
+use,CL.SEQ
+twiss,couple,beta0=b0_cl.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+
+title,"XFEL L1 to T4D"
+use,(L1.SEQ,B1.SEQ,L2.SEQ,B2.SEQ,L3.SEQ,CL.SEQ,&
+     TL1.SEQ,TL2.SEQ,TL3.SEQ,&
+     T2.SEQ,SA1.SEQ,T4.SEQ,SA3.SEQ,T4D.SEQ)
+beam,energy=0.13
+twiss,couple,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,0,vmax=100,2
+
+title,"XFEL L1 to T5D"
+use,(L1.SEQ,B1.SEQ,L2.SEQ,B2.SEQ,L3.SEQ,CL.SEQ,TL1.SEQ,TL2.SEQ,&
+     T1.SEQ,SA2.SEQ,T3.SEQ,&
+     UN1.SEQ,T5.SEQ,UN2.SEQ,T5D.SEQ)
+beam,energy=0.13
+twiss,couple,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,0,vmax=100,2
+
+title,"XFEL L1 to TLD"
+use,(L1.SEQ,B1.SEQ,L2.SEQ,B2.SEQ,L3.SEQ,CL.SEQ,TL1.SEQ,TLD.SEQ)
+beam,energy=0.13
+twiss,couple,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,vmin=0,0,vmax=100,2
+ENDSUBROUTINE

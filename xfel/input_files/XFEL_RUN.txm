@@ -1,0 +1,444 @@
+!assign,print="print"
+option, -echo,-info,-warn
+call,"XFEL_DEFS.txm"
+call,"XFEL_LINAC.txm"
+call,"XFEL_BC1.txm"
+call,"XFEL_B0.txm"
+call,"XFEL_I1.txm"
+call,"XFEL_BC2.txm"
+call,"XFEL_COLL.txm"
+call,"XFEL_TD0.txm"
+call,"XFEL_UND.txm"
+call,"XFEL_TD1.txm"
+call,"XFEL_TD2.txm"
+call,"XFEL_TD20.txm"
+call,"XFEL_SET.txm"
+call,"XFEL_PLOTTAB.txm"
+
+!MATCH_I1
+!MATCH_CL
+!MATCH_B1MAIN1
+!MATCH_B1MAIN2
+!MATCH_B1MAIN3
+!MATCH_B2TL3
+!match_cl2tl
+plotxfel
+listmagnew
+stop
+
+option, -echo,info,warn
+setTD2
+use,(cl,tl1)    ! ,TL1, TL2, TL3, TL4, TL5, T2, SA1, T4, SA3)
+twiss,beta0=b0_cl.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+stop
+
+!stop
+!MATCH_B1D
+!MATCH_I1D
+!MATCH_L3_FODO
+!MATCH_B1D
+!MATCH_B2D
+!MATCH_L3
+!MATCH_CL
+plotxfel
+!listmagnew
+stop
+
+use, TD0
+setTD0lay
+survey, tape="testlay.dat"
+stop
+
+use,td1
+match,betx=1,bety=1
+constraint,TLD.START,x=20
+vary,TL.KSK.1[KICK],step=0.1
+migrad
+endmatch
+
+
+MATCH_SA1
+
+stop
+MATCH_I1
+!MATCH_I1PS
+!MATCH_I1D
+! MATCH_L3_FODO
+!MATCH_B1
+!MATCH_B1D
+!MATCH_B2
+!MATCH_B2D
+MATCH_L3
+MATCH_CL
+
+beam,energy=2.4
+use,(l3,cl)
+print,full
+twiss,couple,beta0=b0_l3.start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,hmin=1000,hmax=1400
+! plotxfel
+! listmagnew
+
+use,(cl_arcs)
+twiss,couple,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+stop
+
+
+
+
+settd1twiss
+use,(lin,td1)
+settd1lay
+match, beta0=b0_i1.gun
+vary,KY1.TD1[KICK],step=0.01
+!vary,KY2.TD1[KICK],step=0.01
+vary,KX3.TD1[KICK],step=0.01
+vary,KX4.TD1[KICK],step=0.01
+vary,KY3.TD1[KICK],step=0.01
+!vary,KXY4.TD1[VKIC],step=0.01
+constraint,MATCH1,&
+x=1.8160e-004,px=3.2025e-006,y=2.0359e-005,py=3.3906e-007
+simplex,tolerance=1e-10
+endmatch
+
+
+use,( DLG1A, DLG1B, DLG3A, DLG3B)
+SELECT, FLAG=ERROR, CLEAR
+EOPT,SEED=987456321
+select,error,class="QUADRUPOLE"
+ealign,dx=500e-6*tgauss(3),dy=500e-6*tgauss(3)
+eprint
+twiss,beta0=b0_i1.dog.fodo,x=-0.002,px=0.001,save
+plot,table=twiss,haxis=s,vaxis=x
+stop
+
+use,(I1)
+beam,energy=0.005
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(I1, L1, B1, L2, B2, L3, CL)
+beam,energy=0.005
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(L1, B1, L2, B2, L3, CL)
+beam,energy=0.130
+twiss,beta0=b0_l1.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(B1, L2, B2, L3, CL)
+beam,energy=0.700
+twiss,beta0=b0_b1.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(L2, B2, L3, CL)
+beam,energy=0.700
+twiss,beta0=b0_l2.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(B2, L3, CL)
+beam,energy=2.400
+twiss,beta0=b0_b2.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+use,(L3, CL)
+beam,energy=2.400
+twiss,beta0=b0_l3.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+
+stop
+
+
+MATCH_L3_FODO
+MATCH_I1
+MATCH_B1
+MATCH_B1D
+MATCH_B2
+MATCH_B2D
+MATCH_L3
+MATCH_CL
+
+use,(i1,l1,b1)
+beam,energy=0.005
+savebeta,label=b0_l1.start,l1.start
+savebeta,label=b0_b1.start,b1.start
+twiss,beta0=b0_i1.gun
+
+use,l2
+beam,energy=0.7
+savebeta,label=BO_b2.start,#e
+twiss,beta0=b0_l2.start
+
+use,(b2,l3)
+beam,energy=2.4
+savebeta,label=b0_l3.start,L3.START.L3
+twiss, beta0=B0_b2.start
+
+use,(L3F, L3D)
+savebeta,label=B0_CL.START,#e
+twiss
+
+
+
+
+
+title, "XFEL TD1 (SASE2, UND1, UND2)  - 22.08.06"
+sett1twiss
+use,td1
+savebeta,label=undfree_end,#e
+twiss,couple,line=tlfodo,tape="td1_1.dat",save
+plot,table=twiss,haxis=s,vaxis=dx,dy,spline,colour=100,&
+vmin=-1,vmax=1
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline,colour=100,&
+vmin=0,vmax=100
+
+
+title, "XFEL TD1 (SASE2, UND1, UND2)  - 22.08.06"
+sett2
+sett1twiss
+sett1lay
+use,td1
+savebeta,label=undfree_end,#e
+twiss,couple,line=tlfodo,tape="td1_2.dat",save
+plot,table=twiss,haxis=s,vaxis=dx,dy,spline,colour=100,&
+vmin=-1,vmax=1
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline,colour=100,&
+vmin=0,vmax=100
+
+title, "XFEL TD1 (SASE2, UND1, UND2)  - 22.08.06"
+sett2
+use,td1
+sett1opt
+savebeta,label=undfree_end,#e
+twiss,couple,line=tlfodo,tape="td1_2.dat",save
+plot,table=twiss,haxis=s,vaxis=dx,dy,spline,colour=100,&
+vmin=-1,vmax=1
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline,colour=100,&
+vmin=0,vmax=100
+select,error,full
+eprint
+
+
+
+use, (I1)
+beam,energy=0.005
+match,beta0=b0_i1.gun
+vary,I1.QI.20[K1],step=0.01   
+vary,I1.QI.21[K1],step=0.01 
+vary,I1.QI.22[K1],step=0.01   
+vary,I1.QI.23[K1],step=0.01   
+vary,I1.QI.26[K1],step=0.01   
+vary,I1.QI.27[K1],step=0.01   
+vary,I1.QI.28[K1],step=0.01   
+vary,I1.QI.29[K1],step=0.01
+constraint,#e, beta0=b0_l1.start
+lmdif
+migrad
+endmatch
+
+use,(b1,l2,b2)
+beam,energy=0.5
+match,beta0=b0_l1.end
+vary,B1.QDH.19[K1],step=0.01!,lower=-1,upper=1
+vary,B1.QDH.18[K1],step=0.01!,lower=-1,upper=1
+vary,L2.Q.A3.4[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A3.3[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A3.2[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A3.1[K1],step=0.01,lower=-0.5,upper=0.5
+constraint,b2.mend,beta0=b0_b2.mend
+simplex,calls=5000
+lmdif,calls=20000
+endmatch
+
+use,(b1,l2,b2)
+beam,energy=2.0
+twiss,beta0=b0_l1.end,save
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline
+match,beta0=b0_l1.end
+vary,B2.QD.4[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QD.3[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QD.2[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QD.1[K1],step=0.01!,lower=-1,upper=1
+vary,L2.Q.A5.4[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A5.3[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A5.2[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L2.Q.A5.1[K1],step=0.01,lower=-0.5,upper=0.5
+vary,B2.QDH.9[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.8[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.7[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.6[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.5[K1],step=0.01!,lower=-1,upper=1
+constraint,b2.mend,betx<10,bety=5.0,alfy=-0.175
+constraint,b2.g6start,beta0=b0_b2.g6start
+constraint,L2.Q.A5.3/B2.QD.4,bety<115,betx<115
+simplex,calls=10000
+lmdif,calls=30000
+endmatch
+twiss,beta0=b0_l1.end,save
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline
+plot,table=twiss,haxis=s,vaxis=betx,bety,spline, &
+vmin=0,vmax=50,hmin=210,hmax=250
+
+use,(b2dia,b2tl3,l3)
+beam,energy=2
+match,beta0=b0_b2.mend
+vary,B2.QDH.21[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.20[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.19[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.18[K1],step=0.01!,lower=-1,upper=1
+vary,B2.QDH.17[K1],step=0.01!,lower=-1,upper=1
+vary,L3.Q.A6.4[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A6.3[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A6.2[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A6.1[K1],step=0.01,lower=-0.5,upper=0.5
+!constraint,#e,beta0=b0_cl.start
+constraint,B2.QDH.13[1]/L3.Q.A6.4,betx<100,bety<100
+constraint,L3.MATCH,line=L3_fodo0
+simplex,calls=5000
+lmdif,calls=20000
+endmatch
+
+
+use,(b2dia,b2tl3,l3)
+beam,energy=2
+match,beta0=b0_b2.mend
+!vary,L3.Q.A20.4[K1],step=0.01,lower=-0.5,upper=0.5
+!vary,L3.Q.A20.3[K1],step=0.01,lower=-0.5,upper=0.5
+!vary,L3.Q.A20.2[K1],step=0.01,lower=-0.5,upper=0.5
+!vary,L3.Q.A20.1[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A21.4[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A21.3[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A21.2[K1],step=0.01,lower=-0.5,upper=0.5
+vary,L3.Q.A21.1[K1],step=0.01,lower=-0.5,upper=0.5
+constraint,#e,beta0=b0_cl.start
+!constraint,L3.QE.1.1[1]/L3.QE.1.2[6],betx<200,bety<200
+simplex,calls=5000
+lmdif,calls=20000
+endmatch
+endcomment
+
+
+stop
+plotxfel
+use,t4
+twiss,couple,line=(SA1SEC2,SA1SEC1),save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+survey
+use,t3
+twiss,couple,line=(SA2SEC1,SA2SEC2),save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+survey
+use,t5
+twiss,couple,line=(UN1SEC1,UN1SEC2),save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+survey
+!listmagnew
+!writeseq
+stop
+
+match,line=(SA3SEC1,SA3SEC2)
+vary,t4d.qf.5[k1],step=0.1
+constraint,#e,dy=0,dpy=0
+migrad
+simplex
+endmatch
+twiss,couple,line=(SA3SEC2,SA3SEC1),save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100,&
+vmin=0,-0.5,vmax =1000,1
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,colour=100
+
+
+use,l1
+
+savebeta,label=b1start,#e
+beam,energy=0.13
+twiss,beta0=b0_l1.start
+
+title,"XFEL Bunch Compressor - 22.08.06"
+use,(b1)
+beam,energy=0.5
+twiss,couple,beta0=b1start,save
+spline,colour=100,vmin=0,0,vmax=100,2
+
+stop
+
+comment
+beam,energy=0.130
+use,(l1,b1)
+match,beta0=b0_l1.start
+vary,b1.qch.4[k1],step=0.01,lower=-3,upper=3
+vary,b1.qch.3[k1],step=0.01,lower=-3,upper=3
+vary,b1.qch.2[k1],step=0.01,lower=-3,upper=3
+vary,b1.qch.1[k1],step=0.01,lower=-3,upper=3
+
+vary,l1.q.a2.4[k1],step=0.01,lower=-2,upper=2
+vary,l1.q.a2.3[k1],step=0.01,lower=-2,upper=2
+vary,l1.q.ah1.4[k1],step=0.01,lower=-1,upper=1
+vary,l1.q.ah1.3[k1],step=0.01,lower=-1,upper=1
+vary,l1.q.ah1.2[k1],step=0.01,lower=-1,upper=1
+vary,l1.q.ah1.1[k1],step=0.01,lower=-1,upper=1
+constraint,b1.bcend,beta0=b0_b1.mend
+constraint,l1.q.ah1.1/b1.qch.4,betx<80,bety<80
+simplex,calls=5000
+migrad,calls=5000
+endmatch
+
+
+beam,energy=0.130
+use, (l1,B1,L2)
+
+match, beta0= b0_l1.start
+
+vary,L2.Q.A3.4[k1]   ,step=0.02,lower=-1,upper=1
+vary,L2.Q.A3.3[k1]   ,step=0.02,lower=-1,upper=1,
+vary,L2.Q.A3.2[k1]   ,step=0.02,lower=-1,upper=1,
+vary,L2.Q.A3.1[k1]   ,step=0.02,lower=-1,upper=1,
+
+vary,B1.QCh.19[k1]   ,step=0.05, lower=-3.0, upper=3.0
+vary,B1.QCh.18[k1]   ,step=0.05, lower=-3.0, upper=3.0
+vary,B1.QCh.17[k1]   ,step=0.04, lower=-3.0, upper=3.0,
+vary,B1.QCh.16[k1]   ,step=0.06, lower=-3.0, upper=3.0
+vary,B1.QCh.15[k1]   ,step=0.04, lower=-3.0, upper=3.0
+
+constraint, L2.STAC.A4.1, line=(ACC00.F,ACC00.D),
+constraint,B1.QCH.14/L2.Q.A3.4, betx>1.0, bety>1.0
+constraint,B1.QCH.14/L2.Q.A3.4, betx<60.0, bety<60.0
+
+weight, betx=1, bety=1
+lmdif                                           ! einer von 3 matching algorithmen
+simplex
+migrad
+endmatch
+
+beam,energy=0.13
+use,(l1,b1,l2,b2,l3.cfb,acc6.1,acc6.2,acc6.3,acc6.4)
+match,beta0=b0_l1.start
+vary,l3.q.a6.4[k1]   ,step=0.2
+vary,L3.q.a6.3[k1]   ,step=0.2
+vary,l3.q.a6.2[k1]   ,step=0.2
+vary,L3.q.a6.1[k1]   ,step=0.2
+vary,B2.QDh.20[k1]   ,step=0.01
+vary,B2.QDh.19[k1]   ,step=0.01
+vary,B2.QDh.18[k1]   ,step=0.01
+vary,B2.QDh.17[k1]   ,step=0.01
+constraint, #e, line=(ACC00.F,ACC00.D)
+constraint,B2.QDH.17/l3.Q.a6.4, betx<60, bety<60.0
+lmdif,calls=5000 
+migrad
+simplex
+endmatch
+endcomment
+
+
+plotxfel
+listmagnew
+
+
+stop

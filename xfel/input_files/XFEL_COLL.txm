@@ -1,0 +1,250 @@
+!----------------------------------------------------------------------------
+! Last work: 07 May 2012
+!----------------------------------------------------------------------------
+
+CL.TORA: MARKER    ! Toroid L = 0.215 m  
+CL.BPMF: MONITOR   ! Cavity BPM L = 0.255 m 
+CL.OTRB: MARKER    ! OTR
+CL.OTRBW: MARKER    ! Wire Scanner
+CL.CRD: MARKER     ! Coherent Radiation
+CL.DCM: MARKER     ! Dark Current Monitor
+CL.BPMA: Monitor   ! 40.5 mm button long L = 0.200 m
+
+CL.BPMI.E: Monitor
+
+
+CL.CFX: HKICKER, L = 0.1
+CL.CFY: VKICKER, L = 0.1
+CL.CHX: HKICKER, L = 0.2
+CL.CHY: VKICKER, L = 0.2
+
+!  Matching from L3_end FODO to 1-st collimation arc
+!  September 20010: Winni's initial Twiss functions
+
+
+comment
+!  Mode A: betx_arc=0.2, bety_arc=3.0
+CL.QF.1:  Quadrupole, L=0.5, K1=+2.664883E-02
+CL.QF.2:  Quadrupole, L=0.5, K1=-1.837737E-01
+CL.QF.3:  Quadrupole, L=0.5, K1=+3.575436E-01
+CL.QH.1:  Quadrupole, L=1.0, K1=-1.641200E-01
+CL.QH.2:  Quadrupole, L=1.0, K1=+3.110349E-01
+
+D02787: Drift, L =  0.2787
+D0235: Drift, L=0.235
+D0660: Drift, L=0.660
+
+
+LTCL:  Line = (D02787, CL.TORA, D0200, CL.DCM, D0500,    &
+               QFSEC(CL.BPMA,CL.QF.1,CL.CFX), &
+               D3715,    &
+               QFSEC(CL.BPMA,CL.QF.2,CL.CFY), &
+               D3215,    &
+               QFSEC(CL.BPMA,CL.QF.3,CL.CFX), &
+               D3080,    &
+               CL.CHY,D0170,CL.QH.1,D0250,CL.QH.1,       &
+               D0200,D0100,CL.BPMA,D0100,D0200,          &
+               CL.QH.2,D0250,CL.QH.2,D0170,CL.CHX,D0490, &
+               D0100,CL.BPMI.E,D0170,CL.QFH.4.1)
+endcomment
+
+CL.QF.1:  Quadrupole, L=0.5, K1=+0.0000000001
+CL.QF.2:  Quadrupole, L=0.5, K1=-1.245719E-01
+CL.QF.3:  Quadrupole, L=0.5, K1=+2.259544E-01 
+CL.QH.1:  Quadrupole, L=1.0, K1=-1.687852E-01
+CL.QH.2:  Quadrupole, L=1.0, K1= 3.287715E-01
+
+D6170:    Drift, L = 6.170
+D70887:   Drift, L = 7.0887-0.7
+
+LTCL: Line = ( D70887, CL.TORA, D0200, CL.DCM, D0500,    &  
+               QFSEC(CL.BPMA,CL.QF.3,CL.CFX), D6170,     &  
+               CL.CHY,D0170,CL.QH.1,D0250,CL.QH.1,       &
+               D0200,D0100,CL.BPMA,D0100,D0200,          &
+               CL.QH.2,D0250,CL.QH.2,D0170,CL.CHX,D0490, &
+               D0100,CL.BPMI.E,D0170, CL.QFH.4.1)
+
+!  Phase shifter
+
+!  Mode A: betx=0.2, bety=3.0
+CL.QH.3:  Quadrupole, L = 1.00, k1 = +3.281040E-01;
+CL.QH.4:  Quadrupole, L = 1.00, k1 = -2.520441E-01;
+CL.QF.5:  Quadrupole, L = 0.50, k1 = +3.614608E-01;
+CL.QF.6:  Quadrupole, L = 0.50, k1 = -2.470030E-02;
+CL.QFH.7: Quadrupole, L = 0.25, k1 = -8.973852E-02;
+
+CLM: Line = (CL.QFH.4.1,D0170,CL.CFY, D1055,                        &
+             CL.CHX,D0170,CL.QH.3,D0250,CL.QH.3,                    &  
+             D0125,D0100,CL.BPMA,D0100,D0275,                       &
+             CL.QH.4,D0250,CL.QH.4,D0170,CL.CHY, D0510,             &
+             D0100,CL.BPMA, D0500,D0100,D0125,CL.QF.5,D0170,CL.CFX, D3405, &
+             D0100,CL.BPMA, D0500, D0100,D0125,CL.QF.6,D0170,CL.CFY, D2905, &
+             D0100,CL.BPMA,D0100,D0125,CL.QFH.7,                    &
+             CL.QFH.7,D0170,CL.CFX, D0100, CL.TORA, D2805,          &
+             D0100,CL.BPMA,D0100,D0125,CL.QF.6,D0170,CL.CFY, D3405, &
+             D0100,CL.BPMA, D0500,D0100,D0125,CL.QF.5,D0170,CL.CFX, D1065, &
+             CL.CHY,D0170,CL.QH.4,D0250,CL.QH.4,                    &
+             D0125,D0100,CL.BPMA,D0100,D0275,                       & 
+             CL.QH.3,D0250,CL.QH.3,D0170,CL.CHX, D0500,             &
+             D0100,CL.BPMA,D0500, D0100,D0125,CL.QFH.4.1);
+
+
+!  Collimation arcs
+
+!  Dipoles
+
+LEN_BE = 2.5
+ANG_BE1_CL = +(0.3571397818 * PI) / 180
+ARC_BE1_CL = (0.5 * LEN_BE * ANG_BE1_CL) / sin(0.5 * ANG_BE1_CL)
+E12_BE1_CL = ANG_BE1_CL / 2
+
+ANG_BE2_CL = +(0.351208227 * PI) / 180
+ARC_BE2_CL = (0.5 * LEN_BE * ANG_BE2_CL) / sin(0.5 * ANG_BE2_CL)
+E12_BE2_CL = ANG_BE2_CL / 2
+
+CL.BE.1: Sbend, L  = ARC_BE1_CL, ANGLE = ANG_BE1_CL,    &
+                E1 = E12_BE1_CL, E2 = E12_BE1_CL,       &
+                TILT = PI/2
+
+CL.BE.2: Sbend, L  = ARC_BE2_CL, ANGLE =-ANG_BE2_CL,    &
+                E1 =-E12_BE2_CL, E2 =-E12_BE2_CL,       &
+                TILT = PI/2
+
+LEN_BL = 0.2
+ANG_BL1_CL =+(0.0422284963 * PI) / 180.0
+ARC_BL1_CL = (0.5 * LEN_BL * ANG_BL1_CL) / sin(0.5 * ANG_BL1_CL)
+E12_BL1_CL = ANG_BL1_CL / 2
+
+ANG_BL2_CL =+(0.04152694153 * PI) / 180.0
+ARC_BL2_CL = (0.5 * LEN_BL * ANG_BL2_CL) / sin(0.5 * ANG_BL2_CL)
+E12_BL2_CL = ANG_BL2_CL / 2
+
+CL.BL.1: Sbend, L  = ARC_BL1_CL, ANGLE = -ANG_BL1_CL,   &
+                E1 =-E12_BL1_CL, E2 = -E12_BL1_CL,      &
+                TILT = PI/2
+
+CL.BL.2: Sbend, L  = ARC_BL2_CL, ANGLE = ANG_BL2_CL,    &
+                E1 = E12_BL2_CL, E2 = E12_BL2_CL,       &
+                TILT = PI/2
+
+
+!  Quadrupoles and sextupoles
+
+CL.QF.4.1:  Quadrupole, L = 0.50, k1 = -0.3202590143
+CL.QF.4.2:  Quadrupole, L = 0.50, k1 = +0.3202497705
+CL.QFH.4.1: Quadrupole, L = 0.25, k1 = -0.3202590143
+CL.QFH.4.2: Quadrupole, L = 0.25, k1 = +0.3202497705
+
+comment
+! Original setting 
+CL.QFH.11: Quadrupole, L = 0.25, k1 = -0.3202590143;
+CL.QF.12:  Quadrupole, L = 0.50, k1 = +0.3202497705;
+CL.QFH.13: Quadrupole, L = 0.25, k1 = -0.3202696544;
+CL.QFH.21: Quadrupole, L = 0.25, k1 = -0.3202592850;
+CL.QFH.22: Quadrupole, L = 0.25, k1 = +0.3202503457;
+CL.QFH.23: Quadrupole, L = 0.25, k1 = -0.3202695746;
+endcomment
+
+CL.SA.1: Sextupole, L = 0.3, k2 = +18.59020266302, tilt = PI/2;
+CL.SA.2: Sextupole, L = 0.3, k2 = -15.63045600493, tilt = PI/2;
+CL.SA.3: Sextupole, L = 0.3, k2 =  +3.01313108964, tilt = PI/2;
+CL.SA.4: Sextupole, L = 0.3, k2 = -18.59020266302, tilt = PI/2;
+CL.SA.5: Sextupole, L = 0.3, k2 = +15.63045600493, tilt = PI/2;
+CL.SA.6: Sextupole, L = 0.3, k2 =  -3.01313108964, tilt = PI/2;
+
+!  Collimators
+
+!CL.C : ECOLLIMATOR, L = 0.5, XSIZE = 0.020, YSIZE = 0.020;
+CL.COLM : ECOLLIMATOR, L = 0.5, XSIZE = 0.002, YSIZE = 0.002;
+CL.COLS : ECOLLIMATOR, L = 1.0, XSIZE = 0.002, YSIZE = 0.002;
+!  Arcs
+                  
+CLFODO_P1: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.1,   &
+                  D2500, CL.BE.1, D1925,                   &
+                  D0100,CL.BPMA,D0500, D0100,D0125,    &
+                  CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.2,    &
+                  D1500,CL.COLS,D2150,&
+                        CL.BL.1,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
+                  CL.SA.3,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.3,    &
+                  D2150, CL.BL.1, D4650,                   &
+                  CL.SA.2,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  CL.QF.4.2,D0170,CL.CFX,                  & 
+                  D2480, CL.BE.1, D2500,                   &
+                  CL.SA.1,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+
+CLFODO_P2: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.1,   &
+                  D2500, CL.BE.1, D1925,                   &
+                  D0100,CL.BPMA,D0500, D0100,D0125,               &
+                  CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.2,    &
+                  D1500,CL.COLS,D2150,&
+                        CL.BL.1,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
+                  CL.SA.3,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.3,    &
+                  D2150, CL.BL.1, D4650,                   &
+                  CL.SA.2,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  CL.QF.4.2,D0170,CL.CFX,                  & 
+                  D2480, CL.BE.1, D2500,                   &
+                  CL.SA.1,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+
+CLFODO_M1: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.4,   &
+                  D2500, CL.BE.2, D1925,                   &
+                  D0100,CL.BPMA, D0500, D0100,D0125,               &
+                  CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.5,    &
+                  D1500,CL.COLS,D2150,&
+                        CL.BL.2,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
+                  CL.SA.6,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.6,    &
+                  D2150, CL.BL.2, D4650,                   &
+                  CL.SA.5,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  CL.QF.4.2,D0170,CL.CFX,                  &
+                  D2480, CL.BE.2, D2500,                   &
+                  CL.SA.4,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+              
+CLFODO_M2: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.4,   &
+                  D2500, CL.BE.2, D1925,                   &
+                  D0100,CL.BPMA, D0500, D0100,D0125,               &
+                  CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.5,    &
+                  D4650, CL.BL.2, D0150, CL.OTRB, D0750, CL.COLM, D0750, &
+                  CL.SA.6,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.6,    &
+                  D2150, CL.BL.2, D4650,                   &
+                  CL.SA.5,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  CL.QF.4.2,D0170,CL.CFX,                  &
+                  D2480, CL.BE.2, D2500,                   &
+                  CL.SA.4,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+
+CLARCP:  Line = (CLFODO_P1, CLFODO_P2);
+CLARCM:  Line = (CLFODO_M1, CLFODO_M2);
+
+CL_ARCS: Line = (CLARCP, CLM, CLARCM);
+
+
+!  Total collimation section
+
+CL.START.ARC: MARKER
+CL: Line = (CL.START, LTCL, CL.START.ARC,CL_ARCS, CL.QFH.4.1, CL.END);
+
+MATCH_CL: SUBROUTINE !----------------------------------------------------------
+use,(l3,cl)
+beam,energy=2.4
+match,beta0=b0_l3.start
+vary,L3.QE.2[K1],step=0.01
+!vary,L3.QF.1[K1],step=0.01
+vary,L3.QF.2[K1],step=0.01
+vary,CL.QF.3[K1],step=0.01
+vary,CL.QH.1[K1],step=0.01
+vary,CL.QH.2[K1],step=0.01
+constraint, CL.START.ARC, beta0=b0_clarc.start
+!constraint, CL.START.ARC, betx=0.2,alfx=0, bety=3.0,alfy=0
+simplex
+migrad
+lmdif
+endmatch
+!use,clts
+!print, #s/#e
+use,(cl,cl.qfh.4.1)
+twiss, beta0=b0_cl.start, save
+plot,table=twiss,haxis=s, vaxis=betx,bety, spline,colour=100, &
+     vmin=0,vmax=500
+ENDSUBROUTINE !-----------------------------------------------------------------
