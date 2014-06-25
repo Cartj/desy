@@ -1,0 +1,217 @@
+'''
+input deck for XFEL SASE1 beamline
+Hardware-oriented 
+UNDER CONSTRUCTION
+'''
+
+beam = Beam()
+beam.E = 17.0
+beam.sigma_E = 0.0
+beam.I = 2.5e-10
+beam.emit_x = 1.752e-11
+beam.emit_y = 1.752e-11
+beam.beta_x = 33.7
+beam.beta_y = 23.218
+beam.alpha_x = 1.219
+beam.alpha_y = -0.842
+
+# undulators 
+
+und1 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x001")
+und2 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x002")
+und_x003 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x003")
+und_x004 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x004")
+und_x005 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x005")
+und_x006 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x006")
+und_x007 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x007")
+und_x008 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x008")
+und_x009 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x009")
+und_x010 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x010")
+und_x011 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x011")
+und_x012 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x012")
+und_x013 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x013")
+und_x014 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x014")
+und_x015 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x015")
+und_x016 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x016")
+und_x017 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x017")
+und_x018 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x018")
+und_x019 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x019")
+und_x020 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x020")
+und_x021 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x021")
+und_x022 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x022")
+und_x023 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x023")
+und_x024 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x024")
+und_x025 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x025")
+und_x026 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x026")
+und_x027 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x027")
+und_x028 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x028")
+und_x029 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x029")
+und_x030 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x030")
+und_x031 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x031")
+und_x032 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x032")
+und_x033 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x033")
+und_x034 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x034")
+und_x035 = Undulator (nperiods=125,lperiod=0.040,Kx=1.9657, id = "und_x035")
+
+# drift spaces
+
+d = Drift (l=1.0, id = "d")
+
+d1 = Drift (l=0.55, id = "d1")
+d2 = Drift (l=0.45, id = "d2")
+d3 = Drift (l=0.27, id = "d0.05nm3")
+
+# phase shifters
+
+l_ps = 0.0575
+
+ps_1_b1 = RBend (l=l_ps, angle=0.0, id = "ps_1_b1")
+ps_1_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_1_b2")
+ps_1_b3 = RBend (l=l_ps, angle=0.0, id = "ps_1_b3")
+
+ps_1 = (ps_1_b1, ps_1_b2, ps_1_b3)
+
+ps_2_b1 = RBend (l=l_ps, angle=0.0, id = "ps_2_b1")
+ps_2_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_2_b2")
+ps_2_b3 = RBend (l=l_ps, angle=0.0, id = "ps_2_b3")
+
+ps_2 = (ps_2_b1, ps_2_b2, ps_2_b3)
+
+ps_3_b1 = RBend (l=l_ps, angle=0.0, id = "ps_3_b1")
+ps_3_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_3_b2")
+ps_3_b3 = RBend (l=l_ps, angle=0.0, id = "ps_3_b3")
+
+ps_3 = (ps_3_b1, ps_3_b2, ps_3_b3)
+
+ps_4_b1 = RBend (l=l_ps, angle=0.0, id = "ps_4_b1")
+ps_4_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_4_b2")
+ps_4_b3 = RBend (l=l_ps, angle=0.0, id = "ps_4_b3")
+
+ps_4 = (ps_4_b1, ps_4_b2, ps_4_b3)
+
+ps_5_b1 = RBend (l=l_ps, angle=0.0, id = "ps_5_b1")
+ps_5_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_5_b2")
+ps_5_b3 = RBend (l=l_ps, angle=0.0, id = "ps_5_b3")
+
+ps_5 = (ps_5_b1, ps_5_b2, ps_5_b3)
+
+ps_6_b1 = RBend (l=l_ps, angle=0.0, id = "ps_6_b1")
+ps_6_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_6_b2")
+ps_6_b3 = RBend (l=l_ps, angle=0.0, id = "ps_6_b3")
+
+ps_6 = (ps_6_b1, ps_6_b2, ps_6_b3)
+
+ps_7_b1 = RBend (l=l_ps, angle=0.0, id = "ps_7_b1")
+ps_7_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_7_b2")
+ps_7_b3 = RBend (l=l_ps, angle=0.0, id = "ps_7_b3")
+
+ps_7 = (ps_7_b1, ps_7_b2, ps_7_b3)
+
+ps_8_b1 = RBend (l=l_ps, angle=0.0, id = "ps_8_b1")
+ps_8_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_8_b2")
+ps_8_b3 = RBend (l=l_ps, angle=0.0, id = "ps_8_b3")
+
+ps_8 = (ps_8_b1, ps_8_b2, ps_8_b3)
+
+ps_9_b1 = RBend (l=l_ps, angle=0.0, id = "ps_9_b1")
+ps_9_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_9_b2")
+ps_9_b3 = RBend (l=l_ps, angle=0.0, id = "ps_9_b3")
+
+ps_9 = (ps_9_b1, ps_9_b2, ps_9_b3)
+
+ps_10_b1 = RBend (l=l_ps, angle=0.0, id = "ps_10_b1")
+ps_10_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_10_b2")
+ps_10_b3 = RBend (l=l_ps, angle=0.0, id = "ps_10_b3")
+
+ps_10 = (ps_10_b1, ps_10_b2, ps_10_b3)
+
+ps_11_b1 = RBend (l=l_ps, angle=0.0, id = "ps_11_b1")
+ps_11_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_11_b2")
+ps_11_b3 = RBend (l=l_ps, angle=0.0, id = "ps_11_b3")
+
+ps_11 = (ps_11_b1, ps_11_b2, ps_11_b3)
+
+ps_12_b1 = RBend (l=l_ps, angle=0.0, id = "ps_12_b1")
+ps_12_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_12_b2")
+ps_12_b3 = RBend (l=l_ps, angle=0.0, id = "ps_12_b3")
+
+ps_12 = (ps_12_b1, ps_12_b2, ps_12_b3)
+
+ps_13_b1 = RBend (l=l_ps, angle=0.0, id = "ps_13_b1")
+ps_13_b2 = RBend (l=2*l_ps, angle=0.0, id = "ps_13_b2")
+ps_13_b3 = RBend (l=l_ps, angle=0.0, id = "ps_13_b3")
+
+ps_13 = (ps_13_b1, ps_13_b2, ps_13_b3)
+
+# quadrupoles 
+
+l_quad = 0.1
+
+qd_1 = Quadrupole (k1=0.0, l=l_quad, id = "qd_1")
+qf_2 = Quadrupole (k1=0.0, l=l_quad, id = "qf_2")
+qd_3 = Quadrupole (k1=0.0, l=l_quad, id = "qd_3")
+qf_4 = Quadrupole (k1=0.0, l=l_quad, id = "qf_4")
+qd_5 = Quadrupole (k1=0.0, l=l_quad, id = "qd_5")
+qf_6 = Quadrupole (k1=0.0, l=l_quad, id = "qf_6")
+qd_7 = Quadrupole (k1=0.0, l=l_quad, id = "qd_7")
+qf_8 = Quadrupole (k1=0.0, l=l_quad, id = "qf_8")
+qd_9 = Quadrupole (k1=0.0, l=l_quad, id = "qd_9")
+qf_10 = Quadrupole (k1=0.0, l=l_quad, id = "qf_10")
+qd_11 = Quadrupole (k1=0.0, l=l_quad, id = "qd_11")
+qf_12 = Quadrupole (k1=0.0, l=l_quad, id = "qf_12")
+qd_13 = Quadrupole (k1=0.0, l=l_quad, id = "qd_13")
+qf_14 = Quadrupole (k1=0.0, l=l_quad, id = "qf_14")
+qd_15 = Quadrupole (k1=0.0, l=l_quad, id = "qd_15")
+qf_16 = Quadrupole (k1=0.0, l=l_quad, id = "qf_16")
+qd_17 = Quadrupole (k1=0.0, l=l_quad, id = "qd_17")
+
+
+# phase shifter settings for 0.05 nm wavelength
+
+ang_005nm = 1.7926311e-5
+
+ps_1_b1.angle = ang_005nm
+ps_1_b2.angle = -2*ang_005nm
+ps_1_b3.angle = ang_005nm
+
+ps_2_b1.angle = ang_005nm
+ps_2_b2.angle = -2*ang_005nm
+ps_2_b3.angle = ang_005nm
+
+ps_3_b1.angle = ang_005nm
+ps_3_b2.angle = -2*ang_005nm
+ps_3_b3.angle = ang_005nm
+
+ps_4_b1.angle = ang_005nm
+ps_4_b2.angle = -2*ang_005nm
+ps_4_b3.angle = ang_005nm
+
+
+# quadrupole settings for ~28m mean beta
+
+kqf = 0.7181242
+kqd = -0.7181242
+
+qd_1.k1 = kqd
+qf_2.k1 = kqf
+qd_3.k1 = kqd
+qf_4.k1 = kqf
+
+
+#
+# undulator line definition
+#
+
+sase1 = (und_x001, d2, qd_1, ps_1, d3,
+		 und_x002, d2, qf_2, ps_2, d3,
+		 und_x003, d2, qd_3, ps_3, d3,
+		 und_x004, d2, qf_4, ps_4, d3,
+		 und_x005, d2, qd_5, ps_5, d3,
+		 und_x006, d2, qf_6, ps_6, d3,
+		 und_x007, d2, qd_7, ps_7, d3,
+		 und_x008, d2, qf_8, ps_8, d3,
+		 und_x009, d2, qd_9, ps_9, d3,
+		 und_x010, d2, qf_10, ps_10, d3,
+		 und_x011, d2, qd_11, ps_11, d3,
+		 und_x012, d2, qf_12, ps_12, d3,
+		 und_x013, d2, qd_13, ps_13, d3)
