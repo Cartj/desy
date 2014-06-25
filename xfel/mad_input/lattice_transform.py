@@ -11,21 +11,21 @@ from numpy import *
 
 emass = 0.511e-3
 
-name = "desy/xfel/input_files/XFEL_DEFS.txm"
+name = "desy/xfel/mad_input/XFEL_DEFS.txm"
 #xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
-name = "desy/xfel/input_files/XFEL_LINAC.txm"
+name = "desy/xfel/mad_input/XFEL_LINAC.txm"
 xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
-name = "desy/xfel/input_files/XFEL_I1.txm"
+name = "desy/xfel/mad_input/XFEL_I1.txm"
 xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
-name = "desy/xfel/input_files/XFEL_DEFS.inp"
+name = "desy/xfel/mad_input/XFEL_DEFS.inp"
 exec( open(sys.path[0][:ind] + name))
 
-name = "desy/xfel/input_files/XFEL_LINAC.inp"
+name = "desy/xfel/mad_input/XFEL_LINAC.inp"
 exec( open(sys.path[0][:ind] + name))
-name = "desy/xfel/input_files/XFEL_I1.inp"
+name = "desy/xfel/mad_input/XFEL_I1.inp"
 
 exec( open(sys.path[0][:ind] + name))
 
