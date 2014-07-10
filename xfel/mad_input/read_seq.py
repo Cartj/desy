@@ -8,24 +8,17 @@ from ocelot.cpbd.elements import *
 from ocelot.adaptors.lat2inp import lat2input
 from numpy import *
 
-
+from ocelot.cpbd.elements import *
+from ocelot.cpbd.optics import *
+from ocelot.gui.accelerator import *
+exec(open("injector.inp"))
 emass = 0.511e-3
 
-name = "desy/xfel/mad_input/XFEL_DEFS.txm"
+name = "desy/xfel/mad_input/XFEL.seq"
 #xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
-name = "desy/xfel/mad_input/XFEL_LINAC.txm"
-xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
-name = "desy/xfel/mad_input/XFEL_I1.txm"
-xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
-
-name = "desy/xfel/mad_input/XFEL_DEFS.inp"
-exec( open(sys.path[0][:ind] + name))
-
-name = "desy/xfel/mad_input/XFEL_LINAC.inp"
-exec( open(sys.path[0][:ind] + name))
-name = "desy/xfel/mad_input/XFEL_I1.inp"
+name = "desy/xfel/mad_input/XFEL.inp"
 
 exec( open(sys.path[0][:ind] + name))
 
@@ -33,9 +26,9 @@ exec( open(sys.path[0][:ind] + name))
 lat = MagneticLattice(i1, energy = 2.5)
 print lat.totalLen, len(lat.sequence)
 
-for elem in lat.sequence:
-    if elem.tilt != 0:
-        print elem.id, elem.type, elem.l, elem.tilt
+#for elem in lat.sequence:
+#    if elem.tilt != 0:
+#        print elem.id, elem.type, elem.l, elem.tilt
 
 def collect_drifts(lat):
     drift = 0
@@ -161,6 +154,7 @@ lines = lat2input(lat)
 f = open("injector.inp", 'w')
 f.writelines(lines)
 f.close()
+
 #print len(drifts), len(quads), len(cavs), len(bends), len(sexs)
 #for elem in drifts:
 #    print elem.id, elem.l #, elem.type, elem.angle, elem.e1, elem.e2
@@ -168,3 +162,30 @@ f.close()
     #print elem.type, elem.l, elem.id
 #lat = MagneticLattice(superperiod, energy = 2.5)
 #tws = twiss(lat,tw0,nPoints=1000 )
+
+exec(open("injector.inp"))
+
+lat = MagneticLattice(lattice)
+
+print lat.totalLen
+tws0 = Twiss()
+tws0.beta_x = 30
+tws0.beta_y = 30
+tws0.alpha_x = 15
+tws0.alpha_y = 12.5
+
+tws0.E = 0.001 * GeV
+L = 0.
+for elem in lat.sequence:
+    L+=elem.l
+    print L, elem.type, elem.id
+# first assign energies to elements
+tws = twiss(lat, tws0, nPoints=None)
+plot_opt_func(lat, tws, top_plot="Dx")
+
+lat.update_transfer_maps()
+
+tws = twiss(lat, tws0, nPoints=None)
+plot_opt_func(lat, tws, top_plot="Dy")
+
+plt.show()

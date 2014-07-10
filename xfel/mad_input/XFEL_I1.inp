@@ -128,8 +128,8 @@ i1_undulator  = (d0030,i1_undu,d0030)
 
 
 i1_bk = Bend(l=0.3, angle=45/180*pi, id = 'i1_bk')
-i1_sola = Scavenger(l=0, id = 'i1_sola')
-i1_solb = Scavenger(l=0, id = 'i1_solb')
+i1_sola = Solenoid(l=0, id = 'i1_sola')
+i1_solb = Solenoid(l=0, id = 'i1_solb')
 
 
 # vacuum system Scavenger

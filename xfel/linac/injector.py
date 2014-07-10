@@ -15,21 +15,24 @@ for elem in lat.sequence:
 '''
 
 tws0 = Twiss()
-tws0.beta_x = 1
-tws0.beta_y = 1
-tws0.alpha_x = 0
-tws0.alpha_y = 0
+tws0.beta_x = 30
+tws0.beta_y = 30
+tws0.alpha_x = 7
+tws0.alpha_y = 7.5
 
 tws0.E = 0.001 * GeV
-
+L = 0.
+for elem in lat.sequence:
+    L+=elem.l
+    print L, elem.type, elem.id
 # first assign energies to elements
-tws = twiss(lat, tws0)
-plot_opt_func(lat, tws)
+tws = twiss(lat, tws0, nPoints=None)
+plot_opt_func(lat, tws, top_plot="Dx")
 
 lat.update_transfer_maps()
 
-tws = twiss(lat, tws0)
-plot_opt_func(lat, tws)
+tws = twiss(lat, tws0, nPoints=None)
+plot_opt_func(lat, tws, top_plot="Dy")
 
 plt.show()
 
