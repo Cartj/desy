@@ -1,0 +1,52 @@
+&run_setup   
+      lattice = XFEL_BC2_new.lte
+	default_order=2,
+      use_beamline = BC2_L3
+	p_central_mev = 2400.0047
+	magnets = %s.mag,
+	parameters= %s.par
+      sigma = %s.sig,
+      centroid = %s.cen,
+      final = %s.fin,
+      print_statistics = 0
+	element_divisions=0
+      always_change_p0=0
+&end
+
+&run_control
+        n_steps = 1
+&end
+
+&twiss_output
+      filename = %s.twi
+      matched = 0,  
+      output_at_each_step=0, 
+      beta_x = 41.1209
+      beta_y = 86.3314
+      alpha_x = 1.9630
+      alpha_y = 4.0972
+	higher_order_chromaticity = 0
+	final_values_only=0
+&end
+
+&floor_coordinates
+    filename = %s.flo
+    magnet_centers = 1
+    include_vertices = 1	
+&end
+
+&save_lattice
+    filename = %s.new
+&end
+
+
+!&sdds_beam
+!   	input = particles.sdds
+!	center_arrival_time=0 	
+!&end
+
+!&track
+!    center_momentum_also=0
+!&end
+
+
