@@ -7,6 +7,9 @@
 #
 
 
+from numpy import *
+from ocelot.cpbd.elements import *
+from ocelot.cpbd.beam import *
 
 #q = charge(total=1e-9, id = 'q')
 #m0 = watch(filename="%s.m0", id = 'm0')
@@ -30,7 +33,7 @@ l0 = 0.5
 
 l_bc2 = l0 *phi_bc2 /sin((phi_bc2))
 
-ac_v = 5e+008*GeV
+ac_v = 5e+008
 #ac_v = 0
 
 
