@@ -8,11 +8,11 @@ from cgi import escape
 import sys, os
 from flup.server.fcgi import WSGIServer
 
-import xframework.adaptors.genesis as genesis
-from xframework.utils.xdb import Xdb
-from xframework.cpbd.elements import Magnet, Quadrupole, RBend, Drift, Undulator, MagneticLattice
-from xframework.cpbd.beam import Beam
-from xframework.cpbd.optics import *
+import ocelot.adaptors.genesis as genesis
+from ocelot.utils.xdb import Xdb
+from ocelot.cpbd.elements import Magnet, Quadrupole, RBend, Drift, Undulator, MagneticLattice
+from ocelot.cpbd.beam import Beam
+from ocelot.cpbd.optics import *
 
 import numpy as np
 from numpy import *
