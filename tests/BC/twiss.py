@@ -22,7 +22,7 @@ beam.alpha_y = 4.0972
 
 tw0 = Twiss(beam)
 print tw0
-tws=twiss(lat, tw0, nPoints = 1000)
+tws=twiss(lat, tw0, nPoints = 2000)
 
 
 f=plt.figure()
