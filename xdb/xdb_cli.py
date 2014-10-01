@@ -1,15 +1,34 @@
 import sys
-import ocelot.common.xio as xio
-from ocelot.utils.xdb import Xdb
+#import ocelot.common.xio as xio
+from xdb import Xdb
 
-from ocelot.cpbd.elements import Element, Quadrupole, RBend, Drift, Undulator, MagneticLattice
-from ocelot.cpbd.beam import Beam
-from ocelot.cpbd.optics import *
+import time
 
 import numpy.fft as fft
 
+import scipy.special as sf
+import scipy.integrate as integrate
+from numpy.polynomial.chebyshev import *
+from numpy import *
+import numpy as np
+
+from ocelot.cpbd.elements import Element, Quadrupole, RBend, Drift, Undulator, MagneticLattice, Hcor, Vcor
+from ocelot.cpbd.beam import Beam, ParticleArray
+from ocelot.cpbd.optics import *
+
+from ocelot.common.screen import Screen
+from ocelot.common.xio import XIO
+
+from ocelot.rad.sr import *
+from ocelot.fel.fel import *
+from ocelot.adaptors.genesis import *
+from copy import deepcopy, copy
+
+from pylab import *
+
+
 sys.path.append('../utils/')
-from xfel_utils import *
+#from xfel_utils import *
 
 def test_twiss():
     xdb = Xdb(index_file='/home/iagapov/data/xdb/test/index.h5', mode='r')
@@ -181,9 +200,10 @@ def plot_stats(idx='', base='', root='/FEL/', dump_ascii=False, columns=['all'])
     mu, sig = fit_gauss_1d(t, s_mean)
     sig2 = fwhm(t, s_mean)
     print 'pulse bandwidth, eV, (2*rms/ FWHM): ', 2*sig, sig2, '(', 2 * 100 * sig/E_gamma, 100 * sig2/E_gamma, '%)'
-    print 'Max brightness (mean) [AU]: ', np.max(s_mean) / 1.e8
-    print 'Max brightness (med) [AU]: ', np.max(s_med) / 1.e8
-	
+    print 'Max brightness (mean) [N_phot / 0.1% bw]:', np.max(s_mean) 
+    print 'Max brightness (med) [N_phot / 0.1% bw]: ', np.max(s_med) 
+
+    '''	
     X = E_gamma * 1.e-3
     print '0.1%bw=', X
     I = np.sum(s_mean) * (t[1] - t[0])
@@ -191,7 +211,8 @@ def plot_stats(idx='', base='', root='/FEL/', dump_ascii=False, columns=['all'])
     Y = Ng / I
     print 'Y' , Ng / (I )
     print 'Max brightness (mean) [N_phot / 0.1% bw]: ', np.max(s_mean) * Y * X
-    
+    '''    
+
     if dump_ascii:
 	    f=open('spec.txt','w')
 	    for i in xrange(len(t)):
@@ -279,8 +300,8 @@ def plot_stats(idx='', base='', root='/FEL/', dump_ascii=False, columns=['all'])
     
     z = np.array(xdb.file[root + base + '/z'])
 
-    power_z = np.array(xdb.file[root + base + '/power_z_mean'])
-    power_z_std = np.array(xdb.file[root + base + '/power_z_std'])
+    power_z = np.array(xdb.file[root + base + '/pulse_energy_mean'])
+    power_z_std = np.array(xdb.file[root + base + '/pulse_energy_std'])
 
     fact = E_pulse * 1.e3 / power_z[-1] 
     power_z *= fact
@@ -311,12 +332,14 @@ def extract(path, ran, h5_file = None):
 
     h = 4.135667516e-15
     c = 299792458.0
-    verbose = False
+    verbose = True
+    
+    if verbose: print 'extracting', path, ran
     
     powers_z = []
     spectra = []
     pulses = []
-    total_power = []
+    pulse_energy = []
     fields_mean = []
     fields_onaxis = []
           
@@ -384,7 +407,7 @@ def extract(path, ran, h5_file = None):
             
             spectra.append( np.real(spec) )
                     
-            total_power.append( sum(P) * zsep * xlamds / c  )
+            pulse_energy.append( sum(P) * zsep * xlamds / c  )
         
             fields_mean.append(E)
 	    fields_onaxis.append(E_onaxis)
@@ -398,9 +421,11 @@ def extract(path, ran, h5_file = None):
         fig.add_subplot(111)
         
         pz_mean, pz_std, pz_med, pz_worst, imed, iworst = stats(powers_z)
-        plot(g.z, pz_med, 'b', lw=3)
+		
+	plot(g.z, pz_med, 'b', lw=3)
         errorbar(g.z, pz_mean, yerr=pz_std, fmt='r--',lw=1, capsize=7)
-        
+	
+     
         
         fig = figure()
         fig.add_subplot(111)
@@ -412,15 +437,23 @@ def extract(path, ran, h5_file = None):
         slices = readRadiationFile(fileName=slice_files[imed], npoints=npoints)
         slices_2d = np.zeros(slices[0,:,:].shape, dtype=complex)
         
+	
+	E_pulse_med = 1.e3 * np.sum(p_med) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
+	E_pulse_mean = 1.e3 * np.sum(p_mean) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
+        fact = E_pulse_med / pz_med[-1]                                           # to give pulse energy vs. z in mJ
+        pz_med *= fact
+	pz_std *= fact
+	pz_mean *= fact
+	pz_worst *= fact
+
+	
         #print slices_2d.shape
         for i in xrange(slices.shape[0]):
             slices_2d[:,:] += slices[i,:,:]
         
         plot(t, p_med, 'g', lw=3)
         errorbar(t, p_mean, yerr=p_std, fmt='r--',lw=1, capsize=7)
-    
-        n_gamma = np.sum(p_mean)
-        
+            
         mu1,mu2, sig1, sig2, sig12 =  fit_gauss_2d(np.linspace(-dgrid/2.0,dgrid/2.0, npoints),np.linspace(-dgrid/2.0,dgrid/2.0, npoints), slices_2d)
         
         field_sig_x, field_sig_y = sig1, sig2
@@ -441,26 +474,37 @@ def extract(path, ran, h5_file = None):
     
         figure()
 	    
-        n, bins = histogram(total_power / mean(total_power), 40, normed=False)
+	    
+	X = E_gamma * 1.e-3 #0.1% bw
+        Ng = E_pulse_mean / 1.5e-19 / E_gamma 
+        Is = np.sum(s_mean) * (t[1] - t[0])
+        Y = Ng / Is
+	s_mean *= (X*Y)
+	s_med *= (X*Y)
+	s_std *= (X*Y)
+	
+        n, bins = histogram(pulse_energy / mean(pulse_energy), 40, normed=False)
         bar( bins[1:] - (bins[1]-bins[0])/2.0 , n, width = (bins[1]-bins[0]), alpha=0.5)
     
         if h5_file != None:
             print 'writing to ', h5_file
             xdb = Xdb(index_file=h5_file, mode='w')
-            
+       
             params = {}
             
-            params['n_gamma'] = n_gamma
-            params['power_z_mean'] = pz_mean
-            params['power_z_med'] = pz_med
-            params['power_z_std'] = pz_std
+	    ''' data sets '''
+            
+	    params['pulse_energy_mean'] = pz_mean
+            params['pulse_energy_med'] = pz_med
+            params['pulse_energy_std'] = pz_std
+	    
             params['pulse_power_mean'] = np.real(p_mean)
             params['pulse_power_med'] = np.real(p_med)
             params['pulse_power_std'] = np.real(p_std)
             params['spec_mean'] = np.real(s_mean)
             params['spec_med'] = np.real(s_med)
             params['spec_std'] = np.real(s_std)
-            params['total_power'] = np.real(total_power)
+            params['pulse_energy'] = np.real(pulse_energy)
 	    
             #params['field_med'] = slices_2d
             params['field_avg'] = fields_mean[f_imed]
@@ -473,10 +517,14 @@ def extract(path, ran, h5_file = None):
             params['z'] = np.array(g.z)
             params['I'] = np.array(g.I)
             params['freq_ev'] = np.real(freq_ev)
-            #params['version'] = 'v0'
+	    
+	    
+	    ''' attributes'''
+	    
             params['dgrid'] = dgrid
             params['e_gamma'] = E_gamma
-            
+            params['format'] = 'fel_stat_v1'	    
+	    
             xdb.add_fel_calculation('sase/', params, root='/')
                         
         show()
@@ -542,6 +590,7 @@ if args.create_db:
     
 if args.extract:
     i1, i2 = get_range(args.range, args.path)
+    #print i1, i2
     #print 'extracting from {} to {} range {}:{}'.format(args.path, args.file, i1, i2)
     from mpi4py import MPI
     comm = MPI.COMM_WORLD
