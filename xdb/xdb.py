@@ -93,7 +93,7 @@ class Xdb:
         # TODO: add validation        
         for p in params.keys(): 
             data = params[p]
-            print data.__class__
+            print 'adding parameter', p, data.__class__
             if data.__class__ in (str, float, complex, int):
                 gu.attrs[p] = data
             if data.__class__ == numpy.ndarray:
