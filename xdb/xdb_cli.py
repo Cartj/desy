@@ -387,7 +387,7 @@ def extract(path, ran, h5_file = None):
         if rank == 0:
             P = np.zeros_like(slices[:,0,0])
             E = np.zeros_like(slices[:,0,0])
-	    E_onaxis = np.zeros_like(slices[:,0,0])
+            E_onaxis = np.zeros_like(slices[:,0,0])
             for i in xrange(len(P)):
                 P[i] = sum( np.multiply( np.abs(slices[i,:,:]), np.abs(slices[i,:,:]) ) )
                 
@@ -422,7 +422,7 @@ def extract(path, ran, h5_file = None):
         
         pz_mean, pz_std, pz_med, pz_worst, imed, iworst = stats(powers_z)
 		
-	plot(g.z, pz_med, 'b', lw=3)
+        plot(g.z, pz_med, 'b', lw=3)
         errorbar(g.z, pz_mean, yerr=pz_std, fmt='r--',lw=1, capsize=7)
 	
      
@@ -436,15 +436,13 @@ def extract(path, ran, h5_file = None):
         p_mean, p_std, p_med, p_worst, imed, iworst = stats(pulses)	
         slices = readRadiationFile(fileName=slice_files[imed], npoints=npoints)
         slices_2d = np.zeros(slices[0,:,:].shape, dtype=complex)
-        
-	
-	E_pulse_med = 1.e3 * np.sum(p_med) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
-	E_pulse_mean = 1.e3 * np.sum(p_mean) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
+        E_pulse_med = 1.e3 * np.sum(p_med) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
+        E_pulse_mean = 1.e3 * np.sum(p_mean) * ( 1.e-15*(t[-1] - t[0]) ) / len(t)   # pulse energy in mJ
         fact = E_pulse_med / pz_med[-1]                                           # to give pulse energy vs. z in mJ
         pz_med *= fact
-	pz_std *= fact
-	pz_mean *= fact
-	pz_worst *= fact
+        pz_std *= fact
+        pz_mean *= fact
+        pz_worst *= fact
 
 	
         #print slices_2d.shape

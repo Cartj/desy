@@ -15,8 +15,10 @@ from ocelot.cpbd.elements import Element, Quadrupole, RBend, Drift, Undulator, M
 from ocelot.cpbd.beam import Beam, ParticleArray
 from ocelot.cpbd.optics import *
 
+from ocelot.optics.utils import *
+
 from ocelot.common.screen import Screen
-from ocelot.common.xio import XIO
+#from ocelot.common.xio import XIO
 
 #from ocelot.adaptors import srwutil as srw
 
@@ -426,4 +428,34 @@ def plot_beam_2(fig, beam, iplot=0):
         #plt.plot(1.e6 * beam.z[beam.idx_max],beam.betax[beam.idx_max], 'bs')
         
         ax.legend([p1,p2],[r'$\beta_x$',r'$\beta_y$'])
+
+'''
+configurable to e.g. semi-empirical models
+'''
+class FelSimulator(object):
+    
+    def __init__(self):
+        self.engine = 'genesis'
+    
+    def run(self):
+        if self.engine == 'test_1d':
+            w1 = read_signal(file_name=self.input, npad = self.npad , E_ref = self.E_ev)
+            return w1, None
+        if self.engine == 'test_3d':
+            ''' produced  sliced field '''
+            w1 = read_signal(file_name=self.input, npad = self.npad , E_ref = self.E_ev)
+            s3d = Signal3D()
+            s3d.fs = [w1, deepcopy(w1), deepcopy(w1), deepcopy(w1)]
+            s3d.mesh_size = (2,2)            
+            return s3d, None
+        if self.engine == 'test_genesis':
+            ''' read test sliced field '''
+            g = readGenesisOutput(self.input)
+            print 'read sliced field ', g('ncar'), g.nSlices
+            slices = readRadiationFile(fileName=self.input + '.dfl', npoints=g('ncar'))            
+            s3d = Signal3D()
+            s3d.slices = slices
+            s3d.mesh_size = (int(g('ncar')),int(g('ncar'))) 
+            s3d.g = g           
+            return s3d, None
 

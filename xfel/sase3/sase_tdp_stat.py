@@ -1,7 +1,7 @@
 '''
 statistical run SASE
 '''
-from xframework.gui.accelerator import *
+from ocelot.gui.accelerator import *
 sys.path.append('../utils/')
 from xfel_utils import *
 
@@ -10,7 +10,7 @@ launcher = get_genesis_launcher(384)
 
 beta_av = 15.0
 
-exec( open("sase3.inp" ))
+from sase3 import *
 lat = MagneticLattice(sase3_segment(n=11))
 
 rematch(beta_av, l_fodo, qdh, lat, extra_fodo, beam, qf, qd) # jeez...
@@ -32,6 +32,7 @@ up.printParameters()
 # donno wtf it comes from -- probably section not multiple of xlamd, correcting out for roundoff
 qf.k1 *= (0.37)*2
 qd.k1 *= (0.37)*2
+
 
 inp = generate_input(up, beam, itdp=True)
 inp.lattice_str = generate_lattice(lat, unit = up.lw*2, energy = beam.E )

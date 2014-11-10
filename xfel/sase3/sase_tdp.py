@@ -92,40 +92,20 @@ if len(sys.argv)>3: inp.zstop = float(sys.argv[3])
 
 s2e = True
 if s2e:
-<<<<<<< .mine
-	beam_new = transform_beam_file(beam_file = '../beams/beam_0.5nC_wake.txt',  
-								transform = [ [beam.beta_x,beam.alpha_x], [beam.beta_y,beam.alpha_y] ], 
-								energy_scale = beam.E / 17.5)
-=======
 	beamf = '../beams/beam_0.1nC_sase1_12kev_fresh.txt'
 	#beamf = '../beams/beam_0.02nC.txt'
 	beam_new = transform_beam_file(beam_file = beamf,  
 						transform = [ [beam.beta_x,beam.alpha_x], [beam.beta_y,beam.alpha_y] ], 
 						energy_scale = beam.E / 14.0)
->>>>>>> .r427
 	
 	inp.nslice = 0
 	inp.zsep = int(beam_new.zsep / inp.xlamds)
 	inp.beamfile = 'tmp.beam'
 	inp.beam_file_str = beam_new.f_str
-<<<<<<< .mine
-	
 	
 	plot_beam(plt.figure(), beam_new)
 	plt.show()
 	
-=======
-	
-	#plot_beam(plt.figure(), beam_new)
-	#plt.show()
-		
->>>>>>> .r427
-<<<<<<< .mine
-	print inp.beam_file_str
-	sys.exit(0)
-
-=======
->>>>>>> .r427
 
 if not stat:
 	inp.runid = next_run_id(get_data_dir())

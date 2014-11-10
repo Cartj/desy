@@ -73,9 +73,6 @@ bar(x,y, lw=1, alpha=0.5)
 grid(True)
 ax.set_ylabel(r'$K/K_0$')
 ax.set_xlabel(r'$N_{segment}$')
-show()
-
-sys.exit(0)
 
 #lat2 = detune_k(lat2, 0.0)
 

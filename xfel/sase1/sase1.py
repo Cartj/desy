@@ -2,11 +2,16 @@
 input deck for XFEL SASE3 beamline
 '''
 
-from xframework.cpbd.elements import *
-from xframework.cpbd.beam import *
+from ocelot.cpbd.elements import *
+from ocelot.optics.elements import Crystal
+from ocelot.optics.bragg import *
+from ocelot.cpbd.beam import *
 import numpy as np
 
-
+m = 1.0
+cm = 1.e-2
+mm = 1.e-3
+mum = 1.e-6
 
 und = Undulator (nperiods=125,lperiod=0.040,Kx=0.0, id = "und"); voodoo=0.69
 
@@ -36,6 +41,19 @@ def sase1_segment(n=0): return (und, d2, qd, psu) + n*cell_ps
 # for matching
 extra_fodo = (und, d2, qdh)
 l_fodo = qf.l / 2 + (b1.l + b2.l + b2.l + b1.l + d3.l) + und.l + d2.l + qf.l / 2 
+
+#self-seeding
+chicane = Drift(l=5.1)
+chicane.cryst = Crystal(r=[0,0,0*cm], size=[5*cm,5*cm,100*mum], no=[0,0,-1], id="cr1")
+chicane.cryst.lattice =  CrystalLattice('C')
+chicane.cryst.psi_n = -pi/2. #input angle psi_n according to Authier (symmetric reflection, Si)
+
+'''
+TODO: for future
+geo = Geometry([cr1])
+chicane.geo = geo
+chicane.geo_transform = t
+'''
 
 # uncomment this for simplified SR calculation
 ## und = Undulator (nperiods=125*35,lperiod=0.040,Kx=1.9657, id = "und")
@@ -76,4 +94,61 @@ beam.I = 1.0e-9 * beam.C / ( np.sqrt(2*pi) * beam.tpulse * 1.e-15 )
 
 #beam.emit = {0.02: [0.32e-6,0.32e-6], 0.1: [0.39e-6,0.39e-6], 0.25: [0.6e-6,0.6e-6], 0.5: [0.7e-6,0.7e-6], 1.0: [0.97e-6,0.97e-6]}
 beam.emit = {0.02: [0.2e-6,0.18e-6], 0.1: [0.32e-6,0.27e-6], 0.25: [0.4e-6,0.36e-6], 0.5: [0.45e-6,0.42e-6], 1.0: [0.8e-6,0.84e-6]}
+
+def f1(n, n0, a0, a1, a2):
+    '''
+    piecewise-quadratic tapering function
+    '''
+    for i in xrange(1,len(n0)):
+        if n < n0[i]:
+            return a0 + (n-n0[i-1])*a1[i-1] + (n-n0[i-1])**2 * a2[i-1]
+        a0 += (n0[i]-n0[i-1])*a1[i-1] + (n0[i]-n0[i-1])**2 * a2[i-1]
+    
+    return 1.0
+
+def f2(n, n0, a0, a1, a2):
+    '''
+    exponential tapering
+    '''
+    
+    if n <= n0:
+        return a0
+    
+    return a0 * (  1 + a1 * (n - n0)**a2 )
+
+
+
+def get_taper_coeff(ebeam, ephoton):
+    if ebeam == 14:
+        if ephoton > 400 and ephoton < 1000:
+            n0 = [0,6,25,35]
+            a0 = 0.999
+            a1 = [-0., -0.001,  -0.00 ]
+            a2 = [0., -0.00012, -0.000 ]
+            return n0, a0, a1, a2
+        if ephoton >= 1000 and ephoton < 2000:
+            n0 = [0,7, 25,35]
+            a0 = 0.999
+            a1 = [-0., -0.001,  -0.00 ]
+            a2 = [0., -0.00012, -0.000 ]
+            return n0, a0, a1, a2
+        if ephoton >= 2000 and ephoton < 2999:
+            n0 = [0,8, 25,35]
+        #n0 = [0,10, 25,35] # 1nc
+            a0 = 0.999
+            a1 = [-0., -0.001,  -0.00 ]
+            a2 = [0., -0.0001, -0.000 ]
+        #a2 = [0., -0.00005, -0.000 ]
+            return n0, a0, a1, a2
+        if ephoton >= 2999:
+            n0 = [0,10, 25,35]
+        #n0 = [0,13, 25,35] # 1nc
+            a0 = 0.999
+            a1 = [-0., -0.001,  -0.00 ]
+            a2 = [0., -0.0001, -0.000 ]
+            return n0, a0, a1, a2
+
+    if ebeam == 8.5:
+        pass
+
 
