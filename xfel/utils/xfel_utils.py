@@ -22,7 +22,7 @@ from ocelot.common.screen import Screen
 
 #from ocelot.adaptors import srwutil as srw
 
-import os, socket
+import os, socket, errno
 from ocelot.utils.launcher import *
 
 
@@ -119,8 +119,15 @@ def rematch(beta_mean, l_fodo, qdh, lat, extra_fodo, beam, qf, qd):
 
 
 def run(inp, launcher):
-
-    os.makedirs(inp.run_dir)
+    
+    try:
+        os.makedirs(inp.run_dir)
+    except OSError as exc: 
+        if exc.errno == errno.EEXIST and os.path.isdir(inp.run_dir):
+            pass
+        else: raise
+    
+    
     open(inp.run_dir + '/lattice.inp','w').write( inp.lattice_str )
     open(inp.run_dir + '/tmp.cmd','w').write("tmp.gen\n")
     open(inp.run_dir + '/tmp.gen','w').write(inp.input())   

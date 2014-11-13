@@ -1,7 +1,7 @@
 '''
 SASE
 '''
-from xframework.gui.accelerator import *
+from ocelot.gui.accelerator import *
 sys.path.append('../utils/')
 from xfel_utils import *
 
@@ -20,13 +20,22 @@ if len(sys.argv)>4:
 	stat = True
 	print 'statistical', sys.argv[4]
 
-beam.E=float(sys.argv[1])
+try:
+	beam.E=float(sys.argv[1])
+except:
+	beam.E = 14.0
 
 # print out UR parameter estimates
 up = UndulatorParameters(und)
 up.E = beam.E
 up.printParameters()
-und.Kx = up.get_k(float(sys.argv[2]))
+
+try:
+	E_gamma = float(sys.argv[2])
+except:
+	E_gamma = 1000.0 
+
+und.Kx = up.get_k(E_gamma)
 up = UndulatorParameters(und)
 up.E = beam.E
 up.printParameters()
@@ -37,7 +46,7 @@ beam.sigma_E = 0.005
 qf.k1 *= voodoo
 qd.k1 *= voodoo
 
-n0, a0, a1, a2 = get_taper_coeff(14, float(sys.argv[2]))
+n0, a0, a1, a2 = get_taper_coeff(14, E_gamma)
 
 
 # fix 
@@ -101,6 +110,7 @@ if s2e:
 	inp.nslice = 0
 	inp.zsep = int(beam_new.zsep / inp.xlamds)
 	inp.beamfile = 'tmp.beam'
+	inp.fieldfile = 'test.dfl'
 	inp.beam_file_str = beam_new.f_str
 	
 	plot_beam(plt.figure(), beam_new)
@@ -108,10 +118,26 @@ if s2e:
 	
 
 if not stat:
-	inp.runid = next_run_id(get_data_dir())
-	inp.run_dir = get_data_dir() + 'run_' + str(inp.runid)
-	output_file = inp.run_dir + '/run.' + str(inp.runid) + '.gout'
+	try:
+		inp.runid = next_run_id(get_data_dir())		
+		inp.run_dir = get_data_dir() + 'run_' + str(inp.runid)
+		output_file = inp.run_dir + '/run.' + str(inp.runid) + '.gout'
+	except:
+		inp.runid = 0
+		inp.run_dir = './run_' + str(inp.runid)
+		output_file = inp.run_dir + '/run.' + str(inp.runid) + '.gout'	
+	
+	import errno
+	try:
+		os.makedirs(inp.run_dir)
+	except OSError as exc: # Python >2.5
+		if exc.errno == errno.EEXIST and os.path.isdir(inp.run_dir):
+			pass
+		else: raise
+
+	os.rename('test.dfl', 'run_0/test.dfl')	
 	g = run(inp, launcher)
+	
 	if True: show_output(g, show_field = True, output_file = output_file, show_slice=396)
 else:
 
