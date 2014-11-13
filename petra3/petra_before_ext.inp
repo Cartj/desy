@@ -1662,7 +1662,7 @@ s1 = Sextupole(l = 0.2853, k2 = -4.184332365, tilt = 0, id = 's1')
 
 # octupole 
 
-# cavity 
+# cavity
 
 # rfcavity 
 rf7 = RFcavity(l = 2.1, volt = 1.66, lag = 0.5, harmon = 3840, id = 'rf7')

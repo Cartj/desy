@@ -15,7 +15,14 @@ beam.E = 6
 beam.sigma_E = 0.001
 beam.I = 0.1
 
-exec( open("petra_after_ext.inp"))
+def RFcavity(l, volt, lag, harmon, id):
+    rf = Cavity(l = l, id = id)
+    rf.volt = volt
+    rf.lag = lag
+    rf.harmon = harmon
+    return rf
+
+exec( open("petra_before_ext.inp"))
 
 
 lat = MagneticLattice(lattice, energy = beam.E)
