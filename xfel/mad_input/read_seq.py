@@ -3,9 +3,9 @@ import sys
 ind = sys.path[0].find("desy")
 sys.path.append(sys.path[0][:ind])
 print sys.path[0][:ind]
-from ocelot.adaptors.txm2ocelot import xfel2ocelot
+from ocelot.adaptors.mad8 import lattice_str_from_mad8
 from ocelot.cpbd.elements import *
-from ocelot.adaptors.lat2inp import lat2input
+from ocelot.cpbd.io import lat2input
 from numpy import *
 
 from ocelot.cpbd.elements import *
@@ -15,7 +15,7 @@ exec(open("injector.inp"))
 emass = 0.511e-3
 
 name = "desy/xfel/mad_input/XFEL.seq"
-#xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+#lattice_str_from_mad8(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
 
 name = "desy/xfel/mad_input/XFEL.inp"
