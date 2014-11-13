@@ -25,6 +25,7 @@ from sase1 import *
 import numpy.fft as fft
 
 
+
 '''
 configurable to e.g. semi-empirical models
 '''
@@ -83,7 +84,7 @@ def pulses_from_field(pulse3d, range=None, npad = 2):
     
     dt = (pulses.t[1] - pulses.t[0]) * 1.e-15
     pulses.freq_k = 2*pi*(fftfreq(n, d=dt) / c )            
-    pulses.freq_k = np.roll(pulses.freq_k, n/2) + k0            
+    pulses.freq_k = -np.roll(pulses.freq_k, n/2) + k0            
     pulses.freq_ev = pulses.freq_k * hbar * c
 
     pulses.f = np.zeros([n_pulses,n], dtype=complex)
@@ -149,7 +150,7 @@ do_plot = True
 fel_simulator =  FelSimulator()
 fel_simulator.engine = 'test_genesis'
 fel_simulator.npad = 2
-fel_simulator.input = 'test/run_13/run.13.gout'
+fel_simulator.input = 'test/run_0/run.0.gout'
 
 
 pulse3d, bunch = fel_simulator.run() 
@@ -208,12 +209,14 @@ f_av = np.zeros(len(pulses_1d.t))
 for i in xrange(pulses_1d.n_pulses):
     print 'processing', i
     sp = np.roll(fft.fft(pulses_1d.f[i,:]), pulses_1d.n/2)
+    #sp = fft.fft(pulses_1d.f[i,:])
     sp = sp * chicane.cryst.filter.tr
     pulses_1d.f[i,:] = np.fft.ifft(sp)
     f_av += np.abs(pulses_1d.f[i,:])
 
 
-f_wake = get_wake(f_av, d_param=200, smooth_param=20)
+#f_wake = get_wake(f_av, d_param=200, smooth_param=20)
+f_wake = get_wake(f_av, d_param=12, smooth_param=10)
 
 '''
 fig = plt.figure()
@@ -253,7 +256,7 @@ writeRadiationFile('test.dfl', pulse3d.slices)
 if do_plot:
     ax.set_yscale('log')
     ax.set_title('Filtered FEL pulse')
-    plt.plot(t + delay, np.abs(pulse3d.slices[:,51,51]), 'r--')
+    plt.plot(t + delay, np.abs(pulse3d.slices[:,5,5]), 'r--')
 
 
 plt.show()
