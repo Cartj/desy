@@ -4,7 +4,7 @@ import os
 import random
 import pickle
 
-from worker import SimInfo
+from sim_info import SimInfo
 
     
 from PyQt4 import QtGui, QtCore
