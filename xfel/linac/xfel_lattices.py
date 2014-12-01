@@ -21,34 +21,37 @@ tws = twiss(lat_i1, tws0, nPoints=None)
 lat_i1.update_transfer_maps()
 tws = twiss(lat_i1, tws0, nPoints=None)
 plot_opt_func(lat_i1, tws, top_plot=["Dx", "Dy"], name = "i1")
+#plt.show()
 tws_end_i1 = tws[-1]
 
 # l1 part of BC
 exec(open("l1.inp"))
 lat_l1 = MagneticLattice(l1)
 tws = twiss(lat_l1, tws[-1], nPoints=None)
+#for elem in lat_l1.sequence:
+#    print elem.type, elem.l
 plot_opt_func(lat_l1, tws, top_plot=["Dx", "Dy"], name = "l1")
-
+#plt.show()
 #b1 part of BC
 exec(open("b1.inp"))
 lat_b1 = MagneticLattice(b1)
 tws = twiss(lat_b1, tws[-1], nPoints=None)
 plot_opt_func(lat_b1, tws, top_plot=["Dx", "Dy"], name = "b1")
-
+#plt.show()
 
 #l2 part of BC
 exec(open("l2.inp"))
 lat_l2 = MagneticLattice(l2)
 tws = twiss(lat_l2, tws[-1], nPoints=None)
 plot_opt_func(lat_l2, tws, top_plot=["Dx", "Dy"], name = "l2")
-
+#plt.show()
 
 #b2 part of BC
 exec(open("b2.inp"))
 lat_b2 = MagneticLattice(b2)
 tws = twiss(lat_b2, tws[-1], nPoints=None)
 plot_opt_func(lat_b2, tws, top_plot=["Dx", "Dy"], name = "b2")
-
+#plt.show()
 
 exec(open("l3.inp"))
 #lat_l3 = MagneticLattice(l3)
@@ -60,7 +63,7 @@ exec(open("cl.inp"))
 lat_cl = MagneticLattice(cl)
 tws = twiss(lat_cl, tws[-1], nPoints=None)
 plot_opt_func(lat_cl, tws, top_plot=["Dx", "Dy"], name = "cl")
-
+plt.show()
 tws_cl_end = tws[-1]
 
 exec(open("td2.inp"))

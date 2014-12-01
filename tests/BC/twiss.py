@@ -1,7 +1,7 @@
 import sys
 from ocelot.cpbd.elements import *
 from ocelot.cpbd.optics import *
-from ocelot.gui.accelerator import plot_lattice
+from ocelot.gui.accelerator import plot_lattice, plot_opt_func
 
 from bc import *
 from pylab import *
@@ -23,7 +23,8 @@ beam.alpha_y = 4.0972
 tw0 = Twiss(beam)
 print tw0
 tws=twiss(lat, tw0, nPoints = 2000)
-
+plot_opt_func(lat, tws, top_plot = ["E"])
+plt.show()
 
 f=plt.figure()
 ax = f.add_subplot(211)

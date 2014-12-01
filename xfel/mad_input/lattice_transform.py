@@ -3,9 +3,9 @@ import sys
 ind = sys.path[0].find("desy")
 sys.path.append(sys.path[0][:ind])
 print sys.path[0][:ind]
-from ocelot.adaptors.txm2ocelot import xfel2ocelot
+from ocelot.adaptors.mad8 import lattice_str_from_mad8, save_lattice_str
 from ocelot.cpbd.elements import *
-from ocelot.adaptors.lat2inp import lat2input
+from ocelot.cpbd.io import write_lattice
 from numpy import *
 
 
@@ -15,10 +15,15 @@ name = "desy/xfel/mad_input/XFEL_DEFS.txm"
 #xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
 
 name = "desy/xfel/mad_input/XFEL_LINAC.txm"
-xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+lines = lattice_str_from_mad8(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+save_lattice_str(lines, sys.path[0][:ind] + name)
+
 
 name = "desy/xfel/mad_input/XFEL_I1.txm"
-xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+lines = lattice_str_from_mad8(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+save_lattice_str(lines, sys.path[0][:ind] + name)
+
+
 
 name = "desy/xfel/mad_input/XFEL_DEFS.inp"
 exec( open(sys.path[0][:ind] + name))
@@ -82,6 +87,7 @@ def collect_drifts(lat):
 #                obj_id.append(elem.id)
 #    return objs
 lat = collect_drifts(lat)
+write_lattice(lat, "injector2.inp")
 #drifts = find_drifts(lat)
 
 #print len(drifts)
@@ -154,13 +160,13 @@ print emass
 
 #for elem in lat.sequence:
 #    print elem.type, elem.tilt
-lines = lat2input(lat)
+#lines = lat2input(lat)
 #for line in lines:
 #    print line
 
-f = open("injector.inp", 'w')
-f.writelines(lines)
-f.close()
+#f = open("injector.inp", 'w')
+#f.writelines(lines)
+#f.close()
 #print len(drifts), len(quads), len(cavs), len(bends), len(sexs)
 #for elem in drifts:
 #    print elem.id, elem.l #, elem.type, elem.angle, elem.e1, elem.e2
