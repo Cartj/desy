@@ -1668,7 +1668,8 @@ s1 = Sextupole(l = 0.2853, k2 = -4.184332365, tilt = 0, id = 's1')
 rf7 = RFcavity(l = 2.1, volt = 1.66, lag = 0.5, harmon = 3840, id = 'rf7')
 
 # Matrices 
-wiggler = Matrix(l = 4, rm11 = 1.000449786, rm12 = 4.000639845, rm13 = 0.0, rm21 = 0.0002257771971, rm22 = 1.000453263, rm33 = 0.9786569515, rm34 = 3.970145599, rm43 = -0.01063922162, rm44 = 0.9786480745, id = 'wiggler')
+#wiggler = Matrix(l = 4, rm11 = 1.000449786, rm12 = 4.000639845, rm13 = 0.0, rm21 = 0.0002257771971, rm22 = 1.000453263, rm33 = 0.9786569515, rm34 = 3.970145599, rm43 = -0.01063922162, rm44 = 0.9786480745, id = 'wiggler')
+wiggler = Undulator(nperiods = 20, lperiod=0.20, Kx=29.0)
 
 # Solenoids 
 

@@ -37,6 +37,7 @@ print "Qx = ", tws[-1].mux/2/pi, "  Qy = ", tws[-1].muy/2/pi
 
 eb = EbeamParams(lat, beam, nsuperperiod=1)
 eb.print_params()
+eb.integrals_id()
 
 plot_opt_func(lat, tws)
 plt.show()
