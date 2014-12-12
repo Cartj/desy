@@ -1729,6 +1729,7 @@ q0n_s = Quadrupole(l = 0.7028, k1 = -0.253082, id = 'q0n_s')
 qs3 = Quadrupole(l = 1.0426, k1 = 0, id = 'qs3')
 qs4 = Quadrupole(l = 1.0426, k1 = 0, id = 'qs4')
 
+
 # bending magnets 
 dk = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
 d = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'd')
@@ -2185,6 +2186,79 @@ q1k, drift_1460, pkhsa, drift_1461, pcv, drift_1462, bpm, drift_1463,
 q0k2, drift_last)
 
 
+qda2 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qd')
+qfa2 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qf')
+
+qda3 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qd')
+qfa3 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qf')
+
+
+qk1n = Quadrupole(l = 0.7028, k1 = -0.22245, id = 'qk1n')
+q2an = Quadrupole(l = 0.7028, k1 = 0.26322, id = 'q2an')
+qk3n = Quadrupole(l = 0.7028, k1 = -0.214705, id = 'qk3n')
+qms1 = Quadrupole(l = 1.0426, k1 = 0.154569, id = 'qms1')
+
+qk1nr = Quadrupole(l = 0.7028, k1 = -0.22245, id = 'qk1nr')
+q2anr = Quadrupole(l = 0.7028, k1 = 0.26322, id = 'q2anr')
+qk3nr = Quadrupole(l = 0.7028, k1 = -0.214705, id = 'qk3nr')
+qms2 = Quadrupole(l = 1.0426, k1 = -0.154569, id = 'qms2')
+
+arc2_end = Marker()
+
+arc3_start = Marker()
+arc3_end = Marker()
+
+l_drift_sase_1 = (drift_273.l - dk.l) / 2.0
+drift_sase_1 = Drift(l = l_drift_sase_1, id="drift_sase_1")
+l_drift_sase_2 = drift_274.l + bpm.l + drift_275.l + pcvm.l + drift_276.l + dk.l
+drift_sase_2 = Drift(l = l_drift_sase_2, id="drift_sase_2")
+l_drift_sase_3 = (drift_294.l + dk.l + drift_295.l +  pcvm.l +  drift_296.l +  bpm.l +  drift_297.l )
+drift_sase_3 = Drift(l = l_drift_sase_3, id="drift_sase_3")
+l_drift_sase_4 = (drift_278.l - dk.l) / 2.0
+drift_sase_4 = Drift(l = l_drift_sase_1, id="drift_sase_4")
+
+
+und_sase = Undulator(lperiod=0.020, nperiods=100, Kx=5.0)
+
+qfs = Quadrupole(l = 0.1, k1 = 3.45108493, id = 'qfs')
+qds = Quadrupole(l = 0.1, k1 = -3.45108493, id = 'qds')
+
+drift_sase_5 = Drift(l = 0.2)
+
+
+sase_start = Marker()
+sase_end = Marker()
+
+
+
+# to match arc2 to sase fodo
+'''
+qk1n.k1 =  -0.26352586118
+q2an.k1 =  0.275938198851
+qk3n.k1 =  -0.17785212466
+qms1.k1 =  0.19409727854
+'''
+
+qfa2.k1 = 0.227747012449
+qda2.k1 =  -0.235862524701
+
+qk1n.k1 =  -0.318015178517
+q2an.k1 =  0.306562149143
+qk3n.k1 =  -0.347769271955
+qms1.k1 =  0.207509408722
+
+
+# fodo 8m beta
+qfs.k1 = 2.31915243786
+qds.k1 = -2.35376159802
+
+
+# to match sase fodo to arc3
+
+qk1nr.k1 =  -0.318015178517
+q2anr.k1 =  0.306562149143
+qk3nr.k1 =  -0.347769271955
+qms2.k1 =  0.207509408722
 
 
 # modified lattice 
@@ -2239,59 +2313,41 @@ q9n_w, drift_180, pkvw, drift_181, bpm, drift_182, qs_w3, drift_183,
 q0b, drift_184, dk, drift_185, sdu, drift_186, bpm, drift_187, 
 q1, drift_188, dk, drift_189, qs_w4, drift_190, q2b, drift_191, 
 d, drift_192, s1, drift_193, bpm, drift_194, q3, drift_195, 
-dk, drift_196, s2, drift_197, qf, drift_198, d, drift_199, 
-s3, drift_200, bpm, drift_201, qd, drift_202, dk, drift_203, 
-s4, drift_204, qf, drift_205, d, drift_206, s1, drift_207, 
-bpm, drift_208, qd, drift_209, dk, drift_210, s2, drift_211, 
-qf, drift_212, d, drift_213, s3, drift_214, bpm, drift_215, 
-qd, drift_216, dk, drift_217, s4, drift_218, qf, drift_219, 
-d, drift_220, s1, drift_221, bpm, drift_222, qd, drift_223, 
-dk, drift_224, s2, drift_225, qf, drift_226, d, drift_227, 
-qd, drift_228, bpm, drift_229, s3, drift_230, dk, drift_231, 
-qf, drift_232, s4, drift_233, d, drift_234, qd, drift_235, 
-bpm, drift_236, s1, drift_237, dk, drift_238, qf, drift_239, 
-s2, drift_240, d, drift_241, qd, drift_242, bpm, drift_243, 
-s3, drift_244, dk, drift_245, qf, drift_246, s4, drift_247, 
-d, drift_248, qd, drift_249, bpm, drift_250, s1, drift_251, 
-dk, drift_252, qf, drift_253, s2, drift_254, d, drift_255, 
-qd, drift_256, bpm, drift_257, s3, drift_258, dk, drift_259, 
-q4a, drift_260, s4, drift_261, d, drift_262, qk3, drift_263, 
-bpm, drift_264, sdu, drift_265, dk, drift_266, q2a, drift_267, 
-d, drift_268, qk1, drift_269, bpm, drift_270, sdu, drift_271, 
-dk, drift_272)
+dk, drift_196, s2, drift_197, qfa2, drift_198, d, drift_199, 
+s3, drift_200, bpm, drift_201, qda2, drift_202, dk, drift_203, 
+s4, drift_204, qfa2, drift_205, d, drift_206, s1, drift_207, 
+bpm, drift_208, qda2, drift_209, dk, drift_210, s2, drift_211, 
+qfa2, drift_212, d, drift_213, s3, drift_214, bpm, drift_215, 
+qda2, drift_216, dk, drift_217, s4, drift_218, qfa2, drift_219, 
+d, drift_220, s1, drift_221, bpm, drift_222, qda2, drift_223, 
+dk, drift_224, s2, drift_225, qfa2, drift_226, d, drift_227, 
+qda2, drift_228, bpm, drift_229, s3, drift_230, dk, drift_231, 
+qfa2, drift_232, s4, drift_233, d, drift_234, qda2, drift_235, 
+bpm, drift_236, s1, drift_237, dk, drift_238, qfa2, drift_239, 
+s2, drift_240, d, drift_241, qda2, drift_242, bpm, drift_243, 
+s3, drift_244, dk, drift_245, qfa2, drift_246, s4, drift_247, 
+d, drift_248, qda2, drift_249, bpm, drift_250, s1, drift_251, 
+dk, drift_252, qfa2, drift_253, s2, drift_254, d, drift_255, 
+qda2, drift_256, bpm, drift_257, s3, drift_258, dk, drift_259, 
+q4a, drift_260, s4, drift_261, d, drift_262, qk3n, drift_263, 
+bpm, drift_264, sdu, drift_265, dk, drift_266, q2an, drift_267, 
+d, drift_268, qk1n, drift_269, bpm, drift_270, sdu, drift_271, 
+dk, drift_272, qms1, drift_sase_1, dk, drift_sase_1, arc2_end)
+
+
+#qk3, q2a, qk1
+
 
 # existing straigh section
+'''
 sase_old= (q0a, drift_273, q5k, drift_274, bpm, drift_275, 
 pcvm, drift_276, dk, drift_277, q4k, drift_278, q2k, drift_279, bpm, drift_280, pcv, drift_281, pkvsa, drift_282, pch, drift_283, 
 q1k, drift_284, pkhsa, drift_285, pcv, drift_286, bpm, drift_287, 
 q0k, drift_288, q1k, drift_289, pch, drift_290, pcv, drift_291, 
 bpm, drift_292, q2k, drift_293, q4k, drift_294, dk, drift_295, 
 pcvm, drift_296, bpm, drift_297, q5k, drift_298, q0a, drift_299)
+'''
 
-l_drift_sase_1 = (drift_273.l - dk.l) / 2.0
-drift_sase_1 = Drift(l = l_drift_sase_1, id="drift_sase_1")
-l_drift_sase_2 = drift_274.l + bpm.l + drift_275.l + pcvm.l + drift_276.l + dk.l
-drift_sase_2 = Drift(l = l_drift_sase_2, id="drift_sase_2")
-
-l_drift_sase_3 = (drift_294.l + dk.l + drift_295.l +  pcvm.l +  drift_296.l +  bpm.l +  drift_297.l )
-drift_sase_3 = Drift(l = l_drift_sase_3, id="drift_sase_3")
-
-l_drift_sase_4 = (drift_278.l - dk.l) / 2.0
-drift_sase_4 = Drift(l = l_drift_sase_1, id="drift_sase_4")
-
-
-und_sase = Undulator(lperiod=0.020, nperiods=100, Kx=5.0)
-
-qfs = Quadrupole(l = 0.1, k1 = 2.45108493, id = 'qsase1')
-qds = Quadrupole(l = 0.1, k1 = -2.45108493, id = 'qsase1')
-
-qms1 = Quadrupole(l = 1.0426, k1 = 0.154569, id = 'qms1')
-qms2 = Quadrupole(l = 1.0426, k1 = 0.154569, id = 'qms1')
-
-drift_sase_5 = Drift(l = 2.2)
-
-sase_start = Marker()
-sase_end = Marker()
 
 '''
 sase = (q0a, drift_sase_1,dk, drift_sase_1, q5k, drift_sase_2,
@@ -2301,31 +2357,48 @@ q0k, drift_288, q1k, drift_289, pch, drift_290, pcv, drift_291,
 bpm, drift_292, q2k, drift_293, q4k, drift_sase_3, q5k, drift_sase_4, dk, drift_sase_4, q0a)
 '''
 
-fodo = (qds, drift_sase_5, qfs, drift_sase_5)*13
+m1s = Marker()
+m2s = Marker()
+m3s = Marker()
+m4s = Marker()
+
+fodo = (qds, m1s, und_sase, drift_sase_5, qfs, m2s, und_sase, drift_sase_5,
+        qds, m3s, und_sase, drift_sase_5, qfs, m4s, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5,
+        qds, und_sase, drift_sase_5, qfs, und_sase, drift_sase_5, qds)
 
 
-sase = (sase_start, qms1, drift_sase_1,dk, drift_sase_1, fodo, drift_sase_4, dk, drift_sase_4, qms2, sase_end)
+sase = (sase_start, fodo, sase_end)
 
 
-arc3=(drift_299, dk, drift_300, sdu, drift_301, bpm, drift_302, qk1, drift_303, 
-dk, drift_304, q2a, drift_305, d, drift_306, sdu, drift_307, 
-bpm, drift_308, qk3, drift_309, dk, drift_310, s4, drift_311, 
+arc3=(drift_sase_4, dk, drift_sase_4, qms2, drift_299, dk, drift_300, sdu, drift_301, bpm, drift_302, qk1nr, drift_303, 
+dk, drift_304, q2anr, drift_305, d, drift_306, sdu, drift_307, 
+bpm, drift_308, qk3nr, drift_309, dk, drift_310, s4, drift_311, 
 q4a, drift_312, d, drift_313, s3, drift_314, bpm, drift_315, 
-qd, drift_316, dk, drift_317, s2, drift_318, qf, drift_319, 
-d, drift_320, s1, drift_321, bpm, drift_322, qd, drift_323, 
-dk, drift_324, s4, drift_325, qf, drift_326, d, drift_327, 
-s3, drift_328, bpm, drift_329, qd, drift_330, dk, drift_331, 
-s2, drift_332, qf, drift_333, d, drift_334, s1, drift_335, 
-bpm, drift_336, qd, drift_337, dk, drift_338, s4, drift_339, 
-qf, drift_340, d, drift_341, s3, drift_342, bpm, drift_343, 
-qd, drift_344, dk, drift_345, qf, drift_346, s2, drift_347, 
-d, drift_348, qd, drift_349, bpm, drift_350, s1, drift_351, 
-dk, drift_352, qf, drift_353, s4, drift_354, d, drift_355, 
-qd, drift_356, bpm, drift_357, s3, drift_358, dk, drift_359, 
-qf, drift_360, s2, drift_361, d, drift_362, qd, drift_363, 
-bpm, drift_364, s1, drift_365, dk, drift_366, qf, drift_367, 
-s4, drift_368, d, drift_369, qd, drift_370, bpm, drift_371, 
-s3, drift_372, dk, drift_373, qf, drift_374, s2, drift_375, 
+qda3, drift_316, dk, drift_317, s2, drift_318, qfa3, drift_319, 
+d, drift_320, s1, drift_321, bpm, drift_322, qda3, drift_323, 
+dk, drift_324, s4, drift_325, qfa3, drift_326, d, drift_327, 
+s3, drift_328, bpm, drift_329, qda3, drift_330, dk, drift_331, 
+s2, drift_332, qfa3, drift_333, d, drift_334, s1, drift_335, 
+bpm, drift_336, qda3, drift_337, dk, drift_338, s4, drift_339, 
+qfa3, drift_340, d, drift_341, s3, drift_342, bpm, drift_343, 
+qda3, drift_344, dk, drift_345, qfa3, drift_346, s2, drift_347, 
+d, drift_348, qda3, drift_349, bpm, drift_350, s1, drift_351, 
+dk, drift_352, qfa3, drift_353, s4, drift_354, d, drift_355, 
+qda3, drift_356, bpm, drift_357, s3, drift_358, dk, drift_359, 
+qfa3, drift_360, s2, drift_361, d, drift_362, qda3, drift_363, 
+bpm, drift_364, s1, drift_365, dk, drift_366, qfa3, drift_367, 
+s4, drift_368, d, drift_369, qda3, drift_370, bpm, drift_371, 
+s3, drift_372, dk, drift_373, qfa3, drift_374, s2, drift_375, 
 d, drift_376, q3, drift_377, bpm, drift_378, s1, drift_379, 
 dk, drift_380, q2b, drift_381, qs_n1, drift_382, d, drift_383, 
 q1, drift_384, bpm, drift_385, sdu, drift_386, dk, drift_387, 
