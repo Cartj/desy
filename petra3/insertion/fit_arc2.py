@@ -47,18 +47,28 @@ tws_arc2=twiss(lat_arc2, tw_end)
 plot_opt_func(lat_arc2, tws_arc2)
 
 
-#6.74211591203 0.867609797322
-#10.0406553557 -1.15608975778
+
+betx = 3.00000000391 
+alfx = 0.601367998599
+bety = 7.78436581638
+alfy = -1.52660480872
+
+
 
 constr = {}
-constr['global'] = {'beta_x':['<',1000.], 'beta_y':['<',1000.]}
-constr[arc2_end] = {'beta_x':6.7421159120, 'beta_y':10.0406553557, 'alpha_x':0.867609797322, 'alpha_y':-1.15608975778, 'Dx':0.0, 'Dxp':0.0}
-variables = [qfa2, qda2, qk1n, q2an, qk3n, qms1]
-match(lat_arc2, constr, variables, tw_end,max_iter=10000)
+constr['global'] = {'beta_x':['<',150.], 'beta_y':['<',150.]}
 
+#constr[arc2_end] = {'beta_x':5.0, 'beta_y':9.75284, 'alpha_x':-0.63097627533, 'alpha_y':1.20340638868, 'Dx':0.0, 'Dxp':0.0}
+constr[arc2_end] = {'beta_x':betx, 'beta_y':bety, 'alpha_x':alfx, 'alpha_y':alfy, 'Dx':0.0, 'Dxp':0.0}
+
+variables = [qfa2, qda2, q1a2, q2a2, q3a2, q4a2, q5a2, q6a2]
+match(lat_arc2, constr, variables, tw_end,max_iter=50)
+
+tw_end.p = 1.e-2
 tws_arc2=twiss(lat_arc2, tw_end)
 plot_opt_func(lat_arc2, tws_arc2)
 
+print 'R56=', tws_arc2[-1].tau*1.e4, 'cm'
 print tws_arc2[-1].beta_x, tws_arc2[-1].alpha_x  
 print tws_arc2[-1].beta_y, tws_arc2[-1].alpha_y
 print tws_arc2[-1].Dx, tws_arc2[-1].Dxp

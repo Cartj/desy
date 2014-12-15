@@ -39,11 +39,10 @@ plot_opt_func(lat, tws0)
 tw0 = deepcopy(tws0[0])
 tw_end = tw0
 
-tw_end.beta_x = 6.41765286468
-tw_end.alpha_x = -0.741360424519
-tw_end.beta_y = 11.0128045182 
-tw_end.alpha_y = 1.19914414542
-
+tw_end.beta_x = 3.00000000313
+tw_end.alpha_x = -0.601367997622
+tw_end.beta_y = 7.78559521531 
+tw_end.alpha_y = 1.5144714708
 
 
 tws_arc3=twiss(lat_arc3, tw_end)
@@ -61,8 +60,14 @@ constr[qd] = {'beta_x':6.4, 'beta_y':23.}
 variables = [qk1nr, q2anr, qk3nr, qms2, qfa3, qda3]
 match(lat_arc3, constr, variables, tw_end,max_iter=10000)
 
-tws_sase=twiss(lat_arc3, tw_end)
+tws_arc3=twiss(lat_arc3, tw_end)
 plot_opt_func(lat_arc3, tws_arc3)
+
+print 'end arc3 twiss'
+print tws_arc3[-1].beta_x, tws_arc3[-1].alpha_x  
+print tws_arc3[-1].beta_y, tws_arc3[-1].alpha_y
+print tws_arc3[-1].Dx, tws_arc3[-1].Dxp
+
 
 
 lat_full = MagneticLattice((arc1, arc2, sase, arc3), energy = beam.E)

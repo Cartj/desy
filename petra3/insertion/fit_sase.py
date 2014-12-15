@@ -50,21 +50,44 @@ tw_end = tws_arc2[-1]
 
 # match to values
 
-tw_end.beta_x = 10.0
-tw_end.alpha_x = -1.0
-tw_end.beta_y = 4.0 
-tw_end.alpha_y = 0.0
+tw_end.beta_x = 3.00000000391
+tw_end.alpha_x = 0.601367998599
+tw_end.beta_y = 7.78436581638
+tw_end.alpha_y = -1.52660480872
 
 tws_sase=twiss(lat_sase, tw_end)
+plot_opt_func(lat_sase, tws_sase)
 
-#plot_opt_func(lat_sase, tws_sase)
+print 'end twiss'
+print tws_sase[-1].beta_x, tws_sase[-1].alpha_x  
+print tws_sase[-1].beta_y, tws_sase[-1].alpha_y
+print tws_sase[-1].Dx, tws_sase[-1].Dxp
 
+plt.show()
+sys.exit(0)
+
+'''
+solution 5m average
+start twiss
+3.00000000391 0.601367998599
+7.78436581638 -1.52660480872
+end twiss
+3.00000000391 -0.601367998594
+7.78559521144 1.51447147204
+qfs 4.08213946419
+qds -3.90994199551
+'''
 
 constr = {}
 constr['global'] = {'beta_x':['<',170.], 'beta_y':['<',170.]}
 #constr[sase_end] = {'beta_x':['->', sase_start], 'beta_y':['->', sase_start], 'Dx':0.44, 'Dxp':0.0}
-constr[qds] = {'alpha_x':0.0, 'alpha_y':0.0, 'beta_x':4.0}
+#constr[qds] = {'alpha_x':0.0, 'alpha_y':0.0, 'beta_x':5.0}
+constr[qds] = {'beta_x':3.0}
+constr[qfs] = {'beta_y':3.0}
 constr[m3s] = {'beta_y':['->', m1s], 'beta_x':['->', m1s]}
+constr[m4s] = {'beta_y':['->', m2s], 'beta_x':['->', m2s]}
+constr[m5s] = {'beta_y':['->', m3s], 'beta_x':['->', m3s]}
+constr[m6s] = {'beta_y':['->', m4s], 'beta_x':['->', m4s]}
 
 variables = [qfs, qds, [tw_end, 'beta_x'], [tw_end, 'beta_y'], [tw_end, 'alpha_x'], [tw_end, 'alpha_y']]
 match(lat_sase, constr, variables, tw_end,max_iter=10000)

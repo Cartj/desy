@@ -17,7 +17,7 @@ def show_optics(tws, lat, beam, scale = 20.0):
     plt.legend([p1,p2,p3], [r'$\beta_x$',r'$\beta_y$', r'$D_x$'], fancybox=True, framealpha=0.5)
     
     ax2 = f.add_subplot(212)
-    plot_lattice(lat, ax2, alpha=0.5)
+    plot_lattice(lat, ax2, alpha=0.5,params={'kmax':2.0, 'ang_max':0.3})
     
     # add beam size (arbitrary scale)
     
