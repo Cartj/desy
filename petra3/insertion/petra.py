@@ -1532,9 +1532,12 @@ q4a = Quadrupole(l = 0.7028, k1 = 0.223988, id = 'q4a')
 qd = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qd')
 qf = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qf')
 q3 = Quadrupole(l = 0.7028, k1 = -0.224979, id = 'q3')
+q3a3 = Quadrupole(l = 0.7028, k1 = -0.224979, id = 'q3a3')
 q2b = Quadrupole(l = 0.7028, k1 = 0.259797, id = 'q2b')
+q2ba3 = Quadrupole(l = 0.7028, k1 = 0.259797, id = 'q2ba3')
 qs_w1 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_w1')
 q1 = Quadrupole(l = 0.7028, k1 = -0.22586, id = 'q1')
+q1a3 = Quadrupole(l = 0.7028, k1 = -0.22586, id = 'q1a3')
 q0b = Quadrupole(l = 1.0426, k1 = 0.175406, id = 'q0b')
 qs_w2 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_w2')
 q9n = Quadrupole(l = 1.0426, k1 = -0.15099, id = 'q9n')
@@ -1551,7 +1554,9 @@ qs_w3 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_w3')
 qs_w4 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_w4')
 q0k = Quadrupole(l = 1.0426, k1 = -0.0794865, id = 'q0k')
 qs_n1 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_n1')
+qs_n1a3 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_n1a3')
 qs_n2 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_n2')
+qs_n2a3 = Quadrupole(l = 0.3242, k1 = 0, id = 'qs_n2a3')
 q5n_n = Quadrupole(l = 0.7028, k1 = 0.256433, id = 'q5n_n')
 q4n_n = Quadrupole(l = 0.7028, k1 = -0.224747, id = 'q4n_n')
 q3n_n = Quadrupole(l = 0.7028, k1 = -0.276155, id = 'q3n_n')
@@ -2209,6 +2214,10 @@ qda3_1 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qda3_1')
 qfa3_1 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qfa3_1')
 qda3_2 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qda3_2')
 qfa3_2 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qfa3_2')
+qda3_3 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qda3_3')
+qfa3_3 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qfa3_3')
+qda3_4 = Quadrupole(l = 0.7028, k1 = -0.24002336, id = 'qda3_4')
+qfa3_4 = Quadrupole(l = 0.7028, k1 = 0.24023231, id = 'qfa3_4')
 
 
 q7na3 = Quadrupole(l = 1.0426, k1 = 0.160415, id = 'q7na3')
@@ -2278,13 +2287,14 @@ qms2.k1 =  0.207509408722
 
 q0ba3 = Quadrupole(l = 1.0426, k1 = 0.175406, id = 'q0ba3')
 q9na3 = Quadrupole(l = 1.0426, k1 = -0.15099, id = 'q9n')
-# arc3 to rest
 
+# arc3 to rest
 q4an.k1 =  0.262212887756
 qfa3_1.k1 =  0.196391042352
 qda3_1.k1 =  -0.20114335714
 qfa3_2.k1 =  0.308002347492
 qda3_2.k1 =  -0.14513514138
+
 qfa3.k1 =  0.234949738807
 qda3.k1 =  -0.285052818077
 q7na3.k1 =  0.203471802222
@@ -2442,22 +2452,60 @@ q0b, drift_388, qs_n2, drift_389, q9na3, drift_390, bpm, drift_391,
 pcvm, drift_392, dk, drift_393, q7n, drift_394, pcvm, drift_395, 
 pkvsa, drift_396, q6n, drift_397, bpm, drift_398)
 
-dkn1 = Bend(l = 5.378, angle = 5*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
-dkn2 = Bend(l = 5.378, angle = -5*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
-dkn3 = Bend(l = 5.378, angle = 1.5*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
-dkn4 = Bend(l = 5.378, angle = 0.001*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
+dkn1 = Bend(l = 5.378, angle = 3*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
+dkn2 = Bend(l = 5.378, angle = -1.5*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
+dkn3 = Bend(l = 5.378, angle = 4.8*0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
+dkn0 = Drift(l = 5.378)
+
+
+rfca3 = Drift(l = 5.378, id = 'rfca3')
+
+
 
 end_arc3 = Marker()
 
-bdc_arc3=(drift_sase_4, dkn1, drift_sase_4, qms2, drift_299, dkn3, drift_300, sdu, drift_301, bpm, drift_302, qk1nr, drift_303, 
-dkn2, drift_304, q2anr, drift_305, dkn3, drift_306, sdu, drift_307, 
-bpm, drift_308, qk3nr, drift_309, dkn3, drift_310, s4, drift_311, 
-q4an, drift_312, dkn3, drift_313, s3, drift_314, bpm, drift_315, 
-qda3_1, drift_316, dkn3, drift_317, s2, drift_318, qfa3_1, drift_319, 
-dkn4, drift_320, s1, drift_321, bpm, drift_322, qda3_2, drift_323, 
-dkn4, drift_324)
+bdc_arc3=(drift_sase_4, dkn1, drift_sase_4, qms2, drift_299, dkn0, 
+drift_300, sdu, drift_301, bpm, drift_302, qk1nr, drift_303, 
+dkn0, drift_304, q2anr, drift_305, dkn2, drift_306, sdu, drift_307, 
+bpm, drift_308, qk3nr, drift_309, dkn2, drift_310, s4, drift_311, 
+q4an, drift_312, dkn0, drift_313, s3, drift_314, bpm, drift_315, 
+qda3_1, drift_316, dkn0, drift_317, s2, drift_318, qfa3_1, drift_319, 
+dkn3, drift_320, s1, drift_321, bpm, drift_322, qda3_2, drift_323, 
+dkn3, drift_324)
 
-arc3_new = (s4, drift_325, qfa3_2, drift_326, d, drift_327, 
+
+b1_bdc = RBend (l=1.0, angle=0.1)
+b2_bdc = RBend (l=2.0, angle=-0.27)
+b3_bdc = RBend (l=2.0, angle=0.29)
+
+#print 'max field [T]', beam.E * b3_bdc.angle / (b3_bdc.l * 0.2998)
+
+
+qf1_bdc = Quadrupole(l=0.1, k1 = 0.9)
+qd1_bdc = Quadrupole(l=0.1, k1 = -1.3)
+qd3_bdc = Quadrupole(l=0.1, k1 = -1.3)
+qd4_bdc = Quadrupole(l=0.1, k1 = -1.3)
+qd2_bdc = Quadrupole(l=0.1, k1 = -1.3)
+qf2_bdc = Quadrupole(l=0.1, k1 = 1.4)
+qf3_bdc = Quadrupole(l=0.1, k1 = 2.0)
+qf4_bdc = Quadrupole(l=0.1, k1 = 1.4)
+
+d1_bdc = Drift(l=3)
+d1h_bdc =Drift(l=1.45)
+d2_bdc = Drift(l=2.5)
+d3_bdc = Drift(l=2.0)
+
+m1_bdc = Monitor()
+m2_bdc = Monitor()
+
+ 
+bc1 = (m1_bdc, b1_bdc, d1h_bdc, qd1_bdc, d1h_bdc, b2_bdc, qf1_bdc, d1h_bdc, qd2_bdc, d1h_bdc, b3_bdc, qf2_bdc, Drift(l=2.45), qd3_bdc, Drift(l=2.45),
+       qf3_bdc, b2_bdc,  d1h_bdc, qd4_bdc, d1h_bdc, b3_bdc, qf4_bdc, Drift(l=1.0), m2_bdc)
+
+
+
+
+arc3_new = (s4, drift_325, qfa3, drift_326, d, drift_327, 
 s3, drift_328, bpm, drift_329, qda3, drift_330, dk, drift_331, 
 s2, drift_332, qfa3, drift_333, d, drift_334, s1, drift_335, 
 bpm, drift_336, qda3, drift_337, dk, drift_338, s4, drift_339, 
@@ -2470,10 +2518,10 @@ qfa3, drift_360, s2, drift_361, d, drift_362, qda3, drift_363,
 bpm, drift_364, s1, drift_365, dk, drift_366, qfa3, drift_367, 
 s4, drift_368, d, drift_369, qda3, drift_370, bpm, drift_371, 
 s3, drift_372, dk, drift_373, qfa3, drift_374, s2, drift_375, 
-d, drift_376, q3, drift_377, bpm, drift_378, s1, drift_379, 
-dk, drift_380, q2b, drift_381, qs_n1, drift_382, d, drift_383, 
-q1, drift_384, bpm, drift_385, sdu, drift_386, dk, drift_387, 
-q0ba3, drift_388, qs_n2, drift_389, q9na3, drift_390, bpm, drift_391, 
+d, drift_376, q3a3, drift_377, bpm, drift_378, s1, drift_379, 
+dk, drift_380, q2ba3, drift_381, qs_n1a3, drift_382, d, drift_383, 
+q1a3, drift_384, bpm, drift_385, sdu, drift_386, dk, drift_387, 
+q0ba3, drift_388, qs_n2a3, drift_389, q9na3, drift_390, bpm, drift_391, 
 pcvm, drift_392, dk, drift_393, q7na3, drift_394, pcvm, drift_395, 
 pkvsa, drift_396, q6na3, drift_397, bpm, drift_398, end_arc3)
 

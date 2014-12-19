@@ -57,14 +57,13 @@ tw_end.alpha_y = -1.52660480872
 
 tws_sase=twiss(lat_sase, tw_end)
 plot_opt_func(lat_sase, tws_sase)
+plt.show()
 
 print 'end twiss'
 print tws_sase[-1].beta_x, tws_sase[-1].alpha_x  
 print tws_sase[-1].beta_y, tws_sase[-1].alpha_y
 print tws_sase[-1].Dx, tws_sase[-1].Dxp
 
-plt.show()
-sys.exit(0)
 
 '''
 solution 5m average

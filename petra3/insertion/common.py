@@ -12,6 +12,7 @@ def show_optics(tws, lat, beam, scale = 20.0):
     p1, = ax.plot(map(lambda p: p.s, tws), map(lambda p: p.beta_x, tws), lw=2.0)
     p2, = ax.plot(map(lambda p: p.s, tws), map(lambda p: p.beta_y, tws), lw=2.0)
     ax2 = ax.twinx()
+    ax2.set_xlim(0, lat.totalLen)
     p3, = ax2.plot(map(lambda p: p.s, tws), map(lambda p: p.Dx, tws), 'r-', lw=2.0)
     plt.grid(True)
     plt.legend([p1,p2,p3], [r'$\beta_x$',r'$\beta_y$', r'$D_x$'], fancybox=True, framealpha=0.5)

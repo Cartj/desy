@@ -22,7 +22,7 @@ lat = MagneticLattice(lattice, energy = beam.E)
 lat_arc1 = MagneticLattice((arc1), energy = beam.E) # start at end of first straigh section (W)
 lat_arc2 = MagneticLattice((arc2), energy = beam.E)
 lat_sase = MagneticLattice((sase), energy = beam.E)
-lat_sase_old = MagneticLattice((sase_old), energy = beam.E)
+#lat_sase_old = MagneticLattice((sase_old), energy = beam.E)
 lat_arc3 = MagneticLattice((arc3), energy = beam.E)
 #lat_nw = MagneticLattice((ins_nw), energy = beam.E)
 #print lat_nw.totalLen
@@ -30,12 +30,14 @@ lat_arc3 = MagneticLattice((arc3), energy = beam.E)
 tw0 = Twiss(beam)
 tws0=twiss(lat, tw0)
 
-#eb = EbeamParams(lat, beam, nsuperperiod=1)
-#eb.print_params()
-#eb.integrals_id()
+eb = EbeamParams(lat, beam, nsuperperiod=1)
+eb.print_params()
+eb.integrals_id()
 
 
-#plot_opt_func(lat, tws0)
+plot_opt_func(lat, tws0)
+plt.show()
+sys.exit(0)
 
 tw0 = tws0[0]
 
