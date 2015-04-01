@@ -11,8 +11,8 @@ E00=5.109986258350895e+05
 beam = Beam()
 beam.sigma_E = 0.0
 beam.I = 2.5e-10
-beam.emit_x = 1.752e-9
-beam.emit_y = 1.752e-9
+beam.emit_x = 1.752e-6
+beam.emit_y = 1.752e-6
 
 
 #20.236    21.5451611025405    4.22017522554549    4.1536706751481    0    0    10    16.8893495037859    -0.157515104668462    4.09289993317716    0    0    10    313.161522378336    BPM2UBC2    1    MONI
@@ -57,8 +57,7 @@ lat = MagneticLattice(lattice, beam.E)
 
 #tws=twiss(lat, tw0, nPoints = 1000)
 
-H10SMATCH.angle = -1.e-5
-H12SMATCH.angle = 1.e-5
+
 
 tws=twiss(lat, tw0)
 lat.update_transfer_maps()
