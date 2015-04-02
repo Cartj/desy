@@ -8,14 +8,6 @@ import scipy.ndimage as ndimage
 import time
 from math import *
 
-
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.beam import *
-from ocelot.cpbd.optics import *
-
-from ocelot.cpbd import *
-
-
 q0=1.60217733e-19
 me=9.10938188e-31
 c=299792458
@@ -40,30 +32,20 @@ def Sym_Kernel(ijk2,hxyz):
          +IG[1:i2+1,0:j2,0:k2]-IG[0:i2,0:j2,0:k2])
     return kern
 
-def Phi(q,kern,steps):
-    #t0=time.time();
+def Phi(q,steps):
     hx=steps[0];    hy=steps[1];    hz=steps[2]
     Nx=q.shape[0];    Ny=q.shape[1];    Nz=q.shape[2]
     out=np.zeros((2*Nx-1,2*Ny-1,2*Nz-1))
     out[:Nx,:Ny,:Nz]=q
-    #if kern.shape>=q.shape:
-    K1=kern[:Nx,:Ny,:Nz]
-    #else:
-    #    print 'size(q)= ', q.shape ,'; calculate kernel'
-    #    K1=Sym_Kernel(q.shape,steps)
+    K1=Sym_Kernel(q.shape,steps)
     K2=np.zeros((2*Nx-1,2*Ny-1,2*Nz-1))
     K2[0:Nx,0:Ny,0:Nz]=K1
     K2[0:Nx,0:Ny,Nz:2*Nz-1]=K2[0:Nx,0:Ny,Nz-1:0:-1] #z-mirror
     K2[0:Nx,Ny:2*Ny-1,:]=K2[0:Nx,Ny-1:0:-1,:]       #y-mirror
     K2[Nx:2*Nx-1,:,:]=K2[Nx-1:0:-1,:,:]             #x-mirror
-    #print out.shape, K2.shape
-    #t0=time.time();
     out=np.real(np.fft.ifftn(np.fft.fftn(out)*np.fft.fftn(K2)))
-    #out=np.fft.fftn(K2)
-    #t1=time.time(); print t1-t0
     out[:Nx,:Ny,:Nz]=out[:Nx,:Ny,:Nz]/(4*pi*eps0*hx*hy*hz)
-    #t1=time.time(); print t1-t0
-    return out[:Nx,:Ny,:Nz], K1
+    return out[:Nx,:Ny,:Nz]
 
 def exact_xp_2_xxstg(xp,gamref):
     N=xp.shape[0]
@@ -90,37 +72,31 @@ def exact_xxstg_2_xp(xxstg,gamref):
     beta=np.sqrt(1-gamma**-2);
     u=np.c_[xxstg[:,1],xxstg[:,3],np.ones(N)]
     norm=np.linalg.norm(u,2,1).reshape((N,1))
-    #print u[1,:]
-    #plt.plot(norm,'.')
-    #plt.show()
     u=u/norm
     xp[:,0]=xxstg[:,0]-u[:,0]*beta*xxstg[:,4]
     xp[:,1]=xxstg[:,2]-u[:,1]*beta*xxstg[:,4]
-    #print np.min(u[:,1]),np.min(u[:,0])
-    np.savetxt('D:/see.ast',u[:,1])
     xp[:,2]=-u[:,2]*beta*xxstg[:,4]
     xp[:,3]=u[:,0]*gamma*beta*E_ele_eV
     xp[:,4]=u[:,1]*gamma*beta*E_ele_eV
     xp[:,5]=u[:,2]*gamma*beta*E_ele_eV-pref
     return xp
     
-def EField(X,Q,gamma,kern,steps):
+def EField(X,Q,gamma,nxyz):
     N=X.shape[0];
     X[:,2]=X[:,2]*gamma
+    XX=np.max(X,axis=0)-np.min(X,axis=0)
+    print XX
+    steps=XX/(nxyz-3)
     X=X/steps
     X_min=np.min(X,axis=0)
     X_mid=np.dot(Q,X)/np.sum(Q);
     X_off=np.floor(X_min-X_mid)+X_mid;
     X=X-X_off  
-    nx,ny,nz=np.int_(3+np.floor(np.max(X,axis=0)))
-    nzny=nz*ny
+    nx=nxyz[0];ny=nxyz[1];nz=nxyz[2];nzny=nz*ny
     Xi=np.int_(np.floor(X)+1)
     inds=np.int_(Xi[:,0]*nzny+Xi[:,1]*nz+Xi[:,2]) # 3d -> 1d
-    q=np.bincount(inds,Q,nzny*nx)
-    q=q.reshape(nx,ny,nz)
-    #t0=time.time()   
-    p,kern=Phi(q,kern,steps)
-    #t1=time.time(); print t1-t0
+    q=np.bincount(inds,Q,nzny*nx).reshape(nxyz)
+    p=Phi(q,steps)
     Ex=np.zeros(p.shape);Ey=np.zeros(p.shape);Ez=np.zeros(p.shape);
     Ex[:nx-1,:,:]=(p[:nx-1,:,:]-p[1:nx,:,:])/steps[0]
     Ey[:,:ny-1,:]=(p[:,:ny-1,:]-p[:,1:ny,:])/steps[1]
@@ -129,49 +105,42 @@ def EField(X,Q,gamma,kern,steps):
     Exyz[:,0]=ndimage.map_coordinates(Ex,np.c_[X[:,0],X[:,1]+0.5,X[:,2]+0.5].T,order=1)*gamma
     Exyz[:,1]=ndimage.map_coordinates(Ey,np.c_[X[:,0]+0.5,X[:,1],X[:,2]+0.5].T,order=1)*gamma
     Exyz[:,2]=ndimage.map_coordinates(Ez,np.c_[X[:,0]+0.5,X[:,1]+0.5,X[:,2]].T,order=1)
-    #t1=time.time();    print t1-t0
     return Exyz
 
-def SC_xxstg_update(p_array,Q,gamref,dS,L0,kern,steps):
+def SC_xxstg_update(xxstg,Q,gamref,dS,L0,nxyz):
     # L0 = true : use low order approximation for kick
     #Lorentz transformation with z-axis and gamref
     betref2=1-gamref**-2
     betref=sqrt(betref2)
     Eref=gamref*E_ele_eV
     pref=Eref*betref
-    # t0=time.time()
-    Exyz=EField( np.c_[p_array.x(),p_array.y(),-betref*p_array.tau()],Q,gamref,kern,steps)
-    #t1=time.time()
-    #print t1-t0
+    Exyz=EField( np.c_[xxstg[:,0],xxstg[:,2],-betref*xxstg[:,4]],Q,gamref,nxyz)
     cdT=dS/betref
     if L0:
     #-- 0te Ordnung -------------------------------------------------------
-        p_array.particles[1::6] = p_array.particles[1::6]+(cdT/pref/gamref**2)*Exyz[:,0]
-        p_array.particles[3::6]=p_array.particles[3::6]+(cdT/pref/gamref**2)*Exyz[:,1]
-        p_array.particles[5::6]=p_array.particles[5::6]+(dS/Eref)*Exyz[:,2]
+        xxstg[:,1]=xxstg[:,1]+(cdT/pref/gamref**2)*Exyz[:,0]
+        xxstg[:,3]=xxstg[:,3]+(cdT/pref/gamref**2)*Exyz[:,1]
+        xxstg[:,5]=xxstg[:,5]+(dS/Eref)*Exyz[:,2]
     else:
     #-- 1te Ordnung -------------------------------------------------------
-        betax=betref*p_array.particles[1::6]
-        betay=betref*p_array.particles[3::6]
-        betaz=betref*(1+p_array.particles[5::6]/(gamref**2-1))
+        betax=betref*xxstg[:,1]
+        betay=betref*xxstg[:,3]
+        betaz=betref*(1+xxstg[:,5]/(gamref**2-1))
         dpxyz_q_pref_x=(cdT/pref)*(1-betref*betaz)*Exyz[:,0]
         dpxyz_q_pref_y=(cdT/pref)*(1-betref*betaz)*Exyz[:,1]
         dpxyz_q_pref_z=(cdT/pref)*(Exyz[:,2]+betref*(betax*Exyz[:,0]+betay*Exyz[:,1]))
-        p_array.particles[1::6]=(1-dpxyz_q_pref_z)*(p_array.particles[1::6]+dpxyz_q_pref_x)
-        p_array.particles[3::6]=(1-dpxyz_q_pref_z)*(p_array.particles[3::6]+dpxyz_q_pref_y)
-        p_array.particles[5::6]=p_array.particles[5::6]+dpxyz_q_pref_z*betref2;
+        xxstg[:,1]=(1-dpxyz_q_pref_z)*(xxstg[:,1]+dpxyz_q_pref_x)
+        xxstg[:,3]=(1-dpxyz_q_pref_z)*(xxstg[:,3]+dpxyz_q_pref_y)
+        xxstg[:,5]=xxstg[:,5]+dpxyz_q_pref_z*betref2;
         
-def SC_xp_update(xp,Q,gamref,dS,kern,steps):
+        
+def SC_xp_update(xp,Q,gamref,dS,nxyz):
     #Lorentz transformation with z-axis and gamref
     betref2=1-gamref**-2
     betref=sqrt(betref2)
     Eref=gamref*E_ele_eV
     pref=Eref*betref
-    # t0=time.time()
-    #t0=time.time()
-    Exyz=EField(np.c_[xp[:,0],xp[:,1],xp[:,2]],Q,gamref,kern,steps)
-    #t1=time.time()
-    #print t1-t0
+    Exyz=EField(np.c_[xp[:,0],xp[:,1],xp[:,2]],Q,gamref,nxyz)
     u=np.c_[xp[:,3],xp[:,4],xp[:,5]+pref]
     gamma=np.sqrt(1+np.sum(u*u,1)/E_ele_eV**2).reshape((xp.shape[0],1))
     cdT=dS/betref
@@ -182,10 +151,8 @@ def SC_xp_update(xp,Q,gamref,dS,kern,steps):
     
         
 if __name__ == "__main__":
-
-    P=np.loadtxt('test.ast')
+    P=np.loadtxt('D:/MyTools/MartinsTracker/2ASTRA/test.ast')
     #P=np.loadtxt('D:/MyTools/MartinsTracker/2ASTRA/bc1_out.ast')
-    
     Q=-P[:,7]*1e-9 #charge in nC -> in C 
     xp=P[:,:6] 
     z00=xp[0,2] 
@@ -197,49 +164,33 @@ if __name__ == "__main__":
     pav=np.mean(xp[:,5]) 
     pz0=pz00+pav; 
     xp[:,5]=xp[:,5]-pav
-    
     Pref=pz0 
     gamref=sqrt((Pref/E_ele_eV)**2+1)
     xxstg=exact_xp_2_xxstg(xp,gamref)
-    
-    p_array = ParticleArray(len(Q))
-    
-    p_array.particles[::6] = xxstg[:,0]
-    p_array.particles[1::6] = xxstg[:,1]
-    p_array.particles[2::6] = xxstg[:,2]
-    p_array.particles[3::6] = xxstg[:,3]
-    p_array.particles[4::6] = xxstg[:,4]
-    p_array.particles[5::6] = xxstg[:,5]
-    
-    
     xxstg0=np.copy(xxstg)
+    L0=False
+    LXXS=True
+    dS=30;
+    plt.ion();plt.hold(False)
+    for i in range(10):
+        t0=time.time()
+        #drift
+        xxstg[:,0]=xxstg[:,0]+xxstg[:,1]*dS
+        xxstg[:,2]=xxstg[:,2]+xxstg[:,3]*dS
+        xxstg[:,4]=xxstg[:,4]+xxstg[:,5]*dS/gamref**2
+        if LXXS:
+            SC_xxstg_update(xxstg,Q,gamref,dS,L0,np.r_[53,53,53])
+        else:    
+            xp=exact_xxstg_2_xp(xxstg,gamref)
+            SC_xp_update(xp,Q,gamref,dS,np.r_[53,53,53])
+            xxstg=exact_xp_2_xxstg(xp,gamref)
+        t1=time.time()
+        print t1-t0, ' sec', gamref
+        plt.plot(xxstg[:,4],xxstg[:,5],'.',xxstg0[:,4],xxstg0[:,5],'.')
+        plt.draw()
+        plt.pause(0.01)
+    plt.ioff(); plt.show()    
+    np.savetxt('D:/pytest.ast',xxstg)
     
-    XX=np.max(p_array.x())-np.min(p_array.x())
-    YY=np.max(p_array.y())-np.min(p_array.y())
-    ZZ=np.max(p_array.tau())-np.min(p_array.tau())
-    
-    
-    xres=XX/50
-    yres=YY/50
-    zres=ZZ/50
-    steps=[xres,yres,zres*gamref];
-    nxyz=np.array([60,60,60])
-    kern=Sym_Kernel(nxyz,steps)
-    dS=200.000;
-    L0=True
-    t0=time.time()
-    
-    #SC_xxstg_update(xxstg,Q,gamref,dS,L0,kern,steps);
-    
-    SC_xxstg_update(p_array,Q,gamref,dS,L0,kern,steps);
-    
-    
-    
-    t1=time.time()
-    print t1-t0, ' sec'
-    np.savetxt('pytest.ast',xxstg)
-    
-    plt.plot(p_array.particles[4::6],p_array.particles[3::6],'.',xxstg0[:,4],xxstg0[:,3],'.')
-    plt.show()
     
     

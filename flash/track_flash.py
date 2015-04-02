@@ -5,6 +5,7 @@ tracking with space charge
 import matplotlib as mpl
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 from numpy import cos, sin, log, abs, exp
 
@@ -27,23 +28,6 @@ c=299792458
 mue0=4*pi*1e-7   
 eps0=1/(c*c*mue0)
 E_ele_eV=me*c*c/q0
-
-
-def apply_space_charge(p_array, dz):
-    gamref = p_array.E / 0.000511
-    XX=np.max(p_array.x())-np.min(p_array.x())
-    YY=np.max(p_array.y())-np.min(p_array.y())
-    ZZ=np.max(p_array.tau())-np.min(p_array.tau())
-
-    xres=XX/50
-    yres=YY/50
-    zres=ZZ/50
-    steps=[xres,yres,zres*gamref];
-    nxyz=np.array([60,60,60])
-    kern=Sym_Kernel(nxyz,steps)
-
-    SC_xxstg_update(p_array,Q,gamref,dz,L0 = True,kern = kern,steps=steps);
-
 
 E00=5.109986258350895e+05
 
@@ -193,13 +177,13 @@ def get_envelope(p_array):
 tws_track = []
 
 
-z_stop =  lat.totalLen
+z_stop =  50.0 #lat.totalLen
 
 while navi.z0 < z_stop:
     track(lat=lat, particle_list=p_array, dz=dz, navi=navi)
-    
-    apply_space_charge(p_array,dz=dz)
-    
+    t0=time.time()
+    SC_xxstg_update(p_array.particles.reshape(len(Q),6),Q,p_array.E / 0.000511,dz,False,np.r_[53,53,63]);
+    t1=time.time(); print t1-t0
     print 'SC:, z=', navi.z0
     
     x.append(p_array.particles[0])
@@ -273,13 +257,13 @@ f=plt.figure()
 f.canvas.set_window_title('Current projection') 
 ax = f.add_subplot(211)
 plt.bar( z0 , n0, width = (bins0[1]-bins0[0]), alpha=0.2)
-p1,=plt.plot( 1.e6 * bins0[1:] , n0, '.-')
+p1,=plt.plot( 1.e6 * bins0[1:] , n0, '-')
 plt.legend([p1],['current projection (initial)'])
 plt.grid(True)
 
 ax = f.add_subplot(212)
 plt.bar( z , n, width = (bins[1]-bins[0]), alpha=0.2)
-p1,=plt.plot( 1.e6 * bins[1:] , n, 'b.-')
+p1,=plt.plot( 1.e6 * bins[1:] , n, 'b-')
 plt.legend([p1],['current projection (final)'])
 plt.grid(True)
 
