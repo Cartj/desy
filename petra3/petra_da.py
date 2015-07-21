@@ -1,6 +1,6 @@
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.tracking import *
+from ocelot.cpbd.track import *
 from time import time
 from mpi4py import MPI
 from ocelot.gui.accelerator import *
