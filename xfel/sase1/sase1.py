@@ -43,10 +43,17 @@ extra_fodo = (und, d2, qdh)
 l_fodo = qf.l / 2 + (b1.l + b2.l + b2.l + b1.l + d3.l) + und.l + d2.l + qf.l / 2 
 
 #self-seeding
-chicane = Drift(l=5.1)
-chicane.cryst = Crystal(r=[0,0,0*cm], size=[5*cm,5*cm,100*mum], no=[0,0,-1], id="cr1")
-chicane.cryst.lattice =  CrystalLattice('C')
-chicane.cryst.psi_n = -pi/2. #input angle psi_n according to Authier (symmetric reflection, Si)
+chicane1 = Drift(l=5.1)
+chicane1.cryst = Crystal(r=[0,0,0*cm], size=[5*cm,5*cm,100*mum], no=[0,0,-1], id="cr1")
+chicane1.cryst.lattice =  CrystalLattice('C')
+chicane1.cryst.psi_n = -pi/2. #input angle psi_n according to Authier (symmetric reflection, Si)
+chicane1.cryst.ref_idx = (4,0,0)
+
+chicane2 = Drift(l=5.1)
+chicane2.cryst = Crystal(r=[0,0,0*cm], size=[5*cm,5*cm,100*mum], no=[0,0,-1], id="cr2")
+chicane2.cryst.lattice =  CrystalLattice('C')
+chicane2.cryst.psi_n = -pi/2. #input angle psi_n according to Authier (symmetric reflection, Si)
+chicane2.cryst.ref_idx = (4,0,0)
 
 '''
 TODO: for future
@@ -78,8 +85,9 @@ und.Kx = 2.395
 beam = Beam()
 beam.E = 14.0
 beam.sigma_E = 0.002
-beam.emit_xn = 0.4e-6 
-beam.emit_yn = 0.4e-6 
+beam.emit_xn = 1.36059e-7
+beam.emit_yn = 2.40048e-7
+
 beam.gamma_rel = beam.E / (0.511e-3)
 beam.emit_x = beam.emit_xn / beam.gamma_rel
 beam.emit_y = beam.emit_yn / beam.gamma_rel
