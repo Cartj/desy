@@ -12,7 +12,7 @@ from ocelot.gui.accelerator import *
 #from codes.genera.src.python.trajectory import undulator
 import pylab as plt
 from time import time
-
+from copy import deepcopy
 
 
 #resonans_diag(Qx = 0, Qy = 0, order=3)
@@ -47,24 +47,14 @@ tw0.x = 0.1
 lat = MagneticLattice(superperiod, energy = 2.5)
 
 
-#tws=twiss(lat, tw0,nPoints=1000)
-#print 10-tws[-1].mux/2./np.pi*6,  6-tws[-1].muy/2./np.pi*6
-#compensate_chromaticity(lat, ksi_x_comp = 0, ksi_y_comp = 0,  nsuperperiod = 6)
-#eb = EbeamParams(lat,tws[0] ,nsuperperiod = 6)
-#eb.print_params()
-#plot_opt_func(lat, tws, top_plot="x")
-#plt.show()
-
-
-nturns = 1000
+nturns = 200
 
 
 nx = 60
 ny = 50
 
 x_array = linspace(-0.06, 0.06, nx)
-#print x_array
-#y_array = linspace(0, 0.050, ny)
+
 y_array = linspace(0.0001, 0.06, ny)
 
 
@@ -73,18 +63,21 @@ start = time()
 start = time()
 
 pxy_list = create_track_list(x_array, y_array)
-pxy_list = tracking(lat, nturns, pxy_list, order = 2, nsuperperiods = 6)
+pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order = 2, nsuperperiods = 6)
+pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order = 1, nsuperperiods = 6)
 rank = 0
 
 
 if rank == 0:
     print "time exec = ", time() - start
-    da = array(map(lambda pxy: pxy.turn, pxy_list))
-    show_da(da, x_array, y_array)
+    da2 = array(map(lambda pxy: pxy.turn, pxy_list_2))
+    da1 = array(map(lambda pxy: pxy.turn, pxy_list_1))
+    show_da(da2, x_array, y_array)
+    show_da(da1, x_array, y_array)
 
 if rank == 0:
 
-    pxy_stable = stable_particles(pxy_list, nturns)
+    pxy_stable = stable_particles(pxy_list_1, nturns)
     x_stable = np.unique(np.sort(map(lambda pxy: pxy.x, pxy_stable)))
     x_stable = x_stable[x_stable>=0]
     pxy_blue_x, pxy_blue_xp, pxy_red_x, pxy_red_xp = phase_space(x_stable, np.zeros(len(x_stable)))
