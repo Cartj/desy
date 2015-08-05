@@ -47,22 +47,22 @@ tw0.x = 0.1
 lat = MagneticLattice(superperiod, energy = 2.5)
 
 
-nturns = 200
+nturns = 400
 
 
 nx = 60
-ny = 50
+ne = 50
 
-x_array = linspace(-0.06, 0.06, nx)
+x_array = linspace(-0.2, 0.2, nx)
 
-y_array = linspace(0.0001, 0.06, ny)
+p_array = linspace(-0.20, 0.20, ne)
 
-
-start = time()
 
 start = time()
 
-pxy_list = create_track_list(x_array, y_array, p_array=[0.])
+start = time()
+
+pxy_list = create_track_list(x_array, y_array = [0], p_array=p_array)
 pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=2, nsuperperiods = 6)
 pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order=1, nsuperperiods = 6)
 rank = 0
@@ -72,8 +72,8 @@ if rank == 0:
     print "time exec = ", time() - start
     da2 = array(map(lambda pxy: pxy.turn, pxy_list_2))
     da1 = array(map(lambda pxy: pxy.turn, pxy_list_1))
-    show_da(da2, x_array, y_array)
-    show_da(da1, x_array, y_array)
+    show_da(da2, x_array, p_array , title = "second order")
+    show_da(da1, x_array, p_array)
 
 if rank == 0:
 
