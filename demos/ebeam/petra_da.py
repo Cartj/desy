@@ -33,6 +33,12 @@ tw0 = Twiss(beam)
 
 exec( open("petra3.inp" ))
 lat = MagneticLattice(lattice, energy = beam.E)
+
+#for elem in lat.sequence:
+#    if elem.type == "drift":
+#        print elem.type, elem.id, elem.l, elem.k2
+#        print elem.transfer_map.R
+#        print elem.transfer_map.T
 tws=twiss(lat, tw0)
 
 print "Qx = ", tws[-1].mux/2/pi, "  Qy = ", tws[-1].muy/2/pi

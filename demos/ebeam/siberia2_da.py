@@ -47,11 +47,11 @@ tw0.x = 0.1
 lat = MagneticLattice(superperiod, energy = 2.5)
 
 
-nturns = 200
+nturns = 1000
 
 
-nx = 60
-ny = 50
+nx = 30
+ny = 20
 
 x_array = linspace(-0.06, 0.06, nx)
 
