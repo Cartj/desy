@@ -5,7 +5,9 @@ import time
 import matplotlib.pyplot as plt
 
 from ocelot.cpbd.elements import *
+from ocelot.cpbd.beam import *
 from ocelot.cpbd.optics import *
+from ocelot.cpbd.track import *
 from PhysConsts import *
 
 from space_charge import *
@@ -114,6 +116,7 @@ SC=False
 MSlice=10000
 nxnynz=np.r_[63,63,63]
 
+order = 2 # order 
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -130,7 +133,7 @@ beam.tlen=2e-3 # in m
 
 tw0 = Twiss(beam)
 exec(open('lattice_FLASH_S2E.txt'))
-lat = MagneticLattice(lattice, beam.E)
+lat = MagneticLattice(lattice, energy = beam.E)
 tws=twiss(lat, tw0, nPoints=1000)
 lat.update_transfer_maps()
 tws=twiss(lat, tw0, nPoints=1000)
@@ -193,38 +196,38 @@ while navi.z0 < z_stop:
         dz0=dz
     if (BC1[0]-navi.z0)<dz0 and navi.z0<BC1[0]:
         dz0=BC1[0]-navi.z0
-        track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+        step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
         if SC:
             SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz);
         dz0=BC1[1]-BC1[0]
         P00=np.copy(P[:,4:]);
-        track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+        step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
         compressor(P00,r56_1,t566_1,u5666_1)
         P[:,4]=P00[:,0];
     else:
         if (BC2[0]-navi.z0)<dz0 and navi.z0<BC2[0]:
             dz0=BC2[0]-navi.z0
-            track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+            step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
             if SC:
                 SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz);
             dz0=BC2[1]-BC2[0]
             P00=np.copy(P[:,4:]);
-            track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+            step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
             compressor(P00,r56_2,t566_2,u5666_2)
             P[:,4]=P00[:,0];
         else:
             if (DL[0]-navi.z0)<dz0 and navi.z0<DL[0]:
                 dz0=DL[0]-navi.z0
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+                step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 if SC:
                     SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz); #63
                 dz0=DL[1]-DL[0]
                 P00=np.copy(P[:,4:]);
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+                step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 compressor(P00,r56_3,t566_3,u5666_3)
                 P[:,4]=P00[:,0];
             else:
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi)
+                step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 t0=time.time()
                 if SC:
                     nxnynz=np.r_[63,63,63]
@@ -254,7 +257,7 @@ parts = p_array.array2list()
 
 
 
-eleg_opt = np.genfromtxt('elegant_beam_optics_1stOrder.txt')
+eleg_opt = np.genfromtxt('elegant_beam_optics_2ndOrder.txt')
 s_b=eleg_opt[:,0]
 betax_b=eleg_opt[:,8]
 betay_b=eleg_opt[:,11]
