@@ -17,7 +17,7 @@ from ocelot.cpbd import *
 from ocelot.gui.accelerator import plot_lattice
 
 
-from space_charge import *
+from space_charge import SC_xxstg_update
 
 import sys
 
@@ -182,7 +182,7 @@ z_stop =  50.0 #lat.totalLen
 while navi.z0 < z_stop:
     track(lat=lat, particle_list=p_array, dz=dz, navi=navi)
     t0=time.time()
-    SC_xxstg_update(p_array.particles.reshape(len(Q),6),Q,p_array.E / 0.000511,dz,False,np.r_[53,53,63]);
+    #SC_xxstg_update(p_array.particles.reshape(len(Q),6),Q,p_array.E / 0.000511,dz,False,np.r_[53,53,63]);
     t1=time.time(); print t1-t0
     print 'SC:, z=', navi.z0
     

@@ -1,10 +1,10 @@
 '''
 Created on 05.04.2013
-
 @author: zagor
 '''
 import csv
 from ocelot.cpbd.elements import *
+from math import *
 
 def read_lattice_elegant(file_flo,file_par):
     f=open(file_flo,'rb')
@@ -92,7 +92,7 @@ def read_lattice_elegant(file_flo,file_par):
             elem.k2=eval(data_par[pos+1][2])
         elif elem.type=="bend":
             elem.angle=eval(data_par[pos+1][2])
-            if (stype=='CRBEND') or (stype=='CSRCRBEND'):
+            if (stype=='CRBEND') or (stype=='CSRCRBEND') or (stype=='CSRCSBEND'):
                 elem.e1=eval(data_par[pos+10][2])
                 elem.e2=eval(data_par[pos+11][2])
                 elem.tilt=eval(data_par[pos+12][2])
@@ -114,19 +114,14 @@ def read_lattice_elegant(file_flo,file_par):
             elem.v=eval(data_par[pos+1][2])
             elem.phi=eval(data_par[pos+2][2])-90
             elem.f=eval(data_par[pos+3][2])
-            elem.delta_e=elem.v*1e-9
-            
+            elem.delta_e=elem.v*1e-9*cos(elem.phi*pi/180)        
         elif elem.type=="hcor":
             elem.l=eval(data_par[pos][2])
         elif elem.type=="vcor":
             elem.l=eval(data_par[pos][2])
         elif elem.type=="monitor":
-            elem.l=eval(data_par[pos][2])
-            
-            
-                               
-            
-            
+            elem.l=eval(data_par[pos][2]) 
+        elem.id=elem.id.replace('.','_')              
     return lattice
 
 def insert_drifts(z_start,z_stop,lat_def):
@@ -139,7 +134,8 @@ def insert_drifts(z_start,z_stop,lat_def):
             else:
                 ds=elem.s-elem.l-s0
             if ds>0:
-                lattice=lattice+[Drift(l=ds,id='DRIFT_'+str(ds))]
+                str_id=str(ds).replace('.','_')
+                lattice=lattice+[Drift(l=ds,id='DRIFT_'+str_id)]
             lattice=lattice+[elem]
             print elem.id,elem.type,elem.z, elem.s, ds
             s0=elem.s
@@ -147,7 +143,8 @@ def insert_drifts(z_start,z_stop,lat_def):
             break
     ds=z_stop-elem.z
     if ds>0:
-        lattice=lattice+[Drift(l=ds,id='DRIFT'+str(ds))]
+        str_id=str(ds).replace('.','_')
+        lattice=lattice+[Drift(l=ds,id='DRIFT'+str_id)]
     return lattice
 
     

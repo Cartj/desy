@@ -14,19 +14,18 @@ beam.I = 2.5e-10
 beam.emit_x = 1.5e-6
 beam.emit_y = 1.5e-6
 
-beam.E = 0.16
-beam.beta_x = 21.5451611025405  
-beam.beta_y = 16.8893495037859   
-beam.alpha_x =  4.22017522554549   
-beam.alpha_y = -0.157515104668462
-s_start=20.236
-z_start=20.236
-z_stop=233.82183697438
+beam.E = 148.3148e-3 #in GeV
+beam.beta_x = 14.8821  
+beam.beta_y = 18.8146   
+beam.alpha_x =  -0.61309   
+beam.alpha_y = -0.54569
+s_start=0
+z_start=0
+z_stop=190
 
-
-dir_name='./flash/'
-file_flo=dir_name+'FLASH_flo.txt'
-file_par=dir_name+'FLASH_par.txt'
+dir_name='./flash/elegant_old/'
+file_flo=dir_name+'FLASH_S2E_flo.txt'
+file_par=dir_name+'FLASH_S2E_par.txt'
 lat_def = read_lattice_elegant(file_flo,file_par)
 
 
@@ -36,7 +35,7 @@ tw0 = Twiss(beam)
 
 lat = MagneticLattice(lat_def, beam.E)
 
-write_lattice(lat, file_name = "lattice_1.txt")
+write_lattice(lat, file_name = "lattice_FLASH_S2E.txt")
 
 
 
@@ -45,7 +44,7 @@ tws=twiss(lat, tw0)
 lat.update_transfer_maps()
 tws=twiss(lat, tw0, nPoints = 10000)
 
-file_opt=dir_name+'FLASH_twi.txt'    
+file_opt=dir_name+'FLASH_S2E_twi.txt'    
 
 
 dd = np.genfromtxt(file_opt)

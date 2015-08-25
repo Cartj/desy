@@ -43,7 +43,10 @@ def Phi(q,steps):
     K2[0:Nx,0:Ny,Nz:2*Nz-1]=K2[0:Nx,0:Ny,Nz-1:0:-1] #z-mirror
     K2[0:Nx,Ny:2*Ny-1,:]=K2[0:Nx,Ny-1:0:-1,:]       #y-mirror
     K2[Nx:2*Nx-1,:,:]=K2[Nx-1:0:-1,:,:]             #x-mirror
+    t0=time.time()
     out=np.real(np.fft.ifftn(np.fft.fftn(out)*np.fft.fftn(K2)))
+    t1=time.time()
+    print 'fft time:', t1-t0,' sec'
     out[:Nx,:Ny,:Nz]=out[:Nx,:Ny,:Nz]/(4*pi*eps0*hx*hy*hz)
     return out[:Nx,:Ny,:Nz]
 
@@ -85,7 +88,7 @@ def EField(X,Q,gamma,nxyz):
     N=X.shape[0];
     X[:,2]=X[:,2]*gamma
     XX=np.max(X,axis=0)-np.min(X,axis=0)
-    print XX
+    print 'mesh steps in the bunch frame:', XX
     steps=XX/(nxyz-3)
     X=X/steps
     X_min=np.min(X,axis=0)
@@ -169,27 +172,31 @@ if __name__ == "__main__":
     xxstg=exact_xp_2_xxstg(xp,gamref)
     xxstg0=np.copy(xxstg)
     L0=False
-    LXXS=True
+    Lxxs=True
     dS=30;
+    f=plt.figure()
     plt.ion();plt.hold(False)
     for i in range(10):
-        t0=time.time()
         #drift
         xxstg[:,0]=xxstg[:,0]+xxstg[:,1]*dS
         xxstg[:,2]=xxstg[:,2]+xxstg[:,3]*dS
         xxstg[:,4]=xxstg[:,4]+xxstg[:,5]*dS/gamref**2
-        if LXXS:
+        t0=time.time()
+        if Lxxs:
             SC_xxstg_update(xxstg,Q,gamref,dS,L0,np.r_[53,53,53])
         else:    
             xp=exact_xxstg_2_xp(xxstg,gamref)
             SC_xp_update(xp,Q,gamref,dS,np.r_[53,53,53])
             xxstg=exact_xp_2_xxstg(xp,gamref)
         t1=time.time()
-        print t1-t0, ' sec', gamref
+        print 'step time:', t1-t0,' sec'
+        f.add_subplot(211)
         plt.plot(xxstg[:,4],xxstg[:,5],'.',xxstg0[:,4],xxstg0[:,5],'.')
+        f.add_subplot(212)
+        plt.plot(xxstg[:,4],xxstg[:,0],'.',xxstg0[:,4],xxstg0[:,0],'.')
         plt.draw()
-        plt.pause(0.01)
-    plt.ioff(); plt.show()    
+        plt.pause(0.1)
+    plt.ioff();plt.show()    
     np.savetxt('D:/pytest.ast',xxstg)
     
     
