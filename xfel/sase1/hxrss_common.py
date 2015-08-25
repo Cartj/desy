@@ -9,7 +9,7 @@ from ocelot.optics.bragg import *
 from ocelot.optics.ray import Ray, trace as trace_ray
 
 from ocelot.gui.optics import *
-from ocelot.common.math import peaks
+from ocelot.common.math_op import peaks
 from ocelot.adaptors.genesis import *
 
 
