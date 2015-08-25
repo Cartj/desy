@@ -116,7 +116,7 @@ SC=False
 MSlice=10000
 nxnynz=np.r_[63,63,63]
 
-order = 2 # order ##
+order = 1 # order ##
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -251,7 +251,8 @@ gamref=p_array.E*1e9/E_ele_eV
 print gamref
 xp=exact_xxstg_2_xp(P,gamref)
 xp[0,5]=xp[0,5]+p_array.E*1e9          
-np.savetxt('D:/pytest.ast',xp)
+#np.savetxt('D:/pytest.ast',xp)
+np.savetxt('pytest.ast',xp)
 
 parts = p_array.array2list()
 
@@ -269,8 +270,8 @@ out=np.zeros((n_out,3))
 out[:,0]=s_p
 out[:,1]=[t.betax for t in tws_track]
 out[:,2]=[t.betay for t in tws_track]
-np.savetxt('D:/pyoptics.txt',out)
-
+#np.savetxt('D:/pyoptics.txt',out)
+np.savetxt('pyoptics.txt',out)
 plt.hold(True)
 
 plt.figure('beam envelope')
