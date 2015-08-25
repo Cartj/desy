@@ -116,7 +116,7 @@ SC=False
 MSlice=10000
 nxnynz=np.r_[63,63,63]
 
-order = 2 # order 
+order = 2 # order #
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
