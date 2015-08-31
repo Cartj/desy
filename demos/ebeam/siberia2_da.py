@@ -44,7 +44,7 @@ exec( open("siberia2.inp" ))
 #exec( open(sys.path[0][:ind] + "repository/siberia2/siberia2.inp" ))
 tw0 = Twiss(beam)
 tw0.x = 0.1
-lat = MagneticLattice(superperiod, energy = 2.5)
+lat = MagneticLattice(superperiod)
 
 
 nturns = 1000
