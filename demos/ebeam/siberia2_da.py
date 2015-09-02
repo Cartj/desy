@@ -47,10 +47,10 @@ tw0.x = 0.1
 lat = MagneticLattice(superperiod)
 
 
-nturns = 1000
+nturns = 100
 
 
-nx = 30
+nx = 40
 ny = 20
 
 x_array = linspace(-0.06, 0.06, nx)
@@ -63,14 +63,15 @@ start = time()
 start = time()
 
 pxy_list = create_track_list(x_array, y_array, p_array=[0.])
-pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=2, nsuperperiods = 6)
-pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order=1, nsuperperiods = 6)
+pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=3, nsuperperiods = 6)
+pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order=2, nsuperperiods = 6)
 rank = 0
 
 
 if rank == 0:
     print "time exec = ", time() - start
     da2 = array(map(lambda pxy: pxy.turn, pxy_list_2))
+    #print da2
     da1 = array(map(lambda pxy: pxy.turn, pxy_list_1))
     show_da(da2, x_array, y_array)
     show_da(da1, x_array, y_array)
@@ -88,9 +89,35 @@ if rank == 0:
     plt.figure(1)
     plt.plot(pxy_blue_x, pxy_blue_xp, "r.", pxy_red_x,pxy_red_xp, "b.")
     plt.xlabel("X, m")
+    plt.title("Brown")
     plt.ylabel("X', rad")
     plt.figure(2)
+    plt.title("Brown")
     plt.plot(pxy_blue_y, pxy_blue_yp, "r.", pxy_red_y,pxy_red_yp, "b.")
     plt.xlabel("Y, m")
     plt.ylabel("Y', rad")
+
+    # second order symplectic maps
+
+    pxy_stable = stable_particles(pxy_list_2, nturns)
+    x_stable = np.unique(np.sort(map(lambda pxy: pxy.x, pxy_stable)))
+    x_stable = x_stable[x_stable>=0]
+    pxy_blue_x, pxy_blue_xp, pxy_red_x, pxy_red_xp = phase_space(x_stable, np.zeros(len(x_stable)))
+
+    y_stable = np.unique(np.sort(map(lambda pxy: pxy.y, pxy_stable)))
+    y_stable = y_stable[y_stable>=0]
+    pxy_blue_y, pxy_blue_yp, pxy_red_y, pxy_red_yp = phase_space(np.zeros(len(y_stable)), y_stable)
+    plt.figure(3)
+    plt.title("Symplectic")
+    plt.plot(pxy_blue_x, pxy_blue_xp, "r.", pxy_red_x,pxy_red_xp, "b.")
+    plt.xlabel("X, m")
+    plt.ylabel("X', rad")
+    plt.figure(4)
+    plt.title("Symplectic")
+    plt.plot(pxy_blue_y, pxy_blue_yp, "r.", pxy_red_y,pxy_red_yp, "b.")
+    plt.xlabel("Y, m")
+    plt.ylabel("Y', rad")
+
+
+
     plt.show()
