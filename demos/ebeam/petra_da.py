@@ -24,7 +24,7 @@ rank = mpi_comm.Get_rank()
 
 
 beam = Beam()
-beam.E = 6
+beam.E = 6.
 beam.sigma_E = 0.001
 beam.I = 0.1
 
@@ -32,7 +32,7 @@ beam.I = 0.1
 tw0 = Twiss(beam)
 
 exec( open("petra3.inp" ))
-lat = MagneticLattice(lattice, energy = beam.E)
+lat = MagneticLattice(lattice)
 
 #for elem in lat.sequence:
 #    if elem.type == "drift":
@@ -56,11 +56,11 @@ err_list = {"quadrupole": {"offset": k_error*0.1e-3, "dtilt": k_error*0.0001},
 #print "error = ", errors[1][3]
 
 
-nturns = 200
+nturns = 2000
 
 
-nx = 60
-ny = 40
+nx = 80
+ny = 50
 
 x_array = linspace(-0.0401, 0.04, nx)
 #y_array = linspace(0, 0.050, ny)
@@ -70,7 +70,7 @@ y_array = linspace(0.0001, 0.04, ny)
 start = time()
 
 pxy_list = create_track_list(x_array, y_array, p_array=[0])
-pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors = err_list, nsuperperiods = 1, order=2)
+pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors=err_list, nsuperperiods=1, order=3)
 
 
 

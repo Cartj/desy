@@ -1782,6 +1782,7 @@ bpm = Monitor(id = 'bpm')
 
 # sextupoles 
 sdu = Sextupole(l = 0.286, k2 = 0, tilt = 0, id = 'sdu')
+#sdu = Drift(l = 0.286,id = 'sdu')
 s4 = Sextupole(l = 0.286, k2 = 3.2120295801, tilt = 0, id = 's4')
 s3 = Sextupole(l = 0.286, k2 = -5.253509535, tilt = 0, id = 's3')
 s2 = Sextupole(l = 0.286, k2 = 3.2120295801, tilt = 0, id = 's2')
@@ -1793,7 +1794,7 @@ s1 = Sextupole(l = 0.286, k2 = -5.253509535, tilt = 0, id = 's1')
 
 # cavity 
 rf7 = Cavity(l = 2.1, volt = 0.0, delta_e = 0.0, freq = 0.0, phi = 0.0, volterr = 0.0, id = 'rf7')
-
+#rf7 = Drift(l = 2.1, id = 'rf7')
 # rfcavity 
 
 # Matrices 

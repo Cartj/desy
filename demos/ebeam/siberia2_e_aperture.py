@@ -44,7 +44,7 @@ exec( open("siberia2.inp" ))
 #exec( open(sys.path[0][:ind] + "repository/siberia2/siberia2.inp" ))
 tw0 = Twiss(beam)
 tw0.x = 0.1
-lat = MagneticLattice(superperiod, energy = 2.5)
+lat = MagneticLattice(superperiod)
 
 
 nturns = 400
@@ -63,7 +63,7 @@ start = time()
 start = time()
 
 pxy_list = create_track_list(x_array, y_array = [0], p_array=p_array)
-pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=2, nsuperperiods = 6)
+pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=3, nsuperperiods = 6)
 pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order=1, nsuperperiods = 6)
 rank = 0
 
