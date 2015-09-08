@@ -9,7 +9,7 @@ from ocelot.cpbd.beam import *
 from ocelot.cpbd.optics import *
 from ocelot.cpbd.track import *
 from PhysConsts import *
-
+from ocelot.gui.accelerator import *
 from space_charge import *
 from math import *
 
