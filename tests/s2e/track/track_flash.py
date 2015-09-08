@@ -31,7 +31,7 @@ def get_envelope(p_array):
     tws.pypy = np.mean((py-tws.py)*(py-tws.py))
     tws.p = np.mean( p_array.p())
     tws.E = p_array.E
-    tws.de = p_array.de
+    #tws.de = p_array.de
     tws.emittx=sqrt(tws.xx*tws.pxpx-tws.xpx**2)
     tws.emitty=sqrt(tws.yy*tws.pypy-tws.ypy**2)
     tws.betax=tws.xx/tws.emittx
@@ -61,9 +61,9 @@ def R56fromR(LB,LD,r,BCtype):
     else:
         if BCtype=='s':
             r56,t566,u5666,Sref=R56(LB,2*LD+dx(r,LB),r,6) 
-    return r56,t566,u5666  
+    return r56, t566, u5666
 
-def compressor(P,R56,T566,U5666):
+def compressor(P, R56, T566, U5666):
     d=P[:,1]
     P[:,0]=P[:,0]+R56*d;
     if T566!=0:
@@ -94,27 +94,28 @@ def SmoothZ(Zin,M):
     Zout2[N-1]=Zout[N-1]
     Zout2[0]=Zout[0]
     for i in range(1,N-1):
-        m=min(i,N-i+1);
+        m=min(i, N-i+1);
         m=floor(myfunc(0.5*m,0.5*M)+0.500001)
         Zout2[i]=(S[i+m+1]-S[i-m])/(2*m+1)
     Zout[inds]=Zout2
     return Zout
 
 
-BC1=(6.5708,10.818543701164369)
-BC2=(53.098343701164396,68.335010600972097)
-DL=( 1.381486106009717e+02,1.453505656016716e+02)
+BC1=(6.5708, 10.818543701164369)
+BC2=(53.098343701164396, 68.335010600972097)
+DL=( 1.381486106009717e+02, 1.453505656016716e+02)
 Lat_end=1.893185656016718e+02
-r1=1.618; r2=6.3727;
-r56_1, t566_1, u5666_1=R56fromR(0.5,0.5,r1,'c');
-r56_2, t566_2, u5666_2,=R56fromR(0.5,2.38,r2,'s');
-r56_3=5.3639e-004; t566_3=0.03; u5666_3=0;
+r1=1.618;
+r2=6.3727;
+r56_1, t566_1, u5666_1 = R56fromR(0.5,0.5,r1,'c');
+r56_2, t566_2, u5666_2, = R56fromR(0.5,2.38,r2,'s');
+r56_3 = 5.3639e-004; t566_3=0.03; u5666_3=0;
 
 dz = 1
 z_stop =  Lat_end
-SC=False
-MSlice=10000
-nxnynz=np.r_[63,63,63]
+SC = False
+MSlice = 10000
+nxnynz = np.r_[63, 63, 63]
 
 order = 1 # order ##
 
@@ -133,12 +134,11 @@ beam.tlen=2e-3 # in m
 
 tw0 = Twiss(beam)
 exec(open('lattice_FLASH_S2E.txt'))
-lat = MagneticLattice(lattice, energy = beam.E)
-tws=twiss(lat, tw0, nPoints=1000)
-lat.update_transfer_maps()
-tws=twiss(lat, tw0, nPoints=1000)
-lat.update_transfer_maps(track_acceleration = True)
+lat = MagneticLattice(lattice)
+tws=twiss(lat, tw0, nPoints=None)
 
+plot_opt_func(lat, tws, top_plot = ["E"])
+plt.show()
 # elegant optics
 file_opt='FLASH_S2E_twi.txt'    
 dd = np.genfromtxt(file_opt)
@@ -152,13 +152,14 @@ energy_dd=dd[:,13]*E_ele_eV*1e-6
 
 ############# design optics #############################
 f=plt.figure();
-ax = f.add_subplot(111); ax.set_xlim(0, lat.totalLen)
+ax = f.add_subplot(111);
+ax.set_xlim(0, lat.totalLen)
 f.canvas.set_window_title('Betax [m]') 
 p1, = plt.plot(map(lambda p: p.s, tws), map(lambda p: p.beta_x, tws), lw=2.0)
 p2, = plt.plot(s_dd, betax_dd, 'g-',lw=2.0)
 plt.grid(True)
 plt.legend([p1,p2], [r'$\beta_x$',r'elegant'])
-
+plt.show()
 P0=np.loadtxt('flash_out_200000.ast')
 Q=-P0[:,7]*1e-9 #charge in nC -> in C 
 xp=P0[:,:6]
@@ -168,10 +169,12 @@ gamref=sqrt((Pref/E_ele_eV)**2+1)
 xxstg=exact_xp_2_xxstg(xp,gamref)
 
 n = len(Q)
-x = [0];s = [0];
+x = [0];
+s = [0];
 p_array = ParticleArray(n)
 navi = Navigator(lattice=lat)
-p_array.E = beam.E; p_array.de = 0
+p_array.E = beam.E;
+#p_array.de = 0
 
 tws_track = []
 p_array.particles[0::6]=xxstg[:,0]
@@ -198,7 +201,7 @@ while navi.z0 < z_stop:
         dz0=BC1[0]-navi.z0
         step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
         if SC:
-            SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz);
+            SC_xxstg_update(P, Q, p_array.E / 0.000511, dz, True, nxnynz);
         dz0=BC1[1]-BC1[0]
         P00=np.copy(P[:,4:]);
         step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
