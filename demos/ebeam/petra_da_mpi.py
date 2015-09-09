@@ -36,7 +36,7 @@ y_array = linspace(0.0001, 0.04, ny)
 
 start = time()
 pxy_list = create_track_list(x_array, y_array, p_array=[0.])
-pxy_list = tracking_mpi( mpi_comm, lat, nturns, pxy_list,  nsuperperiods=1, order=1, save_track=False)
+pxy_list = tracking_mpi( mpi_comm, lat, nturns, pxy_list,  nsuperperiods=1, order=3, save_track=False)
 if rank == 0:
     print( time() - start)
     da = array(map(lambda pxy: pxy.turn, pxy_list))
