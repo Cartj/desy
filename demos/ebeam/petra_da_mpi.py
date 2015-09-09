@@ -1,8 +1,9 @@
 __author__ = 'Sergey Tomin'
 import sys
 ind = sys.path[0].find("repository")
-sys.path.append(sys.path[0][:ind]+ "repository\ocelot")
 
+sys.path.append(sys.path[0][:ind] + "repository")
+print sys.path[-1]
 from ocelot.cpbd.beam import *
 from ocelot.cpbd.track import *
 from time import time
