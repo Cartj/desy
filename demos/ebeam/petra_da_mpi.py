@@ -7,7 +7,7 @@ from ocelot.cpbd.beam import *
 from ocelot.cpbd.track import *
 from time import time
 from mpi4py import MPI
-
+import pickle
 mpi_comm = MPI.COMM_WORLD
 size = mpi_comm.Get_size()
 rank = mpi_comm.Get_rank()
@@ -24,7 +24,7 @@ exec( open("petra3.inp" ))
 lat = MagneticLattice(lattice)
 
 
-nturns = 1000
+nturns = 100
 
 
 nx = 80
@@ -40,9 +40,20 @@ pxy_list = tracking_mpi( mpi_comm, lat, nturns, pxy_list,  nsuperperiods=1, orde
 if rank == 0:
     print( time() - start)
     da = array(map(lambda pxy: pxy.turn, pxy_list))
-    np.savetxt("da.txt", (da))
-    b = []
-    for x, y in zip(x_array, y_array):
-        a = [x, y]
-        b.append(array([x,y]))
-    np.savetxt("da_axis.txt", array(b))
+    data = {"x_array": x_array, "y_array": y_array, "da": da}
+    with open("da.txt",'w') as f:
+        pickle.dump(data, f)
+    #pickle.dump(y_array, "da_test.txt")
+    #pickle.dump(da, "da_test.txt")
+    #f = open("da_test.txt", "w")
+    #f.write("# x: " + str(x_array[0]) + ", " + str(x_array[-1]) + ", " + str(nx) + "\n")
+    #f.write("# y: " + str(y_array[0]) + ", " + str(y_array[-1]) + ", " + str(ny) + "\n")
+    #for d in da:
+    #    f.write(d)
+    #f.close()
+    #np.savetxt("da.txt", da)
+    #b = []
+    #for x, y in zip(x_array, y_array):
+    #    a = [x, y]
+    #    b.append(array([x,y]))
+    #np.savetxt("da_axis.txt", array(b))
