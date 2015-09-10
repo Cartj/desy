@@ -23,6 +23,7 @@ with open("da.txt", 'r') as f:
 x_array = data["x_array"]
 y_array = data["y_array"]
 da = data["da"]
+print da
 #da = np.loadtxt("da.txt")
 #xy = np.loadtxt("da_axis.txt")
 #x_array = xy[:,0]
