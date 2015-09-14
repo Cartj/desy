@@ -1,2210 +1,799 @@
-#option, -echo
-
-
-
-
-
-
-
-#------------------------------------------------------------------------------
-
-
-
-# last work: 16 december 2011
-
-
-
-#------------------------------------------------------------------------------
-
-
-
-d00645 = Drift(l=0.0645, id = 'd00645')
-
-d0082 = Drift(l=0.082, id = 'd0082')
-
-d00052 = Drift(l=0.0052, id = 'd00052')
-
-d03236 = Drift(l=0.3236, id = 'd03236')
-
-d0276 = Drift(l=0.276, id = 'd0276')
-
-d0208 = Drift(l=0.208, id = 'd0208')
-
-d04488 = Drift(l=0.4488, id = 'd04488')
-
-d12744 = Drift(l=1.2744, id = 'd12744')
-
-d0285 = Drift(l=0.285, id = 'd0285')
-
-# lola cavity for diagnostics (mad definition---------------------------------
-
-
-
-
-
-
-
-i1_tdsa = cavity(l=0.7, phi=0, volt=0, freq=2800000000.0*1e-6, id = 'i1_tdsa')
-
-
-
-
-
-# section Markers --------------------------------------------------------------
-
-
-
-i1_start_i1 = Marker(id = 'i1_start_i1')
-
-i1_end_i1 = Marker(id = 'i1_end_i1')
-
-i1_gun = Marker(id = 'i1_gun')
-
-i1_s2e = Marker(id = 'i1_s2e')
-
-i1_start_darm = Marker(id = 'i1_start_darm')
-
-i1_end_darm = Marker(id = 'i1_end_darm')
-
-i1_start_lh = Marker(id = 'i1_start_lh')
-
-i1_end_lh = Marker(id = 'i1_end_lh')
-
-i1_start_dia = Marker(id = 'i1_start_dia')
-
-i1_start_dog = Marker(id = 'i1_start_dog')
-
-i1_end_dog = Marker(id = 'i1_end_dog')
-
-i1_start_mid = Marker(id = 'i1_start_mid')
-
-i1_end_mid = Marker(id = 'i1_end_mid')
-
-i1_start_i1d = Marker(id = 'i1_start_i1d')
-
-i1d_start_i1d = Marker(id = 'i1d_start_i1d')
-
-i1d_end_i1d = Marker(id = 'i1d_end_i1d')
-
-
-
-
-
-# diagnostics Marker -----------------------------------------------------------
-
-
-
-i1_bpma = Monitor(id = 'i1_bpma')
-
-i1_bpmb = Monitor(id = 'i1_bpmb')
-
-i1_bpmg = Monitor(id = 'i1_bpmg')
-
-i1_bpmf = Monitor(id = 'i1_bpmf')
-
-i1d_bpma = Monitor(id = 'i1d_bpma')
-
-i1d_bpmd = Monitor(id = 'i1d_bpmd')
-
-i1_bpms = Monitor(id = 'i1_bpms')
-
-i1_scrn = Marker(id = 'i1_scrn')
-
-i1_otra = Marker(id = 'i1_otra')
-
-i1_otrl = Marker(id = 'i1_otrl')
-
-i1_otrs = Marker(id = 'i1_otrs')
-
-i1_otrc = Marker(id = 'i1_otrc')
-
-i1d_otrc = Marker(id = 'i1d_otrc')
-
-i1d_otrd = Marker(id = 'i1d_otrd')
-
-i1_dcm = Marker(id = 'i1_dcm')
-
-i1_bam = Marker(id = 'i1_bam')
-
-i1_tora = Marker(id = 'i1_tora')
-
-i1_torb = Marker(id = 'i1_torb')
-
-i1d_torc = Marker(id = 'i1d_torc')
-
-i1_eod = Marker(id = 'i1_eod')
-
-i1_srm = Marker(id = 'i1_srm')
-
-i1_fcup = Marker(id = 'i1_fcup')
-
-i1d_bhm = Marker(id = 'i1d_bhm')
-
-
-
-
-
-# undulator with natural focusing--------------------------------------------
-
-
-
-# 15.06.2012: model using analytical Matrix.
-
-
-
-#    period = 74 mm
-
-
-
-#    gap    = 32 - ?? mm  => field  = 0.28 - 0.1 t
-
-
-
-enerlh  = 0.13
-
-
-
-gammalh = enerlh / emass
-
-
-
-bbetalh = 1. / sqrt(1 - 1./(gammalh**2))
-
-
-
-lundlh    = 0.074
-
-
-
-nundlh    = 0.74 / lundlh    # = 10
-
-
-
-lundlh_10= lundlh * 10.
-
-
-
-bundlh    = 0.28         
-
-
-
-kundlh    = 0.934*lundlh*100*bundlh
-
-
-
-kqundlh   = (2 * pi * kundlh) / (lundlh * gammalh * bbetalh)
-
-
-
-omegalh   = kqundlh / sqrt(2.)
-
-
-
+!option, -echo
+
+!------------------------------------------------------------------------------
+! Last work: 16 December 2011
+!------------------------------------------------------------------------------
+D00645 : DRIFT, L = 0.0645
+D0082 : DRIFT, L = 0.082
+D00052 : DRIFT, L = 0.0052
+D03236: DRIFT, L = 0.3236
+D0276 : DRIFT, L = 0.276
+D0208 : DRIFT, L = 0.208
+D04488: DRIFT, L = 0.4488
+D12744 : DRIFT, L = 1.2744
+D0285: DRIFT, L=0.285
+! LOLA CAVITY FOR DIAGNOSTICS (MAD definition---------------------------------
+
+I1.TDSA: LCAVITY, L=0.7, PHI0=0,               &
+                VOLT=0,    &
+                FREQ=2800000000.0*1e-6
+
+! SECTION MARKERS --------------------------------------------------------------
+I1.START.I1:   MARKER
+I1.END.I1:     MARKER
+I1.GUN:        MARKER
+I1.S2E:        MARKER
+I1.START.DARM: MARKER
+I1.END.DARM:   MARKER
+I1.START.LH:   MARKER
+I1.END.LH:     MARKER
+I1.START.DIA:  MARKER
+I1.START.DOG:  MARKER
+I1.END.DOG:    MARKER
+I1.START.MID:  MARKER
+I1.END.MID:    MARKER
+I1.START.I1D:  MARKER
+I1D.START.I1D: MARKER
+I1D.END.I1D:   MARKER
+
+! Diagnostics Marker -----------------------------------------------------------
+I1.BPMA  :    MONITOR  
+I1.BPMB  :    MONITOR   
+I1.BPMG  :    MONITOR 
+I1.BPMF:      MONITOR
+I1D.BPMA :    MONITOR 
+I1D.BPMD :    MONITOR 
+I1.BPMS  :    MONITOR  
+I1.SCRN:       MARKER
+I1.OTRA:      MARKER
+I1.OTRL:      MARKER
+I1.OTRS:      MARKER
+I1.OTRC:      MARKER
+I1D.OTRC :     MARKER
+I1D.OTRD :     MARKER
+I1.DCM:       MARKER
+I1.BAM:       MARKER
+I1.TORA:      MARKER
+I1.TORB:      MARKER
+I1D.TORC :     MARKER
+I1.EOD:       MARKER
+I1.SRM:       MARKER
+I1.FCUP:       MARKER
+I1D.BHM:     MARKER
+
+! Undulator with natural focusing--------------------------------------------
+! 15.06.2012: Model using analytical matrix.
+!    Period = 74 mm
+!    Gap    = 32 - ?? mm  => Field  = 0.28 - 0.1 T
+EnerLH  = 0.13;
+gammaLH = EnerLH / EMASS;
+bbetaLH = 1. / sqrt(1 - 1./(gammaLH^2));
+LundLH    = 0.074;
+NundLH    = 0.74 / LundLH;    ! = 10
+LundLH_10= LundLH * 10.;
+BundLH    = 0.28;         
+KundLH    = 0.934*LundLH*100*BundLH;
+kQundLH   = (2 * pi * KundLH) / (LundLH * gammaLH * bbetaLH);
+OmegaLH   = kQundLH / sqrt(2.);
    
+I1.UNDU: MATRIX, L = LundLH_10,          &
+   RM11 = 1.0,                          &
+   RM12 = LundLH_10,                    &
+   RM13 = 0.0,                          &
+   RM22 = 1.0,                          &
+   RM33 = cos(OmegaLH*LundLH_10),        &
+   RM34 = sin(OmegaLH*LundLH_10)/OmegaLH, &
+   RM43 =-sin(OmegaLH*LundLH_10)*OmegaLH, &
+   RM44 = cos(OmegaLH*LundLH_10)
+
+l_lhbp  = LundLH/2.;
+ang_lhbp = 0.2998*BundLH/sqrt(2)/EnerLH*l_lhbp;
+arc_lhbp = (0.5 * l_lhbp * ang_lhbp) / sin(0.5 * ang_lhbp);
+
+LH.BP.1: Sbend, L = arc_lhbp/2., ANGLE = ang_lhbp/2.,   &
+            e1 = 0, e2 = ang_lhbp/2.
+LH.BP.2: Sbend, L = arc_lhbp, ANGLE =-ang_lhbp,   &
+            e1 = -ang_lhbp, e2 = -ang_lhbp
+LH.BP.3: Sbend, L = arc_lhbp/2., ANGLE = ang_lhbp/2.,   &
+            e1 = ang_lhbp/2., e2 = 0
+
+!I1.UNDULATOR: Line=(D0030,10*(LH.BP.1,LH.BP.2,LH.BP.3),D0030)
+I1.UNDULATOR: Line = (D0030,I1.UNDU,D0030)
+!I1.UNDULATOR: DRIFT, L=0.800
+
+
+I1.BK: SBEND, L =0.3, ANGLE=45/180*PI  ! To diagnostik arm
+I1.SOLA: SOLENOID, L=0
+I1.SOLB: SOLENOID, L=0
+
+! Vacuum System Marker
+I1.VCDST: DRIFT, L=1.215   ! Differential pump station
+I1.VCBSHUT: DRIFT, L =0.3  ! Beam Stop
+
+I1D.DUMP: MARKER
+I1D.DUSTART: MARKER
+
+
+I1.BSEC: RBEND,L=0.3,ANGLE=0
+I1.CIX:   HKICKER, L=0.100
+I1.CIY:   VKICKER, L=0.100
+
+I1.CKXY:   KICKER, L=0.050
+
+I1.KAX: HKICKER, L=0.350
+I1.KDC:  VKICKER, L=0.200
+
+!Definition of Collimator ---------------------------------
+I1.COLO:   ECOL, XSIZE=0.02, YSIZE = 0.02
+I1.COLU:   ECOL, XSIZE=0.02, YSIZE = 0.02
+I1.DCCOL:   ECOL, XSIZE=0.02, YSIZE = 0.02
+
+BPM : LINE= (D0050, I1.BPMB, D0050)
+
+!----------------- laser heater Quadrupole ------------------------
+I1.QI.1: Quadrupole, L=0.2, K1=-9.321360E-02  
+I1.QI.2: Quadrupole, L=0.2, K1= 8.875443E-01 
+
+!----------------- matching to diagnostics ------------------------
+I1.QI.3: Quadrupole, L=0.2, K1= -7.654263E-01
+I1.QI.4: Quadrupole, L=0.2, K1= -7.117866E-02    
+
+!----------------- TDS Quadrupole ---------------------------------
+I1.QI.5: Quadrupole, L=0.2, K1=2.494601E+00  
+I1.QI.6: Quadrupole, L=0.2, K1=9.480791E-01 
+
+!----------------- Diagnostics Quadrupole -------------------------
+I1.QI.7: Quadrupole, L=0.2, K1=-4.15374
+I1.QI.8: Quadrupole, L=0.2, K1=4.15355   
+I1.QI.9: Quadrupole, L=0.2, K1=I1.QI.7[K1]
+
+!----------------- matching to shielding and dogleg ---------------
+I1.QI.11: Quadrupole, L=0.2, K1=2.128  !norm vers
+!I1.QI.11:  Quadrupole, L = 0.20, K1 = -5.18005 !dump vers
+I1.QI.12: Quadrupole, L=0.2, K1=0.933  !norm vers
+!I1.QI.12: Quadrupole, L = 0.20, K1 = 3.1208 !dump vers 7.92 for 3.00m, 
+I1.QI.13: Quadrupole, L=0.2, K1= -2.2531364E+00  
+I1.QI.14: Quadrupole, L=0.2, K1= 2.441008E+00  
+I1.QI.15: Quadrupole, L=0.2, K1= -2.559564E+00   
+I1.QI.16: Quadrupole, L=0.2, K1=  3.653292E+00 
+I1.QI.17: Quadrupole, L=0.2, K1=  -4.341087E+00 
+
+!----------------- BC0 Quadrupole ---------------------------------
+I1.QI.26: Quadrupole, L=0.2, K1=  3.854329117467 
+I1.QI.27: Quadrupole, L=0.2, K1= -3.56939610008
+I1.QI.28: Quadrupole, L=0.2, K1=  0.780579004468 
+I1.QI.29: Quadrupole, L=0.2, K1= -1.631481453547 
+I1.QI.30: Quadrupole, L=0.2, K1=  1.761852654868 
+!----------------- PS Quadrupole ----------------------------------
+I1.QI.31: Quadrupole, L=0.2, K1=-1.8 
+I1.QI.32: Quadrupole, L=0.2, K1=+1.8 
+
+!----------------- L1U Quadrupole ---------------------------------
+I1.QI.33: Quadrupole, L=0.2, K1=  1.184851276534 
+I1.QI.34: Quadrupole, L=0.2, K1=  0.638691311326
+I1.QI.35: Quadrupole, L=0.2, K1= -1.118664445314 
+
+!----------------- DUMP Quadrupole --------------------------------
+I1D.QI.41:  Quadrupole, L = 0.20, K1 = -5.984535E+00
+I1D.QI.42:  Quadrupole, L = 0.20, K1 =  5.141144E+00 ! 7.22 for 3.00m,
+
 
-
-
-i1_undu = Matrix(l=lundlh_10, rm11=1.0, rm12=lundlh_10, rm13=0.0, rm22=1.0, rm33=cos(omegalh*lundlh_10), rm34=sin(omegalh*lundlh_10)/omegalh, rm43=-sin(omegalh*lundlh_10)*omegalh, rm44=cos(omegalh*lundlh_10), id = 'i1_undu')
-
-
-
-
-
-l_lhbp  = lundlh/2.
-
-
-
-ang_lhbp = 0.2998*bundlh/sqrt(2)/enerlh*l_lhbp
-
-
-
-arc_lhbp = (0.5 * l_lhbp * ang_lhbp) / sin(0.5 * ang_lhbp)
-
-
-
-
-
-
-
-lh_bp_1 = Bend(l=arc_lhbp/2., angle=ang_lhbp/2., e1=0, e2=ang_lhbp/2., id = 'lh_bp_1')
-
-lh_bp_2 = Bend(l=arc_lhbp, angle=-ang_lhbp, e1=-ang_lhbp, e2=-ang_lhbp, id = 'lh_bp_2')
-
-lh_bp_3 = Bend(l=arc_lhbp/2., angle=ang_lhbp/2., e1=ang_lhbp/2., e2=0, id = 'lh_bp_3')
-
-
-
-
-
-#i1_undulator: line=(d0030,10*(lh_bp_1,lh_bp_2,lh_bp_3),d0030)
-
-
-
-i1_undulator  = (d0030,i1_undu,d0030)
-
-
-
-#i1_undulator: Drift, l=0.800
-
-
-
-
-
-
-
-
-
-
-
-i1_bk = Bend(l=0.3, angle=45/180*pi, id = 'i1_bk')
-
-i1_sola = Solenoid(l=0, id = 'i1_sola')
-
-i1_solb = Solenoid(l=0, id = 'i1_solb')
-
-
-
-
-
-# vacuum system Marker
-
-
-
-i1_vcdst = Drift(l=1.215, id = 'i1_vcdst')
-
-i1_vcbshut = Drift(l=0.3, id = 'i1_vcbshut')
-
-
-
-
-
-i1d_dump = Marker(id = 'i1d_dump')
-
-i1d_dustart = Marker(id = 'i1d_dustart')
-
-
-
-
-
-
-
-
-
-i1_bsec = RBend(l=0.3, angle=0, id = 'i1_bsec')
-
-i1_cix = scavenger(l=0.100, id = 'i1_cix')
-
-i1_ciy = scavenger(l=0.100, id = 'i1_ciy')
-
-
-
-
-
-i1_ckxy = scavenger(l=0.050, id = 'i1_ckxy')
-
-
-
-
-
-i1_kax = scavenger(l=0.350, id = 'i1_kax')
-
-i1_kdc = scavenger(l=0.200, id = 'i1_kdc')
-
-
-
-
-
-#definition of collimator ---------------------------------
-
-
-
-i1_colo = scavenger(xsize=0.02, ysize=0.02, id = 'i1_colo')
-
-i1_colu = scavenger(xsize=0.02, ysize=0.02, id = 'i1_colu')
-
-i1_dccol = scavenger(xsize=0.02, ysize=0.02, id = 'i1_dccol')
-
-
-
-
-
-bpm = (d0050, i1_bpmb, d0050)
-
-
-
-
-
-
-
-#----------------- laser heater Quadrupole ------------------------
-
-
-
-i1_qi_1 = Quadrupole(l=0.2, k1=-9.321360e-02, id = 'i1_qi_1')
-
-i1_qi_2 = Quadrupole(l=0.2, k1=8.875443e-01, id = 'i1_qi_2')
-
-
-
-
-
-#----------------- matching to diagnostics ------------------------
-
-
-
-i1_qi_3 = Quadrupole(l=0.2, k1=-7.654263e-01, id = 'i1_qi_3')
-
-i1_qi_4 = Quadrupole(l=0.2, k1=-7.117866e-02, id = 'i1_qi_4')
-
-
-
-
-
-#----------------- tds Quadrupole ---------------------------------
-
-
-
-i1_qi_5 = Quadrupole(l=0.2, k1=2.494601e+00, id = 'i1_qi_5')
-
-i1_qi_6 = Quadrupole(l=0.2, k1=9.480791e-01, id = 'i1_qi_6')
-
-
-
-
-
-#----------------- diagnostics Quadrupole -------------------------
-
-
-
-i1_qi_7 = Quadrupole(l=0.2, k1=-4.15374, id = 'i1_qi_7')
-
-i1_qi_8 = Quadrupole(l=0.2, k1=4.15355, id = 'i1_qi_8')
-
-i1_qi_9 = Quadrupole(l=0.2, k1=i1_qi_7.k1, id = 'i1_qi_9')
-
-
-
-
-
-#----------------- matching to shielding and dogleg ---------------
-
-
-
-i1_qi_11 = Quadrupole(l=0.2, k1=2.128, id = 'i1_qi_11')
-
-#i1_qi_11:  Quadrupole, l = 0.20, k1 = -5.18005 #dump vers
-
-
-
-i1_qi_12 = Quadrupole(l=0.2, k1=0.933, id = 'i1_qi_12')
-
-#i1_qi_12: Quadrupole, l = 0.20, k1 = 3.1208 #dump vers 7.92 for 3.00m, 
-
-
-
-i1_qi_13 = Quadrupole(l=0.2, k1=-2.2531364e+00, id = 'i1_qi_13')
-
-i1_qi_14 = Quadrupole(l=0.2, k1=2.441008e+00, id = 'i1_qi_14')
-
-i1_qi_15 = Quadrupole(l=0.2, k1=-2.559564e+00, id = 'i1_qi_15')
-
-i1_qi_16 = Quadrupole(l=0.2, k1=3.653292e+00, id = 'i1_qi_16')
-
-i1_qi_17 = Quadrupole(l=0.2, k1=-4.341087e+00, id = 'i1_qi_17')
-
-
-
-
-
-#----------------- bc0 Quadrupole ---------------------------------
-
-
-
-i1_qi_26 = Quadrupole(l=0.2, k1=3.854329117467, id = 'i1_qi_26')
-
-i1_qi_27 = Quadrupole(l=0.2, k1=-3.56939610008, id = 'i1_qi_27')
-
-i1_qi_28 = Quadrupole(l=0.2, k1=0.780579004468, id = 'i1_qi_28')
-
-i1_qi_29 = Quadrupole(l=0.2, k1=-1.631481453547, id = 'i1_qi_29')
-
-i1_qi_30 = Quadrupole(l=0.2, k1=1.761852654868, id = 'i1_qi_30')
-
-#----------------- ps Quadrupole ----------------------------------
-
-
-
-i1_qi_31 = Quadrupole(l=0.2, k1=-1.8, id = 'i1_qi_31')
-
-i1_qi_32 = Quadrupole(l=0.2, k1=+1.8, id = 'i1_qi_32')
-
-
-
-
-
-#----------------- l1u Quadrupole ---------------------------------
-
-
-
-i1_qi_33 = Quadrupole(l=0.2, k1=1.184851276534, id = 'i1_qi_33')
-
-i1_qi_34 = Quadrupole(l=0.2, k1=0.638691311326, id = 'i1_qi_34')
-
-i1_qi_35 = Quadrupole(l=0.2, k1=-1.118664445314, id = 'i1_qi_35')
-
-
-
-
-
-#----------------- dump Quadrupole --------------------------------
-
-
-
-i1d_qi_41 = Quadrupole(l=0.20, k1=-5.984535e+00, id = 'i1d_qi_41')
-
-i1d_qi_42 = Quadrupole(l=0.20, k1=5.141144e+00, id = 'i1d_qi_42')
-
-
-
-
-
-
-
-
-
-#----------------- dogleg magnets: dogleg with r56=0.03m ----------
-
-
-
-i1_qih_18 = Quadrupole(l=0.10, k1=+5.444766974, id = 'i1_qih_18')
-
-i1_qih_22 = Quadrupole(l=0.10, k1=i1_qih_18.k1, id = 'i1_qih_22')
-
-i1_qi_18 = Quadrupole(l=0.20, k1=+5.444766974, id = 'i1_qi_18')
-
-i1_qi_22 = Quadrupole(l=0.20, k1=i1_qi_18.k1, id = 'i1_qi_22')
-
-i1_qi_19 = Quadrupole(l=0.20, k1=-5.865493569, id = 'i1_qi_19')
-
-i1_qi_21 = Quadrupole(l=0.20, k1=i1_qi_19.k1, id = 'i1_qi_21')
-
-i1_qi_23 = Quadrupole(l=0.20, k1=i1_qi_19.k1, id = 'i1_qi_23')
-
-i1_qi_20 = Quadrupole(l=0.20, k1=+5.906955582, id = 'i1_qi_20')
-
-i1_qi_24 = Quadrupole(l=0.20, k1=i1_qi_20.k1, id = 'i1_qi_24')
-
-
-
-
-
-i1_qi_25 = Quadrupole(l=0.20, k1=-0.525034487046, id = 'i1_qi_25')
-
-
-
-
-
-i1_sc_1_1 = Sextupole(l=0.10, k2=-98.1752276194943, tilt=pi/2, id = 'i1_sc_1_1')
-
-i1_sc_1_2 = Sextupole(l=0.10, k2=+98.1752276194943, tilt=pi/2, id = 'i1_sc_1_2')
-
-i1_sc_2_1 = Sextupole(l=0.10, k2=-59.4821133431329, tilt=pi/2, id = 'i1_sc_2_1')
-
-i1_sc_2_2 = Sextupole(l=0.10, k2=+59.4821133431329, tilt=pi/2, id = 'i1_sc_2_2')
-
-
-
-
+!----------------- Dogleg Magnets: Dogleg with R56=0.03m ----------
+I1.QIH.18: Quadrupole, L=0.10, K1 = +5.444766974
+I1.QIH.22: Quadrupole, L=0.10, K1 = I1.QIH.18[K1]
+I1.QI.18:  Quadrupole, L=0.20, K1 = +5.444766974
+I1.QI.22:  Quadrupole, L=0.20, K1 = I1.QI.18[K1]
+I1.QI.19:  Quadrupole, L=0.20, K1 = -5.865493569
+I1.QI.21:  Quadrupole, L=0.20, K1 = I1.QI.19[K1]
+I1.QI.23:  Quadrupole, L=0.20, K1 = I1.QI.19[K1]
+I1.QI.20:  Quadrupole, L=0.20, K1 = +5.906955582
+I1.QI.24:  Quadrupole, L=0.20, K1 = I1.QI.20[K1]
+
+I1.QI.25: Quadrupole, L=0.20, K1 =  -0.525034487046 
+
+I1.SC.1.1:  SEXTUPOLE, L = 0.10, K2 = -98.1752276194943, tilt=pi/2
+I1.SC.1.2:  SEXTUPOLE, L = 0.10, K2 = +98.1752276194943, tilt=pi/2
+I1.SC.2.1:  SEXTUPOLE, L = 0.10, K2 = -59.4821133431329, tilt=pi/2
+I1.SC.2.2:  SEXTUPOLE, L = 0.10, K2 = +59.4821133431329, tilt=pi/2
 
 lll_injdip = 0.2
 
-
-
-
-
-
-
-cur_injdip1 = -0.5545855173
-
-
-
-ang_injdip1 = 2.0 * arcsin(0.5 * lll_injdip * cur_injdip1)
-
-
-
-arc_injdip1 = ang_injdip1 / cur_injdip1
-
-
-
-end_injdip1 = 0.5 * ang_injdip1
-
-
-
-
-
-
-
-cur_injdip2 = 0.2132461253
-
-
-
-ang_injdip2 = 2.0 * arcsin(0.5 * lll_injdip * cur_injdip2)
-
-
-
-arc_injdip2 = ang_injdip2 / cur_injdip2
-
-
-
-end_injdip2 = 0.5 * ang_injdip2
-
-
-
-
-
-
-
-i1_bl_6_1 = Bend(l=arc_injdip1, angle=ang_injdip1, e1=end_injdip1, e2=end_injdip1, tilt=pi/2, id = 'i1_bl_6_1')
-
-i1_bl_6_2 = Bend(l=arc_injdip1, angle=-ang_injdip1, e1=-end_injdip1, e2=-end_injdip1, tilt=pi/2, id = 'i1_bl_6_2')
-
-
-
-
-
-i1_bl_8_1 = Bend(l=arc_injdip1, angle=ang_injdip1, e1=end_injdip1, e2=end_injdip1, tilt=pi/2, id = 'i1_bl_8_1')
-
-i1_bl_8_2 = Bend(l=arc_injdip1, angle=-ang_injdip1, e1=-end_injdip1, e2=-end_injdip1, tilt=pi/2, id = 'i1_bl_8_2')
-
-
-
-
-
-i1_bl_7_1 = Bend(l=arc_injdip2, angle=ang_injdip2, e1=end_injdip2, e2=end_injdip2, tilt=pi/2, id = 'i1_bl_7_1')
-
-i1_bl_7_2 = Bend(l=arc_injdip2, angle=-ang_injdip2, e1=-end_injdip2, e2=-end_injdip2, tilt=pi/2, id = 'i1_bl_7_2')
-
-
-
-
-
-
-
-
-
-#----------------- dump dipole ------------------------------------
-
-
-
-i1_bb_0 = Drift(l=0.5, id = 'i1_bb_0')
-
+cur_injdip1 = -0.5545855173;
+ang_injdip1 = 2.0 * asin(0.5 * lll_injdip * cur_injdip1);
+arc_injdip1 = ang_injdip1 / cur_injdip1;
+end_injdip1 = 0.5 * ang_injdip1;
+
+cur_injdip2 = 0.2132461253;
+ang_injdip2 = 2.0 * asin(0.5 * lll_injdip * cur_injdip2);
+arc_injdip2 = ang_injdip2 / cur_injdip2;
+end_injdip2 = 0.5 * ang_injdip2;
+
+I1.BL.6.1: Sbend, L = arc_injdip1, ANGLE = ang_injdip1,   &
+            e1 = end_injdip1, e2 = end_injdip1, tilt=pi/2
+I1.BL.6.2: Sbend, L = arc_injdip1, ANGLE =-ang_injdip1,   &
+            e1 = -end_injdip1, e2 = -end_injdip1, tilt=pi/2
+
+I1.BL.8.1: Sbend, L = arc_injdip1, ANGLE = ang_injdip1,   &
+            e1 = end_injdip1, e2 = end_injdip1, tilt=pi/2
+I1.BL.8.2: Sbend, L = arc_injdip1, ANGLE =-ang_injdip1,   &
+            e1 = -end_injdip1, e2 = -end_injdip1, tilt=pi/2
+
+I1.BL.7.1: Sbend, L = arc_injdip2, ANGLE = ang_injdip2,   &
+            e1 = end_injdip2, e2 = end_injdip2, tilt=pi/2
+I1.BL.7.2: Sbend, L = arc_injdip2, ANGLE =-ang_injdip2,   &
+            e1 = -end_injdip2, e2 = -end_injdip2,tilt=pi/2
+
+
+!----------------- Dump Dipole ------------------------------------
+I1.BB.0: DRIFT, L    = 0.5    ! Placeholder in straight beamline for I1D.BB.5
 l_i1d  = 0.5
+ang_i1d= 30./180.*acos(-1)
+arc_i1d= l_i1d/sin(0.5*ang_i1d)*0.5*ang_i1d !l_b0/sin(ang_b0)*ang_b0
 
 
+!ANG_I1D = 30/180*acos(-1);
+!LEN_BB= 0.5;
+!ARCLEN_I1D = (0.5 * LEN_BB * ANG_I1D) / sin(0.5 * ANG_I1D);
+I1D.BB.5 : SBEND, L=arc_i1d, ANGLE=ang_i1d, E1=ang_i1d/2., E2=ang_i1d/2.
 
-ang_i1d= 30./180.*arccos(-1)
-
-
-
-arc_i1d= l_i1d/sin(0.5*ang_i1d)*0.5*ang_i1d #l_b0/sin(ang_b0)*ang_b0
-
-
-
-
-
-
-
-
-
-
-
-#ang_i1d = 30/180*arccos(-1)
-
-
-
-#len_bb= 0.5
-
-
-
-#arclen_i1d = (0.5 * len_bb * ang_i1d) / sin(0.5 * ang_i1d)
-
-
-
-i1d_bb_5 = Bend(l=arc_i1d, angle=ang_i1d, e1=ang_i1d/2., e2=ang_i1d/2., id = 'i1d_bb_5')
-
-
-
-
-
-#----------------- laser heater magnets ---------------------------
-
-
-
-l_bl  = 0.2
-
-
-
+!----------------- Laser Heater Magnets ---------------------------
+l_bl  = 0.2;
 ang_lh = -0.099484
-
-
-
-arc_lh = (l_bl * ang_lh) / sin(ang_lh)
-
-
-
-
-
-
-
-i1_bl_1_1 = Bend(l=arc_lh, angle=ang_lh, e1=0, e2=ang_lh, id = 'i1_bl_1_1')
-
-i1_bl_1_2 = Bend(l=arc_lh, angle=-ang_lh, e1=-ang_lh, e2=0, id = 'i1_bl_1_2')
-
-i1_bl_3 = Bend(l=arc_lh, angle=-ang_lh, e1=0, e2=-ang_lh, id = 'i1_bl_3')
-
-i1_bl_4 = Bend(l=arc_lh, angle=ang_lh, e1=ang_lh, e2=0, id = 'i1_bl_4')
-
-
-
-
-
-#----------------- injector from gun to acc1 ----------------------
-
-
-
-
-
-
-
-i1u = (i1_gun, i1_sola, d0276, i1_solb, d03236, d0100,                     d0050, i1_ckxy, i1_kdc, d0100,                     i1_bpmg, i1_scrn, i1_fcup, d0015, i1_start_darm,                    d0300, d0300, i1_ckxy,                     i1_bpmg, i1_scrn, d0100,                     d0020,  d0020, i1_dccol, d0200, i1_dcm, d0100,                     i1_torb, d0045, i1_ckxy, d04488)
-
-
-
-
-
-
-
-#----------------- injector dispersive arm   ----------------------
-
-
-
-
-
-
-
-i1darm = (i1_gun, i1_sola, d05996, i1_solb, d0100,                     d0050, i1_ckxy, i1_kdc, d0100,                     i1_bpmg, i1_scrn, i1_fcup, d0015, i1_start_darm,                    i1_bk, d0200, i1_bpmg, i1_scrn, i1_fcup, i1_end_darm)
-
-
-
-
-
-
-
-#----------------- laser heater -----------------------------------
-
-
-
-
-
-
-
-
-
-
-
-deltalh  = 0.100
-
-
-
-cd0100i = Drift(l=deltalh/cos(ang_lh), id = 'cd0100i')
-
-d0043 = Drift(l=0.043, id = 'd0043')
-
-d00002 = Drift(l=0.0002, id = 'd00002')
-
-d0064 = Drift(l=0.064, id = 'd0064')
-
-d01087 = Drift(l=0.1087, id = 'd01087')
-
-d019625 = Drift(l=0.19625, id = 'd019625')
-
-d027175 = Drift(l=0.27175, id = 'd027175')
-
-d00785 = Drift(l=0.0785, id = 'd00785')
-
-d010849 = Drift(l=0.10849, id = 'd010849')
-
-
-
-
-
-d0003 = Drift(l=0.003, id = 'd0003')
-
-d01975 = Drift(l=0.1975, id = 'd01975')
-
-d02025 = Drift(l=0.2025, id = 'd02025')
-
-d0122 = Drift(l=0.122, id = 'd0122')
-
-d0260 = Drift(l=0.260, id = 'd0260')
-
-d0035 = Drift(l=0.035, id = 'd0035')
-
-d01817 = Drift(l=0.1817, id = 'd01817')
-
-d00183 = Drift(l=0.0183, id = 'd00183')
-
-d02739 = Drift(l=0.2739, id = 'd02739')
-
-d00835 = Drift(l=0.0835, id = 'd00835')
-
-# my Drift
-
-
-
-d03975 = Drift(l=0.3975, id = 'd03975')
-
-d0085 = Drift(l=0.085, id = 'd0085')
-
-d03175 = Drift(l=0.3175, id = 'd03175')
-
-d0325 = Drift(l=0.325, id = 'd0325')
-
-
-
-
-
-i1lh1 =                  (d12744,i1_tora,d02739,d0100,i1_qi_1,d0130,                   i1_bam, d0170, i1_bpmf, d0150, i1_dcm, d0150,                   d00785, i1_qi_2, d0100)
-
-
-
-
-
-
-
-i1lh2  = (i1_start_lh,                   d0043, (i1_bl_1_1), cd0100i,                   (i1_bl_1_2), d019625, i1_bpmf,                   d027175, i1_otrl, d0064, d0100,                   i1_undulator, d0100, d0064,                  i1_otrl,d0128,                  (i1_bl_3), cd0100i, (i1_bl_4), d0043,                   i1_end_lh)
-
-
-
-
-
-
-
-i1lh =(i1lh1, i1lh2)
-
-
-
-
-
-
-
-
-
-
-
-#------------------ diagniostcis ----------------------------------
-
-
-
-i1diau = (d0100, i1_qi_3, d010849, d0100, i1_eod,                    d0200, i1_ciy, d0100,                   d0200, d0003, i1_cix, d01975, i1_bpmf, d02025,                   i1_qi_4, d0070)
-
-
-
+arc_lh = (l_bl * ang_lh) / sin(ang_lh);
+
+I1.BL.1.1: sbend, l = arc_lh, angle = ang_lh,   &
+                e1 = 0,   e2 = ang_lh
+I1.BL.1.2: sbend, l = arc_lh, angle = -ang_lh,   &
+                e1 = -ang_lh,   e2 = 0
+I1.BL.3: sbend, l = arc_lh, angle = -ang_lh,   &
+                e1 = 0,   e2 = -ang_lh
+I1.BL.4: sbend, l = arc_lh, angle = ang_lh,   &
+                e1 = ang_lh,   e2 = 0
+
+!----------------- Injector from gun to ACC1 ----------------------
+
+I1U      : LINE= (I1.GUN, I1.SOLA, D0276, I1.SOLB, D03236, D0100, &
+                   D0050, I1.CKXY, I1.KDC, D0100, &
+                   I1.BPMG, I1.SCRN, I1.FCUP, D0015, I1.START.DARM,&
+                   D0300, D0300, I1.CKXY, &
+                   I1.BPMG, I1.SCRN, D0100, &
+                   D0020,  D0020, I1.DCCOL, D0200, I1.DCM, D0100, &
+                   I1.TORB, D0045, I1.CKXY, D04488)
+
+!----------------- Injector Dispersive Arm   ----------------------
+
+I1DARM      : LINE= (I1.GUN, I1.SOLA, D05996, I1.SOLB, D0100, &
+                   D0050, I1.CKXY, I1.KDC, D0100, &
+                   I1.BPMG, I1.SCRN, I1.FCUP, D0015, I1.START.DARM,&
+                   I1.BK, D0200, I1.BPMG, I1.SCRN, I1.FCUP, I1.END.DARM)
+
+!----------------- Laser Heater -----------------------------------
+
+
+DELTALH  = 0.100
+CD0100I: DRIFT, L = DELTALH / cos(ang_lh)
+D0043 : DRIFT, L=0.043
+D00002: DRIFT, L=0.0002
+D0064 : DRIFT, L=0.064
+D01087: DRIFT, L=0.1087
+D019625: DRIFT, L=0.19625
+D027175: DRIFT, L=0.27175
+D00785: DRIFT, L=0.0785
+D010849: DRIFT, L=0.10849
+
+D0003: DRIFT, L=0.003
+D01975: DRIFT, L=0.1975
+D02025: DRIFT, L=0.2025
+D0122: DRIFT, L=0.122
+D0260: DRIFT, L=0.260
+D0035: DRIFT, L=0.035
+D01817: DRIFT, L=0.1817
+D00183: DRIFT, L=0.0183
+D02739: DRIFT, L=0.2739
+D00835: DRIFT, L=0.0835
+! my drift
+D03975: DRIFT, L=0.3975
+D0085: DRIFT, L=0.085
+D03175: DRIFT, L=0.3175
+D0325: DRIFT ,L = 0.325
+
+I1LH1     : LINE= &
+                (D12744,I1.TORA,D02739,D0100,I1.QI.1,D0130, &
+                 I1.BAM, D0170, I1.BPMF, D0150, I1.DCM, D0150, &
+                 D00785, I1.QI.2, D0100)
+
+I1LH2     : LINE = (I1.START.LH, &
+                 D0043, (I1.BL.1.1), CD0100I, &
+                 (I1.BL.1.2), D019625, I1.BPMF, &
+                 D027175, I1.OTRL, D0064, D0100, &
+                 I1.UNDULATOR, D0100, D0064,&
+                 I1.OTRL,D0128,&
+                 (I1.BL.3), CD0100I, (I1.BL.4), D0043, &
+                 I1.END.LH)
+
+I1LH : LINE=(I1LH1, I1LH2)
+
+
+!------------------ Diagniostcis ----------------------------------
+I1DIAU   : LINE= (D0100, I1.QI.3, D010849, D0100, I1.EOD,  &
+                 D0200, I1.CIY, D0100, &
+                 D0200, D0003, I1.CIX, D01975, I1.BPMF, D02025, &
+                 I1.QI.4, D0070)
                  
+diafodo: line=( D0035,I1.OTRC,D0125,& 
+                   D0050,I1.CIY,D0150,I1.BPMA,D0150,&
+                   I1.QI.7,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIX,D0150,I1.BPMA,D0150,&
+                   I1.QI.8,D0105,I1.KAX,D0285)
 
+I1DIACORE: LINE = (I1.TDSA,D0070,&
+                   I1.QI.5,D0122,D0175,I1.KAX,D0105,&
+                   I1.QI.6,D0105,I1.KAX,D0285,I1.START.DIA,D0035,I1.OTRC,D0125,& 
+                   D0050,I1.CIY,D0150,I1.BPMA,D0150,&
+                   I1.QI.7,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125,&
+                   D0050,I1.CIX,D0150,I1.BPMA,D0150,&
+                   I1.QI.8,D0105,I1.KAX,D0285,D0035,I1.OTRC,D0125, &
+                   D0150,I1.CIY,D0050,D0150,& 
+                   I1.QI.9,D0220,I1.BPMA,D0380,I1.OTRC,D0200)
 
+I1DIAD1 : LINE =  (D0100,I1.QI.11,D0100,D01817,I1.TORA,D00183,D0350,I1.BPMA,&
+                   D0100, D0300, I1.QI.12, D0150,  &
+                   D0400, I1.START.I1D)
 
-diafodo =( d0035,i1_otrc,d0125,                     d0050,i1_ciy,d0150,i1_bpma,d0150,                    i1_qi_7,d0105,i1_kax,d0285,d0035,i1_otrc,d0125,                    d0050,i1_cix,d0150,i1_bpma,d0150,                    i1_qi_8,d0105,i1_kax,d0285)
-
-
-
-
-
-
-
-i1diacore  = (i1_tdsa,d0070,                    i1_qi_5,d0122,d0175,i1_kax,d0105,                    i1_qi_6,d0105,i1_kax,d0285,i1_start_dia,d0035,i1_otrc,d0125,                     d0050,i1_ciy,d0150,i1_bpma,d0150,                    i1_qi_7,d0105,i1_kax,d0285,d0035,i1_otrc,d0125,                    d0050,i1_cix,d0150,i1_bpma,d0150,                    i1_qi_8,d0105,i1_kax,d0285,d0035,i1_otrc,d0125,                     d0150,i1_ciy,d0050,d0150,                     i1_qi_9,d0220,i1_bpma,d0380,i1_otrc,d0200)
-
-
-
-
-
-
-
-i1diad1  =  (d0100,i1_qi_11,d0100,d01817,i1_tora,d00183,d0350,i1_bpma,                    d0100, d0300, i1_qi_12, d0150,                      d0400, i1_start_i1d)
-
-
-
-
-
-
-
-i1diad2  =      (i1_bb_0,                                          d0200, d0200, d0040,d0100,                                           d0200, i1_ciy, d0100, i1_qi_13, d0150, i1_bpma,                        d0200, i1_bsec, d0950, i1_cix,                       d0150, i1_vcbshut,d0200,i1_qi_14)                   
-
-
-
+I1DIAD2: LINE =      (I1.BB.0, &                  
+                      D0200, D0200, D0040,D0100, &                   
+                      D0200, I1.CIY, D0100, I1.QI.13, D0150, I1.BPMA, &
+                      D0200, I1.BSEC, D0950, I1.CIX,&
+                      D0150, I1.VCBSHUT,D0200,I1.QI.14)                   
                    
-
-
-
-i1dia  = (i1diau, i1diacore, i1diad1, i1diad2)
-
-
-
-
-
-
-
-
-
-
-
-#------------------ new dogleg with r56 = 0.03 m (compression) ------------
-
-
-
-
-
-
-
-i1dlgu = (d2900,                     i1_qi_15, d1800, i1_qi_16,                     d0700, i1_bpma, d0200, i1_qi_17, d0200,                     i1_ciy, d0200, i1_cix, d0100)
-
-
-
-
-
-
-
-d02012268 = Drift(l=0.2012268540, id = 'd02012268')
-
-d00804818 = Drift(l=0.0804818046, id = 'd00804818')
-
-d02804818 = Drift(l=0.2804818046, id = 'd02804818')
-
-d01409819 = Drift(l=0.1409819890, id = 'd01409819')
-
-d01086082 = Drift(l=0.1086082922, id = 'd01086082')
-
-d05086082 = Drift(l=0.5086082922, id = 'd05086082')
-
-d03586082 = Drift(l=0.3586082922, id = 'd03586082')
-
-
-
-
-
-#fodo_injdog: line = (i1_qih_18, d02012268, i1_bl_6_1,     &
-
-
-
-#                     d0200, i1_bpma, d02804818,           &
-
-
-
-#                     i1_sc_1_1, d0100, i1_qi_19, d0100,   &
-
-
-
-#                     i1_sc_2_1, d01409819, i1_bl_7_1,     &
-
-
-
-#                     d03586082, i1_bpma, d0150, i1.qih.20)
-
-
-
-
-
-
-
-dlg1a  = (i1_qih_18, d02012268, i1_bl_6_1,                           d0150,i1_cix,d0150,d00804818,                              i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_20, d0150, i1_cix, d0150, d01086082,                 i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_19, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_18)
-
-
-
-dlg1b  = (i1_qih_18,d02012268, i1_bl_6_1,                            d0150, i1_cix, d0150,d00804818,                            i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_20, d0150, i1_cix, d0150, d01086082,                        i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_21, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_22)
-
-
-
-dlg3a  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_21, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                   i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
-
-
-
-dlg3b  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,i1_ciy,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
-
-
-
-dlg3bm  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,i1_ciy,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qi_25)
-
-
-
-
-
-
-
-
-
-
-
-dlgcore = (i1_start_dog, i1_qih_18, dlg1a, dlg1b, dlg3a,                     dlg3bm, i1_end_dog)
-
-
-
-
-
-
-
-i1dlg  = (i1dlgu, dlgcore)
-
-
-
-
-
-
-
-
-
-
-
-#------------------ bunch compressor 0 ----------------------------
-
-
-
-#------------------ define b1 chicane------------------------------
-
-
-
+I1DIA : LINE = (I1DIAU, I1DIACORE, I1DIAD1, I1DIAD2)
+
+
+!------------------ New Dogleg with R56 = 0.03 m (compression) ------------
+
+I1DLGU    : LINE= (D2900, &
+                   I1.QI.15, D1800, I1.QI.16, &
+                   D0700, I1.BPMA, D0200, I1.QI.17, D0200, &
+                   I1.CIY, D0200, I1.CIX, D0100)
+
+D02012268: Drift, L = 0.2012268540
+D00804818: Drift, L = 0.0804818046
+D02804818: Drift, L = 0.2804818046
+D01409819: Drift, L = 0.1409819890
+D01086082: Drift, L = 0.1086082922
+D05086082: Drift, L = 0.5086082922
+D03586082: Drift, L = 0.3586082922
+
+!fodo_injdog: Line = (I1.QIH.18, D02012268, I1.BL.6.1,     &
+!                     D0200, I1.BPMA, D02804818,           &
+!                     I1.SC.1.1, D0100, I1.QI.19, D0100,   &
+!                     I1.SC.2.1, D01409819, I1.BL.7.1,     &
+!                     D03586082, I1.BPMA, D0150, I1.QIH.20)
+
+DLG1A: LINE = (I1.QIH.18, D02012268, I1.BL.6.1,           &
+               D0150,I1.CIX,D0150,D00804818,              &
+               I1.SC.1.1, D0100, I1.QI.19, D0100,         &
+               I1.SC.2.1, D01409819, I1.BL.7.1,           &
+               D01086082,D0050,I1.BPMA,D0100,I1.CIY,D0150,&
+               I1.QI.20, D0150, I1.CIX, D0150, D01086082, &
+               I1.BL.7.1, D01409819, I1.SC.2.1,           &
+               D0100, I1.QI.19, D0100, I1.SC.1.1,         &
+               D00804818,D0050,D0100,D0100,I1.BPMA,D0150,&
+               I1.BL.6.1, D02012268, I1.QIH.18)
+DLG1B: LINE = (I1.QIH.18,D02012268, I1.BL.6.1,            &
+               D0150, I1.CIX, D0150,D00804818,            &
+               I1.SC.1.1, D0100, I1.QI.19, D0100,         &
+               I1.SC.2.1, D01409819, I1.BL.7.1,           &
+               D01086082,D0050,I1.BPMA,D0100,I1.CIY,D0150,&
+               I1.QI.20, D0150, I1.CIX, D0150, D01086082, &       
+               I1.BL.7.1, D01409819, I1.SC.2.1,           &
+               D0100, I1.QI.21, D0100, I1.SC.1.1,         &
+               D00804818,D0050,D0100,D0100,I1.BPMA,D0150,&
+               I1.BL.6.1, D02012268, I1.QIH.22)
+DLG3A: LINE = (I1.QIH.22,D02012268, I1.BL.8.2,            &
+               D0150,I1.CIX,D0150,D00804818,              &
+               I1.SC.1.2, D0100, I1.QI.21, D0100,         &
+               I1.SC.2.2, D01409819, I1.BL.7.2,           &
+               D01086082,D0050,I1.BPMA,D0100,I1.CIY,D0150,&
+               I1.QI.24, D0150, I1.CIX, D0150, D01086082, &  
+               I1.BL.7.2, D01409819, I1.SC.2.2,           &
+               D0100, I1.QI.23, D0100, I1.SC.1.2,         &
+               D00804818,D0050,D0100,D0100,I1.BPMA,D0150,&
+               I1.BL.8.2, D02012268, I1.QIH.22)
+DLG3B: LINE = (I1.QIH.22,D02012268, I1.BL.8.2,            &
+               D0150,I1.CIX,D0150,D00804818,              &
+               I1.SC.1.2, D0100, I1.QI.23, D0100,         &
+               I1.SC.2.2, D01409819, I1.BL.7.2,           &
+               D01086082,D0050,I1.BPMA,D0100,I1.CIY,D0150,&
+               I1.QI.24, D0150, I1.CIX, D0150, D01086082, & 
+               I1.BL.7.2, D01409819, I1.SC.2.2,           &
+               D0100, I1.QI.23, D0100, I1.SC.1.2,         &
+               D00804818,D0050,I1.CIY,D0100,I1.BPMA,D0150,&
+               I1.BL.8.2, D02012268, I1.QIH.22)
+DLG3BM: LINE = (I1.QIH.22,D02012268, I1.BL.8.2,            &
+               D0150,I1.CIX,D0150,D00804818,              &
+               I1.SC.1.2, D0100, I1.QI.23, D0100,         &
+               I1.SC.2.2, D01409819, I1.BL.7.2,           &
+               D01086082,D0050,I1.BPMA,D0100,I1.CIY,D0150,&
+               I1.QI.24, D0150, I1.CIX, D0150, D01086082, & 
+               I1.BL.7.2, D01409819, I1.SC.2.2,           &
+               D0100, I1.QI.23, D0100, I1.SC.1.2,         &
+               D00804818,D0050,I1.CIY,D0100,I1.BPMA,D0150,&
+               I1.BL.8.2, D02012268, I1.QI.25)
+
+
+DLGCORE   : LINE= (I1.START.DOG, I1.QIH.18, DLG1A, DLG1B, DLG3A, &
+                   DLG3BM, I1.END.DOG)
+
+I1DLG : LINE = (I1DLGU, DLGCORE)
+
+
+!------------------ Bunch Compressor 0 ----------------------------
+!------------------ Define B1 Chicane------------------------------
 l_b0  = 0.5
-
-
-
 ang_b0 = 0.132729704703170
-
-
-
 arc_b0=l_b0/sin(ang_b0)*ang_b0
+DELTAL  = 1.0
+CD1000I = DELTAL / cos(ang_b0)
+
+I1.BB.1.1 : SBEND,L=arc_b0,ANGLE= ang_b0, &
+   e1= 0,e2= ang_b0,TILT = 1.570796326795  
+I1.BB.1.2 : SBEND,L=arc_b0,ANGLE=-ang_b0, &
+   e1= -ang_b0,e2=0,TILT = 1.570796326795  
+I1.BB.1.3 : SBEND,L=arc_b0,ANGLE=-ang_b0, &
+   e1= 0,e2=-ang_b0,TILT = 1.570796326795  
+I1.BB.1.4 : SBEND,L=arc_b0,ANGLE= ang_b0, &
+   e1=ang_b0,e2=0,TILT = 1.570796326795
+D1000I : DRIFT, L=CD1000I
+D1000IM : DRIFT, L=CD1000I-0.6 
+
+I1.CBB.2: VKICKER, L=0
+I1.CBB.3: VKICKER, L=0
+I1.CBB.4: VKICKER, L=0
+
+BC0U : LINE = (D000013, D0900, I1.TORA, D0200,&
+               I1.CIY,D0110,I1.QI.26,D0300,I1.BPMF, &
+               D0300, &
+               I1.CIX,D0110,I1.QI.27,D0200, &
+               D0200)
+
+BC0D : LINE =     (D0200,&
+                   D0100,D0110,I1.QI.28,D0110,I1.CIX,D0250,I1.BPMF, &
+                   D0240, &
+                   I1.CIY,D0110,I1.QI.29,D0200,I1.BPMA, &
+                   D0500,D0060, &
+                   I1.CIX,D0110,I1.QI.30)
 
 
 
-deltal  = 1.0
-
-
-
-cd1000i = deltal / cos(ang_b0)
-
-
-
-
-
-
-
-i1_bb_1_1 = Bend(l=arc_b0, angle=ang_b0, e1=0, e2=ang_b0, tilt=1.570796326795, id = 'i1_bb_1_1')
-
-i1_bb_1_2 = Bend(l=arc_b0, angle=-ang_b0, e1=-ang_b0, e2=0, tilt=1.570796326795, id = 'i1_bb_1_2')
-
-i1_bb_1_3 = Bend(l=arc_b0, angle=-ang_b0, e1=0, e2=-ang_b0, tilt=1.570796326795, id = 'i1_bb_1_3')
-
-i1_bb_1_4 = Bend(l=arc_b0, angle=ang_b0, e1=ang_b0, e2=0, tilt=1.570796326795, id = 'i1_bb_1_4')
-
-d1000i = Drift(l=cd1000i, id = 'd1000i')
-
-d1000im = Drift(l=cd1000i-0.6, id = 'd1000im')
-
-
-
-
-
-i1_cbb_2 = scavenger(l=0, id = 'i1_cbb_2')
-
-i1_cbb_3 = scavenger(l=0, id = 'i1_cbb_3')
-
-i1_cbb_4 = scavenger(l=0, id = 'i1_cbb_4')
-
-
-
-
-
-bc0u  = (d000013, d0900, i1_tora, d0200,                i1_ciy,d0110,i1_qi_26,d0300,i1_bpmf,                 d0300,                 i1_cix,d0110,i1_qi_27,d0200,                 d0200)
-
-
-
-
-
-
-
-bc0d  =     (d0200,                    d0100,d0110,i1_qi_28,d0110,i1_cix,d0250,i1_bpmf,                     d0240,                     i1_ciy,d0110,i1_qi_29,d0200,i1_bpma,                     d0500,d0060,                     i1_cix,d0110,i1_qi_30)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-bc0core  =(i1_start_mid,                  d0100, i1_bb_1_1, d1000i, i1_bb_1_2,i1_cbb_2,                  d03975, i1_colo,d0085,i1_colu,d03175, d0100, i1_bpms, d0100,                 d0200, i1_otrs, d0200, d0100,                  i1_bb_1_3, i1_cbb_3, d0600, i1_srm, d1000im,                  i1_bb_1_4, i1_cbb_4, d0100,                      i1_end_mid)
-
-
-
-
-
-
+BC0CORE: LINE =(I1.START.MID, &
+                D0100, I1.BB.1.1, D1000I, I1.BB.1.2,I1.CBB.2, &
+                D03975, I1.COLO,D0085,I1.COLU,D03175, D0100, I1.BPMS, D0100,&
+                D0200, I1.OTRS, D0200, D0100, &
+                I1.BB.1.3, I1.CBB.3, D0600, I1.SRM, D1000IM, &
+                I1.BB.1.4, I1.CBB.4, D0100, &
+                    I1.END.MID)
 
                    
+I1BC0: LINE = (BC0U, BC0CORE, BC0D)
 
+!----------------- Phase Shifter ----------------------------------                                
 
+I1PS_FODO: LINE=(D0200,I1.BPMA,&
+                D1800, D0090,&
+                I1.CIY,D0110,I1.QI.31,D0200,I1.BPMA,&
+                D1800,D0090,&
+                I1.CIX,D0110,I1.QI.32)
 
-i1bc0  = (bc0u, bc0core, bc0d)
-
-
-
-
-
-
-
-#----------------- phase shifter ----------------------------------                                
-
-
-
-
-
-
-
-i1ps_fodo =(d0200,i1_bpma,                 d1800, d0090,                 i1_ciy,d0110,i1_qi_31,d0200,i1_bpma,                 d1800,d0090,                 i1_cix,d0110,i1_qi_32)
-
-
-
-
-
-
-
-i1_start_ps = Marker(id = 'i1_start_ps')
-
-i1ps   = (                  i1_start_ps,d0200,i1_bpma,                 d1800, d0090,                 i1_ciy,d0110,i1_qi_31,d0200,i1_bpma,                 d1800,d0090,                 i1_cix,d0110,i1_qi_32,d0200,i1_bpma,                 d1800,d0090,                 i1_ciy,d0110,i1_qi_31,d0200,i1_bpma,                 d0500,i1_vcdst,d0325)
-
-
-
+I1.START.PS: MARKER                
+I1PS:  LINE = ( &
+                I1.START.PS,D0200,I1.BPMA,&
+                D1800, D0090,&
+                I1.CIY,D0110,I1.QI.31,D0200,I1.BPMA,&
+                D1800,D0090,&
+                I1.CIX,D0110,I1.QI.32,D0200,I1.BPMA,&
+                D1800,D0090,&
+                I1.CIY,D0110,I1.QI.31,D0200,I1.BPMA,&
+                D0500,I1.VCDST,D0325)
                 
-
-
-
-#----------------- match to linac ---------------------------------
-
-
-
+!----------------- Match to Linac ---------------------------------
                                 
+L1U:  LINE = (  I1.CIX,D0110,I1.QI.33,D0200,I1.BPMA,&
+                D1200,D0065,&
+                I1.CIY,D0110,I1.QI.34,D0200,I1.BPMA,&
+                D0500,D0090,&
+                I1.TORA,D0400,I1.OTRA,D0300,I1.DCM,D0200,&
+                I1.CIX,D0110,I1.QI.35,D0200,I1.BPMA,&
+                D0315)
 
-
-
-l1u   = (  i1_cix,d0110,i1_qi_33,d0200,i1_bpma,                 d1200,d0065,                 i1_ciy,d0110,i1_qi_34,d0200,i1_bpma,                 d0500,d0090,                 i1_tora,d0400,i1_otra,d0300,i1_dcm,d0200,                 i1_cix,d0110,i1_qi_35,d0200,i1_bpma,                 d0315)
-
-
-
-
-
-
-
-#----------------- injector dump ----------------------------------       
-
-
-
-d0156 = Drift(l=0.156, id = 'd0156')
-
-d0019 = Drift(l=0.019, id = 'd0019')
-
-d026806 = Drift(l=0.26806, id = 'd026806')
-
-d029694 = Drift(l=0.29694, id = 'd029694')
-
+!----------------- Injector Dump ----------------------------------       
+D0156: DRIFT, L=0.156
+D0019: DRIFT, L=0.019
+D026806: DRIFT, L=0.26806
+D029694: DRIFT, L=0.29694
     
 
-
-
-
-
-
-
-i1d30  = (i1d_start_i1d, i1d_bb_5, d0250, d0135,                    d0500, d0100, i1d_qi_41, d0175,                    i1d_bpma, d0250, d0156, i1d_otrc, d0150, d0019,                    i1d_qi_42, d026806,                    i1d_otrd, d0225, i1d_torc, d0125,i1d_bpmd,                    d029694, i1d_dustart, i1d_dump, i1d_bhm, i1d_end_i1d)                                    
-
-
-
+I1D30  : LINE = (I1D.START.I1D, I1D.BB.5, D0250, D0135, &
+                  D0500, D0100, I1D.QI.41, D0175, &
+                  I1D.BPMA, D0250, D0156, I1D.OTRC, D0150, D0019, &
+                  I1D.QI.42, D026806, &
+                  I1D.OTRD, D0225, I1D.TORC, D0125,I1D.BPMD, &
+                  D029694, I1D.DUSTART, I1D.DUMP, I1D.BHM, I1D.END.I1D)                                    
                                  
-
-
-
-#----------------- basic injector lines ---------------------------
-
-
-
-
-
-
-
-i1tdump  = (i1_start_i1, i1u, l0, i1lh,                   i1diau, i1diacore, i1diad1, i1d30)
-
-
-
-i1  = (i1_start_i1, i1u, l0, i1lh, i1dia,                   i1dlg,i1bc0,i1ps,l1u,i1_end_i1)
-
-
-
-i1s2e  = (i1_s2e, l0c8, i1lh, i1dia,                   i1dlg, i1bc0, i1ps, l1u)
-
-
-
-i1_gun2bc0 =(i1_start_i1,i1u,l0,i1lh,i1dia,i1dlg)     
-
-
-
-backtr_acc1_gun = (l0c8rev,i1u,i1_start_i1)           
-
-
-
-
-
-
-
-
-
-
-
-#match_i1 = subroutine():
-
-    #
-
-
-
-    #set,b0_i1.s2er.alfx,-b0_i1.s2e.alfx
-
-
-
-    #set,b0_i1.s2er.alfy,-b0_i1.s2e.alfy
-
-
-
-    #set,b0_i1.s2er.betx,b0_i1.s2e.betx
-
-
-
-    #set,b0_i1.s2er.bety,b0_i1.s2e.bety
-
-
-
-    #
-
-
-
-    #use,backtr_acc1_gun
-
-
-
-    #savebeta,label=b0_i1.gun,i1_start_i1
-
-
-
-    ##print,full
-
-
-
-    #beam,energy=0.150278
-
-
-
-    #twiss,beta0=b0_i1.s2er,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #
-
-
-
-    #set,b0_i1.gun.alfx,-b0_i1.gun.alfx
-
-
-
-    #set,b0_i1.gun.alfy,-b0_i1.gun.alfy
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #use,i1_gun2bc0
-
-
-
-    #beam,energy=0.005
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.q.a1.1.k1,step=0.1
-
-
-
-    #vary,i1.q.ah1.1.k1,step=0.1
-
-
-
-    #vary,i1.qi.1.k1,step=0.1
-
-
-
-    #vary,i1.qi.2.k1,step=0.1
-
-
-
-    #constraint, i1.start.lh, beta0=b0_i1.lh
-
-
-
-    #lmdif
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.3.k1,step=0.1
-
-
-
-    #vary,i1.qi.4.k1,step=0.1
-
-
-
-    #vary,i1.qi.5.k1,step=0.1
-
-
-
-    #vary,i1.qi.6.k1,step=0.1
-
-
-
-    #constraint, i1.start.dia, line=diafodo
-
-
-
-    #lmdif
-
-
-
-    #endmatch
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.q.a1.1.k1,step=0.1
-
-
-
-    #vary,i1.q.ah1.1.k1,step=0.1
-
-
-
-    #vary,i1.qi.1.k1,step=0.1
-
-
-
-    #vary,i1.qi.2.k1,step=0.1
-
-
-
-    #constraint, i1.start.dia, line=diafodo
-
-
-
-    #lmdif
-
-
-
-    #endmatch
-
-
-
-    #print,full
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.13.k1,step=0.1
-
-
-
-    #vary,i1.qi.14.k1,step=0.1
-
-
-
-    #vary,i1.qi.15.k1,step=0.1
-
-
-
-    #vary,i1.qi.16.k1,step=0.1
-
-
-
-    #vary,i1.qi.17.k1,step=0.1
-
-
-
-    #constraint, i1.start.dog, beta0=b0_i1.dog
-
-
-
-    #lmdif
-
-
-
-    #endmatch
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #use,i1ps_fodo
-
-
-
-    #savebeta,label=i1ps_fodo.start,#s
-
-
-
-    #twiss,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #
-
-
-
-    ###title, "xfel injector "
-
-
-
-    #use,i1
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.25.k1,step=0.1
-
-
-
-    #vary,i1.qi.26.k1,step=0.1
-
-
-
-    #vary,i1.qi.27.k1,step=0.1
-
-
-
-    #vary,i1.qi.28.k1,step=0.1
-
-
-
-    #vary,i1.qi.29.k1,step=0.1
-
-
-
-    #vary,i1.qi.30.k1,step=0.1
-
-
-
-    #constraint,i1_start_ps,beta0=i1ps_fodo.start
-
-
-
-    #lmdif
-
-
-
-    #simplex
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #
-
-
-
-    ###title, "xfel injector+linac1+bc1 "
-
-
-
-    #set,l1.q.a2.1.k1, 0.1  
-
-
-
-    #set,l1.q.a2.2.k1, -0.1  
-
-
-
-    #set,l1.q.a2.3.k1, 0.1  
-
-
-
-    #set,l1.q.a2.4.k1, -0.1
-
-
-
-    #set,b1.qi.1.k1, -0.0
-
-
-
-    #set,b1.qi.2.k1, 0.0
-
-
-
-    #set,b1.qd.3.k1, 0.5
-
-
-
-    #set,b1.qd.4.k1, -0.5
-
-
-
-    #
-
-
-
-    #use,(i1,l1,b1)
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.33.k1,step=0.1
-
-
-
-    #vary,i1.qi.34.k1,step=0.1
-
-
-
-    #vary,i1.qi.35.k1,step=0.1
-
-
-
-    #vary,l1.q.a2.1.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.2.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.3.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.4.k1,step=0.1
-
-
-
-    ##vary,b1.qi.1.k1,step=0.1
-
-
-
-    ##vary,b1.qi.2.k1,step=0.1
-
-
-
-    #vary,b1.qd.3.k1,step=0.1
-
-
-
-    #vary,b1.qd.4.k1,step=0.1
-
-
-
-    #constraint,i1_qi_25/b1.end.mid,betx<80,bety<80
-
-
-
-    #constraint,b1.end.mid,beta0=b0_b1.mend  
-
-
-
-    ##constraint, #e, beta0=b0_l1.start
-
-
-
-    #lmdif
-
-
-
-    #simplex
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #savebeta,label=b0_l1.start,l1.start.l1
-
-
-
-    #savebeta,label=b0_b1.start,b1.start
-
-
-
-    #savebeta,label=b0_i1.lh,i1.start.lh
-
-
-
-    #
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #
-
-
-
-    #value,i1.q.a1.1.k1
-
-
-
-    #value,i1.q.ah1.1.k1
-
-
-
-    #value,i1.qi.1.k1
-
-
-
-    #value,i1.qi.2.k1
-
-
-
-    #value,i1.qi.3.k1
-
-
-
-    #value,i1.qi.4.k1
-
-
-
-    #value,i1.qi.5.k1
-
-
-
-    #value,i1.qi.6.k1
-
-
-
-    #value,i1.qi.7.k1
-
-
-
-    #value,i1.qi.8.k1
-
-
-
-    #value,i1.qi.9.k1
-
-
-
-    #value,i1.qi.11.k1
-
-
-
-    #value,i1.qi.12.k1
-
-
-
-    #value,i1.qi.13.k1
-
-
-
-    #value,i1.qi.14.k1
-
-
-
-    #value,i1.qi.15.k1
-
-
-
-    #value,i1.qi.16.k1
-
-
-
-    #value,i1.qi.17.k1
-
-
-
-    #value,i1.qi.18.k1
-
-
-
-    #value,i1.qi.19.k1
-
-
-
-    #value,i1.qi.20.k1
-
-
-
-    #value,i1.qi.21.k1
-
-
-
-    #value,i1.qi.22.k1
-
-
-
-    #value,i1.qi.23.k1
-
-
-
-    #value,i1.qi.24.k1
-
-
-
-    #value,i1.qi.25.k1
-
-
-
-    #value,i1.qi.26.k1
-
-
-
-    #value,i1.qi.27.k1
-
-
-
-    #value,i1.qi.28.k1
-
-
-
-    #value,i1.qi.29.k1
-
-
-
-    #value,i1.qi.30.k1
-
-
-
-    #value,i1.qi.31.k1
-
-
-
-    #value,i1.qi.32.k1
-
-
-
-    #value,i1.qi.33.k1
-
-
-
-    #value,i1.qi.34.k1
-
-
-
-    #value,i1.qi.35.k1
-
-
-
-    #value,i1d.qi.41.k1
-
-
-
-    #value,i1d.qi.42.k1
-
-
-
-    #value,l1.q.a2.1.k1  
-
-
-
-    #value,l1.q.a2.2.k1  
-
-
-
-    #value,l1.q.a2.3.k1  
-
-
-
-    #value,l1.q.a2.4.k1
-
-
-
-    #value,b1.qi.1.k1
-
-
-
-    #value,b1.qi.2.k1
-
-
-
-    #value,b1.qd.3.k1
-
-
-
-    #value,b1.qd.4.k1
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-#match_i1ps = subroutine():
-
-    #
-
-
-
-    #
-
-
-
-    #set,i1_qi_31.k1, i1_qi_31.k1 -0.5  
-
-
-
-    #set,i1_qi_32.k1, i1_qi_32.k1 +0.5   
-
-
-
-    #use,i1ps_fodo
-
-
-
-    #savebeta,label=i1ps_fodo.start,#s
-
-
-
-    #twiss,save
-
-
-
-    #
-
-
-
-    #use,i1
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.25.k1,step=0.1
-
-
-
-    #vary,i1.qi.26.k1,step=0.1
-
-
-
-    #vary,i1.qi.27.k1,step=0.1
-
-
-
-    #vary,i1.qi.28.k1,step=0.1
-
-
-
-    #vary,i1.qi.29.k1,step=0.1
-
-
-
-    #vary,i1.qi.30.k1,step=0.1
-
-
-
-    #constraint,i1_start_ps,beta0=i1ps_fodo.start
-
-
-
-    #lmdif
-
-
-
-    #simplex
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #use,(i1,l1,b1)
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.33.k1,step=0.1
-
-
-
-    #vary,i1.qi.34.k1,step=0.1
-
-
-
-    #vary,i1.qi.35.k1,step=0.1
-
-
-
-    #vary,l1.q.a2.1.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.2.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.3.k1,step=0.1  
-
-
-
-    #vary,l1.q.a2.4.k1,step=0.1
-
-
-
-    ##vary,b1.qi.1.k1,step=0.1
-
-
-
-    ##vary,b1.qi.2.k1,step=0.1
-
-
-
-    #vary,b1.qd.3.k1,step=0.1
-
-
-
-    #vary,b1.qd.4.k1,step=0.1
-
-
-
-    #constraint,i1_qi_19/b1.end.mid,betx<80,bety<80
-
-
-
-    #constraint,b1.end.mid,beta0=b0_b1.mend  
-
-
-
-    #lmdif
-
-
-
-    #simplex
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #savebeta,label=b0_l1.start,l1.start.l1
-
-
-
-    #savebeta,label=b0_b1.start,b1.start
-
-
-
-    #savebeta,label=b0_i1.lh,i1.start.lh
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    ###title, "xfel injector+linac1+bc1 "
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #value, (b0_l1.start.mux-b0_i1.lh.mux)
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-    #
-
-
-
-#match_i1d = subroutine():
-
-    #use,(i1tdump)
-
-
-
-    #beam,energy=0.005
-
-
-
-    #match,beta0=b0_i1.gun
-
-
-
-    #vary,i1.qi.11.k1,step=0.1,lower=-7,upper=7
-
-
-
-    #vary,i1.qi.12.k1,step=0.1,lower=-7,upper=7
-
-
-
-    #vary,i1d.qi.41.k1,step=0.1,lower=-7,upper=7
-
-
-
-    #vary,i1d.qi.42.k1,step=0.1,lower=-7,upper=7
-
-
-
-    #constraint, #e, betx>1200,bety>1000
-
-
-
-    #simplex
-
-
-
-    #migrad
-
-
-
-    #endmatch
-
-
-
-    #twiss,beta0=b0_i1.gun,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-    #
-
-
-
-#list_i1 = subroutine():
-
-    #use,(i1)
-
-
-
-    #beam,energy=0.005
-
-
-
-    #twiss,couple,beta0=b0_i1.gun,  tape="mag_xfeli1.dat",save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,       spline,colour=100
-
-
-
-    #plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,       spline,colour=100,hmin=0,hmax =50
-
-
-
-    #
-
-
-
-    #
-
-
-
-    #survey,x0=0,z0=1,y0=0,  phi=phicor, tape="lay_xfeli1.dat"
-
-
-
-    #makeSequence,label=i1.seq,refer=''centre''
-
-
-
-    #
-
-
-
-    #use,(i1lh2)
-
-
-
-    #match
-
-
-
-    #rMatrix,range=#s/#e, rm(1,1) = 0.
-
-
-
-    #simplex,calls=1
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
+!----------------- Basic Injector Lines ---------------------------
+
+I1TDUMP: LINE = (I1.START.I1, I1U, L0, I1LH, &
+                 I1DIAU, I1DIACORE, I1DIAD1, I1D30)
+I1     : LINE = (I1.START.I1, I1U, L0, I1LH, I1DIA, &
+                 I1DLG,I1BC0,I1PS,L1U,I1.END.I1)
+I1S2E  : LINE = (I1.S2E, L0C8, I1LH, I1DIA, &
+                 I1DLG, I1BC0, I1PS, L1U)
+I1_GUN2BC0 : LINE=(I1.START.I1,I1U,L0,I1LH,I1DIA,I1DLG)     
+BACKTR_ACC1_GUN : LINE= (L0C8REV,I1U,I1.START.I1)           
+
+
+MATCH_I1: SUBROUTINE !----------------------------------------------------------
+
+set,b0_i1.s2er[alfx],-b0_i1.s2e[alfx]
+set,b0_i1.s2er[alfy],-b0_i1.s2e[alfy]
+set,b0_i1.s2er[betx],b0_i1.s2e[betx]
+set,b0_i1.s2er[bety],b0_i1.s2e[bety]
+
+use,BACKTR_ACC1_GUN
+savebeta,label=b0_i1.gun,I1.START.I1
+!print,full
+beam,energy=0.150278
+twiss,beta0=b0_i1.s2er,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+set,b0_i1.gun[alfx],-b0_i1.gun[alfx]
+set,b0_i1.gun[alfy],-b0_i1.gun[alfy]
+
+
+
+use,I1_GUN2BC0
+beam,energy=0.005
+match,beta0=b0_i1.gun
+vary,i1.q.a1.1[k1],step=0.1
+vary,i1.q.ah1.1[k1],step=0.1
+vary,i1.qi.1[k1],step=0.1
+vary,i1.qi.2[k1],step=0.1
+constraint, i1.start.lh, beta0=b0_i1.lh
+lmdif
+endmatch
+
+match,beta0=b0_i1.gun
+vary,i1.qi.3[k1],step=0.1
+vary,i1.qi.4[k1],step=0.1
+vary,i1.qi.5[k1],step=0.1
+vary,i1.qi.6[k1],step=0.1
+constraint, i1.start.dia, line=diafodo
+lmdif
+endmatch
+twiss,beta0=b0_i1.gun,save
+
+
+match,beta0=b0_i1.gun
+vary,i1.q.a1.1[k1],step=0.1
+vary,i1.q.ah1.1[k1],step=0.1
+vary,i1.qi.1[k1],step=0.1
+vary,i1.qi.2[k1],step=0.1
+constraint, i1.start.dia, line=diafodo
+lmdif
+endmatch
+print,full
+twiss,beta0=b0_i1.gun,save
+
+match,beta0=b0_i1.gun
+vary,i1.qi.13[k1],step=0.1
+vary,i1.qi.14[k1],step=0.1
+vary,i1.qi.15[k1],step=0.1
+vary,i1.qi.16[k1],step=0.1
+vary,i1.qi.17[k1],step=0.1
+constraint, i1.start.dog, beta0=b0_i1.dog
+lmdif
+endmatch
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+
+use,I1PS_fodo
+savebeta,label=i1ps_fodo.start,#s
+twiss,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+title, "XFEL Injector "
+use,I1
+match,beta0=b0_i1.gun
+vary,i1.qi.25[k1],step=0.1
+vary,i1.qi.26[k1],step=0.1
+vary,i1.qi.27[k1],step=0.1
+vary,i1.qi.28[k1],step=0.1
+vary,i1.qi.29[k1],step=0.1
+vary,i1.qi.30[k1],step=0.1
+constraint,I1.START.PS,beta0=I1PS_fodo.start
+lmdif
+simplex
+endmatch
+
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+title, "XFEL Injector+Linac1+BC1 "
+set,L1.Q.A2.1[k1], 0.1  
+set,L1.Q.A2.2[k1], -0.1  
+set,L1.Q.A2.3[k1], 0.1  
+set,L1.Q.A2.4[k1], -0.1
+set,b1.qi.1[k1], -0.0
+set,b1.qi.2[k1], 0.0
+set,b1.qd.3[k1], 0.5
+set,b1.qd.4[k1], -0.5
+
+use,(i1,l1,b1)
+match,beta0=b0_i1.gun
+vary,i1.qi.33[k1],step=0.1
+vary,i1.qi.34[k1],step=0.1
+vary,i1.qi.35[k1],step=0.1
+vary,L1.Q.A2.1[k1],step=0.1  
+vary,L1.Q.A2.2[k1],step=0.1  
+vary,L1.Q.A2.3[k1],step=0.1  
+vary,L1.Q.A2.4[k1],step=0.1
+!vary,b1.qi.1[k1],step=0.1
+!vary,b1.qi.2[k1],step=0.1
+vary,b1.qd.3[k1],step=0.1
+vary,b1.qd.4[k1],step=0.1
+constraint,I1.QI.25/b1.end.mid,betx<80,bety<80
+constraint,b1.end.mid,beta0=b0_b1.mend  
+!constraint, #e, beta0=b0_l1.start
+lmdif
+simplex
+endmatch
+
+savebeta,label=b0_l1.start,l1.start.l1
+savebeta,label=b0_b1.start,b1.start
+savebeta,label=b0_i1.lh,i1.start.lh
+
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+
+value,i1.q.a1.1[k1]
+value,i1.q.ah1.1[k1]
+value,i1.qi.1[k1]
+value,i1.qi.2[k1]
+value,i1.qi.3[k1]
+value,i1.qi.4[k1]
+value,i1.qi.5[k1]
+value,i1.qi.6[k1]
+value,i1.qi.7[k1]
+value,i1.qi.8[k1]
+value,i1.qi.9[k1]
+value,i1.qi.11[k1]
+value,i1.qi.12[k1]
+value,i1.qi.13[k1]
+value,i1.qi.14[k1]
+value,i1.qi.15[k1]
+value,i1.qi.16[k1]
+value,i1.qi.17[k1]
+value,i1.qi.18[k1]
+value,i1.qi.19[k1]
+value,i1.qi.20[k1]
+value,i1.qi.21[k1]
+value,i1.qi.22[k1]
+value,i1.qi.23[k1]
+value,i1.qi.24[k1]
+value,i1.qi.25[k1]
+value,i1.qi.26[k1]
+value,i1.qi.27[k1]
+value,i1.qi.28[k1]
+value,i1.qi.29[k1]
+value,i1.qi.30[k1]
+value,i1.qi.31[k1]
+value,i1.qi.32[k1]
+value,i1.qi.33[k1]
+value,i1.qi.34[k1]
+value,i1.qi.35[k1]
+value,i1d.qi.41[k1]
+value,i1d.qi.42[k1]
+value,L1.Q.A2.1[k1]  
+value,L1.Q.A2.2[k1]  
+value,L1.Q.A2.3[k1]  
+value,L1.Q.A2.4[k1]
+value,b1.qi.1[k1]
+value,b1.qi.2[k1]
+value,b1.qd.3[k1]
+value,b1.qd.4[k1]
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+MATCH_I1PS: SUBROUTINE !----------------------------------------------------------
+
+
+set,I1.QI.31[k1], I1.QI.31[k1] -0.5  
+set,I1.QI.32[k1], I1.QI.32[k1] +0.5   
+use,I1PS_fodo
+savebeta,label=i1ps_fodo.start,#s
+twiss,save
+
+use,I1
+match,beta0=b0_i1.gun
+vary,i1.qi.25[k1],step=0.1
+vary,i1.qi.26[k1],step=0.1
+vary,i1.qi.27[k1],step=0.1
+vary,i1.qi.28[k1],step=0.1
+vary,i1.qi.29[k1],step=0.1
+vary,i1.qi.30[k1],step=0.1
+constraint,I1.START.PS,beta0=I1PS_fodo.start
+lmdif
+simplex
+endmatch
+
+use,(i1,l1,b1)
+match,beta0=b0_i1.gun
+vary,i1.qi.33[k1],step=0.1
+vary,i1.qi.34[k1],step=0.1
+vary,i1.qi.35[k1],step=0.1
+vary,L1.Q.A2.1[k1],step=0.1  
+vary,L1.Q.A2.2[k1],step=0.1  
+vary,L1.Q.A2.3[k1],step=0.1  
+vary,L1.Q.A2.4[k1],step=0.1
+!vary,b1.qi.1[k1],step=0.1
+!vary,b1.qi.2[k1],step=0.1
+vary,b1.qd.3[k1],step=0.1
+vary,b1.qd.4[k1],step=0.1
+constraint,I1.QI.19/b1.end.mid,betx<80,bety<80
+constraint,b1.end.mid,beta0=b0_b1.mend  
+lmdif
+simplex
+endmatch
+
+savebeta,label=b0_l1.start,l1.start.l1
+savebeta,label=b0_b1.start,b1.start
+savebeta,label=b0_I1.LH,i1.start.lh
+twiss,beta0=b0_i1.gun,save
+title, "XFEL Injector+Linac1+BC1 "
+plot,table=twiss,haxis=s,vaxis=betx,bety
+value, (b0_l1.start[mux]-b0_I1.LH[mux])
+
+
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+
+MATCH_I1D: SUBROUTINE !----------------------------------------------------------
+use,(I1TDUMP)
+beam,energy=0.005
+match,beta0=b0_i1.gun
+vary,i1.qi.11[k1],step=0.1,lower=-7,upper=7
+vary,i1.qi.12[k1],step=0.1,lower=-7,upper=7
+vary,i1D.qi.41[k1],step=0.1,lower=-7,upper=7
+vary,i1D.qi.42[k1],step=0.1,lower=-7,upper=7
+constraint, #e, betx>1200,bety>1000
+simplex
+migrad
+endmatch
+twiss,beta0=b0_i1.gun,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+
+LIST_I1: SUBROUTINE !-----------------------------------------------------------
+use,(i1)
+beam,energy=0.005
+twiss,couple,beta0=b0_i1.gun, &
+tape="mag_xfeli1.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100,hmin=0,hmax =50
+
+
+survey,x0=0,z0=1,y0=0, &
+phi0=phicor, tape="lay_xfeli1.dat"
+makesequence,label=I1.seq,refer=centre
+
+use,(i1lh2)
+match
+rmatrix,range=#s/#e, rm(1,1) = 0.
+simplex,calls=1
+endmatch
+
+ENDSUBROUTINE !-----------------------------------------------------------------
 

@@ -135,11 +135,14 @@ def run(inp, launcher):
     if inp.beamfile != None:
         open(inp.run_dir + '/tmp.beam','w').write(inp.beam_file_str)
     
+    out_file = inp.run_dir + '/run.' + str(inp.runid) + '.gout'
+    os.system('rm -rf ' + out_file + '.dfl') # to make sure field file is not attached to old one
+
     launcher.dir = inp.run_dir
     launcher.prepare()
     launcher.launch()
     
-    g = readGenesisOutput( inp.run_dir + '/run.' + str(inp.runid) + '.gout')
+    g = readGenesisOutput(out_file)
     return g
 
 
@@ -152,7 +155,8 @@ def get_genesis_launcher(nproc = 1):
         launcher.program = '/home/iagapov/workspace/xcode/codes/genesis/genesis < tmp.cmd | tee log'
     if host.startswith('it-hpc'):
         launcher.program = '/data/netapp/xfel/products/genesis/genesis < tmp.cmd | tee log'
-        launcher.mpiParameters ='-x LD_LIBRARY_PATH=/usr/local/lib:/opt/intel/2011/lib/intel64:/usr/lib64/openmpi-intel/lib:/data/netapp/it/tools/gcc47/lib64'
+        #launcher.mpiParameters ='-x LD_LIBRARY_PATH=/usr/local/lib:/data/netapp/it/tools/gcc47/lib64 --prefix /data/netapp/it/tools/gcc47'
+        launcher.mpiParameters ='-x LD_LIBRARY_PATH=/usr/local/lib:/usr/lib64/openmpi/lib --prefix /usr/lib64/openmpi/'
         launcher.mpiParameters = launcher.mpiParameters + ' -hostfile '+ os.path.abspath('.') +'/hosts.txt'
     
     launcher.nproc = nproc
@@ -167,27 +171,47 @@ def get_data_dir():
         return '/data/netapp/xfel/iagapov/xcode_data/'
     return '/tmp/'
 
+def create_exp_dir(exp_dir, run_ids):
+    for run_id in run_ids:
 
-def show_output(g, show_field = False, output_file = None, show_slice=0):
+        try:
+            run_dir = exp_dir + 'run_' + str(run_id)
+            os.makedirs(run_dir)
+        except OSError as exc: 
+            if exc.errno == errno.EEXIST and os.path.isdir(run_dir):
+                pass
+            else: raise
+
+def checkout_run(run_dir, run_id, prefix1, prefix2, save=True):
+    old_file = run_dir + '/run.' +str(run_id) + prefix1 + '.gout'
+    new_file = run_dir + '/run.' +str(run_id) + prefix2 + '.gout'
+    os.system('cp ' + old_file + ' ' + new_file )
+    os.system('cp ' + old_file + '.dfl ' + new_file + '.dfl')
+    os.system('rm ' + run_dir + '/run.' +str(run_id) + '.gout')
+    os.system('rm ' + run_dir + '/run.' +str(run_id) + '.gout.dfl')
+    if not save:
+        os.system('rm ' + old_file)
+        os.system('rm ' + old_file + '.dfl ')
+
+
+def show_output(g, show_field = False, show_slice=0):
+
+    print 'plotting slice', show_slice
+
     h = 4.135667516e-15
     c = 299792458.0
     xrms = np.array(g.sliceValues[g.sliceValues.keys()[show_slice]]['xrms'])
     yrms = np.array(g.sliceValues[g.sliceValues.keys()[show_slice]]['yrms'])
-    power = 0*np.array(g.sliceValues[g.sliceValues.keys()[show_slice]]['power'])
-    
-    nslice = len(g.sliceValues.keys())
-    power_s = np.zeros(nslice)
-    for i in xrange( nslice ):
-        power +=  np.array(g.sliceValues[g.sliceValues.keys()[i]]['power']) / nslice
-        pend =  g.sliceValues[g.sliceValues.keys()[i]]['power'][-1]
-        power_s[i] = pend
         
     f = plt.figure()
     f.add_subplot(131), plt.plot(g.z, xrms, lw=3), plt.plot(g.z, yrms, lw=3), plt.grid(True)
-    f.add_subplot(132), plt.plot(g.z, power, lw=3), plt.grid(True)
-    I = np.array(g.I)
-    t = 1.0e+15 * float(g('zsep')) * float(g('xlamds')) * np.arange(0,len(I)) / c
-    f.add_subplot(133), plt.plot(t,power_s, lw=3), plt.plot(t,np.array(I) * np.max(power_s) / np.max(I), lw=3), plt.grid(True)
+    f.add_subplot(132), plt.plot(g.z, g.power_z, lw=3), plt.grid(True)
+    t = 1.0e+15 * float(g('zsep')) * float(g('xlamds')) * np.arange(0,len(g.I)) / c
+
+    f.add_subplot(133)
+    plt.plot(g.t,g.power_int, lw=3)
+    plt.plot(t,g.I * np.max(g.power_int) / np.max(g.I), lw=3)
+    plt.grid(True)
     
     npoints = g('ncar')
     zstop = g('zstop')
@@ -207,93 +231,34 @@ def show_output(g, show_field = False, output_file = None, show_slice=0):
         
         #comm = MPI.COMM_WORLD
         #slices = readRadiationFile_mpi(comm=comm, fileName=file+'.dfl', npoints=npoints)
-        slices = readRadiationFile(fileName=output_file + '.dfl', npoints=npoints)
+        slices = readRadiationFile(fileName= g.path + '.dfl', npoints=npoints)
         print 'slices:', slices.shape
     
         E = np.zeros_like(slices[0,:,:])
         for i in xrange(slices.shape[0]): E += np.multiply(slices[i,:,:], slices[i,:,:].conjugate())
     
-        #Z = E*E.conjugate()
-    
+        
         fig = plt.figure()
-        fig.add_subplot(111)
+        fig.add_subplot(131)
         m = plt.imshow(abs(E),cmap='YlOrRd')
         z = abs(slices[100,:,:])
-    
-        fig = plt.figure()
+
+        fig.add_subplot(132)
         P = np.zeros_like(slices[:,0,0])
         for i in xrange(len(P)):
-            #s = slices[i,int(npoints/2),int(npoints/2)]
             s = sum( np.abs(np.multiply(slices[i,:,:], slices[i,:,:])) )
             P[i] = abs(s*s.conjugate()) * (dgrid**2 / npoints )**2  
     
-        plot(P)
-    plt.figure()
-    plt.plot(np.linspace(-dgrid/2,dgrid/2,npoints),abs(E[:,int(npoints/2)]), lw=3), plt.grid(True)
             
-    plt.show()
+        t = 1.0e+15 * float(g('zsep')) * float(g('xlamds')) * np.arange(0,len(P)) / c
+        plt.plot(t, P)
+        plt.title('Pulse/axis')
 
-
-def show_output_old(g, show_field = False, output_file = None):
-
-    xrms = np.array(g.sliceValues[g.sliceValues.keys()[0]]['xrms'])
-    yrms = np.array(g.sliceValues[g.sliceValues.keys()[0]]['yrms'])
-    power = np.array(g.sliceValues[g.sliceValues.keys()[0]]['power'])
-    
-    nslice = len(g.sliceValues.keys())
-    power_s = np.zeros(nslice)
-    for i in xrange( nslice ):
-        power +=  np.array(g.sliceValues[g.sliceValues.keys()[i]]['power']) / nslice
-        pend =  g.sliceValues[g.sliceValues.keys()[i]]['power'][-1]
-        power_s[i] = pend
-        
-    f = plt.figure()
-    f.add_subplot(131), plt.plot(g.z, xrms, lw=3), plt.plot(g.z, yrms, lw=3), plt.grid(True)
-    f.add_subplot(132), plt.plot(g.z, power, lw=3), plt.grid(True)
-    f.add_subplot(133), plt.plot(power_s, lw=3), plt.grid(True)
-    
-    npoints = g('ncar')
-    zstop = g('zstop')
-    delz = g('delz')
-    xlamd = g('xlamd')
-    xlamds = g('xlamds')
-    nslice = g('nslice')
-    zsep = g('zsep')
-    dgrid = g('dgrid')
-    
-    smax = nslice * zsep * xlamds 
-                     
-    print 'npoints, nslice', npoints, nslice
-    
-    
-    if show_field:
-        #from mpi4py import MPI
-        
-        #comm = MPI.COMM_WORLD
-        #slices = readRadiationFile_mpi(comm=comm, fileName=file+'.dfl', npoints=npoints)
-        slices = readRadiationFile(fileName=output_file + '.dfl', npoints=npoints)
-        print 'slices:', slices.shape
-    
-        E = np.zeros_like(slices[0,:,:])
-        for i in xrange(slices.shape[0]): E += slices[i]
-    
-        Z = E*E.conjugate()
-    
-        fig = plt.figure()
-        fig.add_subplot(111)
-        m = plt.imshow(abs(E),cmap='YlOrRd')
-        z = abs(slices[100,:,:])
-    
-        fig = plt.figure()
-        P = np.zeros_like(slices[:,0,0])
-        for i in xrange(len(P)):
-            s = slices[i,int(npoints/2),int(npoints/2)]
-        #s = sum(slices[i,:,:])
-            P[i] = abs(s*s.conjugate()) * (dgrid**2 / npoints )**2  
-    
-        plot(P)
-    
-    plt.show()
+        fig.add_subplot(133)
+        spec = np.abs(np.fft.fft(slices[:,int(npoints/2),int(npoints/2)]))**2
+        freq_ev = h * fftfreq(len(spec), d=zsep * xlamds / c) 
+        plt.plot(freq_ev, spec)
+        plt.title('Spectrum/axis')
 
 
 

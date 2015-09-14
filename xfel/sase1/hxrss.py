@@ -1,278 +1,292 @@
 '''
-FEL self-seeding
+hard x-ray self-seeding
+this is a template file
+please copy this file into your working directory and use it there
 '''
 
-from ocelot.optics.elements import *
+rep_dir = '/data/netapp/xfel/products/xdb/xfel/'
 
-from ocelot.optics.wave import *
-from ocelot.optics.bragg import *
-from ocelot.optics.ray import Ray, trace as trace_ray
+from ocelot.gui.accelerator import *
 
-from ocelot.gui.optics import *
-from ocelot.common.math_op import peaks
-from ocelot.adaptors.genesis import *
+sys.path.append(rep_dir + 'utils/')
+from xfel_utils import *
+from hxrss_common import *
 
-
-from copy import deepcopy
-
-
-from ocelot.optics.utils import *
-import mpi4py
-
-
-from sase1 import *
-
+from copy import copy
+from sim_info import *
 import numpy.fft as fft
 
+launcher = get_genesis_launcher(128)
+
+sys.path.append(rep_dir + 'sase1/')
+from sase1 import *
+
+exp_dir = '/data/fhgfs/iagapov/exp6/'
+#exp_dir = './exp1/'
+run_ids = xrange(0,10)
+beta_av = 25.0
+xt_couple = True
+start_stage = 1
+stop_stage = 2
+debug = True
+
+create_exp_dir(exp_dir, run_ids)
+
+lat = MagneticLattice(sase1_segment(n=20))
+rematch(beta_av, l_fodo, qdh, lat, extra_fodo, beam, qf, qd) # jeez...
+
+tw0 = Twiss(beam)
+tws=twiss(lat, tw0, nPoints = 100) # to make sure the average beta exists, show twiss if needed 
+
+beam.E = float(sys.argv[1]) # 14.0
+E_ev = float(sys.argv[2])   # 8000.0
+
+# calculate UR parameters (required later for input generation)
+up = UndulatorParameters(und)
+up.E = beam.E
+up.printParameters()
+und.Kx = up.get_k(E_ev)
+up = UndulatorParameters(und)
+up.E = beam.E
+up.printParameters()
+
+#tapering functions around 9 kev, 17.5 gev
+
+#taper_func_1 = lambda n : f1(n, [0, 20], 0.999, [0,0], [0,0])
+taper_func_1 = lambda n : f1(n, [0, 20], 0.9995, [0,0], [0,0])
+
+#taper_func_2 = lambda n : f1(n, [0, 20], 0.998, [0,0], [0,0])
+taper_func_2 = lambda n : f1(n, [0, 20], 0.999, [0,0], [0,0])
+
+n0 = [0,8,29,36]
+a0 = 0.999
+a1 = [0.0, -0.0006,  -0.0006 ]
+a2 = [0.0, -0.00013, -0.0001 ]
+taper_func_3 = lambda n : f1(n, n0, a0, a1, a2 )
+
+lat1 = taper(lat, taper_func_1)
+lat2 = taper(lat, taper_func_2)
+lat3 = taper(lat, taper_func_3)
+
+beam.emit_xn, beam.emit_yn = beam.emit[beam.C]
+beam.gamma_rel = beam.E / (0.511e-3)
+beam.emit_x = beam.emit_xn / beam.gamma_rel
+beam.emit_y = beam.emit_yn / beam.gamma_rel
+
+inp = generate_input(up, beam, itdp=True)
+inp.lattice_str = generate_lattice(lat1, unit = up.lw, energy = beam.E )
+
+inp.ncar = 101
+inp.curlen = beam.tpulse * 3.e-7
+inp.zsep = int(8 * inp.curlen  / inp.nslice / inp.xlamds )
+inp.ntail = - int (inp.nslice/2)
+inp.npart = 8192 
+inp.rmax0 = 0.0
+inp.dgrid = 1.0e-4
+inp.delz = 1.0
+inp.ipseed = 147
+inp.zstop = 30.0
+inp.nharm = 1
+inp.DUMP_PARTICLES = 0
+
+#beamf = rep_dir + '/beams/beam_0.25nC_wake_sase1.txt'
+beamf = rep_dir + '/beams/b30pC_ACC.txt'
+# nb: beam is now the 'beam file' object!
+beam_new = transform_beam_file(beam_file = beamf,transform = [ [beam.beta_x,beam.alpha_x], [beam.beta_y,beam.alpha_y] ], energy_scale = beam.E / 14.0, emit_scale = 1.0, n_interp=1000)
+
+beam_new.x *= 0.0
+beam_new.px *= 0.0
+beam_new.y *= 0.0
+beam_new.py *= 0.0
+#beam_new.eloss *= 0.0
+#beam_new.I *= 1.e-5
+
+inp.nslice = 0
+inp.zsep = int(beam_new.zsep / inp.xlamds)
+inp.beamfile = 'tmp.beam'
+inp.beam_file_str = beam_new.f_str= beam_file_str(beam_new)
+
+# plotting beam not required
+if debug: plot_beam(plt.figure(), beam_new)
+idx_max = beam_new.idx_max
+if debug: print 'idx_max', idx_max
+if debug: plt.show()
 
 
-'''
-configurable to e.g. semi-empirical models
-'''
-class FelSimulator(object):
-    
-    def __init__(self):
-        self.engine = 'genesis'
-    
-    def run(self):
-        if self.engine == 'test_1d':
-            w1 = read_signal(file_name=self.input, npad = self.npad , E_ref = self.E_ev)
-            return w1, None
-        if self.engine == 'test_3d':
-            ''' produced  sliced field '''
-            w1 = read_signal(file_name=self.input, npad = self.npad , E_ref = self.E_ev)
-            s3d = Signal3D()
-            s3d.fs = [w1, deepcopy(w1), deepcopy(w1), deepcopy(w1)]
-            s3d.mesh_size = (2,2)            
-            return s3d, None
-        if self.engine == 'test_genesis':
-            ''' read test sliced field '''
-            g = readGenesisOutput(self.input)
-            print 'read sliced field ', g('ncar'), g.nSlices
-            slices = readRadiationFile(fileName=self.input + '.dfl', npoints=g('ncar'))            
-            s3d = Signal3D()
-            s3d.slices = slices
-            s3d.mesh_size = (int(g('ncar')),int(g('ncar'))) 
-            s3d.g = g           
-            return s3d, None
+sim_info = SimInfo()
+sim_info.log_dir = exp_dir
+
+save_output = True
+new_beams = {}
 
 
+# stage 1
+shift_ev = 0.0
+if start_stage <= 1 and stop_stage >= 1:
+    spec_av = None
+    skip_s1 = False
+    for run_id in run_ids:
+        inp.runid = run_id
+        inp.run_dir = exp_dir + 'run_' + str(inp.runid)
+        inp.ipseed = 61*(run_id + 1 )
+        inp.zstop = 35.0
 
-def pulses_from_field(pulse3d, range=None, npad = 2):
-    import gc
-    gc.collect()
-    nx, ny = pulse3d.nx, pulse3d.ny
-    n_slices = len(pulse3d.slices) / (nx*ny)
-    n_pulses = nx*ny
-    
-    n = (2*npad+1)*n_slices
-    
-    tmax = pulse3d.tmax
-    E_ref = pulse3d.E_ref
-    k0 = E_ref / (hbar * c)
-    print 'creating ', n_pulses, ' pulses ', nx, 'x', ny, ' tmax=', tmax
+        if skip_s1: g = readGenesisOutput( inp.run_dir + '/run.' + str(inp.runid) + '.s1.gout')
+        else: g = run(inp, launcher)
 
-    
-    pulses = Signal()
-             
-    ''' spectrum with finer resolution '''
-    pulses.nslice = n_slices
-    pulses.npad = npad
-    pulses.n = n
-    pulses.n_pulses = n_pulses
-    pulses.t = (npad+1)*np.linspace(0, tmax, n)
-    
-    dt = (pulses.t[1] - pulses.t[0]) * 1.e-15
-    pulses.freq_k = 2*pi*(fftfreq(n, d=dt) / c )            
-    pulses.freq_k = -np.roll(pulses.freq_k, n/2) + k0            
-    pulses.freq_ev = pulses.freq_k * hbar * c
+        if spec_av == None: spec_av = np.abs(g.spec)**2
+        else: spec_av += np.abs(g.spec)**2        
+        idx = np.argmax(spec_av)
+        print 'freq shift:', spec_av[idx], g.freq_ev[idx]
 
-    pulses.f = np.zeros([n_pulses,n], dtype=complex)
-    #pulses.sp = np.zeros([n_pulses,n], dtype=complex)
-             
-     
-    for i in xrange(n_pulses): 
-        print i
-        pulses.f[i,npad*n_slices:(npad+1)*n_slices] = pulse3d.slices[i::nx*ny]        
-        #pulses.sp[i,:] = np.roll(fft.fft(pulses.f[i]), n/2)
+        if debug: show_output(g, show_field = True, show_slice=475)
+        if debug: plt.show()
 
-    #del(pulse3d.slices)
-    return pulses
+        log_info(sim_info, g, run_id, 1)
+
+        beam_stage1 = deepcopy(beam_new)
+        update_beam(beam_stage1, g, beam)
+        new_beams[run_id] = beam_stage1
+        open(inp.run_dir + '/beam.s1.txt','w').write( beam_file_str(new_beams[run_id]) )
+
+        checkout_run(inp.run_dir, run_id, '', '.s1', True)
+
+        if debug: plt.plot(beam_stage1.dg)
+        if debug: plt.show()
+
+    shift_ev = g.freq_ev[idx]
+    print 'frequency shift [ev]:', shift_ev 
 
 
-def field_from_pulses_test(t, fs):
-    s3d = Signal3D()
-    s3d.t = t
-    s3d.fs = fs
-    return s3d
+# stage 2 (filter -- get average delay -- filter individually)
+if start_stage <= 2 and stop_stage >= 2:
+    delays = []
+    wakes = []
+    npad = 0
+    nslice = 0
 
-def field_from_pulses(t, fs, mesh_size, slices=None, write_file = None):
-    
-    nslice = fs.shape[1]
-    print fs.shape
-    print 'creating field', nslice , 'x', mesh_size[0], 'x', mesh_size[1]
-    if slices == None: 
-        slices = np.zeros([nslice, mesh_size[0], mesh_size[1]], dtype=complex)
-        
-    for i in xrange(nslice):
-        for j in xrange(mesh_size[0]):
-            for k in xrange(mesh_size[1]):
-                #print i, j, k, j*mesh_size[0] + k, fs[j*mesh_size[0] + k][i]
-                slices[i,j,k] = fs[j*mesh_size[0] + k,i]
-                
-    s3d = Signal3D()
-    s3d.t = t
-    s3d.slices = slices
-    
-    return s3d
+    for run_id in run_ids:
+        run_dir = exp_dir + 'run_' + str(run_id)
+        input_file = run_dir + '/run.' + str(run_id) + '.s1.gout'
+        # set debug to True to see plot of the seed pulse
+        g = sseed(input_file, E_ev + shift_ev, chicane1, run_dir, debug=debug, xt_couple = xt_couple)
+        delays.append(g.delay)
+        wakes.append(g.wake)
 
-'''
-modulus of wake signal (fel pulse minus core), for seed delay finding
-f -- modulus of the original signal (time domain)
-'''
-def get_wake(f, d_param=200, smooth_param=120):
-    f2 = copy(f)
-    fact = 1.0
-    d = np.abs(np.diff(f2))
-    for i in xrange(1,len(f2)):
-        if d[i-1] > d_param:
-            fact = 0.0
-        f2[i] *= fact
-    f2 = np.convolve(f2, np.ones(smooth_param) / float(smooth_param), mode='same')
-    return f2
+    if debug: plt.figure()
+    wake_av = np.zeros(len(wakes[0]))
+    for w in wakes:
+        if debug: plt.plot(w,'b--')
+        wake_av += np.array(w) /len(wakes)
+    if debug: plt.plot(wake_av, 'r-')
+    if debug: plt.show()
 
-do_plot = True
+    for run_id in run_ids:
+        run_dir = exp_dir + 'run_' + str(run_id)
+        input_file = run_dir + '/run.' + str(run_id) + '.s1.gout'
 
-'''
-1 stage SASE
-'''
+        g = sseed(input_file, E_ev + shift_ev, chicane1, run_dir, 
+                  debug=debug, output_file=run_dir +'/tmp2', wake = wake_av, xt_couple = xt_couple)
 
-fel_simulator =  FelSimulator()
-fel_simulator.engine = 'test_genesis'
-fel_simulator.npad = 2
-fel_simulator.input = 'test/run_0/run.0.gout'
+        log_info_seed(sim_info, g, run_id, 2)
 
+# stage 3
+if start_stage <= 3 and stop_stage >= 3:
+    inp.lattice_str = generate_lattice(lat2, unit = up.lw, energy = beam.E )
+    skip_s3 = False
+    spec_av = None
+    for run_id in run_ids:        
+        inp.runid = run_id
+        inp.run_dir = exp_dir + 'run_' + str(inp.runid)
+        inp.fieldfile='tmp2.dfl'
+        inp.ipseed = 17*(run_id + 1 )
+        try: # if previous stage has calculated/read in reasults
+            inp.beam_file_str = beam_new.f_str = beam_file_str(new_beams[run_id])
+        except KeyError: # if start from stage 3 and 
+            try:
+                inp.beam_file_str = beam_new.f_str = open(inp.run_dir + '/beam.s1.txt').read()
+            except:
+                print 'ERROR: beam file from stage 1 not present, cannot calculate '
 
-pulse3d, bunch = fel_simulator.run() 
+        inp.zstop = 36.0
 
-nproc = 1
-iproc = 0
-pulse3d.slices = np.reshape(pulse3d.slices, (nproc,-1))
-pulse3d_part = Signal3D()
-pulse3d_part.nx = int(pulse3d.g('ncar'))
-pulse3d_part.ny = int(pulse3d.g('ncar'))
-pulse3d_part.tmax = pulse3d.g.nSlices * pulse3d.g('zsep') * pulse3d.g('xlamds') / 2.99792458e8 * 1.e15
-#scatter
-pulse3d_part.slices = pulse3d.slices[iproc]
-pulse3d_part.E_ref = 1./ pulse3d.g('xlamds') * 4.135667516e-15 *2.99792458e8
+        if skip_s3: g = readGenesisOutput( inp.run_dir + '/run.' + str(inp.runid) + '.s1.gout')
+        else: g = run(inp, launcher)
 
-pulses_1d = pulses_from_field(pulse3d_part) 
+        if spec_av == None: spec_av = np.abs(g.spec)**2
+        else: spec_av += np.abs(g.spec)**2        
+        idx = np.argmax(spec_av)
+        print 'freq shift:', spec_av[idx], g.freq_ev[idx]
 
-print 'created', pulses_1d.n_pulses, ' pulses'
+        if debug: show_output(g, show_field = True, show_slice=475)
+        if debug: plt.show()
 
- 
-if do_plot:
-    ''' TODO: determine hat to plot/log'''
-    pulse_idx = int(pulse3d_part.nx*pulse3d_part.ny/2.) 
-    print 'plotting slice', pulse_idx
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.grid(True)
-    ax.plot(pulses_1d.t, np.abs(pulses_1d.f[pulse_idx]), '#000000', alpha=0.5)
-    ax.set_title('Stage 1 FEL pulse')
+        log_info(sim_info, g, run_id, 3)
 
+        beam_stage3 = deepcopy(beam_new)
+        update_beam(beam_stage3, g, beam)
+        new_beams[run_id] = beam_stage3
+        open(inp.run_dir + '/beam.s3.txt','w').write( beam_file_str(new_beams[run_id]) )
 
+        checkout_run(inp.run_dir, run_id, '', '.s3', True)
 
-'''
-2 stage chicane
-'''
+    shift_ev = g.freq_ev[idx]
+    print 'frequency shift [ev]:', shift_ev 
 
-''' option 1 -- delay calculated based on pulse'''
+# stage 4.0 (filter -- get average delay)
+if start_stage <= 4 and stop_stage >= 4:
+    delays = []
+    wakes = []
+    npad = 0
+    nslice = 0
 
-'''
-TODO: add logic to fine-tune the bragg angle to actual maximum of fel spectrum
-'''
-E_ev = pulse3d_part.E_ref
+    for run_id in run_ids:
+        run_dir = exp_dir + 'run_' + str(run_id)
+        input_file = run_dir + '/run.' + str(run_id) + '.s3.gout'
 
+        g = sseed(input_file, E_ev + shift_ev, chicane1, run_dir, debug=False, xt_couple = xt_couple)
+        delays.append(g.delay)
+        wakes.append(g.wake)
 
-r = Ray() 
-r.lamb = 2 * pi * hbar * c / E_ev
-print 'wavelength', r.lamb
+    if debug: plt.figure()
+    wake_av = np.zeros(len(wakes[0]))
+    for w in wakes:
+        if debug: plt.plot(w,'b--')
+        wake_av += np.array(w) /len(wakes)
+    if debug: plt.plot(wake_av, 'r-')
+    if debug: plt.show()
 
+    for run_id in run_ids:
+        run_dir = exp_dir + 'run_' + str(run_id)
+        input_file = run_dir + '/run.' + str(run_id) + '.s4.gout'
+        checkout_run(run_dir, run_id, '.s3', '.s4', True)
+        #g = sseed(input_file, run_dir + 'tmp', E_ev, chicane1, run_dir, delay=69, debug=True)
+        g = sseed(input_file, E_ev + shift_ev, chicane1, run_dir, 
+                  debug=False, output_file=run_dir + '/tmp4', wake = wake_av, xt_couple = xt_couple)
 
-filt = get_crystal_filter(chicane.cryst, r, ref_idx = (4,0,0), k = pulses_1d.freq_k)
-chicane.cryst.filter = filt
+        log_info_seed(sim_info, g, run_id, 4)
 
-f_av = np.zeros(len(pulses_1d.t)) 
+# stage 5
+if start_stage <= 5 and stop_stage >= 5:
+    inp.lattice_str = generate_lattice(lat3, unit = up.lw, energy = beam.E )
+    for run_id in run_ids:
+        inp.runid = run_id
+        inp.run_dir = exp_dir + 'run_' + str(inp.runid)
+        inp.ipseed = 71*(run_id + 1 )
+        inp.fieldfile='tmp4.dfl'
 
+        try: # if previous stage has calculated/read in reasults
+            inp.beam_file_str = beam_new.f_str = beam_file_str(new_beams[run_id])
+        except KeyError: # if start from stage 5 and prev. beam file present
+            try:
+                inp.beam_file_str = beam_new.f_str = open(inp.run_dir + '/beam.s3.txt').read()
+            except:
+                print 'ERROR: beam file from stage 3 not present, cannot calculate '
+                sys.exit(0)
 
-for i in xrange(pulses_1d.n_pulses):
-    print 'processing', i
-    sp = np.roll(fft.fft(pulses_1d.f[i,:]), pulses_1d.n/2)
-    #sp = fft.fft(pulses_1d.f[i,:])
-    sp = sp * chicane.cryst.filter.tr
-    pulses_1d.f[i,:] = np.fft.ifft(sp)
-    f_av += np.abs(pulses_1d.f[i,:])
+        inp.zstop = 140.0
+        g = run(inp, launcher)
+        if debug: show_output(g, show_field = True, show_slice=475)
+        if debug: plt.show()
+        log_info(sim_info, g, run_id, 5)
 
-
-#f_wake = get_wake(f_av, d_param=200, smooth_param=20)
-f_wake = get_wake(f_av, d_param=12, smooth_param=10)
-
-'''
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.grid(True)
-ax.set_yscale('log')
-plt.plot(f_wake, 'r--')
-plt.plot(f_av, 'g--')
-plt.show()
-'''
-
-x,y = peaks(pulses_1d.t, f_wake, n=4)
-x0,y0 = peaks(pulses_1d.t, np.abs(f_av), n=4)
-
-print 'peaks', x, y
-print 'peaks original', x0, y0    
-    
-n_peak = 0
-
-delay = x0[0] - x[n_peak] # based on fel pulse maximum
-n_delay = int(np.round(delay / (pulses_1d.t[1] - pulses_1d.t[0])))
-n_start = pulses_1d.npad*pulses_1d.nslice - n_delay
-
-print 'delay', x0[0] - x[n_peak], ' fs ', n_delay , ' slices', ' nslice=', pulses_1d.nslice, ' n_start=', n_start 
-
-
-i1=0
-i2=pulses_1d.n_pulses
-
-t = pulses_1d.t[n_start:n_start+pulses_1d.nslice]
-pulse3d.slices = np.reshape(pulse3d.slices, (pulses_1d.nslice, pulse3d_part.nx, pulse3d_part.nx))
-field_from_pulses( t, pulses_1d.f[i1:i2,n_start:n_start+pulses_1d.nslice], pulse3d.mesh_size,pulse3d.slices)
-writeRadiationFile('test.dfl', pulse3d.slices)    
-
-#slices2 = readRadiationFile(fileName='test.dfl', npoints=pulse3d_part.nx)
-
-if do_plot:
-    ax.set_yscale('log')
-    ax.set_title('Filtered FEL pulse')
-    plt.plot(t + delay, np.abs(pulse3d.slices[:,5,5]), 'r--')
-
-
-plt.show()
-sys.exit(0)
-
-
-
-''' option 2 -- delay calculated from chicane '''
-
-
-'''
-3 stage FEL
-'''
-
-'''
-fel_simulator.configure()
-
-pulse, bunch = fel_simulator.run()
-'''
