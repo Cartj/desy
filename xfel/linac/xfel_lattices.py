@@ -48,8 +48,8 @@ lat = MagneticLattice(L1)
 tws = twiss(lat, tws_L1, nPoints=1000)
 #print "L1               : length = ", lat.totalLen, "s = ", tws[-1].s
 print "L1               : delta on the end:  bx =", tws[-1].beta_x - tws_B1.beta_x , " by =", tws[-1].beta_y - tws_B1.beta_y
-plot_opt_func(lat, tws, top_plot=["E"], fig_name= "L1")
-plt.show()
+#plot_opt_func(lat, tws, top_plot=["E"], fig_name= "L1")
+#plt.show()
 
 
 lat = MagneticLattice(B1)
