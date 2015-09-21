@@ -58,7 +58,7 @@
 
 # 13.03.2006 : simultaneous use for mad and elegant	
 
-# 06.07.2006 : rearrange switchyard, include compensation Scavengers, rearrange dump0 
+# 06.07.2006 : rearrange switchyard, include compensation UnknownElements, rearrange dump0 
 
 # 22.08.2006 : new naming convention, inj2 deleted
 
@@ -152,50 +152,76 @@
 
 
 
+
+
 # Drift defintions-------------------------------------------------------
 
 d0000 = Drift(l=0.000, id = 'd0000')
 d00001 = Drift(l=0.0001, id = 'd00001')
 d000013 = Drift(l=0.00013, id = 'd000013')
 d0001 = Drift(l=0.001, id = 'd0001')
+d0004 = Drift(l=0.004, id = 'd0004')
 d00022 = Drift(l=0.0022, id = 'd00022')
+d00046 = Drift(l=0.0046, id = 'd00046')
 d00065 = Drift(l=0.0065, id = 'd00065')
+d000675 = Drift(l=0.00675, id = 'd000675')
 d0010 = Drift(l=0.010, id = 'd0010')
 d00125 = Drift(l=0.0125, id = 'd00125')
 d00135 = Drift(l=0.0135, id = 'd00135')
 d0015 = Drift(l=0.015, id = 'd0015')
+d00175 = Drift(l=0.0175, id = 'd00175')
+d00185 = Drift(l=0.0185, id = 'd00185')
 d0020 = Drift(l=0.020, id = 'd0020')
 d0022 = Drift(l=0.022, id = 'd0022')
 d0025 = Drift(l=0.025, id = 'd0025')
 d00267 = Drift(l=0.0267, id = 'd00267')
 d0030 = Drift(l=0.030, id = 'd0030')
+d00315 = Drift(l=0.0315, id = 'd00315')
 d0033 = Drift(l=0.033, id = 'd0033')
+d0035 = Drift(l=0.035, id = 'd0035')
+d0036 = Drift(l=0.036, id = 'd0036')
 d0040 = Drift(l=0.040, id = 'd0040')
 d0045 = Drift(l=0.045, id = 'd0045')
+d00457 = Drift(l=0.0457, id = 'd00457')
+d00467 = Drift(l=0.0467, id = 'd00467')
 d00475 = Drift(l=0.0475, id = 'd00475')
+d00483 = Drift(l=0.0483, id = 'd00483')
 d0049 = Drift(l=0.049, id = 'd0049')
 d00494 = Drift(l=0.0494, id = 'd00494')
 d0050 = Drift(l=0.050, id = 'd0050')
 d0055 = Drift(l=0.055, id = 'd0055')
+d00565 = Drift(l=0.0565, id = 'd00565')
+d0058 = Drift(l=0.058, id = 'd0058')
 d0060 = Drift(l=0.060, id = 'd0060')
 d0065 = Drift(l=0.065, id = 'd0065')
 d0070 = Drift(l=0.070, id = 'd0070')
 d0072 = Drift(l=0.072, id = 'd0072')
 d0075 = Drift(l=0.075, id = 'd0075')
 d0077 = Drift(l=0.077, id = 'd0077')
+d00793 = Drift(l=0.0793, id = 'd00793')
 d0080 = Drift(l=0.080, id = 'd0080')
 d0084 = Drift(l=0.084, id = 'd0084')
+d00862 = Drift(l=0.0862, id = 'd00862')
 d0090 = Drift(l=0.090, id = 'd0090')
 d0092 = Drift(l=0.092, id = 'd0092')
 d0093 = Drift(l=0.093, id = 'd0093')
 d0095 = Drift(l=0.095, id = 'd0095')
+d0096 = Drift(l=0.096, id = 'd0096')
+d00974 = Drift(l=0.0974, id = 'd00974')
+d009975 = Drift(l=0.09975, id = 'd009975')
 d0100 = Drift(l=0.100, id = 'd0100')
+d01025 = Drift(l=0.1025, id = 'd01025')
+d01044 = Drift(l=0.1044, id = 'd01044')
+d01047 = Drift(l=0.1047, id = 'd01047')
 d0105 = Drift(l=0.105, id = 'd0105')
 d01075 = Drift(l=0.1075, id = 'd01075')
 d0108 = Drift(l=0.108, id = 'd0108')
+d010975 = Drift(l=0.10975, id = 'd010975')
 d0110 = Drift(l=0.110, id = 'd0110')
+d0113 = Drift(l=0.113, id = 'd0113')
 d01149 = Drift(l=0.1149, id = 'd01149')
 d0115 = Drift(l=0.115, id = 'd0115')
+d01175 = Drift(l=0.1175, id = 'd01175')
 d0120 = Drift(l=0.120, id = 'd0120')
 d0125 = Drift(l=0.125, id = 'd0125')
 d012575 = Drift(l=0.12575, id = 'd012575')
@@ -203,20 +229,28 @@ d01275 = Drift(l=0.1275, id = 'd01275')
 d0128 = Drift(l=0.128, id = 'd0128')
 d012955 = Drift(l=0.12955, id = 'd012955')
 d0130 = Drift(l=0.130, id = 'd0130')
+d01325 = Drift(l=0.1325, id = 'd01325')
 d0135 = Drift(l=0.135, id = 'd0135')
 d0140 = Drift(l=0.140, id = 'd0140')
 d0145 = Drift(l=0.145, id = 'd0145')
 d0150 = Drift(l=0.150, id = 'd0150')
 d01455 = Drift(l=0.1455, id = 'd01455')
 d01475 = Drift(l=0.1475, id = 'd01475')
+d01525 = Drift(l=0.1525, id = 'd01525')
+d01543 = Drift(l=0.1543, id = 'd01543')
 d0155 = Drift(l=0.155, id = 'd0155')
 d01566 = Drift(l=0.1566, id = 'd01566')
+d01568 = Drift(l=0.1568, id = 'd01568')
 d015575 = Drift(l=0.15575, id = 'd015575')
 d0160 = Drift(l=0.160, id = 'd0160')
 d0165 = Drift(l=0.165, id = 'd0165')
 d0170 = Drift(l=0.170, id = 'd0170')
+d01725 = Drift(l=0.1725, id = 'd01725')
 d0175 = Drift(l=0.175, id = 'd0175')
+d01753 = Drift(l=0.1753, id = 'd01753')
 d0180 = Drift(l=0.180, id = 'd0180')
+d01848 = Drift(l=0.1848, id = 'd01848')
+d01849 = Drift(l=0.1849, id = 'd01849')
 d0186 = Drift(l=0.186, id = 'd0186')
 d01883 = Drift(l=0.1883, id = 'd01883')
 d0190 = Drift(l=0.190, id = 'd0190')
@@ -224,15 +258,19 @@ d0191 = Drift(l=0.191, id = 'd0191')
 d0195 = Drift(l=0.195, id = 'd0195')
 d0200 = Drift(l=0.200, id = 'd0200')
 d0205 = Drift(l=0.205, id = 'd0205')
+d0208 = Drift(l=0.208, id = 'd0208')
 d0210 = Drift(l=0.210, id = 'd0210')
+d02125 = Drift(l=0.2125, id = 'd02125')
 d021225 = Drift(l=0.21225, id = 'd021225')
 d0215 = Drift(l=0.215, id = 'd0215')
 d0220 = Drift(l=0.220, id = 'd0220')
 d0225 = Drift(l=0.225, id = 'd0225')
 d0230 = Drift(l=0.230, id = 'd0230')
+d0233 = Drift(l=0.233, id = 'd0233')
 d0236 = Drift(l=0.236, id = 'd0236')
 d0240 = Drift(l=0.240, id = 'd0240')
 d0250 = Drift(l=0.250, id = 'd0250')
+d0256 = Drift(l=0.256, id = 'd0256')
 d0262 = Drift(l=0.262, id = 'd0262')
 d0270 = Drift(l=0.270, id = 'd0270')
 d0272 = Drift(l=0.272, id = 'd0272')
@@ -241,8 +279,13 @@ d02767 = Drift(l=0.2767, id = 'd02767')
 d0280 = Drift(l=0.280, id = 'd0280')
 d0286 = Drift(l=0.286, id = 'd0286')
 d0300 = Drift(l=0.300, id = 'd0300')
+d0308 = Drift(l=0.308, id = 'd0308')
+d0310 = Drift(l=0.310, id = 'd0310')
 d0315 = Drift(l=0.315, id = 'd0315')
 d0320 = Drift(l=0.320, id = 'd0320')
+d03218 = Drift(l=0.3218, id = 'd03218')
+d03223 = Drift(l=0.3223, id = 'd03223')
+d03325 = Drift(l=0.3325, id = 'd03325')
 d0340 = Drift(l=0.340, id = 'd0340')
 d03434 = Drift(l=0.3434, id = 'd03434')
 d0345 = Drift(l=0.345, id = 'd0345')
@@ -252,50 +295,67 @@ d0360 = Drift(l=0.360, id = 'd0360')
 d0370 = Drift(l=0.370, id = 'd0370')
 d0375 = Drift(l=0.375, id = 'd0375')
 d0380 = Drift(l=0.380, id = 'd0380')
+d03825 = Drift(l=0.3825, id = 'd03825')
 d0400 = Drift(l=0.400, id = 'd0400')
+d04037 = Drift(l=0.4037, id = 'd04037')
+d0408 = Drift(l=0.408, id = 'd0408')
 d0410 = Drift(l=0.410, id = 'd0410')
 d0420 = Drift(l=0.420, id = 'd0420')
 d0425 = Drift(l=0.425, id = 'd0425')
 d0430 = Drift(l=0.430, id = 'd0430')
 d0434 = Drift(l=0.434, id = 'd0434')
+d0442 = Drift(l=0.442, id = 'd0442')
 d0445 = Drift(l=0.445, id = 'd0445')
 d0450 = Drift(l=0.450, id = 'd0450')
 d0460 = Drift(l=0.460, id = 'd0460')
 d0475 = Drift(l=0.475, id = 'd0475')
 d0480 = Drift(l=0.480, id = 'd0480')
+d0482 = Drift(l=0.482, id = 'd0482')
 d0485 = Drift(l=0.485, id = 'd0485')
 d0490 = Drift(l=0.490, id = 'd0490')
+d0492 = Drift(l=0.492, id = 'd0492')
 d0500 = Drift(l=0.500, id = 'd0500')
 d0502 = Drift(l=0.502, id = 'd0502')
 d0505 = Drift(l=0.505, id = 'd0505')
 d0510 = Drift(l=0.510, id = 'd0510')
 d0520 = Drift(l=0.520, id = 'd0520')
 d0522 = Drift(l=0.522, id = 'd0522')
+d0545 = Drift(l=0.545, id = 'd0545')
 d0550 = Drift(l=0.550, id = 'd0550')
 d05767 = Drift(l=0.5767, id = 'd05767')
+d0582 = Drift(l=0.582, id = 'd0582')
+d05857 = Drift(l=0.5857, id = 'd05857')
 d05996 = Drift(l=0.5996, id = 'd05996')
+d0592 = Drift(l=0.592, id = 'd0592')
 d0600 = Drift(l=0.600, id = 'd0600')
 d0610 = Drift(l=0.610, id = 'd0610')
 d06117 = Drift(l=0.6117, id = 'd06117')
 d0625 = Drift(l=0.625, id = 'd0625')
 d0640 = Drift(l=0.640, id = 'd0640')
+d0643 = Drift(l=0.643, id = 'd0643')
 d0645 = Drift(l=0.645, id = 'd0645')
 d0650 = Drift(l=0.650, id = 'd0650')
 d0665 = Drift(l=0.665, id = 'd0665')
 d0700 = Drift(l=0.700, id = 'd0700')
 d0750 = Drift(l=0.750, id = 'd0750')
 d0760 = Drift(l=0.760, id = 'd0760')
+d07705 = Drift(l=0.7705, id = 'd07705')
 d0775 = Drift(l=0.775, id = 'd0775')
 d0790 = Drift(l=0.790, id = 'd0790')
 d0800 = Drift(l=0.800, id = 'd0800')
+d0822 = Drift(l=0.822, id = 'd0822')
 d0825 = Drift(l=0.825, id = 'd0825')
 d0835 = Drift(l=0.835, id = 'd0835')
+d08578 = Drift(l=0.8578, id = 'd08578')
 d0865 = Drift(l=0.865, id = 'd0865')
 d0875 = Drift(l=0.875, id = 'd0875')
 d08696 = Drift(l=0.8696, id = 'd08696')
+d0890 = Drift(l=0.890, id = 'd0890')
 d0900 = Drift(l=0.900, id = 'd0900')
 d0930 = Drift(l=0.930, id = 'd0930')
 d0935 = Drift(l=0.935, id = 'd0935')
+d0940 = Drift(l=0.940, id = 'd0940')
+d0944 = Drift(l=0.944, id = 'd0944')
 d0950 = Drift(l=0.950, id = 'd0950')
 d0975 = Drift(l=0.975, id = 'd0975')
 d0985 = Drift(l=0.985, id = 'd0985')
@@ -303,11 +363,14 @@ d0990 = Drift(l=0.990, id = 'd0990')
 d1000 = Drift(l=1.000, id = 'd1000')
 d1010 = Drift(l=1.010, id = 'd1010')
 d1015 = Drift(l=1.015, id = 'd1015')
+d1045 = Drift(l=1.045, id = 'd1045')
 d1050 = Drift(l=1.050, id = 'd1050')
 d1060 = Drift(l=1.060, id = 'd1060')
 d1065 = Drift(l=1.065, id = 'd1065')
 d1055 = Drift(l=1.055, id = 'd1055')
 d1075 = Drift(l=1.075, id = 'd1075')
+d107324 = Drift(l=1.07324, id = 'd107324')
+d108149 = Drift(l=1.08149, id = 'd108149')
 d1084 = Drift(l=1.084, id = 'd1084')
 d1100 = Drift(l=1.100, id = 'd1100')
 d1105 = Drift(l=1.105, id = 'd1105')
@@ -322,18 +385,20 @@ d1195 = Drift(l=1.195, id = 'd1195')
 d1200 = Drift(l=1.200, id = 'd1200')
 d1215 = Drift(l=1.215, id = 'd1215')
 d1230 = Drift(l=1.230, id = 'd1230')
+d1235 = Drift(l=1.235, id = 'd1235')
 d1345 = Drift(l=1.345, id = 'd1345')
 d1250 = Drift(l=1.250, id = 'd1250')
 d1290 = Drift(l=1.290, id = 'd1290')
 d1300 = Drift(l=1.300, id = 'd1300')
 d1350 = Drift(l=1.350, id = 'd1350')
 d1354 = Drift(l=1.354, id = 'd1354')
+d13847 = Drift(l=1.3847, id = 'd13847')
 d1395 = Drift(l=1.395, id = 'd1395')
 d1400 = Drift(l=1.400, id = 'd1400')
-d1420 = Drift(l=1.42, id = 'd1420')
+d1420 = Drift(l=1.420, id = 'd1420')
 d1440 = Drift(l=1.440, id = 'd1440')
-d1450 = Drift(l=1.45, id = 'd1450')
-d1480 = Drift(l=1.48, id = 'd1480')
+d1450 = Drift(l=1.450, id = 'd1450')
+d1480 = Drift(l=1.480, id = 'd1480')
 d1495 = Drift(l=1.495, id = 'd1495')
 d1500 = Drift(l=1.500, id = 'd1500')
 d1540 = Drift(l=1.540, id = 'd1540')
@@ -353,31 +418,42 @@ d1705 = Drift(l=1.705, id = 'd1705')
 d1713 = Drift(l=1.713, id = 'd1713')
 d1750 = Drift(l=1.750, id = 'd1750')
 d1775 = Drift(l=1.775, id = 'd1775')
-d1800 = Drift(l=1.80, id = 'd1800')
+d1800 = Drift(l=1.800, id = 'd1800')
 d1805 = Drift(l=1.805, id = 'd1805')
-d1840 = Drift(l=1.84, id = 'd1840')
+d1840 = Drift(l=1.840, id = 'd1840')
 d1848 = Drift(l=1.848, id = 'd1848')
+d17167 = Drift(l=1.7167, id = 'd17167')
+d1900 = Drift(l=1.900, id = 'd1900')
 d1905 = Drift(l=1.905, id = 'd1905')
+d1920 = Drift(l=1.920, id = 'd1920')
 d1925 = Drift(l=1.925, id = 'd1925')
+d193104 = Drift(l=1.93104, id = 'd193104')
 d1950 = Drift(l=1.950, id = 'd1950')
 d1990 = Drift(l=1.990, id = 'd1990')
 d2000 = Drift(l=2.000, id = 'd2000')
 d2005 = Drift(l=2.005, id = 'd2005')
+d200615 = Drift(l=2.00615, id = 'd200615')
+d20144 = Drift(l=2.0144, id = 'd20144')
 d2025 = Drift(l=2.025, id = 'd2025')
 d2030 = Drift(l=2.030, id = 'd2030')
 d2035 = Drift(l=2.035, id = 'd2035')
 d2060 = Drift(l=2.060, id = 'd2060')
 d2070 = Drift(l=2.070, id = 'd2070')
+d20705 = Drift(l=2.0705, id = 'd20705')
 d2100 = Drift(l=2.100, id = 'd2100')
 d2140 = Drift(l=2.140, id = 'd2140')
 d2150 = Drift(l=2.150, id = 'd2150')
 d2160 = Drift(l=2.160, id = 'd2160')
 d2165 = Drift(l=2.165, id = 'd2165')
 d2175 = Drift(l=2.175, id = 'd2175')
+d21835 = Drift(l=2.1835, id = 'd21835')
 d2200 = Drift(l=2.200, id = 'd2200')
 d2205 = Drift(l=2.205, id = 'd2205')
+d2225 = Drift(l=2.225, id = 'd2225')
+d20575 = Drift(l=2.0575, id = 'd20575')
 d2235 = Drift(l=2.235, id = 'd2235')
 d2250 = Drift(l=2.250, id = 'd2250')
+d22705 = Drift(l=2.2705, id = 'd22705')
 d2285 = Drift(l=2.285, id = 'd2285')
 d2300 = Drift(l=2.300, id = 'd2300')
 d2301 = Drift(l=2.301, id = 'd2301')
@@ -399,7 +475,9 @@ d2700 = Drift(l=2.700, id = 'd2700')
 d2750 = Drift(l=2.750, id = 'd2750')
 d2771 = Drift(l=2.771, id = 'd2771')
 d2775 = Drift(l=2.775, id = 'd2775')
+d2800 = Drift(l=2.800, id = 'd2800')
 d2805 = Drift(l=2.805, id = 'd2805')
+d2880 = Drift(l=2.880, id = 'd2880')
 d2900 = Drift(l=2.900, id = 'd2900')
 d2905 = Drift(l=2.905, id = 'd2905')
 d2950 = Drift(l=2.950, id = 'd2950')
@@ -408,6 +486,7 @@ d3000 = Drift(l=3.000, id = 'd3000')
 d3080 = Drift(l=3.080, id = 'd3080')
 d3120 = Drift(l=3.120, id = 'd3120')
 d3155 = Drift(l=3.155, id = 'd3155')
+d31577 = Drift(l=3.1577, id = 'd31577')
 d3160 = Drift(l=3.160, id = 'd3160')
 d3163 = Drift(l=3.163, id = 'd3163')
 d3165 = Drift(l=3.165, id = 'd3165')
@@ -415,10 +494,13 @@ d3200 = Drift(l=3.200, id = 'd3200')
 d3205 = Drift(l=3.205, id = 'd3205')
 d3215 = Drift(l=3.215, id = 'd3215')
 d3221 = Drift(l=3.221, id = 'd3221')
+d3227 = Drift(l=3.227, id = 'd3227')
 d3250 = Drift(l=3.250, id = 'd3250')
 d3255 = Drift(l=3.255, id = 'd3255')
 d3300 = Drift(l=3.300, id = 'd3300')
 d33034 = Drift(l=3.3034, id = 'd33034')
+d3320 = Drift(l=3.320, id = 'd3320')
+d3325 = Drift(l=3.325, id = 'd3325')
 d3340 = Drift(l=3.340, id = 'd3340')
 d3380 = Drift(l=3.380, id = 'd3380')
 d3405 = Drift(l=3.405, id = 'd3405')
@@ -426,6 +508,7 @@ d3450 = Drift(l=3.450, id = 'd3450')
 d3500 = Drift(l=3.500, id = 'd3500')
 d3555 = Drift(l=3.555, id = 'd3555')
 d3520 = Drift(l=3.520, id = 'd3520')
+d3546 = Drift(l=3.546, id = 'd3546')
 d3600 = Drift(l=3.600, id = 'd3600')
 d3650 = Drift(l=3.650, id = 'd3650')
 d3676 = Drift(l=3.676, id = 'd3676')
@@ -440,6 +523,7 @@ d3870 = Drift(l=3.870, id = 'd3870')
 d3900 = Drift(l=3.900, id = 'd3900')
 d3905 = Drift(l=3.905, id = 'd3905')
 d3825 = Drift(l=3.825, id = 'd3825')
+d3930 = Drift(l=3.930, id = 'd3930')
 d3950 = Drift(l=3.950, id = 'd3950')
 d4000 = Drift(l=4.000, id = 'd4000')
 d4020 = Drift(l=4.020, id = 'd4020')
@@ -453,6 +537,7 @@ d4260 = Drift(l=4.260, id = 'd4260')
 d4265 = Drift(l=4.265, id = 'd4265')
 d4350 = Drift(l=4.350, id = 'd4350')
 d4370 = Drift(l=4.370, id = 'd4370')
+d41142 = Drift(l=4.1142, id = 'd41142')
 d4400 = Drift(l=4.400, id = 'd4400')
 d4430 = Drift(l=4.430, id = 'd4430')
 d4450 = Drift(l=4.450, id = 'd4450')
@@ -508,7 +593,8 @@ d5850 = Drift(l=5.850, id = 'd5850')
 d5860 = Drift(l=5.860, id = 'd5860')
 d5875 = Drift(l=5.875, id = 'd5875')
 d5900 = Drift(l=5.900, id = 'd5900')
-d5920 = Drift(l=5.920, id = 'd5920')
+#d5920 : Drift, l= 5.920
+
 d5950 = Drift(l=5.950, id = 'd5950')
 d6000 = Drift(l=6.000, id = 'd6000')
 d6030 = Drift(l=6.030, id = 'd6030')
@@ -518,6 +604,7 @@ d6200 = Drift(l=6.200, id = 'd6200')
 d6207 = Drift(l=6.207, id = 'd6207')
 d6250 = Drift(l=6.250, id = 'd6250')
 d6275 = Drift(l=6.275, id = 'd6275')
+d6405 = Drift(l=6.405, id = 'd6405')
 d6480 = Drift(l=6.480, id = 'd6480')
 d6490 = Drift(l=6.490, id = 'd6490')
 d6500 = Drift(l=6.500, id = 'd6500')
@@ -556,6 +643,7 @@ d8020 = Drift(l=8.020, id = 'd8020')
 d8200 = Drift(l=8.200, id = 'd8200')
 d8250 = Drift(l=8.250, id = 'd8250')
 d8430 = Drift(l=8.430, id = 'd8430')
+d8475 = Drift(l=8.475, id = 'd8475')
 d8500 = Drift(l=8.500, id = 'd8500')
 d8667 = Drift(l=8.667, id = 'd8667')
 d8905 = Drift(l=8.905, id = 'd8905')
@@ -563,7 +651,7 @@ d8405 = Drift(l=8.405, id = 'd8405')
 d84393 = Drift(l=8.4393, id = 'd84393')
 d8750 = Drift(l=8.750, id = 'd8750')
 d8705 = Drift(l=8.705, id = 'd8705')
-d87993 = Drift(l=8.7993, id = 'd87993')
+d87993 = Drift(l=8.7993-0.30675, id = 'd87993')
 d8805 = Drift(l=8.805, id = 'd8805')
 d8820 = Drift(l=8.820, id = 'd8820')
 d88393 = Drift(l=8.8393, id = 'd88393')
@@ -583,13 +671,14 @@ d9750 = Drift(l=9.750, id = 'd9750')
 #d983325: Drift, l= 9.83325 + 0.118
 
 d9021375 = Drift(l=9.021375, id = 'd9021375')
-d9421375 = Drift(l=9.421375, id = 'd9421375')
+d9421375 = Drift(l=9.421375-0.30675, id = 'd9421375')
 d9621375 = Drift(l=9.621375, id = 'd9621375')
 d9905 = Drift(l=9.905, id = 'd9905')
 d10000 = Drift(l=10.000, id = 'd10000')
 d10105 = Drift(l=10.105, id = 'd10105')
 d10135 = Drift(l=10.135, id = 'd10135')
 d10205 = Drift(l=10.205, id = 'd10205')
+d10285 = Drift(l=10.285, id = 'd10285')
 d10485 = Drift(l=10.485, id = 'd10485')
 d10500 = Drift(l=10.500, id = 'd10500')
 d10516 = Drift(l=10.516, id = 'd10516')
@@ -602,6 +691,7 @@ d11000 = Drift(l=10.800, id = 'd11000')
 d10870 = Drift(l=10.870, id = 'd10870')
 d10905 = Drift(l=10.905, id = 'd10905')
 d11170 = Drift(l=11.170, id = 'd11170')
+d11165 = Drift(l=11.165, id = 'd11165')
 d11370 = Drift(l=11.370, id = 'd11370')
 d11500 = Drift(l=11.500, id = 'd11500')
 d11613 = Drift(l=11.613, id = 'd11613')
@@ -610,6 +700,7 @@ d11705 = Drift(l=11.705, id = 'd11705')
 d11905 = Drift(l=11.905, id = 'd11905')
 d12000 = Drift(l=12.000, id = 'd12000')
 d12200 = Drift(l=12.200, id = 'd12200')
+d122482 = Drift(l=12.2482, id = 'd122482')
 d12300 = Drift(l=12.300, id = 'd12300')
 d12400 = Drift(l=12.400, id = 'd12400')
 d12405 = Drift(l=12.405, id = 'd12405')
@@ -629,9 +720,8 @@ d13905 = Drift(l=13.905, id = 'd13905')
 d14000 = Drift(l=14.000, id = 'd14000')
 d14250 = Drift(l=14.250, id = 'd14250')
 d14500 = Drift(l=14.500, id = 'd14500')
+d15065 = Drift(l=15.065, id = 'd15065')
 d20000 = Drift(l=20.000, id = 'd20000')
-
-
 
 
 #d351375: Drift, l =  4.51375-1.000   # do compensate for bc-0 chicane lengthening
@@ -641,27 +731,34 @@ d31887 = Drift(l=3.1887, id = 'd31887')
 
 #-------------------------------------------------------------------------
 
-#   definition of common Scavengers
+#   definition of common Markers
 
 #-------------------------------------------------------------------------
 
-cl_start = Scavenger(id = 'cl_start')
-cl_end = Scavenger(id = 'cl_end')
-tl_start = Scavenger(id = 'tl_start')
-tl_end = Scavenger(id = 'tl_end')
-t1_start = Scavenger(id = 't1_start')
-t1_end = Scavenger(id = 't1_end')
-t2_start = Scavenger(id = 't2_start')
-t2_end = Scavenger(id = 't2_end')
-t20_start = Scavenger(id = 't20_start')
-t20_end = Scavenger(id = 't20_end')
-tld_start = Scavenger(id = 'tld_start')
-tld_end = Scavenger(id = 'tld_end')
+cl_start = Marker(id = 'cl_start')
+cl_end = Marker(id = 'cl_end')
+tl_start = Marker(id = 'tl_start')
+tl_end = Marker(id = 'tl_end')
+t1_startt1 = Marker(id = 't1_startt1')
+t1_startkt1 = Marker(id = 't1_startkt1')
+t1_end = Marker(id = 't1_end')
+t2_startt2 = Marker(id = 't2_startt2')
+t2_end = Marker(id = 't2_end')
+t20_startt20 = Marker(id = 't20_startt20')
+t20_end = Marker(id = 't20_end')
+tld_starttld = Marker(id = 'tld_starttld')
+tld_startktld = Marker(id = 'tld_startktld')
+tld_end = Marker(id = 'tld_end')
 
 
-tl_startt1 = Scavenger(id = 'tl_startt1')
-tl_startt20 = Scavenger(id = 'tl_startt20')
-tl_starttld = Scavenger(id = 'tl_starttld')
+tl_startt1 = Marker(id = 'tl_startt1')
+tl_startt20 = Marker(id = 'tl_startt20')
+tl_starttld = Marker(id = 'tl_starttld')
+
+
+tl_startkt1 = Marker(id = 'tl_startkt1')
+tl_startkt20 = Marker(id = 'tl_startkt20')
+tl_startktld = Marker(id = 'tl_startktld')
 
 
 #--------------------------------------------------------------------------
@@ -672,39 +769,39 @@ tl_starttld = Scavenger(id = 'tl_starttld')
 
 
 
-bam = Scavenger(id = 'bam')
-dcm = Scavenger(id = 'dcm')
-otrc = Scavenger(id = 'otrc')
-otrd = Scavenger(id = 'otrd')
-otre = Scavenger(id = 'otre')
-otra = Scavenger(id = 'otra')
-otrb = Scavenger(id = 'otrb')
-otrs = Scavenger(id = 'otrs')
-scrn = Scavenger(id = 'scrn')
-scrw = Scavenger(id = 'scrw')
-tora = Scavenger(id = 'tora')
-torb = Scavenger(id = 'torb')
-torc = Scavenger(id = 'torc')
-bpma = Scavenger(id = 'bpma')
-bpmb = Scavenger(id = 'bpmb')
-bpmc = Scavenger(id = 'bpmc')
-bpmd = Scavenger(id = 'bpmd')
-bpme = Scavenger(id = 'bpme')
-bpmf = Scavenger(id = 'bpmf')
-bpmw = Scavenger(id = 'bpmw')
-bpmg = Scavenger(id = 'bpmg')
-bpmr = Scavenger(id = 'bpmr')
-bpms = Scavenger(id = 'bpms')
-srm = Scavenger(id = 'srm')
-pyr = Scavenger(id = 'pyr')
-tdsa = Scavenger(id = 'tdsa')
-tdsb = Scavenger(id = 'tdsb')
-eod = Scavenger(id = 'eod')
-crd = Scavenger(id = 'crd')
-bhm = Scavenger(id = 'bhm')
+bam = Marker(id = 'bam')
+dcm = Marker(id = 'dcm')
+otrc = Marker(id = 'otrc')
+otrd = Marker(id = 'otrd')
+otre = Marker(id = 'otre')
+otra = Marker(id = 'otra')
+otrb = Marker(id = 'otrb')
+otrs = Marker(id = 'otrs')
+scrn = Marker(id = 'scrn')
+scrw = Marker(id = 'scrw')
+tora = Marker(id = 'tora')
+torb = Marker(id = 'torb')
+torc = Marker(id = 'torc')
+bpma = Marker(id = 'bpma')
+bpmb = Marker(id = 'bpmb')
+bpmc = Marker(id = 'bpmc')
+bpmd = Marker(id = 'bpmd')
+bpme = Marker(id = 'bpme')
+bpmf = Marker(id = 'bpmf')
+bpmw = Marker(id = 'bpmw')
+bpmg = Marker(id = 'bpmg')
+bpmr = Marker(id = 'bpmr')
+bpms = Marker(id = 'bpms')
+srm = Marker(id = 'srm')
+bcm = Marker(id = 'bcm')
+tdsa = Marker(id = 'tdsa')
+tdsb = Marker(id = 'tdsb')
+eod = Marker(id = 'eod')
+crd = Marker(id = 'crd')
+bhm = Marker(id = 'bhm')
 
 
-bpmisec = lambda bpmi:   (d0100,d01275,bpmi,d01275,d0100)                # 255 mm, 40.5 mm, ibfb cavity bpm, 100 mm on both side for bellow
+bpmisec = lambda bpmmid,bpmmp:             (d0096,d0004,d01275,bpmmid,d0096,bpmmp,d00315,d0100)    # 255 mm, 40.5 mm, ibfb cavity bpm, 100 mm on both side for bellow
 
 
 
@@ -741,40 +838,40 @@ sa = Sextupole(l=0.3, id = 'sa')
 sc = Sextupole(l=0.1, id = 'sc')
 
 
-oo = Scavenger(l=0.25, id = 'oo')
+oo = UnknownElement(l=0.25, id = 'oo')
 
 
-ci = Scavenger(l=0.1, id = 'ci')
-cc = Scavenger(l=0.1, id = 'cc')
-ce = Scavenger(l=0.1, id = 'ce')
-cf = Scavenger(l=0.1, id = 'cf')
-ch = Scavenger(l=0.2, id = 'ch')
-ca = Scavenger(l=0.05, id = 'ca')
+ci = UnknownElement(l=0.1, id = 'ci')
+cc = UnknownElement(l=0.1, id = 'cc')
+ce = UnknownElement(l=0.1, id = 'ce')
+cf = UnknownElement(l=0.1, id = 'cf')
+ch = UnknownElement(l=0.2, id = 'ch')
+ca = UnknownElement(l=0.05, id = 'ca')
 
 
 
 
 #----------------------------------------------------------------------------
 
-#   definition of fast Scavengers
+#   definition of fast UnknownElements
 
 #----------------------------------------------------------------------------
 
 #
 
-#kfb(x/y): Scavenger   , l=1.0
+#kfb(x/y): UnknownElement   , l=1.0
 
-#ks(x/y):  Scavenger   , l=0.5
+#ks(x/y):  UnknownElement   , l=0.5
 
-#kl(x/y):  Scavenger   , l=1.0
+#kl(x/y):  UnknownElement   , l=1.0
 
-#kdc(x/y): Scavenger   , l=0.2
+#kdc(x/y): UnknownElement   , l=0.2
 
-#ka(x/y):  Scavenger   , l=0.4
+#ka(x/y):  UnknownElement   , l=0.4
 
-#kb(x/y):  Scavenger   , l=0.65
+#kb(x/y):  UnknownElement   , l=0.65
 
-#kd(x/y):  Scavenger   , l=0.8
+#kd(x/y):  UnknownElement   , l=0.8
 
 #
 
@@ -785,6 +882,22 @@ ca = Scavenger(l=0.05, id = 'ca')
 #----------------------------------------------------------------------------
 
 vcdst = Drift(l=1.215, id = 'vcdst')
+
+
+vcst35to78 = Marker(id = 'vcst35to78')
+vcst78to30 = Marker(id = 'vcst78to30')
+vcst30to78 = Marker(id = 'vcst30to78')
+vcst78to40 = Marker(id = 'vcst78to40')
+vcst40to78 = Marker(id = 'vcst40to78')
+vcst40to35 = Marker(id = 'vcst40to35')
+vcst35to40 = Marker(id = 'vcst35to40')
+vcst40to98 = Marker(id = 'vcst40to98')
+vcst98to40 = Marker(id = 'vcst98to40')
+vcst98to200 = Marker(id = 'vcst98to200')
+vcst40to10 = Marker(id = 'vcst40to10')
+vcst10to40 = Marker(id = 'vcst10to40')
+vcst40to30 = Marker(id = 'vcst40to30')
+vcst30to40 = Marker(id = 'vcst30to40')
 #----------------------------------------------------------------------------
 
 #   definition of standard magnet combinations
@@ -817,7 +930,7 @@ qhalf = lambda q:   (d0050,q,q,d0050)
 
 #------------------------------------------------------------------------------
 
-# definition of wake field Scavengers
+# definition of wake field Markers
 
 #------------------------------------------------------------------------------
 
@@ -830,36 +943,39 @@ ltwaketds = Drift(l=0.0, id = 'ltwaketds')
 
 
 
-#bc =(l1, b1, l2, b2)
+#bc : line=(l1, b1, l2, b2)
+
+#lin: line=(i1, bc, l3, cl)
+
+#line1 : line=(t1,sa2,t3, un1, t5, un2, t5d)
+
 #
-#lin =(i1, bc, l3, cl)
+
+#td2:   line=(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, t4d)
+
+#td0:   line=(tl1, tl2, tld)
+
+#td1:   line=(tl1, tl2, tl3, tl4, t1, sa2, t3, un1, t5, un2, t5d)
+
+#td20:  line=(tl1, tl2, tl3, tl4, tl5, t20)
+
+#td6:  line=(tl1, tl2, tl3, tl4, t1, sa2, &
+
+#                      sa2tt3,t3m1,t6)
+
+#td7:  line=(tl1, tl2, tl3, tl4, t1, sa2, t3,un1,t5,un2,un2tt5d,t7)
+
+#td8:  line=(tl1, tl2, tl3, tl4, t1, sa2, t3,un1, &
+
+#                      un1tt5,t5m1, t8)
+
+#td9:  line=(tl1, tl2, tl3, tl4, tl5, t2, sa1, sa1tt4, t4m1, t9)
+
+#td10: line=(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, sa3tt4d, t10)
+
 #
-#line1 =(t1,sa2,t3, un1, t5, un2, t5d)
+
 #
-#
-#
-#td2   =(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, t4d)
-#
-#td0   =(tl1, tl2, tld)
-#
-#td1   =(tl1, tl2, tl3, tl4, t1, sa2, t3, un1, t5, un2, t5d)
-#
-#td20  =(tl1, tl2, tl3, tl4, tl5, t20)
-#
-#td6  =(tl1, tl2, tl3, tl4, t1, sa2,                        sa2tt3,t3m1,t6)
-#
-#td7  =(tl1, tl2, tl3, tl4, t1, sa2, t3,un1,t5,un2,un2tt5d,t7)
-#
-#td8  =(tl1, tl2, tl3, tl4, t1, sa2, t3,un1,                        un1tt5,t5m1, t8)
-#
-#td9  =(tl1, tl2, tl3, tl4, tl5, t2, sa1, sa1tt4, t4m1, t9)
-#
-#td10 =(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, sa3tt4d, t10)
-#
-#
-#
-#
-#
-#xfelall = (lin, td2)
-#
-#
+
+#xfelall : line= (lin, td2)
+

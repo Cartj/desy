@@ -1,33 +1,32 @@
-
 ! DEFINITIONS OF PARAMETERS OF KICKERS AND SEPTA  ============================
 
 setTD2: subroutine
 set, TL.KS.1[ANGLE],         0.0
 set, TL.KL.1[ANGLE],         0.0
-set, HELP.KICK1a.TLD[ANGLE],  0.0
-set, HELP.KICK1a.TLD[TILT],   0.0
-set, HELP.KICK1b.TLD[ANGLE],  0.0
-set, HELP.KICK1b.TLD[TILT],   0.0
-set, HELP.KICK2a.TLD[ANGLE],  0.0
-set, HELP.KICK2a.TLD[TILT],   0.0
-set, HELP.KICK2b.TLD[ANGLE],  0.0
-set, HELP.KICK2b.TLD[TILT],   0.0
-set, HELP.KICK3a.TLD[ANGLE],  0.0
-set, HELP.KICK3a.TLD[TILT],   0.0
-set, HELP.KICK3b.TLD[ANGLE],  0.0
-set, HELP.KICK3b.TLD[TILT],   0.0
-set, HELP.KICK1a.TD1[ANGLE],  0.0
-set, HELP.KICK1a.TD1[TILT],   0.0
-set, HELP.KICK2a.TD1[ANGLE],  0.0
-set, HELP.KICK2a.TD1[TILT],   0.0
-set, HELP.KICK1b.TD1[ANGLE],  0.0
-set, HELP.KICK1b.TD1[TILT],   0.0
-set, HELP.KICK2b.TD1[ANGLE],  0.0
-set, HELP.KICK2b.TD1[TILT],   0.0
-set, HELP.KICK1.TD20[ANGLE], 0.0
-set, HELP.KICK1.TD20[TILT],  0.0
-set, HELP.KICK2.TD20[ANGLE], 0.0
-set, HELP.KICK2.TD20[TILT],  0.0
+set, TLD.HELP.1a[ANGLE],  0.0
+set, TLD.HELP.1a[TILT],   0.0
+set, TLD.HELP.1b[ANGLE],  0.0
+set, TLD.HELP.1b[TILT],   0.0
+set, TLD.HELP.2a[ANGLE],  0.0
+set, TLD.HELP.2a[TILT],   0.0
+set, TLD.HELP.2b[ANGLE],  0.0
+set, TLD.HELP.2b[TILT],   0.0
+set, TLD.HELP.3a[ANGLE],  0.0
+set, TLD.HELP.3a[TILT],   0.0
+set, TLD.HELP.3b[ANGLE],  0.0
+set, TLD.HELP.3b[TILT],   0.0
+set, T1.HELP.1a[ANGLE],  0.0
+set, T1.HELP.1a[TILT],   0.0
+set, T1.HELP.1b[ANGLE],  0.0
+set, T1.HELP.1b[TILT],   0.0
+set, T1.HELP.2a[ANGLE],  0.0
+set, T1.HELP.2a[TILT],   0.0
+set, T1.HELP.2b[ANGLE],  0.0
+set, T1.HELP.2b[TILT],   0.0
+set, T20.HELP.1[ANGLE],  0.0
+set, T20.HELP.1[TILT],   0.0
+set, T20.HELP.2[ANGLE],  0.0
+set, T20.HELP.2[TILT],   0.0
 set, TLD.BZ.1[L],            LEN_BZ
 set, TLD.BZ.1[ANGLE],        0.0
 set, TLD.BZ.1[E1],           0.0
@@ -93,28 +92,32 @@ yQKb_TLD:=1
 
 setTD0lay: subroutine
 set, TL.KS.1[ANGLE],        -ANG_KS_TLD 
-set, xQF1a_TLD,   +6.8865546667e-04*1.00025
-set, xQF1b_TLD,   +7.2448579134e-04*0.99977
-set, HELP.KICK1a.TLD[ANGLE], +TL.QFH.1[K1]*TL.QFH.1[L]*xQF1a_TLD
-set, HELP.KICK1b.TLD[ANGLE], +TL.QFH.1[K1]*TL.QFH.1[L]*xQF1b_TLD
-set, xQF2a_TLD,   +6.4087534974e-03*0.99999999
-set, xQF2b_TLD,   +6.5308925239e-03*0.999999
-set, HELP.KICK2a.TLD[ANGLE], +TL.QFH.2[K1]*TL.QFH.2[L]*xQF2a_TLD
-set, HELP.KICK2b.TLD[ANGLE], +TL.QFH.2[K1]*TL.QFH.2[L]*xQF2b_TLD
-set, xQKa_TLD,   +2.3328294682e-02*1.000267884
-set, yQKa_TLD,   +7.2096366299e-03*1.00033
-set, xQKb_TLD,   +2.3706398032e-02*1.00025
-set, yQKb_TLD,   +9.1090294842e-03*0.999999
-set, HELP.KICK3a.TLD[ANGLE],   &
-     +TL.QKH.1[K1]*TL.QKH.1[L]*xQKa_TLD/cos(atan(yQKa_TLD/xQKa_TLD))
-set, HELP.KICK3a.TLD[TILT], -atan(yQKa_TLD/xQKa_TLD)
-set, HELP.KICK3b.TLD[ANGLE],   &
-     +TL.QKH.1[K1]*TL.QKH.1[L]*xQKb_TLD/cos(atan(yQKb_TLD/xQKb_TLD))
-set, HELP.KICK3b.TLD[TILT], -atan(yQKb_TLD/xQKb_TLD)
+!
+set, xQF1a_TLD,   +1.8402867474e-03*1.000008360
+set, xQF1b_TLD,   +1.8761171054e-03*0.9999917949
+set, TLD.HELP.1a[ANGLE], +TL.QF.1[K1]*TL.QFH.1[L]*xQF1a_TLD
+set, TLD.HELP.1b[ANGLE], +TL.QF.1[K1]*TL.QFH.1[L]*xQF1b_TLD
+!
+set, xQF2a_TLD,   +6.4087534579e-03*0.999993275
+set, xQF2b_TLD,   +6.5308924852e-03*1.000006596
+set, TLD.HELP.2a[ANGLE], +TL.QF.2[K1]*TL.QFH.2[L]*xQF2a_TLD
+set, TLD.HELP.2b[ANGLE], +TL.QF.2[K1]*TL.QFH.2[L]*xQF2b_TLD
+!
+set, xQKa_TLD,   +2.3328294694e-02*1.00065622
+set, xQKb_TLD,   +2.3706398044e-02
+set, yQKa_TLD,   +7.2096366299e-03*1.00131
+set, yQKb_TLD,   +9.1090294842e-03*0.999305
+set, TLD.HELP.3a[ANGLE],   &
+     +TL.QK.1[K1]*TL.QKH.1[L]*xQKa_TLD/cos(atan(yQKa_TLD/xQKa_TLD))
+set, TLD.HELP.3a[TILT], -atan(yQKa_TLD/xQKa_TLD)
+set, TLD.HELP.3b[ANGLE],   &
+     +TL.QK.1[K1]*TL.QKH.1[L]*xQKb_TLD/cos(atan(yQKb_TLD/xQKb_TLD))
+set, TLD.HELP.3b[TILT], -atan(yQKb_TLD/xQKb_TLD)
+!
 set, TLD.BZ.1[L],       ARC_TLD1
 set, TLD.BZ.1[ANGLE],   ANG_TLD1
-set, TLD.BZ.1[E1],      E12_TLD1
-set, TLD.BZ.1[E2],      E12_TLD1
+set, TLD.BZ.1[E1],      0.0
+set, TLD.BZ.1[E2],      ANG_TLD1
 set, TLD.BZ.1[TILT],    PI/2 + TILT_TLD1
 set, TLD.BZ.2[L],       ARC_TLD2
 set, TLD.BZ.2[ANGLE],   ANG_TLD2
@@ -127,26 +130,26 @@ endsubroutine
 setTD1twiss: subroutine
 set, TL.KS.1[ANGLE],        0.0
 set, TL.KL.1[ANGLE],        0.0
-set, HELP.KICK1a.TLD[ANGLE],  0.0
-set, HELP.KICK1a.TLD[TILT],   0.0
-set, HELP.KICK1b.TLD[ANGLE],  0.0
-set, HELP.KICK1b.TLD[TILT],   0.0
-set, HELP.KICK2a.TLD[ANGLE],  0.0
-set, HELP.KICK2a.TLD[TILT],   0.0
-set, HELP.KICK2b.TLD[ANGLE],  0.0
-set, HELP.KICK2b.TLD[TILT],   0.0
-set, HELP.KICK3a.TLD[ANGLE],  0.0
-set, HELP.KICK3a.TLD[TILT],   0.0
-set, HELP.KICK3b.TLD[ANGLE],  0.0
-set, HELP.KICK3b.TLD[TILT],   0.0
-set, HELP.KICK1a.TD1[ANGLE],  0.0
-set, HELP.KICK1a.TD1[TILT],   0.0
-set, HELP.KICK2a.TD1[ANGLE],  0.0
-set, HELP.KICK2a.TD1[TILT],   0.0
-set, HELP.KICK1b.TD1[ANGLE],  0.0
-set, HELP.KICK1b.TD1[TILT],   0.0
-set, HELP.KICK2b.TD1[ANGLE],  0.0
-set, HELP.KICK2b.TD1[TILT],   0.0
+set, TLD.HELP.1a[ANGLE],  0.0
+set, TLD.HELP.1a[TILT],   0.0
+set, TLD.HELP.1b[ANGLE],  0.0
+set, TLD.HELP.1b[TILT],   0.0
+set, TLD.HELP.2a[ANGLE],  0.0
+set, TLD.HELP.2a[TILT],   0.0
+set, TLD.HELP.2b[ANGLE],  0.0
+set, TLD.HELP.2b[TILT],   0.0
+set, TLD.HELP.3a[ANGLE],  0.0
+set, TLD.HELP.3a[TILT],   0.0
+set, TLD.HELP.3b[ANGLE],  0.0
+set, TLD.HELP.3b[TILT],   0.0
+set, T1.HELP.1a[ANGLE],  0.0
+set, T1.HELP.1a[TILT],   0.0
+set, T1.HELP.1b[ANGLE],  0.0
+set, T1.HELP.1b[TILT],   0.0
+set, T1.HELP.2a[ANGLE],  0.0
+set, T1.HELP.2a[TILT],   0.0
+set, T1.HELP.2b[ANGLE],  0.0
+set, T1.HELP.2b[TILT],   0.0
 set, TLD.BZ.1[L],           LEN_BZ
 set, TLD.BZ.1[ANGLE],       0.0
 set, TLD.BZ.1[E1],          0.0
@@ -183,21 +186,21 @@ set, TL.KL.1[ANGLE],        -ANG_KL_TD1
 
 set, yQF1_TD1,              +5.9279880955e-03*1.0001
 set, yQF2_TD1,              +6.0599146749e-03*0.9999
-set, HELP.KICK1a.TD1[ANGLE],-TL.QFH.1[K1]*TL.QFH.1[L]*yQF1_TD1
-set, HELP.KICK1b.TD1[ANGLE],-TL.QFH.1[K1]*TL.QFH.1[L]*yQF2_TD1
-set, HELP.KICK1a.TD1[TILT], +pi/2
-set, HELP.KICK1b.TD1[TILT], +pi/2
+set, T1.HELP.1a[ANGLE],-TL.QFH.1[K1]*TL.QFH.1[L]*yQF1_TD1
+set, T1.HELP.1b[ANGLE],-TL.QFH.1[K1]*TL.QFH.1[L]*yQF2_TD1
+set, T1.HELP.1a[TILT], +pi/2
+set, T1.HELP.1b[TILT], +pi/2
 
 set, xQK1_TD1,              +7.2197740604e-03*1.00067
 set, xQK2_TD1,              +9.1218401096e-03*0.99976
 set, yQK1_TD1,              +2.3348937648e-02*1.00071
 set, yQK2_TD1,              +2.3727377870e-02*0.99988
-set, HELP.KICK2a.TD1[ANGLE],  &
+set, T1.HELP.2a[ANGLE],  &
      TL.QKH.2[K1]*TL.QKH.2[L]*xQK1_TD1/cos(atan(yQK1_TD1/xQK1_TD1))
-set, HELP.KICK2a.TD1[TILT],  -atan(yQK1_TD1/xQK1_TD1)
-set, HELP.KICK2b.TD1[ANGLE],  &
+set, T1.HELP.2a[TILT],  -atan(yQK1_TD1/xQK1_TD1)
+set, T1.HELP.2b[ANGLE],  &
      TL.QKH.2[K1]*TL.QKH.2[L]*xQK2_TD1/cos(atan(yQK2_TD1/xQK2_TD1))
-set, HELP.KICK2b.TD1[TILT],  -atan(yQK2_TD1/xQK2_TD1)
+set, T1.HELP.2b[TILT],  -atan(yQK2_TD1/xQK2_TD1)
 
 set, TLD.BZ.1[L],       LEN_BZ
 set, TLD.BZ.1[ANGLE],   0.0
@@ -226,24 +229,29 @@ endsubroutine
 setTD20twiss: subroutine
 set, TL.KS.1[ANGLE],         0.0
 set, TL.KL.1[ANGLE],         0.0
-set, HELP.KICK1a.TLD[ANGLE],  0.0
-set, HELP.KICK1a.TLD[TILT],   0.0
-set, HELP.KICK1b.TLD[ANGLE],  0.0
-set, HELP.KICK1b.TLD[TILT],   0.0
-set, HELP.KICK2a.TLD[ANGLE],  0.0
-set, HELP.KICK2a.TLD[TILT],   0.0
-set, HELP.KICK2b.TLD[ANGLE],  0.0
-set, HELP.KICK2b.TLD[TILT],   0.0
-set, HELP.KICK3a.TLD[ANGLE],  0.0
-set, HELP.KICK3a.TLD[TILT],   0.0
-set, HELP.KICK3b.TLD[ANGLE],  0.0
-set, HELP.KICK3b.TLD[TILT],   0.0
-set, HELP.KICK1a.TD1[ANGLE],  0.0
-set, HELP.KICK2a.TD1[ANGLE],  0.0
-set, HELP.KICK1b.TD1[ANGLE],  0.0
-set, HELP.KICK2b.TD1[ANGLE],  0.0
-set, HELP.KICK1.TD20[ANGLE], 0.0
-set, HELP.KICK2.TD20[ANGLE], 0.0
+set, TLD.HELP.1a[ANGLE],  0.0
+set, TLD.HELP.1a[TILT],   0.0
+set, TLD.HELP.1b[ANGLE],  0.0
+set, TLD.HELP.1b[TILT],   0.0
+set, TLD.HELP.2a[ANGLE],  0.0
+set, TLD.HELP.2a[TILT],   0.0
+set, TLD.HELP.2b[ANGLE],  0.0
+set, TLD.HELP.2b[TILT],   0.0
+set, TLD.HELP.3a[ANGLE],  0.0
+set, TLD.HELP.3a[TILT],   0.0
+set, TLD.HELP.3b[ANGLE],  0.0
+set, TLD.HELP.3b[TILT],   0.0
+set, T1.HELP.1a[ANGLE],  0.0
+set, T1.HELP.1a[TILT],   0.0
+set, T1.HELP.1b[ANGLE],  0.0
+set, T1.HELP.1b[TILT],   0.0
+set, T1.HELP.2a[ANGLE],  0.0
+set, T1.HELP.2a[TILT],   0.0
+set, T1.HELP.2b[ANGLE],  0.0
+set, T20.HELP.1[ANGLE],  0.0
+set, T20.HELP.1[TILT],   0.0
+set, T20.HELP.2[ANGLE],  0.0
+set, T20.HELP.2[TILT],   0.0
 set, TLD.BZ.1[L],            LEN_BZ
 set, TLD.BZ.1[ANGLE],        0.0
 set, TLD.BZ.1[E1],           0.0
@@ -290,21 +298,21 @@ setTD20lay: subroutine
 set, TL.KS.1[ANGLE],         0.0
 set, TL.KL.1[ANGLE],        -ANG_KL_TD20
 set, yoff1_TD20,            -5.31542521888086e-03
-!set, HELP.KICK1.TD1[ANGLE], -TL.QFH.1[K1]*TL.QFH.1[L]*yoff1_TD20
-!set, HELP.KICK1.TD1[TILT],   pi/2
+!set, HELP.HELP.1.T1[ANGLE], -TL.QFH.1[K1]*TL.QFH.1[L]*yoff1_TD20
+!set, HELP.HELP.1.T1[TILT],   pi/2
 set, yoff2_TD20,            -1.97909346175805e-02*0.9955
-!set, HELP.KICK2.TD1[ANGLE], -TL.QKH.2[K1]*TL.QKH.2[L]*yoff2_TD20
-!set, HELP.KICK2.TD1[TILT],   pi/2
+!set, HELP.HELP.2.T1[ANGLE], -TL.QKH.2[K1]*TL.QKH.2[L]*yoff2_TD20
+!set, HELP.HELP.2.T1[TILT],   pi/2
 set, xoff3_TD20,            -9.93289121840438e-03
 set, yoff3_TD20,            -1.15647186663064e-02
-set, HELP.KICK1.TD20[ANGLE], &
+set, T20.HELP.1[ANGLE], &
   TL.QFH.1[K1]*TL.QFH.1[L]*xoff3_TD20/cos(atan(-yoff3_TD20/xoff3_TD20))
-set, HELP.KICK1.TD20[TILT],  atan(-yoff3_TD20/xoff3_TD20)
+set, T20.HELP.1[TILT],  atan(-yoff3_TD20/xoff3_TD20)
 set, xoff4_TD20,            -1.49988163047153e-02
 set, yoff4_TD20,            -2.21201842320686e-02
-set, HELP.KICK2.TD20[ANGLE], &
+set, T20.HELP.2[ANGLE], &
   TL.QFH.2[K1]*TL.QFH.2[L]*xoff4_TD20/cos(atan(-yoff4_TD20/xoff4_TD20))
-set, HELP.KICK2.TD20[tilt],  atan(-yoff4_TD20/xoff4_TD20)
+set, T20.HELP.2[tilt],  atan(-yoff4_TD20/xoff4_TD20)
 set, T20.BZ.1[L],            ARC_BZ1_TD20 
 set, T20.BZ.1[angle],        ANG_BZ1_TD20
 set, T20.BZ.1[E1],           E12_BZ1_TD20

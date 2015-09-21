@@ -1,2542 +1,1139 @@
-# xfel linac definitions
-
-
-
-#
-
-
-
-# version 7.1 8.03.2011
-
-
-
-#
-
-
-
-# new nomenclature
-
-
-
-# extended length of cryo components: feed and turnbox 3.5 m, connection box 
-
-
-
-# new length of feedbox: 3.35 m
-
-
-
-# new length of endbox : 3.25 m
-
-
-
-# lambda: 0.23061
-
-
-
-# cavity length: 1.0377  (l/2*9
-
-
-
-# module length: 11.9917 (l*52)
-
-
-
-# string connection box: 2.9979 (l*13)
-
-
-
-# module center: 6.20582 from module start (cold) (or at 3.90394*l/2 in the 5th 9-cell cavity)
-
-
-
-# insert Marker close to this position, s,x,y,z to be corrected by post-processing
-
-
-
-# updated 3rd harmonic according to design from 12.2.2009
-
-
-
-# changed l3 to maximum of 96 modules with 6 long warm fodo cells at end
-
-
-
-# changed l0 to include 3rd harmonic and end box
-
-
-
-# inserted l0 start/end Markers (10/11/09 wd)
-
-
-
-# differentiate bpm types (10/11/09 wd)
-
-
-
-# add tora at beginning of temporary beamline (4/1/11 wd)
-
-
-
-# changed injector module and injector linac layout to adjust for 3* module (8/3/11 wd)
-
-
-
-# single cavity (mad definition)-----------------------------------------
-
-
-
-relerr=0e-3
-
-
-
-efi1= 130
-
-
-
-efl1= 700
-
-
-
-efl2= 2400
-
-
-
-efl3= 14000
-
-
-
-
-
-
-
-delta_el1=(efl1-efi1)/8/4
-
-
-
-delta_el2=(efl2-efl1)/8/12
-
-
-
-delta_el3=(efl3-efl2)/8/64
-
-
-
-i1_c_a1_r = cavity(l=0.1153*9, phi=0/360, delta_e=-17.5e+00*0.1153*9*1, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'i1_c_a1_r')
-
-i1_c_a1 = cavity(l=0.1153*9, phi=0/360, delta_e=17.5e+00*0.1153*9*1, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'i1_c_a1')
-
-
-
-
-
-l1_c_a2 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el1, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l1_c_a2')
-
-l2_c_a3 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el2, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l2_c_a3')
-
-l2_c_a4 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el2, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l2_c_a4')
-
-l2_c_a5 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el2, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l2_c_a5')
-
-l3_c_a6 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a6')
-
-l3_c_a7 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a7')
-
-l3_c_a8 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a8')
-
-l3_c_a9 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a9')
-
-l3_c_a10 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a10')
-
-l3_c_a11 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a11')
-
-l3_c_a12 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a12')
-
-l3_c_a13 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a13')
-
-l3_c_a14 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a14')
-
-l3_c_a15 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a15')
-
-l3_c_a16 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a16')
-
-l3_c_a17 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a17')
-
-l3_c_a18 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a18')
-
-l3_c_a19 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a19')
-
-l3_c_a20 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a20')
-
-l3_c_a21 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a21')
-
-l3_c_a22 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a22')
-
-l3_c_a23 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a23')
-
-l3_c_a24 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a24')
-
-l3_c_a25 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a25')
-
-l3_c_a26 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a26')
-
-l3_c_a27 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a27')
-
-l3_c_a28 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a28')
-
-l3_c_a29 = cavity(l=0.1153*9, phi=0/360, delta_e=delta_el3, freq=1300000000.0*1e-6, volterr=20*relerr, id = 'l3_c_a29')
-
-
-
-
-
-l3_c_00 = Drift(l=1.0377, id = 'l3_c_00')
-
-
-
-
-
-# single 9cell cavity for acc3rd (mad definition) ----------------------------
-
-
-
-# based on e. vogel 12/02/2009 design
-
-
-
-
-
-
-
-i1_c3_ah1 = cavity(l=0.346, phi=180/360, delta_e=7.2254*0.346, freq=3900000000.0*1e-6, id = 'i1_c3_ah1')
-
-
-
-
-
-# lola cavity for diagnostics (mad definition---------------------------
-
-
-
-# definied in section files
-
-
-
-#i1.tdsa: cavity, l=0.7, phi=0,               &
-
-
-
-#                volt=0,    &
-
-
-
-#                freq=2800000000.0*1e-6
-
-
-
-#
-
-
-
-#b1.tds: cavity, l=0.7, phi=0,               &
-
-
-
-#                volt=0,    &
-
-
-
-#                freq=2800000000.0*1e-6
-
-
-
-#
-
-
-
-#b2.tds: cavity, l=1.30, phi=0,                    &
-
-
-
-#                delta_e=0,                           &
-
-
-
-#                freq=2800000000.0*1e-6 
-
-
-
-#ltwakecav3: Drift, l=0.0
-
-
-
-
-
-
-
-# cavity wake field dummies --------------------------------------------
-
-
-
-
-
-
-
-ltwakecav = Drift(l=0.0, id = 'ltwakecav')
-
-ltwakecav3 = Drift(l=0.0, id = 'ltwakecav3')
-
-
-
-
-
-
-
-
-
-#========================================================================
-
-
-
-# definition of rf module Drifts
-
-
-
-#------------------------------------------------------------------------
-
-
-
-
-
-
-
-# 1.3 ghz module---------------------------------------------------------
-
-
-
-
-
-
-
-d00124 = Drift(l=0.0124, id = 'd00124')
-
-d01416 = Drift(l=0.1416, id = 'd01416')
-
-d02043 = Drift(l=0.2043, id = 'd02043')
-
-d02979 = Drift(l=0.2979, id = 'd02979')
-
-d00229 = Drift(l=0.0729, id = 'd00229')
-
-d00729 = Drift(l=0.0729, id = 'd00729')
-
-d03924 = Drift(l=0.3924, id = 'd03924')
-
-
-
-
-
-d00632 = Drift(l=0.0632, id = 'd00632')
-
-d00118 = Drift(l=0.0118, id = 'd00118')
-
-
-
-
-
-# 3.9 ghz module with 8 3900 mhz cavities --------------------------------
-
-
-
-# based on e. vogels 12/02/2009 design
-
-
-
-d00225 = Drift(l=0.0225, id = 'd00225')
-
-d0102 = Drift(l=0.102, id = 'd0102')
-
-d01014 = Drift(l=0.1014, id = 'd01014')
-
-d0085 = Drift(l=0.085, id = 'd0085')
-
-d00611 = Drift(l=0.0611, id = 'd00611')
-
-
-
-
-
-# Drift for string connection box --------------------------------------
-
-
-
-l3_csc = Drift(l=2.9978, id = 'l3_csc')
-
-# Drift for feed and turn box 
-
-
-
-# endpoint means bypass to beam distance of 0.7 m and warm vaccuum valve
-
-
-
-i1_cfbi = Drift(l=0.1+0.4512, id = 'i1_cfbi')
-
-i1_ctbi = Drift(l=2.5-0.208-0.0663-1.1857, id = 'i1_ctbi')
-
-l1_cfb = Drift(l=3.35, id = 'l1_cfb')
-
-l1_ctb = Drift(l=3.25, id = 'l1_ctb')
-
-l2_cfb = Drift(l=3.35, id = 'l2_cfb')
-
-l2_ctb = Drift(l=3.25, id = 'l2_ctb')
-
-l3_cfb = Drift(l=3.35, id = 'l3_cfb')
-
-l3_ctb = Drift(l=3.25, id = 'l3_ctb')
-
-
-
-
-
-#========================================================================
-
-
-
-
-
-
-
-# one 9-cells cavity with Drift------------------------------------------
-
-
-
-acc_cav0 = Drift(l=1.3836, id = 'acc_cav0')
-
-
-
-
-
-# one 9-cells 3900 mhz cavity with scaled Drifts ------------------------
-
-
-
-
-
-
-
-#========================================================================
-
-
-
-
-
-
-
-# Markers for 1.3 ghz module
-
-
-
-i1_stac_a1_1 = Marker(id = 'i1_stac_a1_1')
-
-i1_miac_a1_1 = Marker(id = 'i1_miac_a1_1')
-
-i1_enac_a1_1 = Marker(id = 'i1_enac_a1_1')
-
-l1_stac_a2_1 = Marker(id = 'l1_stac_a2_1')
-
-l1_miac_a2_1 = Marker(id = 'l1_miac_a2_1')
-
-l1_enac_a2_1 = Marker(id = 'l1_enac_a2_1')
-
-l1_stac_a2_2 = Marker(id = 'l1_stac_a2_2')
-
-l1_miac_a2_2 = Marker(id = 'l1_miac_a2_2')
-
-l1_enac_a2_2 = Marker(id = 'l1_enac_a2_2')
-
-l1_stac_a2_3 = Marker(id = 'l1_stac_a2_3')
-
-l1_miac_a2_3 = Marker(id = 'l1_miac_a2_3')
-
-l1_enac_a2_3 = Marker(id = 'l1_enac_a2_3')
-
-l1_stac_a2_4 = Marker(id = 'l1_stac_a2_4')
-
-l1_miac_a2_4 = Marker(id = 'l1_miac_a2_4')
-
-l1_enac_a2_4 = Marker(id = 'l1_enac_a2_4')
-
-l2_stac_a3_1 = Marker(id = 'l2_stac_a3_1')
-
-l2_miac_a3_1 = Marker(id = 'l2_miac_a3_1')
-
-l2_enac_a3_1 = Marker(id = 'l2_enac_a3_1')
-
-l2_stac_a3_2 = Marker(id = 'l2_stac_a3_2')
-
-l2_miac_a3_2 = Marker(id = 'l2_miac_a3_2')
-
-l2_enac_a3_2 = Marker(id = 'l2_enac_a3_2')
-
-l2_stac_a3_3 = Marker(id = 'l2_stac_a3_3')
-
-l2_miac_a3_3 = Marker(id = 'l2_miac_a3_3')
-
-l2_enac_a3_3 = Marker(id = 'l2_enac_a3_3')
-
-l2_stac_a3_4 = Marker(id = 'l2_stac_a3_4')
-
-l2_miac_a3_4 = Marker(id = 'l2_miac_a3_4')
-
-l2_enac_a3_4 = Marker(id = 'l2_enac_a3_4')
-
-l2_stac_a4_1 = Marker(id = 'l2_stac_a4_1')
-
-l2_miac_a4_1 = Marker(id = 'l2_miac_a4_1')
-
-l2_enac_a4_1 = Marker(id = 'l2_enac_a4_1')
-
-l2_stac_a4_2 = Marker(id = 'l2_stac_a4_2')
-
-l2_miac_a4_2 = Marker(id = 'l2_miac_a4_2')
-
-l2_enac_a4_2 = Marker(id = 'l2_enac_a4_2')
-
-l2_stac_a4_3 = Marker(id = 'l2_stac_a4_3')
-
-l2_miac_a4_3 = Marker(id = 'l2_miac_a4_3')
-
-l2_enac_a4_3 = Marker(id = 'l2_enac_a4_3')
-
-l2_stac_a4_4 = Marker(id = 'l2_stac_a4_4')
-
-l2_miac_a4_4 = Marker(id = 'l2_miac_a4_4')
-
-l2_enac_a4_4 = Marker(id = 'l2_enac_a4_4')
-
-l2_stac_a5_1 = Marker(id = 'l2_stac_a5_1')
-
-l2_miac_a5_1 = Marker(id = 'l2_miac_a5_1')
-
-l2_enac_a5_1 = Marker(id = 'l2_enac_a5_1')
-
-l2_stac_a5_2 = Marker(id = 'l2_stac_a5_2')
-
-l2_miac_a5_2 = Marker(id = 'l2_miac_a5_2')
-
-l2_enac_a5_2 = Marker(id = 'l2_enac_a5_2')
-
-l2_stac_a5_3 = Marker(id = 'l2_stac_a5_3')
-
-l2_miac_a5_3 = Marker(id = 'l2_miac_a5_3')
-
-l2_enac_a5_3 = Marker(id = 'l2_enac_a5_3')
-
-l2_stac_a5_4 = Marker(id = 'l2_stac_a5_4')
-
-l2_miac_a5_4 = Marker(id = 'l2_miac_a5_4')
-
-l2_enac_a5_4 = Marker(id = 'l2_enac_a5_4')
-
-l3_stac_a6_1 = Marker(id = 'l3_stac_a6_1')
-
-l3_miac_a6_1 = Marker(id = 'l3_miac_a6_1')
-
-l3_enac_a6_1 = Marker(id = 'l3_enac_a6_1')
-
-l3_stac_a6_2 = Marker(id = 'l3_stac_a6_2')
-
-l3_miac_a6_2 = Marker(id = 'l3_miac_a6_2')
-
-l3_enac_a6_2 = Marker(id = 'l3_enac_a6_2')
-
-l3_stac_a6_3 = Marker(id = 'l3_stac_a6_3')
-
-l3_miac_a6_3 = Marker(id = 'l3_miac_a6_3')
-
-l3_enac_a6_3 = Marker(id = 'l3_enac_a6_3')
-
-l3_stac_a6_4 = Marker(id = 'l3_stac_a6_4')
-
-l3_miac_a6_4 = Marker(id = 'l3_miac_a6_4')
-
-l3_enac_a6_4 = Marker(id = 'l3_enac_a6_4')
-
-l3_stac_a7_1 = Marker(id = 'l3_stac_a7_1')
-
-l3_miac_a7_1 = Marker(id = 'l3_miac_a7_1')
-
-l3_enac_a7_1 = Marker(id = 'l3_enac_a7_1')
-
-l3_stac_a7_2 = Marker(id = 'l3_stac_a7_2')
-
-l3_miac_a7_2 = Marker(id = 'l3_miac_a7_2')
-
-l3_enac_a7_2 = Marker(id = 'l3_enac_a7_2')
-
-l3_stac_a7_3 = Marker(id = 'l3_stac_a7_3')
-
-l3_miac_a7_3 = Marker(id = 'l3_miac_a7_3')
-
-l3_enac_a7_3 = Marker(id = 'l3_enac_a7_3')
-
-l3_stac_a7_4 = Marker(id = 'l3_stac_a7_4')
-
-l3_miac_a7_4 = Marker(id = 'l3_miac_a7_4')
-
-l3_enac_a7_4 = Marker(id = 'l3_enac_a7_4')
-
-l3_stac_a8_1 = Marker(id = 'l3_stac_a8_1')
-
-l3_miac_a8_1 = Marker(id = 'l3_miac_a8_1')
-
-l3_enac_a8_1 = Marker(id = 'l3_enac_a8_1')
-
-l3_stac_a8_2 = Marker(id = 'l3_stac_a8_2')
-
-l3_miac_a8_2 = Marker(id = 'l3_miac_a8_2')
-
-l3_enac_a8_2 = Marker(id = 'l3_enac_a8_2')
-
-l3_stac_a8_3 = Marker(id = 'l3_stac_a8_3')
-
-l3_miac_a8_3 = Marker(id = 'l3_miac_a8_3')
-
-l3_enac_a8_3 = Marker(id = 'l3_enac_a8_3')
-
-l3_stac_a8_4 = Marker(id = 'l3_stac_a8_4')
-
-l3_miac_a8_4 = Marker(id = 'l3_miac_a8_4')
-
-l3_enac_a8_4 = Marker(id = 'l3_enac_a8_4')
-
-l3_stac_a9_1 = Marker(id = 'l3_stac_a9_1')
-
-l3_miac_a9_1 = Marker(id = 'l3_miac_a9_1')
-
-l3_enac_a9_1 = Marker(id = 'l3_enac_a9_1')
-
-l3_stac_a9_2 = Marker(id = 'l3_stac_a9_2')
-
-l3_miac_a9_2 = Marker(id = 'l3_miac_a9_2')
-
-l3_enac_a9_2 = Marker(id = 'l3_enac_a9_2')
-
-l3_stac_a9_3 = Marker(id = 'l3_stac_a9_3')
-
-l3_miac_a9_3 = Marker(id = 'l3_miac_a9_3')
-
-l3_enac_a9_3 = Marker(id = 'l3_enac_a9_3')
-
-l3_stac_a9_4 = Marker(id = 'l3_stac_a9_4')
-
-l3_miac_a9_4 = Marker(id = 'l3_miac_a9_4')
-
-l3_enac_a9_4 = Marker(id = 'l3_enac_a9_4')
-
-l3_stac_a10_1 = Marker(id = 'l3_stac_a10_1')
-
-l3_miac_a10_1 = Marker(id = 'l3_miac_a10_1')
-
-l3_enac_a10_1 = Marker(id = 'l3_enac_a10_1')
-
-l3_stac_a10_2 = Marker(id = 'l3_stac_a10_2')
-
-l3_miac_a10_2 = Marker(id = 'l3_miac_a10_2')
-
-l3_enac_a10_2 = Marker(id = 'l3_enac_a10_2')
-
-l3_stac_a10_3 = Marker(id = 'l3_stac_a10_3')
-
-l3_miac_a10_3 = Marker(id = 'l3_miac_a10_3')
-
-l3_enac_a10_3 = Marker(id = 'l3_enac_a10_3')
-
-l3_stac_a10_4 = Marker(id = 'l3_stac_a10_4')
-
-l3_miac_a10_4 = Marker(id = 'l3_miac_a10_4')
-
-l3_enac_a10_4 = Marker(id = 'l3_enac_a10_4')
-
-l3_stac_a11_1 = Marker(id = 'l3_stac_a11_1')
-
-l3_miac_a11_1 = Marker(id = 'l3_miac_a11_1')
-
-l3_enac_a11_1 = Marker(id = 'l3_enac_a11_1')
-
-l3_stac_a11_2 = Marker(id = 'l3_stac_a11_2')
-
-l3_miac_a11_2 = Marker(id = 'l3_miac_a11_2')
-
-l3_enac_a11_2 = Marker(id = 'l3_enac_a11_2')
-
-l3_stac_a11_3 = Marker(id = 'l3_stac_a11_3')
-
-l3_miac_a11_3 = Marker(id = 'l3_miac_a11_3')
-
-l3_enac_a11_3 = Marker(id = 'l3_enac_a11_3')
-
-l3_stac_a11_4 = Marker(id = 'l3_stac_a11_4')
-
-l3_miac_a11_4 = Marker(id = 'l3_miac_a11_4')
-
-l3_enac_a11_4 = Marker(id = 'l3_enac_a11_4')
-
-l3_stac_a12_1 = Marker(id = 'l3_stac_a12_1')
-
-l3_miac_a12_1 = Marker(id = 'l3_miac_a12_1')
-
-l3_enac_a12_1 = Marker(id = 'l3_enac_a12_1')
-
-l3_stac_a12_2 = Marker(id = 'l3_stac_a12_2')
-
-l3_miac_a12_2 = Marker(id = 'l3_miac_a12_2')
-
-l3_enac_a12_2 = Marker(id = 'l3_enac_a12_2')
-
-l3_stac_a12_3 = Marker(id = 'l3_stac_a12_3')
-
-l3_miac_a12_3 = Marker(id = 'l3_miac_a12_3')
-
-l3_enac_a12_3 = Marker(id = 'l3_enac_a12_3')
-
-l3_stac_a12_4 = Marker(id = 'l3_stac_a12_4')
-
-l3_miac_a12_4 = Marker(id = 'l3_miac_a12_4')
-
-l3_enac_a12_4 = Marker(id = 'l3_enac_a12_4')
-
-l3_stac_a13_1 = Marker(id = 'l3_stac_a13_1')
-
-l3_miac_a13_1 = Marker(id = 'l3_miac_a13_1')
-
-l3_enac_a13_1 = Marker(id = 'l3_enac_a13_1')
-
-l3_stac_a13_2 = Marker(id = 'l3_stac_a13_2')
-
-l3_miac_a13_2 = Marker(id = 'l3_miac_a13_2')
-
-l3_enac_a13_2 = Marker(id = 'l3_enac_a13_2')
-
-l3_stac_a13_3 = Marker(id = 'l3_stac_a13_3')
-
-l3_miac_a13_3 = Marker(id = 'l3_miac_a13_3')
-
-l3_enac_a13_3 = Marker(id = 'l3_enac_a13_3')
-
-l3_stac_a13_4 = Marker(id = 'l3_stac_a13_4')
-
-l3_miac_a13_4 = Marker(id = 'l3_miac_a13_4')
-
-l3_enac_a13_4 = Marker(id = 'l3_enac_a13_4')
-
-l3_stac_a14_1 = Marker(id = 'l3_stac_a14_1')
-
-l3_miac_a14_1 = Marker(id = 'l3_miac_a14_1')
-
-l3_enac_a14_1 = Marker(id = 'l3_enac_a14_1')
-
-l3_stac_a14_2 = Marker(id = 'l3_stac_a14_2')
-
-l3_miac_a14_2 = Marker(id = 'l3_miac_a14_2')
-
-l3_enac_a14_2 = Marker(id = 'l3_enac_a14_2')
-
-l3_stac_a14_3 = Marker(id = 'l3_stac_a14_3')
-
-l3_miac_a14_3 = Marker(id = 'l3_miac_a14_3')
-
-l3_enac_a14_3 = Marker(id = 'l3_enac_a14_3')
-
-l3_stac_a14_4 = Marker(id = 'l3_stac_a14_4')
-
-l3_miac_a14_4 = Marker(id = 'l3_miac_a14_4')
-
-l3_enac_a14_4 = Marker(id = 'l3_enac_a14_4')
-
-l3_stac_a15_1 = Marker(id = 'l3_stac_a15_1')
-
-l3_miac_a15_1 = Marker(id = 'l3_miac_a15_1')
-
-l3_enac_a15_1 = Marker(id = 'l3_enac_a15_1')
-
-l3_stac_a15_2 = Marker(id = 'l3_stac_a15_2')
-
-l3_miac_a15_2 = Marker(id = 'l3_miac_a15_2')
-
-l3_enac_a15_2 = Marker(id = 'l3_enac_a15_2')
-
-l3_stac_a15_3 = Marker(id = 'l3_stac_a15_3')
-
-l3_miac_a15_3 = Marker(id = 'l3_miac_a15_3')
-
-l3_enac_a15_3 = Marker(id = 'l3_enac_a15_3')
-
-l3_stac_a15_4 = Marker(id = 'l3_stac_a15_4')
-
-l3_miac_a15_4 = Marker(id = 'l3_miac_a15_4')
-
-l3_enac_a15_4 = Marker(id = 'l3_enac_a15_4')
-
-l3_stac_a16_1 = Marker(id = 'l3_stac_a16_1')
-
-l3_miac_a16_1 = Marker(id = 'l3_miac_a16_1')
-
-l3_enac_a16_1 = Marker(id = 'l3_enac_a16_1')
-
-l3_stac_a16_2 = Marker(id = 'l3_stac_a16_2')
-
-l3_miac_a16_2 = Marker(id = 'l3_miac_a16_2')
-
-l3_enac_a16_2 = Marker(id = 'l3_enac_a16_2')
-
-l3_stac_a16_3 = Marker(id = 'l3_stac_a16_3')
-
-l3_miac_a16_3 = Marker(id = 'l3_miac_a16_3')
-
-l3_enac_a16_3 = Marker(id = 'l3_enac_a16_3')
-
-l3_stac_a16_4 = Marker(id = 'l3_stac_a16_4')
-
-l3_miac_a16_4 = Marker(id = 'l3_miac_a16_4')
-
-l3_enac_a16_4 = Marker(id = 'l3_enac_a16_4')
-
-l3_stac_a17_1 = Marker(id = 'l3_stac_a17_1')
-
-l3_miac_a17_1 = Marker(id = 'l3_miac_a17_1')
-
-l3_enac_a17_1 = Marker(id = 'l3_enac_a17_1')
-
-l3_stac_a17_2 = Marker(id = 'l3_stac_a17_2')
-
-l3_miac_a17_2 = Marker(id = 'l3_miac_a17_2')
-
-l3_enac_a17_2 = Marker(id = 'l3_enac_a17_2')
-
-l3_stac_a17_3 = Marker(id = 'l3_stac_a17_3')
-
-l3_miac_a17_3 = Marker(id = 'l3_miac_a17_3')
-
-l3_enac_a17_3 = Marker(id = 'l3_enac_a17_3')
-
-l3_stac_a17_4 = Marker(id = 'l3_stac_a17_4')
-
-l3_miac_a17_4 = Marker(id = 'l3_miac_a17_4')
-
-l3_enac_a17_4 = Marker(id = 'l3_enac_a17_4')
-
-l3_stac_a18_1 = Marker(id = 'l3_stac_a18_1')
-
-l3_miac_a18_1 = Marker(id = 'l3_miac_a18_1')
-
-l3_enac_a18_1 = Marker(id = 'l3_enac_a18_1')
-
-l3_stac_a18_2 = Marker(id = 'l3_stac_a18_2')
-
-l3_miac_a18_2 = Marker(id = 'l3_miac_a18_2')
-
-l3_enac_a18_2 = Marker(id = 'l3_enac_a18_2')
-
-l3_stac_a18_3 = Marker(id = 'l3_stac_a18_3')
-
-l3_miac_a18_3 = Marker(id = 'l3_miac_a18_3')
-
-l3_enac_a18_3 = Marker(id = 'l3_enac_a18_3')
-
-l3_stac_a18_4 = Marker(id = 'l3_stac_a18_4')
-
-l3_miac_a18_4 = Marker(id = 'l3_miac_a18_4')
-
-l3_enac_a18_4 = Marker(id = 'l3_enac_a18_4')
-
-l3_stac_a19_1 = Marker(id = 'l3_stac_a19_1')
-
-l3_miac_a19_1 = Marker(id = 'l3_miac_a19_1')
-
-l3_enac_a19_1 = Marker(id = 'l3_enac_a19_1')
-
-l3_stac_a19_2 = Marker(id = 'l3_stac_a19_2')
-
-l3_miac_a19_2 = Marker(id = 'l3_miac_a19_2')
-
-l3_enac_a19_2 = Marker(id = 'l3_enac_a19_2')
-
-l3_stac_a19_3 = Marker(id = 'l3_stac_a19_3')
-
-l3_miac_a19_3 = Marker(id = 'l3_miac_a19_3')
-
-l3_enac_a19_3 = Marker(id = 'l3_enac_a19_3')
-
-l3_stac_a19_4 = Marker(id = 'l3_stac_a19_4')
-
-l3_miac_a19_4 = Marker(id = 'l3_miac_a19_4')
-
-l3_enac_a19_4 = Marker(id = 'l3_enac_a19_4')
-
-l3_stac_a20_1 = Marker(id = 'l3_stac_a20_1')
-
-l3_miac_a20_1 = Marker(id = 'l3_miac_a20_1')
-
-l3_enac_a20_1 = Marker(id = 'l3_enac_a20_1')
-
-l3_stac_a20_2 = Marker(id = 'l3_stac_a20_2')
-
-l3_miac_a20_2 = Marker(id = 'l3_miac_a20_2')
-
-l3_enac_a20_2 = Marker(id = 'l3_enac_a20_2')
-
-l3_stac_a20_3 = Marker(id = 'l3_stac_a20_3')
-
-l3_miac_a20_3 = Marker(id = 'l3_miac_a20_3')
-
-l3_enac_a20_3 = Marker(id = 'l3_enac_a20_3')
-
-l3_stac_a20_4 = Marker(id = 'l3_stac_a20_4')
-
-l3_miac_a20_4 = Marker(id = 'l3_miac_a20_4')
-
-l3_enac_a20_4 = Marker(id = 'l3_enac_a20_4')
-
-l3_stac_a21_1 = Marker(id = 'l3_stac_a21_1')
-
-l3_miac_a21_1 = Marker(id = 'l3_miac_a21_1')
-
-l3_enac_a21_1 = Marker(id = 'l3_enac_a21_1')
-
-l3_stac_a21_2 = Marker(id = 'l3_stac_a21_2')
-
-l3_miac_a21_2 = Marker(id = 'l3_miac_a21_2')
-
-l3_enac_a21_2 = Marker(id = 'l3_enac_a21_2')
-
-l3_stac_a21_3 = Marker(id = 'l3_stac_a21_3')
-
-l3_miac_a21_3 = Marker(id = 'l3_miac_a21_3')
-
-l3_enac_a21_3 = Marker(id = 'l3_enac_a21_3')
-
-l3_stac_a21_4 = Marker(id = 'l3_stac_a21_4')
-
-l3_miac_a21_4 = Marker(id = 'l3_miac_a21_4')
-
-l3_enac_a21_4 = Marker(id = 'l3_enac_a21_4')
-
-l3_stac_a22_1 = Marker(id = 'l3_stac_a22_1')
-
-l3_miac_a22_1 = Marker(id = 'l3_miac_a22_1')
-
-l3_enac_a22_1 = Marker(id = 'l3_enac_a22_1')
-
-l3_stac_a22_2 = Marker(id = 'l3_stac_a22_2')
-
-l3_miac_a22_2 = Marker(id = 'l3_miac_a22_2')
-
-l3_enac_a22_2 = Marker(id = 'l3_enac_a22_2')
-
-l3_stac_a22_3 = Marker(id = 'l3_stac_a22_3')
-
-l3_miac_a22_3 = Marker(id = 'l3_miac_a22_3')
-
-l3_enac_a22_3 = Marker(id = 'l3_enac_a22_3')
-
-l3_stac_a22_4 = Marker(id = 'l3_stac_a22_4')
-
-l3_miac_a22_4 = Marker(id = 'l3_miac_a22_4')
-
-l3_enac_a22_4 = Marker(id = 'l3_enac_a22_4')
-
-l3_stac_a23_1 = Marker(id = 'l3_stac_a23_1')
-
-l3_miac_a23_1 = Marker(id = 'l3_miac_a23_1')
-
-l3_enac_a23_1 = Marker(id = 'l3_enac_a23_1')
-
-l3_stac_a23_2 = Marker(id = 'l3_stac_a23_2')
-
-l3_miac_a23_2 = Marker(id = 'l3_miac_a23_2')
-
-l3_enac_a23_2 = Marker(id = 'l3_enac_a23_2')
-
-l3_stac_a23_3 = Marker(id = 'l3_stac_a23_3')
-
-l3_miac_a23_3 = Marker(id = 'l3_miac_a23_3')
-
-l3_enac_a23_3 = Marker(id = 'l3_enac_a23_3')
-
-l3_stac_a23_4 = Marker(id = 'l3_stac_a23_4')
-
-l3_miac_a23_4 = Marker(id = 'l3_miac_a23_4')
-
-l3_enac_a23_4 = Marker(id = 'l3_enac_a23_4')
-
-l3_stac_a24_1 = Marker(id = 'l3_stac_a24_1')
-
-l3_miac_a24_1 = Marker(id = 'l3_miac_a24_1')
-
-l3_enac_a24_1 = Marker(id = 'l3_enac_a24_1')
-
-l3_stac_a24_2 = Marker(id = 'l3_stac_a24_2')
-
-l3_miac_a24_2 = Marker(id = 'l3_miac_a24_2')
-
-l3_enac_a24_2 = Marker(id = 'l3_enac_a24_2')
-
-l3_stac_a24_3 = Marker(id = 'l3_stac_a24_3')
-
-l3_miac_a24_3 = Marker(id = 'l3_miac_a24_3')
-
-l3_enac_a24_3 = Marker(id = 'l3_enac_a24_3')
-
-l3_stac_a24_4 = Marker(id = 'l3_stac_a24_4')
-
-l3_miac_a24_4 = Marker(id = 'l3_miac_a24_4')
-
-l3_enac_a24_4 = Marker(id = 'l3_enac_a24_4')
-
-l3_stac_a25_1 = Marker(id = 'l3_stac_a25_1')
-
-l3_miac_a25_1 = Marker(id = 'l3_miac_a25_1')
-
-l3_enac_a25_1 = Marker(id = 'l3_enac_a25_1')
-
-l3_stac_a25_2 = Marker(id = 'l3_stac_a25_2')
-
-l3_miac_a25_2 = Marker(id = 'l3_miac_a25_2')
-
-l3_enac_a25_2 = Marker(id = 'l3_enac_a25_2')
-
-l3_stac_a25_3 = Marker(id = 'l3_stac_a25_3')
-
-l3_miac_a25_3 = Marker(id = 'l3_miac_a25_3')
-
-l3_enac_a25_3 = Marker(id = 'l3_enac_a25_3')
-
-l3_stac_a25_4 = Marker(id = 'l3_stac_a25_4')
-
-l3_miac_a25_4 = Marker(id = 'l3_miac_a25_4')
-
-l3_enac_a25_4 = Marker(id = 'l3_enac_a25_4')
-
-l3_stac_a26_1 = Marker(id = 'l3_stac_a26_1')
-
-l3_miac_a26_1 = Marker(id = 'l3_miac_a26_1')
-
-l3_enac_a26_1 = Marker(id = 'l3_enac_a26_1')
-
-l3_stac_a26_2 = Marker(id = 'l3_stac_a26_2')
-
-l3_miac_a26_2 = Marker(id = 'l3_miac_a26_2')
-
-l3_enac_a26_2 = Marker(id = 'l3_enac_a26_2')
-
-l3_stac_a26_3 = Marker(id = 'l3_stac_a26_3')
-
-l3_miac_a26_3 = Marker(id = 'l3_miac_a26_3')
-
-l3_enac_a26_3 = Marker(id = 'l3_enac_a26_3')
-
-l3_stac_a26_4 = Marker(id = 'l3_stac_a26_4')
-
-l3_miac_a26_4 = Marker(id = 'l3_miac_a26_4')
-
-l3_enac_a26_4 = Marker(id = 'l3_enac_a26_4')
-
-
-
-
-
-l3_stac_a27_1 = Marker(id = 'l3_stac_a27_1')
-
-l3_miac_a27_1 = Marker(id = 'l3_miac_a27_1')
-
-l3_enac_a27_1 = Marker(id = 'l3_enac_a27_1')
-
-l3_stac_a27_2 = Marker(id = 'l3_stac_a27_2')
-
-l3_miac_a27_2 = Marker(id = 'l3_miac_a27_2')
-
-l3_enac_a27_2 = Marker(id = 'l3_enac_a27_2')
-
-l3_stac_a27_3 = Marker(id = 'l3_stac_a27_3')
-
-l3_miac_a27_3 = Marker(id = 'l3_miac_a27_3')
-
-l3_enac_a27_3 = Marker(id = 'l3_enac_a27_3')
-
-l3_stac_a27_4 = Marker(id = 'l3_stac_a27_4')
-
-l3_miac_a27_4 = Marker(id = 'l3_miac_a27_4')
-
-l3_enac_a27_4 = Marker(id = 'l3_enac_a27_4')
-
-l3_stac_a28_1 = Marker(id = 'l3_stac_a28_1')
-
-l3_miac_a28_1 = Marker(id = 'l3_miac_a28_1')
-
-l3_enac_a28_1 = Marker(id = 'l3_enac_a28_1')
-
-l3_stac_a28_2 = Marker(id = 'l3_stac_a28_2')
-
-l3_miac_a28_2 = Marker(id = 'l3_miac_a28_2')
-
-l3_enac_a28_2 = Marker(id = 'l3_enac_a28_2')
-
-l3_stac_a28_3 = Marker(id = 'l3_stac_a28_3')
-
-l3_miac_a28_3 = Marker(id = 'l3_miac_a28_3')
-
-l3_enac_a28_3 = Marker(id = 'l3_enac_a28_3')
-
-l3_stac_a28_4 = Marker(id = 'l3_stac_a28_4')
-
-l3_miac_a28_4 = Marker(id = 'l3_miac_a28_4')
-
-l3_enac_a28_4 = Marker(id = 'l3_enac_a28_4')
-
-l3_stac_a29_1 = Marker(id = 'l3_stac_a29_1')
-
-l3_miac_a29_1 = Marker(id = 'l3_miac_a29_1')
-
-l3_enac_a29_1 = Marker(id = 'l3_enac_a29_1')
-
-l3_stac_a29_2 = Marker(id = 'l3_stac_a29_2')
-
-l3_miac_a29_2 = Marker(id = 'l3_miac_a29_2')
-
-l3_enac_a29_2 = Marker(id = 'l3_enac_a29_2')
-
-l3_stac_a29_3 = Marker(id = 'l3_stac_a29_3')
-
-l3_miac_a29_3 = Marker(id = 'l3_miac_a29_3')
-
-l3_enac_a29_3 = Marker(id = 'l3_enac_a29_3')
-
-l3_stac_a29_4 = Marker(id = 'l3_stac_a29_4')
-
-l3_miac_a29_4 = Marker(id = 'l3_miac_a29_4')
-
-l3_enac_a29_4 = Marker(id = 'l3_enac_a29_4')
-
-
-
-
-
-# Markers for 3.9 ghz module
-
-
-
-i1_stac_ah1_1 = Marker(id = 'i1_stac_ah1_1')
-
-i1_enac_ah1_1 = Marker(id = 'i1_enac_ah1_1')
-
-i1_miac_ah1_1 = Marker(id = 'i1_miac_ah1_1')
-
-
-
-
-
-# bpm at acc end (typ bpm) ---------------------------------------------
-
-
-
-i1_bpmc = Monitor(id = 'i1_bpmc')
-
-l1_bpmc = Monitor(id = 'l1_bpmc')
-
-l2_bpmc = Monitor(id = 'l2_bpmc')
-
-l3_bpmc = Monitor(id = 'l3_bpmc')
-
-i1_bpmr = Monitor(id = 'i1_bpmr')
-
-l1_bpmr = Monitor(id = 'l1_bpmr')
-
-l2_bpmr = Monitor(id = 'l2_bpmr')
-
-l3_bpmr = Monitor(id = 'l3_bpmr')
-
-l3_bpma = Monitor(id = 'l3_bpma')
-
-l3_tora = Marker(id = 'l3_tora')
-
-
-
-
-
-# steerer at acc end-----------------------------------------------------
-
-
-
-# (zero length scavenger, in reality cos(phi) winding in Quadrupole)
-
-
-
-i1_cx = scavenger(id = 'i1_cx')
-
-i1_cy = scavenger(id = 'i1_cy')
-
-l1_cx = scavenger(id = 'l1_cx')
-
-l1_cy = scavenger(id = 'l1_cy')
-
-l2_cx = scavenger(id = 'l2_cx')
-
-l2_cy = scavenger(id = 'l2_cy')
-
-l3_cx = scavenger(id = 'l3_cx')
-
-l3_cy = scavenger(id = 'l3_cy')
-
-
-
-
-
-# injector linac Quadrupolerupols---------------------------------------------
-
-
-
-i1_q_a1_1 = Quadrupole(l=0.3, k1=-1.537886e+00, id = 'i1_q_a1_1')
-
-i1_q_ah1_1 = Quadrupole(l=0.3, k1=1.435078e+00, id = 'i1_q_ah1_1')
-
-# linac 1 Quadrupoles ------------------------------------------
-
-
-
-l1_q_a2_1 = Quadrupole(l=0.3, k1=0.219222826375, id = 'l1_q_a2_1')
-
-l1_q_a2_2 = Quadrupole(l=0.3, k1=-0.211095518521, id = 'l1_q_a2_2')
-
-l1_q_a2_3 = Quadrupole(l=0.3, k1=0.141481449266, id = 'l1_q_a2_3')
-
-l1_q_a2_4 = Quadrupole(l=0.3, k1=-0.144615140151, id = 'l1_q_a2_4')
-
-# linac 2 Quadrupoles ------------------------------------------
-
-
-
-l2_q_a3_1 = Quadrupole(l=0.3, k1=2.530148e-01, id = 'l2_q_a3_1')
-
-l2_q_a3_2 = Quadrupole(l=0.3, k1=-2.297111e-01, id = 'l2_q_a3_2')
-
-l2_q_a3_3 = Quadrupole(l=0.3, k1=0.15, id = 'l2_q_a3_3')
-
-l2_q_a3_4 = Quadrupole(l=0.3, k1=-0.15, id = 'l2_q_a3_4')
-
-l2_q_a4_1 = Quadrupole(l=0.3, k1=0.15, id = 'l2_q_a4_1')
-
-l2_q_a4_2 = Quadrupole(l=0.3, k1=-0.15, id = 'l2_q_a4_2')
-
-l2_q_a4_3 = Quadrupole(l=0.3, k1=0.15, id = 'l2_q_a4_3')
-
-l2_q_a4_4 = Quadrupole(l=0.3, k1=-0.15, id = 'l2_q_a4_4')
-
-l2_q_a5_1 = Quadrupole(l=0.3, k1=1.201214e-01, id = 'l2_q_a5_1')
-
-l2_q_a5_2 = Quadrupole(l=0.3, k1=-3.788105e-01, id = 'l2_q_a5_2')
-
-l2_q_a5_3 = Quadrupole(l=0.3, k1=2.677186e-01, id = 'l2_q_a5_3')
-
-l2_q_a5_4 = Quadrupole(l=0.3, k1=-3.557654e-01, id = 'l2_q_a5_4')
-
-# linac 3 Quadrupoles --------------------------------------------------
-
-
-
-l3_q_f = Quadrupole(l=0.3, k1=2.145800e-01, id = 'l3_q_f')
-
-l3_q_d = Quadrupole(l=0.3, k1=-2.145800e-01, id = 'l3_q_d')
-
-
-
-
-
-l3_q_a6_1 = Quadrupole(l=0.3, k1=-2.715919e-01, id = 'l3_q_a6_1')
-
-l3_q_a6_2 = Quadrupole(l=0.3, k1=2.909251e-01, id = 'l3_q_a6_2')
-
-l3_q_a6_3 = Quadrupole(l=0.3, k1=-1.010462e-01, id = 'l3_q_a6_3')
-
-l3_q_a6_4 = Quadrupole(l=0.3, k1=-1.674086e-01, id = 'l3_q_a6_4')
-
-l3_q_a7_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a7_1')
-
-l3_q_a7_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a7_2')
-
-l3_q_a7_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a7_3')
-
-l3_q_a7_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a7_4')
-
-l3_q_a8_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a8_1')
-
-l3_q_a8_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a8_2')
-
-l3_q_a8_3 = Quadrupole(l=0.3, k1=2.258091e-01, id = 'l3_q_a8_3')
-
-l3_q_a8_4 = Quadrupole(l=0.3, k1=-2.094214e-01, id = 'l3_q_a8_4')
-
-l3_q_a9_1 = Quadrupole(l=0.3, k1=2.067368e-01, id = 'l3_q_a9_1')
-
-l3_q_a9_2 = Quadrupole(l=0.3, k1=-2.181746e-01, id = 'l3_q_a9_2')
-
-l3_q_a9_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a9_3')
-
-l3_q_a9_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a9_4')
-
-l3_q_a10_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a10_1')
-
-l3_q_a10_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a10_2')
-
-l3_q_a10_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a10_3')
-
-l3_q_a10_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a10_4')
-
-l3_q_a11_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a11_1')
-
-l3_q_a11_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a11_2')
-
-l3_q_a11_3 = Quadrupole(l=0.3, k1=l3_q_a8_3.k1, id = 'l3_q_a11_3')
-
-l3_q_a11_4 = Quadrupole(l=0.3, k1=l3_q_a8_4.k1, id = 'l3_q_a11_4')
-
-l3_q_a12_1 = Quadrupole(l=0.3, k1=l3_q_a9_1.k1, id = 'l3_q_a12_1')
-
-l3_q_a12_2 = Quadrupole(l=0.3, k1=l3_q_a9_2.k1, id = 'l3_q_a12_2')
-
-l3_q_a12_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a12_3')
-
-l3_q_a12_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a12_4')
-
-l3_q_a13_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a13_1')
-
-l3_q_a13_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a13_2')
-
-l3_q_a13_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a13_3')
-
-l3_q_a13_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a13_4')
-
-l3_q_a14_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a14_1')
-
-l3_q_a14_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a14_2')
-
-l3_q_a14_3 = Quadrupole(l=0.3, k1=l3_q_a8_3.k1, id = 'l3_q_a14_3')
-
-l3_q_a14_4 = Quadrupole(l=0.3, k1=l3_q_a8_4.k1, id = 'l3_q_a14_4')
-
-l3_q_a15_1 = Quadrupole(l=0.3, k1=l3_q_a9_1.k1, id = 'l3_q_a15_1')
-
-l3_q_a15_2 = Quadrupole(l=0.3, k1=l3_q_a9_2.k1, id = 'l3_q_a15_2')
-
-l3_q_a15_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a15_3')
-
-l3_q_a15_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a15_4')
-
-l3_q_a16_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a16_1')
-
-l3_q_a16_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a16_2')
-
-l3_q_a16_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a16_3')
-
-l3_q_a16_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a16_4')
-
-l3_q_a17_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a17_1')
-
-l3_q_a17_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a17_2')
-
-l3_q_a17_3 = Quadrupole(l=0.3, k1=l3_q_a8_3.k1, id = 'l3_q_a17_3')
-
-l3_q_a17_4 = Quadrupole(l=0.3, k1=l3_q_a8_4.k1, id = 'l3_q_a17_4')
-
-l3_q_a18_1 = Quadrupole(l=0.3, k1=l3_q_a9_1.k1, id = 'l3_q_a18_1')
-
-l3_q_a18_2 = Quadrupole(l=0.3, k1=l3_q_a9_2.k1, id = 'l3_q_a18_2')
-
-l3_q_a18_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a18_3')
-
-l3_q_a18_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a18_4')
-
-l3_q_a19_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a19_1')
-
-l3_q_a19_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a19_2')
-
-l3_q_a19_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a19_3')
-
-l3_q_a19_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a19_4')
-
-l3_q_a20_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a20_1')
-
-l3_q_a20_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a20_2')
-
-l3_q_a20_3 = Quadrupole(l=0.3, k1=l3_q_a8_3.k1, id = 'l3_q_a20_3')
-
-l3_q_a20_4 = Quadrupole(l=0.3, k1=l3_q_a8_4.k1, id = 'l3_q_a20_4')
-
-l3_q_a21_1 = Quadrupole(l=0.3, k1=l3_q_a9_1.k1, id = 'l3_q_a21_1')
-
-l3_q_a21_2 = Quadrupole(l=0.3, k1=l3_q_a9_2.k1, id = 'l3_q_a21_2')
-
-l3_q_a21_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a21_3')
-
-l3_q_a21_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a21_4')
-
-l3_q_a22_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a22_1')
-
-l3_q_a22_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a22_2')
-
-l3_q_a22_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a22_3')
-
-l3_q_a22_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a22_4')
-
-l3_q_a23_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a23_1')
-
-l3_q_a23_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a23_2')
-
-l3_q_a23_3 = Quadrupole(l=0.3, k1=l3_q_a8_3.k1, id = 'l3_q_a23_3')
-
-l3_q_a23_4 = Quadrupole(l=0.3, k1=l3_q_a8_4.k1, id = 'l3_q_a23_4')
-
-l3_q_a24_1 = Quadrupole(l=0.3, k1=l3_q_a9_1.k1, id = 'l3_q_a24_1')
-
-l3_q_a24_2 = Quadrupole(l=0.3, k1=l3_q_a9_2.k1, id = 'l3_q_a24_2')
-
-l3_q_a24_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a24_3')
-
-l3_q_a24_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a24_4')
-
-l3_q_a25_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a25_1')
-
-l3_q_a25_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a25_2')
-
-l3_q_a25_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a25_3')
-
-l3_q_a25_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a25_4')
-
-l3_q_a26_1 = Quadrupole(l=0.3, k1=1.040586e-01, id = 'l3_q_a26_1')
-
-l3_q_a26_2 = Quadrupole(l=0.3, k1=-2.918657e-02, id = 'l3_q_a26_2')
-
-l3_q_a26_3 = Quadrupole(l=0.3, k1=1.553850e-01, id = 'l3_q_a26_3')
-
-l3_q_a26_4 = Quadrupole(l=0.3, k1=-1.772898e-01, id = 'l3_q_a26_4')
-
-
-
-
-
-l3_q_a27_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a27_1')
-
-l3_q_a27_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a27_2')
-
-l3_q_a27_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a27_3')
-
-l3_q_a27_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a27_4')
-
-l3_q_a28_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a28_1')
-
-l3_q_a28_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a28_2')
-
-l3_q_a28_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a28_3')
-
-l3_q_a28_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a28_4')
-
-l3_q_a29_1 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a29_1')
-
-l3_q_a29_2 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a29_2')
-
-l3_q_a29_3 = Quadrupole(l=0.3, k1=l3_q_f.k1, id = 'l3_q_a29_3')
-
-l3_q_a29_4 = Quadrupole(l=0.3, k1=l3_q_d.k1, id = 'l3_q_a29_4')
-
-
-
-
+! XFEL Linac Definitions
+!
+! Version 7.1 8.03.2011
+!
+! New Nomenclature
+! Extended length of cryo components: Feed and turnbox 3.5 m, connection box 
+! New length of feedbox: 3.35 m
+! New length of endbox : 3.25 m
+! lambda: 0.23061
+! cavity length: 1.0377  (l/2*9
+! module length: 11.9917 (l*52)
+! string connection box: 2.9979 (l*13)
+! module center: 6.20582 from module start (cold) (or at 3.90394*l/2 in the 5th 9-cell cavity)
+! insert marker close to this position, s,x,y,z to be corrected by post-processing
+! updated 3rd harmonic according to design from 12.2.2009
+! changed L3 to maximum of 96 modules with 6 long warm FODO cells at end
+! changed L0 to include 3rd harmonic and end box
+! inserted L0 start/end markers (10/11/09 WD)
+! differentiate BPM types (10/11/09 WD)
+! add TORA at beginning of temporary beamline (4/1/11 WD)
+! changed Injector module and Injector Linac layout to adjust for 3* module (8/3/11 WD)
+! Single Cavity (MAD definition)-----------------------------------------
+relerr:=0e-3
+EfI1:= 130
+EfL1:= 700
+EfL2:= 2400
+EfL3:= 14000
+
+deltaeL1:=(EfL1-EfI1)/8/4
+deltaeL2:=(EfL2-EfL1)/8/12
+deltaeL3:=(EfL3-EfL2)/8/64
+
+I1.C.A1: LCAVITY, L=0.1153*9, PHI0=0/360 ,        &
+                DELTAE=17.5e+00*0.1153*9*1 ,        &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+I1.C.A1.R: LCAVITY, L=0.1153*9, PHI0=0/360 ,        &
+                DELTAE=-17.5e+00*0.1153*9*1 ,        &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L1.C.A2  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL1,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L2.C.A3  : LCAVITY, L=0.1153*9, PHI0=0/360,          &
+                DELTAE=deltaeL2,      &
+               FREQ=1300000000.0*1e-6,volterr=20*relerr
+L2.C.A4  : LCAVITY, L=0.1153*9, PHI0=0/360,          &
+                DELTAE=deltaeL2,      &
+               FREQ=1300000000.0*1e-6,volterr=20*relerr
+L2.C.A5  : LCAVITY, L=0.1153*9, PHI0=0/360,          &
+                DELTAE=deltaeL2,      &
+               FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A6  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A7  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A8  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A9  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A10  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A11  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A12  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A13  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A14  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A15  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A16  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A17  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A18  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A19  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A20  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A21  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A22  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A23  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A24  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A25  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A26  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A27  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A28  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+L3.C.A29  : LCAVITY, L=0.1153*9, PHI0=0/360 ,         &
+                DELTAE=deltaeL3,      &
+                FREQ=1300000000.0*1e-6,volterr=20*relerr
+
+L3.C.00  : DRIFT, L=1.0377
+
+! Single 9cell Cavity for ACC3RD (MAD definition) ----------------------------
+! Based on E. Vogel 12/02/2009 design
+
+I1.C3.AH1   : LCAVITY, L=0.346, PHI0=180/360,      &
+                DELTAE=7.2254*0.346 ,    &
+                FREQ=3900000000.0*1e-6
+
+! LOLA CAVITY FOR DIAGNOSTICS (MAD definition---------------------------
+! Definied in Section Files
+!I1.TDSA: LCAVITY, L=0.7, PHI0=0,               &
+!                VOLT=0,    &
+!                FREQ=2800000000.0*1e-6
+!
+!B1.TDS: LCAVITY, L=0.7, PHI0=0,               &
+!                VOLT=0,    &
+!                FREQ=2800000000.0*1e-6
+!
+!B2.TDS: LCAVITY, L=1.30, PHI0=0,                    &
+!                DELTAE=0,                           &
+!                FREQ=2800000000.0*1e-6 
+!LTWAKECAV3: DRIFT, L=0.0
+
+! Cavity Wake field dummies --------------------------------------------
+
+LTWAKECAV: DRIFT, L=0.0
+LTWAKECAV3: DRIFT, L=0.0
+
+
+!========================================================================
+! Definition of RF Module Drifts
+!------------------------------------------------------------------------
+
+! 1.3 GHz Module---------------------------------------------------------
+
+D00124: DRIFT, L=0.0124
+D01416: DRIFT, L=0.1416
+D02043: DRIFT, L=0.2043
+D02979: DRIFT, L=0.2979
+D00229 : DRIFT, L=0.0729
+D00729 : DRIFT, L=0.0729
+D03924: DRIFT, L=0.3924
+
+D00632 : DRIFT, L=0.0632
+D00118 : DRIFT, L=0.0118
+
+! 3.9 GHz module with 8 3900 MHz cavities --------------------------------
+! based on E. Vogels 12/02/2009 design
+D00225: DRIFT, L=0.0225
+D0102:  DRIFT,  L=0.102
+D01014: DRIFT,  L=0.1014
+D0085: DRIFT, L = 0.085
+D00611: DRIFT, L = 0.0611
+
+! Drift for string connection box --------------------------------------
+L3.CSC : DRIFT, L=2.9978 
+! Drift for feed and turn box 
+! Endpoint means bypass to beam distance of 0.7 m and warm vaccuum valve
+I1.CFBI: DRIFT, L=0.1+0.4512
+I1.CTBI: DRIFT, L=2.5-0.208-0.0663-1.1857
+L1.CFB : DRIFT, L=3.35 
+L1.CTB : DRIFT, L=3.25 
+L2.CFB : DRIFT, L=3.35 
+L2.CTB : DRIFT, L=3.25 
+L3.CFB : DRIFT, L=3.35 
+L3.CTB : DRIFT, L=3.25 
+
+!========================================================================
+
+! One 9-cells cavity with drift------------------------------------------
+ACC_CAV0  : DRIFT, L=1.3836
+
+! One 9-cells 3900 MHz cavity with scaled drifts ------------------------
+
+!========================================================================
+
+! Markers for 1.3 GHZ MODULE
+I1.STAC.A1.1 : MARKER
+I1.MIAC.A1.1 : MARKER
+I1.ENAC.A1.1 : MARKER 
+L1.STAC.A2.1 : MARKER
+L1.MIAC.A2.1 : MARKER
+L1.ENAC.A2.1 : MARKER 
+L1.STAC.A2.2 : MARKER
+L1.MIAC.A2.2 : MARKER
+L1.ENAC.A2.2 : MARKER 
+L1.STAC.A2.3 : MARKER
+L1.MIAC.A2.3 : MARKER
+L1.ENAC.A2.3 : MARKER 
+L1.STAC.A2.4 : MARKER
+L1.MIAC.A2.4 : MARKER
+L1.ENAC.A2.4 : MARKER 
+L2.STAC.A3.1 : MARKER
+L2.MIAC.A3.1 : MARKER
+L2.ENAC.A3.1 : MARKER 
+L2.STAC.A3.2 : MARKER
+L2.MIAC.A3.2 : MARKER
+L2.ENAC.A3.2 : MARKER 
+L2.STAC.A3.3 : MARKER
+L2.MIAC.A3.3 : MARKER
+L2.ENAC.A3.3 : MARKER 
+L2.STAC.A3.4 : MARKER
+L2.MIAC.A3.4 : MARKER
+L2.ENAC.A3.4 : MARKER 
+L2.STAC.A4.1 : MARKER
+L2.MIAC.A4.1 : MARKER
+L2.ENAC.A4.1 : MARKER 
+L2.STAC.A4.2 : MARKER
+L2.MIAC.A4.2 : MARKER
+L2.ENAC.A4.2 : MARKER 
+L2.STAC.A4.3 : MARKER
+L2.MIAC.A4.3 : MARKER
+L2.ENAC.A4.3 : MARKER 
+L2.STAC.A4.4 : MARKER
+L2.MIAC.A4.4 : MARKER
+L2.ENAC.A4.4 : MARKER 
+L2.STAC.A5.1 : MARKER
+L2.MIAC.A5.1 : MARKER
+L2.ENAC.A5.1 : MARKER 
+L2.STAC.A5.2 : MARKER
+L2.MIAC.A5.2 : MARKER
+L2.ENAC.A5.2 : MARKER 
+L2.STAC.A5.3 : MARKER
+L2.MIAC.A5.3 : MARKER
+L2.ENAC.A5.3 : MARKER 
+L2.STAC.A5.4 : MARKER
+L2.MIAC.A5.4 : MARKER
+L2.ENAC.A5.4 : MARKER 
+L3.STAC.A6.1 : MARKER
+L3.MIAC.A6.1 : MARKER
+L3.ENAC.A6.1 : MARKER 
+L3.STAC.A6.2 : MARKER
+L3.MIAC.A6.2 : MARKER
+L3.ENAC.A6.2 : MARKER 
+L3.STAC.A6.3 : MARKER
+L3.MIAC.A6.3 : MARKER
+L3.ENAC.A6.3 : MARKER 
+L3.STAC.A6.4 : MARKER
+L3.MIAC.A6.4 : MARKER
+L3.ENAC.A6.4 : MARKER 
+L3.STAC.A7.1 : MARKER
+L3.MIAC.A7.1 : MARKER
+L3.ENAC.A7.1 : MARKER 
+L3.STAC.A7.2 : MARKER
+L3.MIAC.A7.2 : MARKER
+L3.ENAC.A7.2 : MARKER 
+L3.STAC.A7.3 : MARKER
+L3.MIAC.A7.3 : MARKER
+L3.ENAC.A7.3 : MARKER 
+L3.STAC.A7.4 : MARKER
+L3.MIAC.A7.4 : MARKER
+L3.ENAC.A7.4 : MARKER 
+L3.STAC.A8.1 : MARKER
+L3.MIAC.A8.1 : MARKER
+L3.ENAC.A8.1 : MARKER 
+L3.STAC.A8.2 : MARKER
+L3.MIAC.A8.2 : MARKER
+L3.ENAC.A8.2 : MARKER 
+L3.STAC.A8.3 : MARKER
+L3.MIAC.A8.3 : MARKER
+L3.ENAC.A8.3 : MARKER 
+L3.STAC.A8.4 : MARKER
+L3.MIAC.A8.4 : MARKER
+L3.ENAC.A8.4 : MARKER 
+L3.STAC.A9.1 : MARKER
+L3.MIAC.A9.1 : MARKER
+L3.ENAC.A9.1 : MARKER 
+L3.STAC.A9.2 : MARKER
+L3.MIAC.A9.2 : MARKER
+L3.ENAC.A9.2 : MARKER 
+L3.STAC.A9.3 : MARKER
+L3.MIAC.A9.3 : MARKER
+L3.ENAC.A9.3 : MARKER 
+L3.STAC.A9.4 : MARKER
+L3.MIAC.A9.4 : MARKER
+L3.ENAC.A9.4 : MARKER 
+L3.STAC.A10.1 : MARKER
+L3.MIAC.A10.1 : MARKER
+L3.ENAC.A10.1 : MARKER 
+L3.STAC.A10.2 : MARKER
+L3.MIAC.A10.2 : MARKER
+L3.ENAC.A10.2 : MARKER 
+L3.STAC.A10.3 : MARKER
+L3.MIAC.A10.3 : MARKER
+L3.ENAC.A10.3 : MARKER 
+L3.STAC.A10.4 : MARKER
+L3.MIAC.A10.4 : MARKER
+L3.ENAC.A10.4 : MARKER 
+L3.STAC.A11.1 : MARKER
+L3.MIAC.A11.1 : MARKER
+L3.ENAC.A11.1 : MARKER 
+L3.STAC.A11.2 : MARKER
+L3.MIAC.A11.2 : MARKER
+L3.ENAC.A11.2 : MARKER 
+L3.STAC.A11.3 : MARKER
+L3.MIAC.A11.3 : MARKER
+L3.ENAC.A11.3 : MARKER 
+L3.STAC.A11.4 : MARKER
+L3.MIAC.A11.4 : MARKER
+L3.ENAC.A11.4 : MARKER 
+L3.STAC.A12.1 : MARKER
+L3.MIAC.A12.1 : MARKER
+L3.ENAC.A12.1 : MARKER 
+L3.STAC.A12.2 : MARKER
+L3.MIAC.A12.2 : MARKER
+L3.ENAC.A12.2 : MARKER 
+L3.STAC.A12.3 : MARKER
+L3.MIAC.A12.3 : MARKER
+L3.ENAC.A12.3 : MARKER 
+L3.STAC.A12.4 : MARKER
+L3.MIAC.A12.4 : MARKER
+L3.ENAC.A12.4 : MARKER 
+L3.STAC.A13.1 : MARKER
+L3.MIAC.A13.1 : MARKER
+L3.ENAC.A13.1 : MARKER 
+L3.STAC.A13.2 : MARKER
+L3.MIAC.A13.2 : MARKER
+L3.ENAC.A13.2 : MARKER 
+L3.STAC.A13.3 : MARKER
+L3.MIAC.A13.3 : MARKER
+L3.ENAC.A13.3 : MARKER 
+L3.STAC.A13.4 : MARKER
+L3.MIAC.A13.4 : MARKER
+L3.ENAC.A13.4 : MARKER 
+L3.STAC.A14.1 : MARKER
+L3.MIAC.A14.1 : MARKER
+L3.ENAC.A14.1 : MARKER 
+L3.STAC.A14.2 : MARKER
+L3.MIAC.A14.2 : MARKER
+L3.ENAC.A14.2 : MARKER 
+L3.STAC.A14.3 : MARKER
+L3.MIAC.A14.3 : MARKER
+L3.ENAC.A14.3 : MARKER 
+L3.STAC.A14.4 : MARKER
+L3.MIAC.A14.4 : MARKER
+L3.ENAC.A14.4 : MARKER 
+L3.STAC.A15.1 : MARKER
+L3.MIAC.A15.1 : MARKER
+L3.ENAC.A15.1 : MARKER 
+L3.STAC.A15.2 : MARKER
+L3.MIAC.A15.2 : MARKER
+L3.ENAC.A15.2 : MARKER 
+L3.STAC.A15.3 : MARKER
+L3.MIAC.A15.3 : MARKER
+L3.ENAC.A15.3 : MARKER 
+L3.STAC.A15.4 : MARKER
+L3.MIAC.A15.4 : MARKER
+L3.ENAC.A15.4 : MARKER 
+L3.STAC.A16.1 : MARKER
+L3.MIAC.A16.1 : MARKER
+L3.ENAC.A16.1 : MARKER 
+L3.STAC.A16.2 : MARKER
+L3.MIAC.A16.2 : MARKER
+L3.ENAC.A16.2 : MARKER 
+L3.STAC.A16.3 : MARKER
+L3.MIAC.A16.3 : MARKER
+L3.ENAC.A16.3 : MARKER 
+L3.STAC.A16.4 : MARKER
+L3.MIAC.A16.4 : MARKER
+L3.ENAC.A16.4 : MARKER 
+L3.STAC.A17.1 : MARKER
+L3.MIAC.A17.1 : MARKER
+L3.ENAC.A17.1 : MARKER 
+L3.STAC.A17.2 : MARKER
+L3.MIAC.A17.2 : MARKER
+L3.ENAC.A17.2 : MARKER 
+L3.STAC.A17.3 : MARKER
+L3.MIAC.A17.3 : MARKER
+L3.ENAC.A17.3 : MARKER 
+L3.STAC.A17.4 : MARKER
+L3.MIAC.A17.4 : MARKER
+L3.ENAC.A17.4 : MARKER 
+L3.STAC.A18.1 : MARKER
+L3.MIAC.A18.1 : MARKER
+L3.ENAC.A18.1 : MARKER 
+L3.STAC.A18.2 : MARKER
+L3.MIAC.A18.2 : MARKER
+L3.ENAC.A18.2 : MARKER 
+L3.STAC.A18.3 : MARKER
+L3.MIAC.A18.3 : MARKER
+L3.ENAC.A18.3 : MARKER 
+L3.STAC.A18.4 : MARKER
+L3.MIAC.A18.4 : MARKER
+L3.ENAC.A18.4 : MARKER 
+L3.STAC.A19.1 : MARKER
+L3.MIAC.A19.1 : MARKER
+L3.ENAC.A19.1 : MARKER 
+L3.STAC.A19.2 : MARKER
+L3.MIAC.A19.2 : MARKER
+L3.ENAC.A19.2 : MARKER 
+L3.STAC.A19.3 : MARKER
+L3.MIAC.A19.3 : MARKER
+L3.ENAC.A19.3 : MARKER 
+L3.STAC.A19.4 : MARKER
+L3.MIAC.A19.4 : MARKER
+L3.ENAC.A19.4 : MARKER 
+L3.STAC.A20.1 : MARKER
+L3.MIAC.A20.1 : MARKER
+L3.ENAC.A20.1 : MARKER 
+L3.STAC.A20.2 : MARKER
+L3.MIAC.A20.2 : MARKER
+L3.ENAC.A20.2 : MARKER 
+L3.STAC.A20.3 : MARKER
+L3.MIAC.A20.3 : MARKER
+L3.ENAC.A20.3 : MARKER 
+L3.STAC.A20.4 : MARKER
+L3.MIAC.A20.4 : MARKER
+L3.ENAC.A20.4 : MARKER 
+L3.STAC.A21.1 : MARKER
+L3.MIAC.A21.1 : MARKER
+L3.ENAC.A21.1 : MARKER 
+L3.STAC.A21.2 : MARKER
+L3.MIAC.A21.2 : MARKER
+L3.ENAC.A21.2 : MARKER 
+L3.STAC.A21.3 : MARKER
+L3.MIAC.A21.3 : MARKER
+L3.ENAC.A21.3 : MARKER 
+L3.STAC.A21.4 : MARKER
+L3.MIAC.A21.4 : MARKER
+L3.ENAC.A21.4 : MARKER 
+L3.STAC.A22.1 : MARKER
+L3.MIAC.A22.1 : MARKER
+L3.ENAC.A22.1 : MARKER 
+L3.STAC.A22.2 : MARKER
+L3.MIAC.A22.2 : MARKER
+L3.ENAC.A22.2 : MARKER 
+L3.STAC.A22.3 : MARKER
+L3.MIAC.A22.3 : MARKER
+L3.ENAC.A22.3 : MARKER 
+L3.STAC.A22.4 : MARKER
+L3.MIAC.A22.4 : MARKER
+L3.ENAC.A22.4 : MARKER 
+L3.STAC.A23.1 : MARKER
+L3.MIAC.A23.1 : MARKER
+L3.ENAC.A23.1 : MARKER 
+L3.STAC.A23.2 : MARKER
+L3.MIAC.A23.2 : MARKER
+L3.ENAC.A23.2 : MARKER 
+L3.STAC.A23.3 : MARKER
+L3.MIAC.A23.3 : MARKER
+L3.ENAC.A23.3 : MARKER 
+L3.STAC.A23.4 : MARKER
+L3.MIAC.A23.4 : MARKER
+L3.ENAC.A23.4 : MARKER 
+L3.STAC.A24.1 : MARKER
+L3.MIAC.A24.1 : MARKER
+L3.ENAC.A24.1 : MARKER 
+L3.STAC.A24.2 : MARKER
+L3.MIAC.A24.2 : MARKER
+L3.ENAC.A24.2 : MARKER 
+L3.STAC.A24.3 : MARKER
+L3.MIAC.A24.3 : MARKER
+L3.ENAC.A24.3 : MARKER 
+L3.STAC.A24.4 : MARKER
+L3.MIAC.A24.4 : MARKER
+L3.ENAC.A24.4 : MARKER 
+L3.STAC.A25.1 : MARKER
+L3.MIAC.A25.1 : MARKER
+L3.ENAC.A25.1 : MARKER 
+L3.STAC.A25.2 : MARKER
+L3.MIAC.A25.2 : MARKER
+L3.ENAC.A25.2 : MARKER 
+L3.STAC.A25.3 : MARKER
+L3.MIAC.A25.3 : MARKER
+L3.ENAC.A25.3 : MARKER 
+L3.STAC.A25.4 : MARKER
+L3.MIAC.A25.4 : MARKER
+L3.ENAC.A25.4 : MARKER 
+L3.STAC.A26.1 : MARKER
+L3.MIAC.A26.1 : MARKER
+L3.ENAC.A26.1 : MARKER 
+L3.STAC.A26.2 : MARKER
+L3.MIAC.A26.2 : MARKER
+L3.ENAC.A26.2 : MARKER 
+L3.STAC.A26.3 : MARKER
+L3.MIAC.A26.3 : MARKER
+L3.ENAC.A26.3 : MARKER 
+L3.STAC.A26.4 : MARKER
+L3.MIAC.A26.4 : MARKER
+L3.ENAC.A26.4 : MARKER 
+
+L3.STAC.A27.1 : MARKER
+L3.MIAC.A27.1 : MARKER
+L3.ENAC.A27.1 : MARKER 
+L3.STAC.A27.2 : MARKER
+L3.MIAC.A27.2 : MARKER
+L3.ENAC.A27.2 : MARKER 
+L3.STAC.A27.3 : MARKER
+L3.MIAC.A27.3 : MARKER
+L3.ENAC.A27.3 : MARKER 
+L3.STAC.A27.4 : MARKER
+L3.MIAC.A27.4 : MARKER
+L3.ENAC.A27.4 : MARKER 
+L3.STAC.A28.1 : MARKER
+L3.MIAC.A28.1 : MARKER
+L3.ENAC.A28.1 : MARKER 
+L3.STAC.A28.2 : MARKER
+L3.MIAC.A28.2 : MARKER
+L3.ENAC.A28.2 : MARKER 
+L3.STAC.A28.3 : MARKER
+L3.MIAC.A28.3 : MARKER
+L3.ENAC.A28.3 : MARKER 
+L3.STAC.A28.4 : MARKER
+L3.MIAC.A28.4 : MARKER
+L3.ENAC.A28.4 : MARKER 
+L3.STAC.A29.1 : MARKER
+L3.MIAC.A29.1 : MARKER
+L3.ENAC.A29.1 : MARKER 
+L3.STAC.A29.2 : MARKER
+L3.MIAC.A29.2 : MARKER
+L3.ENAC.A29.2 : MARKER 
+L3.STAC.A29.3 : MARKER
+L3.MIAC.A29.3 : MARKER
+L3.ENAC.A29.3 : MARKER 
+L3.STAC.A29.4 : MARKER
+L3.MIAC.A29.4 : MARKER
+L3.ENAC.A29.4 : MARKER 
+
+! Markers for 3.9 GHZ MODULE
+I1.STAC.AH1.1: MARKER
+I1.ENAC.AH1.1: MARKER
+I1.MIAC.AH1.1: MARKER
+
+! BPM at ACC end (TYP BPM) ---------------------------------------------
+I1.BPMC : MONITOR  ! Cold Button BPM
+L1.BPMC : MONITOR  ! Cold Button BPM
+L2.BPMC : MONITOR  ! Cold Button BPM
+L3.BPMC : MONITOR  ! Cold Button BPM
+I1.BPMR : MONITOR  ! Re-Entrant BPM
+L1.BPMR : MONITOR  ! Re-Entrant BPM
+L2.BPMR : MONITOR  ! Re-Entrant BPM
+L3.BPMR : MONITOR  ! Re-Entrant BPM
+L3.BPMA : MONITOR  ! Warm Button BPM  40.5 mm diameter
+L3.TORA : MARKER   ! Toroid at beginning of temporary beamline
+
+! Steerer at ACC end-----------------------------------------------------
+! (zero length kicker, in reality cos(phi) winding in quadrupole)
+I1.CX   : HKICKER
+I1.CY   : VKICKER
+L1.CX   : HKICKER
+L1.CY   : VKICKER
+L2.CX   : HKICKER
+L2.CY   : VKICKER
+L3.CX   : HKICKER
+L3.CY   : VKICKER
+
+! Injector Linac Quadrupols---------------------------------------------
+I1.Q.A1.1  : QUADRUPOLE, L=0.3, K1= -1.537886E+00 
+I1.Q.AH1.1 : QUADRUPOLE, L=0.3, K1=  1.435078E+00  
+! Linac 1 Quadrupoles ------------------------------------------
+L1.Q.A2.1   : Quadrupole, L=0.3, K1=  0.219222826375    
+L1.Q.A2.2   : Quadrupole, L=0.3, K1= -0.211095518521  
+L1.Q.A2.3   : Quadrupole, L=0.3, K1=  0.141481449266
+L1.Q.A2.4   : Quadrupole, L=0.3, K1= -0.144615140151 
+! Linac 2 Quadrupoles ------------------------------------------
+L2.Q.A3.1: Quadrupole, L=0.3, K1=2.604636E-01       !0.29008 
+L2.Q.A3.2: Quadrupole, L=0.3, K1= -2.391746E-01      !-0.3329 
+L2.Q.A3.3: Quadrupole, L=0.3, K1=0.15       !0.25229 
+L2.Q.A3.4: Quadrupole, L=0.3, K1=-0.15      !-0.28899 
+L2.Q.A4.1: Quadrupole, L=0.3, K1=0.15       !0.28037 
+L2.Q.A4.2: Quadrupole, L=0.3, K1=-0.15      !-0.28037 
+L2.Q.A4.3: Quadrupole, L=0.3, K1=0.15        !0.28037 
+L2.Q.A4.4: Quadrupole, L=0.3, K1=-0.15       !-0.28037 
+L2.Q.A5.1: Quadrupole, L=0.3, K1=1.368622E-01      !0.48169 
+L2.Q.A5.2: Quadrupole, L=0.3, K1=-3.658154E-01      !-0.25502 
+L2.Q.A5.3: Quadrupole, L=0.3, K1=2.606671E-01       !0.30506 
+L2.Q.A5.4: Quadrupole, L=0.3, K1= -3.647037E-01       !-0.2736 
+! Linac 3 Quadrupoles --------------------------------------------------
+L3.Q.F  : QUADRUPOLE, L=0.3, K1=  2.145800E-01      
+L3.Q.D  : QUADRUPOLE, L=0.3, K1= -2.145800E-01
+
+L3.Q.A6.1: Quadrupole, L=0.3, K1=-2.715919E-01
+L3.Q.A6.2: Quadrupole, L=0.3, K1= 2.909251E-01
+L3.Q.A6.3: Quadrupole, L=0.3, K1=-1.010462E-01  
+L3.Q.A6.4: Quadrupole, L=0.3, K1=-1.674086E-01
+L3.Q.A7.1   : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]  
+L3.Q.A7.2   : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1]  
+L3.Q.A7.3   : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A7.4   : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A8.1   : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A8.2   : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1]   
+L3.Q.A8.3: Quadrupole, L=0.3, K1=2.258091E-01
+L3.Q.A8.4: Quadrupole, L=0.3, K1=-2.094214E-01
+L3.Q.A9.1: Quadrupole, L=0.3, K1=2.067368E-01 
+L3.Q.A9.2: Quadrupole, L=0.3, K1=-2.181746E-01
+L3.Q.A9.3   : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1] 
+L3.Q.A9.4   : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A10.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A10.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A10.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A10.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A11.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1] 
+L3.Q.A11.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A11.3  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.3[K1]
+L3.Q.A11.4  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.4[K1]
+L3.Q.A12.1  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.1[K1]       
+L3.Q.A12.2  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.2[K1]
+L3.Q.A12.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A12.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A13.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A13.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A13.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1] 
+L3.Q.A13.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A14.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A14.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A14.3  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.3[K1]  
+L3.Q.A14.4  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.4[K1]
+L3.Q.A15.1  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.1[K1]
+L3.Q.A15.2  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.2[K1]
+L3.Q.A15.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A15.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A16.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A16.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A16.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A16.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A17.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A17.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A17.3  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.3[K1]
+L3.Q.A17.4  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.4[K1]
+L3.Q.A18.1  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.1[K1]
+L3.Q.A18.2  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.2[K1]
+L3.Q.A18.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A18.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A19.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A19.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A19.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A19.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A20.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A20.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A20.3  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.3[K1]
+L3.Q.A20.4  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.4[K1]
+L3.Q.A21.1  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.1[K1]
+L3.Q.A21.2  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.2[K1]
+L3.Q.A21.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A21.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A22.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A22.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A22.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A22.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A23.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A23.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A23.3  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.3[K1]
+L3.Q.A23.4  : QUADRUPOLE, L=0.3, K1=L3.Q.A8.4[K1]
+L3.Q.A24.1  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.1[K1]        
+L3.Q.A24.2  : QUADRUPOLE, L=0.3, K1=L3.Q.A9.2[K1]   
+L3.Q.A24.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A24.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A25.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A25.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A25.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A25.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A26.1: Quadrupole, L=0.3, K1= 1.040586E-01 
+L3.Q.A26.2: Quadrupole, L=0.3, K1=-2.918657E-02 
+L3.Q.A26.3: Quadrupole, L=0.3, K1= 1.553850E-01
+L3.Q.A26.4: Quadrupole, L=0.3, K1=-1.772898E-01 
+
+L3.Q.A27.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A27.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A27.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A27.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A28.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A28.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A28.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A28.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A29.1  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A29.2  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
+L3.Q.A29.3  : QUADRUPOLE, L=0.3, K1=L3.Q.F[K1]
+L3.Q.A29.4  : QUADRUPOLE, L=0.3, K1=L3.Q.D[K1] 
 
   
+MIAC: MARKER
 
-
-
-miac = Marker(id = 'miac')
-
-
-
-
-
-acc=lambdastart,c,bpm,q,cor,end:        (start, d0080, 4*(d01416,c, d02043,ltwakecav), miac,       4*(d01416,c, d02043,ltwakecav),       q, cor, d0085, bpm, d0085, d00729, d0300, end)
-
-
-
+ACC(START,C,BPM,Q,COR,END) : LINE = &
+    (START, D0080, 4*(D01416,C, D02043,LTWAKECAV), MIAC, &
+     4*(D01416,C, D02043,LTWAKECAV), &
+     Q, COR, D0085, BPM, D0085, D00729, D0300, END)
      
-
-
-
-accrev=lambdastart,c,end:        (end, 4*(ltwakecav, d02043, c, d01416),       miac, 4*(ltwakecav, d02043, c, d01416),       d0080, start)  
-
-
-
+ACCREV(START,C,END) : LINE = &
+    (END, 4*(LTWAKECAV, D02043, C, D01416), &
+     MIAC, 4*(LTWAKECAV, D02043, C, D01416), &
+     D0080, START)  
                
-
-
-
      
 
-
-
-
-
-
-
-ach=lambdastart,c,bpm,q,corx,cory,end:        (start, d00611, d0075, d0085, bpm, d0085, q, corx, cory, d0020, d0102,      2*(d0080, c, d0080, ltwakecav3, d0102), miac,       5*(d0080, c, d0080, ltwakecav3, d0102),         (d0080, c, d0080, ltwakecav3),      d0075, end)
-
-
-
-
-
-
-
-# injector linac ------------------------------------------------------
-
-
-
-i1cor =(i1_cx,i1_cy)
-
-
-
-acc1=(acc(i1_stac_a1_1, i1_c_a1,i1_bpmc, i1_q_a1_1, i1cor, i1_enac_a1_1))
-
-
-
-acc1rev=(accrev(i1_stac_a1_1,i1_c_a1_r,i1_enac_a1_1))
-
-
-
-acc10q  = (i1_stac_a1_1,d0080,4*(d01416,i1_c_a1,d02043,ltwakecav),miac,                4*(d01416,i1_c_a1,d02043,ltwakecav))
-
-
-
-acc1c8  = (i1_stac_a1_1,                  i1_q_a1_1, i1_cx, i1_cy, d0085, i1_bpmc, d0085,                 d00729, d0300, i1_enac_a1_1)
-
-
-
-ach1=  (ach(i1_stac_ah1_1,i1_c3_ah1,i1_bpmc,i1_q_ah1_1,i1_cx,i1_cy,i1_enac_ah1_1))
-
-
-
-
-
-
-
-# linac 1 -------------------------------------------------------------
-
-
-
-l1cor =(l1_cx,l1_cy)
-
-
-
-
-
-
-
-acc2_1=(acc(l1_stac_a2_1,l1_c_a2,l1_bpmc,l1_q_a2_1,l1cor,l1_enac_a2_1))
-
-
-
-acc2_2=(acc(l1_stac_a2_2,l1_c_a2,l1_bpmc,l1_q_a2_2,l1cor,l1_enac_a2_2))
-
-
-
-acc2_3=(acc(l1_stac_a2_3,l1_c_a2,l1_bpmc,l1_q_a2_3,l1cor,l1_enac_a2_3))
-
-
-
-acc2_4=(acc(l1_stac_a2_4,l1_c_a2,l1_bpmc,l1_q_a2_4,l1cor,l1_enac_a2_4))
-
-
-
-
-
-
-
-# linac 2 ------------------------------------------------------------
-
-
-
-
-
-
-
-acc3_1=(acc(l2_stac_a3_1,l2_c_a3,l2_bpmr,l2_q_a3_1,l2_cx,l2_enac_a3_1))
-
-
-
-acc3_2=(acc(l2_stac_a3_2,l2_c_a3,l2_bpmr,l2_q_a3_2,l2_cy,l2_enac_a3_2))
-
-
-
-acc3_3=(acc(l2_stac_a3_3,l2_c_a3,l2_bpmc,l2_q_a3_3,l2_cx,l2_enac_a3_3))
-
-
-
-acc3_4=(acc(l2_stac_a3_4,l2_c_a3,l2_bpmc,l2_q_a3_4,l2_cy,l2_enac_a3_4))
-
-
-
-acc4_1=(acc(l2_stac_a4_1,l2_c_a4,l2_bpmc,l2_q_a4_1,l2_cx,l2_enac_a4_1))
-
-
-
-acc4_2=(acc(l2_stac_a4_2,l2_c_a4,l2_bpmc,l2_q_a4_2,l2_cy,l2_enac_a4_2))
-
-
-
-acc4_3=(acc(l2_stac_a4_3,l2_c_a4,l2_bpmc,l2_q_a4_3,l2_cx,l2_enac_a4_3))
-
-
-
-acc4_4=(acc(l2_stac_a4_4,l2_c_a4,l2_bpmc,l2_q_a4_4,l2_cy,l2_enac_a4_4))
-
-
-
-acc5_1=(acc(l2_stac_a5_1,l2_c_a5,l2_bpmc,l2_q_a5_1,l2_cx,l2_enac_a5_1))
-
-
-
-acc5_2=(acc(l2_stac_a5_2,l2_c_a5,l2_bpmc,l2_q_a5_2,l2_cy,l2_enac_a5_2))
-
-
-
-acc5_3=(acc(l2_stac_a5_3,l2_c_a5,l2_bpmr,l2_q_a5_3,l2_cx,l2_enac_a5_3))
-
-
-
-acc5_4=(acc(l2_stac_a5_4,l2_c_a5,l2_bpmr,l2_q_a5_4,l2_cy,l2_enac_a5_4))
-
-
-
-
-
-
-
-# main linac matching cell-----------------------------------------------
-
-
-
-acc6_1=(acc(l3_stac_a6_1, l3_c_a6, l3_bpmr,l3_q_a6_1, l3_cx,l3_enac_a6_1))
-
-
-
-acc6_2=(acc(l3_stac_a6_2, l3_c_a6, l3_bpmr,l3_q_a6_2, l3_cy,l3_enac_a6_2))
-
-
-
-acc6_3=(acc(l3_stac_a6_3, l3_c_a6, l3_bpmc,l3_q_a6_3, l3_cx,l3_enac_a6_3))
-
-
-
-acc6_4=(acc(l3_stac_a6_4, l3_c_a6, l3_bpmc,l3_q_a6_4, l3_cy,l3_enac_a6_4))
-
-
-
-acc7_1=(acc(l3_stac_a7_1, l3_c_a7, l3_bpmc,l3_q_a7_1, l3_cx,l3_enac_a7_1))
-
-
-
-acc7_2=(acc(l3_stac_a7_2, l3_c_a7, l3_bpmc,l3_q_a7_2, l3_cy,l3_enac_a7_2))
-
-
-
-acc7_3=(acc(l3_stac_a7_3, l3_c_a7, l3_bpmc,l3_q_a7_3, l3_cx,l3_enac_a7_3))
-
-
-
-acc7_4=(acc(l3_stac_a7_4, l3_c_a7, l3_bpmc,l3_q_a7_4, l3_cy,l3_enac_a7_4))
-
-
-
-acc8_1=(acc(l3_stac_a8_1, l3_c_a8, l3_bpmc,l3_q_a8_1, l3_cx,l3_enac_a8_1))
-
-
-
-acc8_2=(acc(l3_stac_a8_2, l3_c_a8, l3_bpmc,l3_q_a8_2, l3_cy,l3_enac_a8_2))
-
-
-
-acc8_3=(acc(l3_stac_a8_3, l3_c_a8, l3_bpmr,l3_q_a8_3, l3_cx,l3_enac_a8_3))
-
-
-
-acc8_4=(acc(l3_stac_a8_4, l3_c_a8, l3_bpmr,l3_q_a8_4, l3_cy,l3_enac_a8_4))
-
-
-
-acc9_1=(acc(l3_stac_a9_1, l3_c_a9, l3_bpmr,l3_q_a9_1, l3_cx,l3_enac_a9_1))
-
-
-
-acc9_2=(acc(l3_stac_a9_2, l3_c_a9, l3_bpmr,l3_q_a9_2, l3_cy,l3_enac_a9_2))
-
-
-
-acc9_3=(acc(l3_stac_a9_3, l3_c_a9, l3_bpmc,l3_q_a9_3, l3_cx,l3_enac_a9_3))
-
-
-
-acc9_4=(acc(l3_stac_a9_4, l3_c_a9, l3_bpmc,l3_q_a9_4, l3_cy,l3_enac_a9_4))
-
-
-
-acc10_1=   (acc(l3_stac_a10_1,l3_c_a10,l3_bpmc,l3_q_a10_1,l3_cx,l3_enac_a10_1))
-
-
-
-acc10_2=   (acc(l3_stac_a10_2,l3_c_a10,l3_bpmc,l3_q_a10_2,l3_cy,l3_enac_a10_2))
-
-
-
-acc10_3=   (acc(l3_stac_a10_3,l3_c_a10,l3_bpmc,l3_q_a10_3,l3_cx,l3_enac_a10_3))
-
-
-
-acc10_4=   (acc(l3_stac_a10_4,l3_c_a10,l3_bpmc,l3_q_a10_4,l3_cy,l3_enac_a10_4))
-
-
-
-acc11_1=   (acc(l3_stac_a11_1,l3_c_a11,l3_bpmc,l3_q_a11_1,l3_cx,l3_enac_a11_1))
-
-
-
-acc11_2=   (acc(l3_stac_a11_2,l3_c_a11,l3_bpmc,l3_q_a11_2,l3_cy,l3_enac_a11_2))
-
-
-
-acc11_3=   (acc(l3_stac_a11_3,l3_c_a11,l3_bpmr,l3_q_a11_3,l3_cx,l3_enac_a11_3))
-
-
-
-acc11_4=   (acc(l3_stac_a11_4,l3_c_a11,l3_bpmr,l3_q_a11_4,l3_cy,l3_enac_a11_4))
-
-
-
-acc12_1=   (acc(l3_stac_a12_1,l3_c_a12,l3_bpmr,l3_q_a12_1,l3_cx,l3_enac_a12_1))
-
-
-
-acc12_2=   (acc(l3_stac_a12_2,l3_c_a12,l3_bpmr,l3_q_a12_2,l3_cy,l3_enac_a12_2))
-
-
-
-acc12_3=   (acc(l3_stac_a12_3,l3_c_a12,l3_bpmc,l3_q_a12_3,l3_cx,l3_enac_a12_3))
-
-
-
-acc12_4=   (acc(l3_stac_a12_4,l3_c_a12,l3_bpmc,l3_q_a12_4,l3_cy,l3_enac_a12_4))
-
-
-
-acc13_1=   (acc(l3_stac_a13_1,l3_c_a13,l3_bpmc,l3_q_a13_1,l3_cx,l3_enac_a13_1))
-
-
-
-acc13_2=   (acc(l3_stac_a13_2,l3_c_a13,l3_bpmc,l3_q_a13_2,l3_cy,l3_enac_a13_2))
-
-
-
-acc13_3=   (acc(l3_stac_a13_3,l3_c_a13,l3_bpmc,l3_q_a13_3,l3_cx,l3_enac_a13_3))
-
-
-
-acc13_4=   (acc(l3_stac_a13_4,l3_c_a13,l3_bpmc,l3_q_a13_4,l3_cy,l3_enac_a13_4))
-
-
-
-acc14_1=   (acc(l3_stac_a14_1,l3_c_a14,l3_bpmc,l3_q_a14_1,l3_cx,l3_enac_a14_1))
-
-
-
-acc14_2=   (acc(l3_stac_a14_2,l3_c_a14,l3_bpmc,l3_q_a14_2,l3_cy,l3_enac_a14_2))
-
-
-
-acc14_3=   (acc(l3_stac_a14_3,l3_c_a14,l3_bpmr,l3_q_a14_3,l3_cx,l3_enac_a14_3))
-
-
-
-acc14_4=   (acc(l3_stac_a14_4,l3_c_a14,l3_bpmr,l3_q_a14_4,l3_cy,l3_enac_a14_4))
-
-
-
-acc15_1=   (acc(l3_stac_a15_1,l3_c_a15,l3_bpmr,l3_q_a15_1,l3_cx,l3_enac_a15_1))
-
-
-
-acc15_2=   (acc(l3_stac_a15_2,l3_c_a15,l3_bpmr,l3_q_a15_2,l3_cy,l3_enac_a15_2))
-
-
-
-acc15_3=    (acc(l3_stac_a15_3,l3_c_a15,l3_bpmc,l3_q_a15_3,l3_cx,l3_enac_a15_3))
-
-
-
-acc15_4=   (acc(l3_stac_a15_4,l3_c_a15,l3_bpmc,l3_q_a15_4,l3_cy,l3_enac_a15_4))
-
-
-
-acc16_1=   (acc(l3_stac_a16_1,l3_c_a16,l3_bpmc,l3_q_a16_1,l3_cx,l3_enac_a16_1))
-
-
-
-acc16_2=   (acc(l3_stac_a16_2,l3_c_a16,l3_bpmc,l3_q_a16_2,l3_cy,l3_enac_a16_2))
-
-
-
-acc16_3=   (acc(l3_stac_a16_3,l3_c_a16,l3_bpmc,l3_q_a16_3,l3_cx,l3_enac_a16_3))
-
-
-
-acc16_4=   (acc(l3_stac_a16_4,l3_c_a16,l3_bpmc,l3_q_a16_4,l3_cy,l3_enac_a16_4))
-
-
-
-acc17_1=   (acc(l3_stac_a17_1,l3_c_a17,l3_bpmc,l3_q_a17_1,l3_cx,l3_enac_a17_1))
-
-
-
-acc17_2=   (acc(l3_stac_a17_2,l3_c_a17,l3_bpmc,l3_q_a17_2,l3_cy,l3_enac_a17_2))
-
-
-
-acc17_3=   (acc(l3_stac_a17_3,l3_c_a17,l3_bpmr,l3_q_a17_3,l3_cx,l3_enac_a17_3))
-
-
-
-acc17_4=   (acc(l3_stac_a17_4,l3_c_a17,l3_bpmr,l3_q_a17_4,l3_cy,l3_enac_a17_4))
-
-
-
-acc18_1=   (acc(l3_stac_a18_1,l3_c_a18,l3_bpmr,l3_q_a18_1,l3_cx,l3_enac_a18_1))
-
-
-
-acc18_2=   (acc(l3_stac_a18_2,l3_c_a18,l3_bpmr,l3_q_a18_2,l3_cy,l3_enac_a18_2))
-
-
-
-acc18_3=   (acc(l3_stac_a18_3,l3_c_a18,l3_bpmc,l3_q_a18_3,l3_cx,l3_enac_a18_3))
-
-
-
-acc18_4=   (acc(l3_stac_a18_4,l3_c_a18,l3_bpmc,l3_q_a18_4,l3_cy,l3_enac_a18_4))
-
-
-
-acc19_1=   (acc(l3_stac_a19_1,l3_c_a19,l3_bpmc,l3_q_a19_1,l3_cx,l3_enac_a19_1))
-
-
-
-acc19_2=   (acc(l3_stac_a19_2,l3_c_a19,l3_bpmc,l3_q_a19_2,l3_cy,l3_enac_a19_2))
-
-
-
-acc19_3=   (acc(l3_stac_a19_3,l3_c_a19,l3_bpmc,l3_q_a19_3,l3_cx,l3_enac_a19_3))
-
-
-
-acc19_4=   (acc(l3_stac_a19_4,l3_c_a19,l3_bpmc,l3_q_a19_4,l3_cy,l3_enac_a19_4))
-
-
-
-acc20_1=   (acc(l3_stac_a20_1,l3_c_a20,l3_bpmc,l3_q_a20_1,l3_cx,l3_enac_a20_1))
-
-
-
-acc20_2=   (acc(l3_stac_a20_2,l3_c_a20,l3_bpmc,l3_q_a20_2,l3_cy,l3_enac_a20_2))
-
-
-
-acc20_3=   (acc(l3_stac_a20_3,l3_c_a20,l3_bpmr,l3_q_a20_3,l3_cx,l3_enac_a20_3))
-
-
-
-acc20_4=   (acc(l3_stac_a20_4,l3_c_a20,l3_bpmr,l3_q_a20_4,l3_cy,l3_enac_a20_4))
-
-
-
-acc21_1=   (acc(l3_stac_a21_1,l3_c_a21,l3_bpmr,l3_q_a21_1,l3_cx,l3_enac_a21_1))
-
-
-
-acc21_2=   (acc(l3_stac_a21_2,l3_c_a21,l3_bpmr,l3_q_a21_2,l3_cy,l3_enac_a21_2))
-
-
-
-acc21_3=   (acc(l3_stac_a21_3,l3_c_a21,l3_bpmc,l3_q_a21_3,l3_cx,l3_enac_a21_3))
-
-
-
-acc21_4=   (acc(l3_stac_a21_4,l3_c_a21,l3_bpmc,l3_q_a21_4,l3_cy,l3_enac_a21_4))
-
-
-
-acc22_1=   (acc(l3_stac_a22_1,l3_c_a22,l3_bpmc,l3_q_a22_1,l3_cx,l3_enac_a22_1))
-
-
-
-acc22_2=   (acc(l3_stac_a22_2,l3_c_a22,l3_bpmc,l3_q_a22_2,l3_cy,l3_enac_a22_2))
-
-
-
-acc22_3=   (acc(l3_stac_a22_3,l3_c_a22,l3_bpmc,l3_q_a22_3,l3_cx,l3_enac_a22_3))
-
-
-
-acc22_4=   (acc(l3_stac_a22_4,l3_c_a22,l3_bpmc,l3_q_a22_4,l3_cy,l3_enac_a22_4))
-
-
-
-acc23_1=   (acc(l3_stac_a23_1,l3_c_a23,l3_bpmc,l3_q_a23_1,l3_cx,l3_enac_a23_1))
-
-
-
-acc23_2=   (acc(l3_stac_a23_2,l3_c_a23,l3_bpmc,l3_q_a23_2,l3_cy,l3_enac_a23_2))
-
-
-
-acc23_3=   (acc(l3_stac_a23_3,l3_c_a23,l3_bpmr,l3_q_a23_3,l3_cx,l3_enac_a23_3))
-
-
-
-acc23_4=   (acc(l3_stac_a23_4,l3_c_a23,l3_bpmr,l3_q_a23_4,l3_cy,l3_enac_a23_4))
-
-
-
-acc24_1=   (acc(l3_stac_a24_1,l3_c_a24,l3_bpmr,l3_q_a24_1,l3_cx,l3_enac_a24_1))
-
-
-
-acc24_2=   (acc(l3_stac_a24_2,l3_c_a24,l3_bpmr,l3_q_a24_2,l3_cy,l3_enac_a24_2))
-
-
-
-acc24_3=   (acc(l3_stac_a24_3,l3_c_a24,l3_bpmc,l3_q_a24_3,l3_cx,l3_enac_a24_3))
-
-
-
-acc24_4=   (acc(l3_stac_a24_4,l3_c_a24,l3_bpmc,l3_q_a24_4,l3_cy,l3_enac_a24_4))
-
-
-
-acc25_1=   (acc(l3_stac_a25_1,l3_c_a25,l3_bpmc,l3_q_a25_1,l3_cx,l3_enac_a25_1))
-
-
-
-acc25_2=   (acc(l3_stac_a25_2,l3_c_a25,l3_bpmc,l3_q_a25_2,l3_cy,l3_enac_a25_2))
-
-
-
-acc25_3=   (acc(l3_stac_a25_3,l3_c_a25,l3_bpmc,l3_q_a25_3,l3_cx,l3_enac_a25_3))
-
-
-
-acc25_4=   (acc(l3_stac_a25_4,l3_c_a25,l3_bpmc,l3_q_a25_4,l3_cy,l3_enac_a25_4))
-
-
-
-acc26_1=   (acc(l3_stac_a26_1,l3_c_a26,l3_bpmc,l3_q_a26_1,l3_cx,l3_enac_a26_1))
-
-
-
-acc26_2=   (acc(l3_stac_a26_2,l3_c_a26,l3_bpmc,l3_q_a26_2,l3_cy,l3_enac_a26_2))
-
-
-
-acc26_3=   (acc(l3_stac_a26_3,l3_c_a26,l3_bpmr,l3_q_a26_3,l3_cx,l3_enac_a26_3))
-
-
-
-acc26_4=   (acc(l3_stac_a26_4,l3_c_a26,l3_bpmr,l3_q_a26_4,l3_cy,l3_enac_a26_4))
-
-
-
-acc27_1=   (acc(l3_stac_a27_1,l3_c_a27,l3_bpmc,l3_q_a27_1,l3_cx,l3_enac_a27_1))
-
-
-
-acc27_2=   (acc(l3_stac_a27_2,l3_c_a27,l3_bpmc,l3_q_a27_2,l3_cy,l3_enac_a27_2))
-
-
-
-acc27_3=   (acc(l3_stac_a27_3,l3_c_a27,l3_bpmr,l3_q_a27_3,l3_cx,l3_enac_a27_3))
-
-
-
-acc27_4=   (acc(l3_stac_a27_4,l3_c_a27,l3_bpmr,l3_q_a27_4,l3_cy,l3_enac_a27_4))
-
-
-
-acc28_1=   (acc(l3_stac_a28_1,l3_c_a28,l3_bpmc,l3_q_a28_1,l3_cx,l3_enac_a28_1))
-
-
-
-acc28_2=   (acc(l3_stac_a28_2,l3_c_a28,l3_bpmc,l3_q_a28_2,l3_cy,l3_enac_a28_2))
-
-
-
-acc28_3=   (acc(l3_stac_a28_3,l3_c_a28,l3_bpmr,l3_q_a28_3,l3_cx,l3_enac_a28_3))
-
-
-
-acc28_4=   (acc(l3_stac_a28_4,l3_c_a28,l3_bpmr,l3_q_a28_4,l3_cy,l3_enac_a28_4))
-
-
-
-acc29_1=   (acc(l3_stac_a29_1,l3_c_a29,l3_bpmc,l3_q_a29_1,l3_cx,l3_enac_a29_1))
-
-
-
-acc29_2=   (acc(l3_stac_a29_2,l3_c_a29,l3_bpmc,l3_q_a29_2,l3_cy,l3_enac_a29_2))
-
-
-
-acc29_3=   (acc(l3_stac_a29_3,l3_c_a29,l3_bpmr,l3_q_a29_3,l3_cx,l3_enac_a29_3))
-
-
-
-acc29_4=   (acc(l3_stac_a29_4,l3_c_a29,l3_bpmr,l3_q_a29_4,l3_cy,l3_enac_a29_4))
-
-
-
-
-
-
-
-# main linac cell without cavity focussing
-
-
-
-acc00_f=(acc(l3_stac_a26_3,l3_c_00,l3_bpmc,l3_q_f,l3_cx,l3_enac_a26_3))
-
-
-
-acc00_d=(acc(l3_stac_a26_4,l3_c_00,l3_bpmc,l3_q_d,l3_cy,l3_enac_a26_4))
-
-
-
-l3_fodo0  = (acc00_f, acc00_d)
-
-
-
-
-
-
-
-# long fodo and matching after linac
-
-
-
-l3_qe_1_1 = Quadrupole(l=0.2, k1=1.537098e-01, id = 'l3_qe_1_1')
-
-l3_qe_1_2 = Quadrupole(l=0.2, k1=-l3_qe_1_1.k1, id = 'l3_qe_1_2')
-
-l3_cex = scavenger(l=0.1, id = 'l3_cex')
-
-l3_cey = scavenger(l=0.1, id = 'l3_cey')
-
-l3_qe_2 = Quadrupole(l=0.2, k1=-1.501576e-02, id = 'l3_qe_2')
-
-l3_qf_1 = Quadrupole(l=0.5, k1=+0.0000000001, id = 'l3_qf_1')
-
-l3_qf_2 = Quadrupole(l=0.5, k1=-1.259369e-01, id = 'l3_qf_2')
-
-l3_cfx = scavenger(l=0.1, id = 'l3_cfx')
-
-l3_cfy = scavenger(l=0.1, id = 'l3_cfy')
-
-
-
-
-
-d359096 = Drift(l=(12*11.9917+2.9978)/4-0.815, id = 'd359096')
-
-
-
-
-
-# 01.02.2013: 73.4491 m long fodo after linac with 4 screens
-
-
-
-l3_otrbw = Marker(id = 'l3_otrbw')
-
-d359096a = Drift(l=(d359096.l+0.290+0.325)/2-0.290-0.200, id = 'd359096a')
-
-d359096b = Drift(l=(d359096.l+0.290+0.325)/2-0.325-0.400, id = 'd359096b')
-
-
-
-
-
-l3f=(d359096a, d0200,l3_otrbw,d0400, d359096b,            qesec(l3_bpma, l3_qe_1_1,l3_cex))
-
-
-
-l3d=(d359096a, d0200,l3_otrbw,d0400, d359096b,            qesec(l3_bpma, l3_qe_1_2,l3_cey))
-
-
-
-l3d0=(d359096a, d0200,d0400, d359096b,            qesec(l3_bpma, l3_qe_1_2,l3_cey))
-
-
-
-
-
-
-
-d1277325 = Drift(l=12.77325, id = 'd1277325')
-
-d5780 = Drift(l=5.780, id = 'd5780')
-
-d5745 = Drift(l=5.745, id = 'd5745')
-
-d8215 = Drift(l=8.215, id = 'd8215')
-
-d11263 = Drift(l=1.1263, id = 'd11263')
-
-
-
-
-
-l3tcl=(d1277325,                                               qesec(l3_bpma,l3_qe_2,l3_cey),                         d5780, l3_otrbw, d5745,                                 qfsec(l3_bpma,l3_qf_1,l3_cfx), d8215,                  qfsec(l3_bpma,l3_qf_2,l3_cfy), d11263)    
-
-
-
-
-
-
-
-# linac 0 (injector linac) ------------------------------------------------
-
-
-
-i1_start_l0 = Marker(id = 'i1_start_l0')
-
-i1_end_l0 = Marker(id = 'i1_end_l0')
-
-
-
-
-
-l0 =(i1_start_l0, i1_cfbi, acc1,ach1,i1_ctbi, i1_end_l0)
-
-
-
-l0c8 =(acc1c8,ach1,i1_ctbi, i1_end_l0)
-
-
-
-l0c8rev =(acc1rev,i1_cfbi,i1_start_l0)
-
-
-
-
-
-
-
-# linac 1 -----------------------------------------------------------------
-
-
-
-l1_start_l1 = Marker(id = 'l1_start_l1')
-
-l1_end_l1 = Marker(id = 'l1_end_l1')
-
-
-
-
-
-l1c =(acc2_1,acc2_2,acc2_3,acc2_4)
-
-
-
-
-
-
-
-l1 =(l1_start_l1, l1_cfb, l1c, l1_ctb, l1_end_l1)
-
-
-
-
-
-
-
-# linac 2 ---------------------------------------------------------------
-
-
-
-l2_start_l2 = Marker(id = 'l2_start_l2')
-
-l2_end_l2 = Marker(id = 'l2_end_l2')
-
-l2_mid_l2 = Marker(id = 'l2_mid_l2')
-
-
-
-
-
-l2c =(acc3_1, acc3_2, acc3_3, acc3_4,             acc4_1, acc4_2, l2_mid_l2, acc4_3, acc4_4,             acc5_1, acc5_2, acc5_3, acc5_4)
-
-
-
-
-
-
-
-
-
-
-
-l2 =(l2_start_l2, l2_cfb, l2c, l2_ctb, l2_end_l2)
-
-
-
-
-
-
-
-# ---  main linac (84 modules)   ---------------------------------------
-
-
-
-l3_start_l3 = Marker(id = 'l3_start_l3')
-
-l3_end_l3 = Marker(id = 'l3_end_l3')
-
-l3_match = Marker(id = 'l3_match')
-
-
-
-
-
-l3c  = (acc6_1, acc6_2, acc6_3, acc6_4, l3_match,                      acc7_1, acc7_2, acc7_3, acc7_4,                       acc8_1, acc8_2, acc8_3, acc8_4, l3_csc,               acc9_1, acc9_2, acc9_3, acc9_4,                       acc10_1, acc10_2, acc10_3, acc10_4,                       acc11_1, acc11_2, acc11_3, acc11_4, l3_csc,               acc12_1, acc12_2, acc12_3, acc12_4,                       acc13_1, acc13_2, acc13_3, acc13_4,                       acc14_1, acc14_2, acc14_3, acc14_4, l3_csc,               acc15_1, acc15_2, acc15_3, acc15_4,                       acc16_1, acc16_2, acc16_3, acc16_4,                       acc17_1, acc17_2, acc17_3, acc17_4, l3_csc,               acc18_1, acc18_2, acc18_3, acc18_4,                       acc19_1, acc19_2, acc19_3, acc19_4,                       acc20_1, acc20_2, acc20_3, acc20_4, l3_csc,               acc21_1, acc21_2, acc21_3, acc21_4,                       acc22_1, acc22_2, acc22_3, acc22_4,                       acc23_1, acc23_2, acc23_3, acc23_4, l3_csc,               acc24_1, acc24_2, acc24_3, acc24_4,                       acc25_1, acc25_2, acc25_3, acc25_4,                       acc26_1, acc26_2, acc26_3, acc26_4)
-
-
-
-
-
-
-
-l3full  = ( l3_csc,               acc27_1, acc27_2, acc27_3, acc27_4,                       acc28_1, acc28_2, acc28_3, acc28_4,                       acc29_1, acc29_2, acc29_3, acc29_4)
-
-
-
-
-
-
-
-l3 =(l3_start_l3, l3_cfb, l3c, l3_ctb, l3_tora,           l3f,l3d0,l3f,l3tcl,l3_end_l3)
-
-
-
-#l3: line=(l3_start_l3, l3_cfb, l3c, l3_ctb, l3_tora,l3f,l3d0,l3f,l3d, l3_end_l3)
-
-
-
-#l3: line=(l3_start_l3, l3_cfb, l3c, l3full, l3_ctb, l3_end_l3)
-
-
-
-# main linac for martins s2e simulation (after module 24)
-
-
-
-#mmlin: line = (l3.cavd,d00124, d0300, d0080, l3.accend, &
-
-
-
-#              csc, &
-
-
-
-#              acc_f1,acc_d1,acc_f2,acc_d2,acc_f ,acc_d, &
-
-
-
-#              7*mlincell, acc_f,acc_d, l3.end)
-
-
-
-
-
-
-
-#match_l3_fodo = subroutine():
-
-    #use, l3_fodo0
-
-
-
-    #cell
-
-
-
-    #vary,l3_q_f.k1, step = 0.1
-
-
-
-    #vary,l3_q_d.k1, step = 0.1
-
-
-
-    #constraint,#e,mux=0.125,muy=0.125
-
-
-
-    #simplex
-
-
-
-    #endmatch
-
-
-
-    #savebeta,label=b0_l3.match,#e
-
-
-
-    #twiss
-
-
-
-    #
-
-
-
-    #use,(  acc7_1, acc7_2, acc7_3, acc7_4,                       acc8_1, acc8_2, acc8_3, acc8_4, l3_csc,               acc9_1, acc9_2, acc9_3, acc9_4)
-
-
-
-    #beam,energy=3.2
-
-
-
-    #twiss,beta0=b0_l3.match,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety    
-
-
-
-    #
-
-
-
-    #beam,energy=3.2
-
-
-
-    #match,beta0=b0_l3.match
-
-
-
-    ##vary,l3_q_a8_1.k1, step=0.01,lower=-0.0,upper=0.35     
-
-
-
-    ##vary,l3_q_a8_2.k1, step=0.01,lower=-0.35,upper=0.0
-
-
-
-    #vary,l3_q_a8_3.k1, step=0.01,lower=-0.0,upper=0.35     
-
-
-
-    #vary,l3_q_a8_4.k1, step=0.01,lower=-0.35,upper=0.0   
-
-
-
-    #vary,l3_q_a9_1.k1, step=0.01,lower=-0.0,upper=0.35       
-
-
-
-    #vary,l3_q_a9_2.k1, step=0.01,lower=-0.35,upper=0.0 
-
-
-
-    ##vary,l3_q_a9_3.k1, step=0.01,lower=-0.0,upper=0.35      
-
-
-
-    ##vary,l3_q_a9_4.k1, step=0.01,lower=-0.35,upper=0.0 
-
-
-
-    #constraint,#e,beta0=b0_l3.match
-
-
-
-    #lmdif
-
-
-
-    #migrad
-
-
-
-    #simplex,calls=10000
-
-
-
-    #endmatch
-
-
-
-    #
-
-
-
-    ##beam,energy=3.2
-
-
-
-    #twiss,beta0=b0_l3.match,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety    
-
-
-
-    #
-
-
-
-    #use,(l3f, l3d)
-
-
-
-    #savebeta,label=b0_cl.start,#e
-
-
-
-    #twiss
-
-
-
-    #  
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-#match_l3 = subroutine():
-
-    #use, (l3)
-
-
-
-    #beam,energy=2.4
-
-
-
-    #match,beta0=b0_l3.start
-
-
-
-    #vary,l3_q_a26_1.k1, step=0.1,lower=-0.25,upper=0.25 
-
-
-
-    #vary,l3_q_a26_2.k1, step=0.1,lower=-0.25,upper=0.25  
-
-
-
-    #vary,l3_q_a26_3.k1, step=0.1,lower=-0.25,upper=0.25  
-
-
-
-    #vary,l3_q_a26_4.k1, step=0.1,lower=-0.25,upper=0.25 
-
-
-
-    #constraint, #e,beta0=b0_cl.start
-
-
-
-    #simplex
-
-
-
-    #migrad
-
-
-
-    #endmatch
-
-
-
-    #twiss,beta0=b0_l3.start,save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis=betx,bety
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-#list_l3 = subroutine():
-
-    #use,l3
-
-
-
-    #beam,energy=2.4
-
-
-
-    #twiss,couple,beta0=b0_l3.start,  tape="mag_xfell3.dat",save
-
-
-
-    #plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,       spline,colour=100
-
-
-
-    #survey,x0=0,z0=471.8451,y0=0,  phi=phicor, tape="lay_xfell3.dat"
-
-
-
-    #makeSequence,label=l3.seq,refer=''centre''
-
-
-
-    #
-
-
-
-    #endsubroutine #-----------------------------------------------------------------
-
-
-
-    #
-
-
-
-    ###return
-
+ACH(START,C,BPM,Q,CORX,CORY,END) : LINE = &
+    (START, D00611, D0075, D0085, BPM, D0085, Q, CORX, CORY, D0020, D0102,&
+     2*(D0080, C, D0080, LTWAKECAV3, D0102), MIAC, &
+     5*(D0080, C, D0080, LTWAKECAV3, D0102), &
+       (D0080, C, D0080, LTWAKECAV3), &
+    D0075, END)
+
+! Injector linac ------------------------------------------------------
+I1COR: LINE=(I1.CX,I1.CY)
+ACC1:LINE=(ACC(I1.STAC.A1.1,I1.C.A1,I1.BPMC,I1.Q.A1.1,I1COR,I1.ENAC.A1.1))
+ACC1REV:LINE=(ACCREV(I1.STAC.A1.1,I1.C.A1.R,I1.ENAC.A1.1))
+ACC10Q: LINE = (I1.STAC.A1.1,D0080,4*(D01416,I1.C.A1,D02043,LTWAKECAV),MIAC,&
+               4*(D01416,I1.C.A1,D02043,LTWAKECAV))
+ACC1C8: LINE = (I1.STAC.A1.1, & 
+               I1.Q.A1.1, I1.CX, I1.CY, D0085, I1.BPMC, D0085, &
+               D00729, D0300, I1.ENAC.A1.1)
+ACH1:LINE=&
+ (ACH(I1.STAC.AH1.1,I1.C3.AH1,I1.BPMR,I1.Q.AH1.1,I1.CX,I1.CY,I1.ENAC.AH1.1))
+
+! LINAC 1 -------------------------------------------------------------
+L1COR: LINE=(L1.CX,L1.CY)
+
+ACC2.1:LINE=(ACC(L1.STAC.A2.1,L1.C.A2,L1.BPMC,L1.Q.A2.1,L1COR,L1.ENAC.A2.1))
+ACC2.2:LINE=(ACC(L1.STAC.A2.2,L1.C.A2,L1.BPMR,L1.Q.A2.2,L1COR,L1.ENAC.A2.2))
+ACC2.3:LINE=(ACC(L1.STAC.A2.3,L1.C.A2,L1.BPMC,L1.Q.A2.3,L1COR,L1.ENAC.A2.3))
+ACC2.4:LINE=(ACC(L1.STAC.A2.4,L1.C.A2,L1.BPMR,L1.Q.A2.4,L1COR,L1.ENAC.A2.4))
+
+! LINAC 2 ------------------------------------------------------------
+
+ACC3.1:LINE=(ACC(L2.STAC.A3.1,L2.C.A3,L2.BPMR,L2.Q.A3.1,L2.CX,L2.ENAC.A3.1))
+ACC3.2:LINE=(ACC(L2.STAC.A3.2,L2.C.A3,L2.BPMR,L2.Q.A3.2,L2.CY,L2.ENAC.A3.2))
+ACC3.3:LINE=(ACC(L2.STAC.A3.3,L2.C.A3,L2.BPMC,L2.Q.A3.3,L2.CX,L2.ENAC.A3.3))
+ACC3.4:LINE=(ACC(L2.STAC.A3.4,L2.C.A3,L2.BPMC,L2.Q.A3.4,L2.CY,L2.ENAC.A3.4))
+ACC4.1:LINE=(ACC(L2.STAC.A4.1,L2.C.A4,L2.BPMC,L2.Q.A4.1,L2.CX,L2.ENAC.A4.1))
+ACC4.2:LINE=(ACC(L2.STAC.A4.2,L2.C.A4,L2.BPMC,L2.Q.A4.2,L2.CY,L2.ENAC.A4.2))
+ACC4.3:LINE=(ACC(L2.STAC.A4.3,L2.C.A4,L2.BPMC,L2.Q.A4.3,L2.CX,L2.ENAC.A4.3))
+ACC4.4:LINE=(ACC(L2.STAC.A4.4,L2.C.A4,L2.BPMC,L2.Q.A4.4,L2.CY,L2.ENAC.A4.4))
+ACC5.1:LINE=(ACC(L2.STAC.A5.1,L2.C.A5,L2.BPMC,L2.Q.A5.1,L2.CX,L2.ENAC.A5.1))
+ACC5.2:LINE=(ACC(L2.STAC.A5.2,L2.C.A5,L2.BPMC,L2.Q.A5.2,L2.CY,L2.ENAC.A5.2))
+ACC5.3:LINE=(ACC(L2.STAC.A5.3,L2.C.A5,L2.BPMR,L2.Q.A5.3,L2.CX,L2.ENAC.A5.3))
+ACC5.4:LINE=(ACC(L2.STAC.A5.4,L2.C.A5,L2.BPMR,L2.Q.A5.4,L2.CY,L2.ENAC.A5.4))
+
+! Main linac matching cell-----------------------------------------------
+ACC6.1 :LINE=(ACC(L3.STAC.A6.1, L3.C.A6, L3.BPMC,L3.Q.A6.1, L3.CX,L3.ENAC.A6.1))
+ACC6.2 :LINE=(ACC(L3.STAC.A6.2, L3.C.A6, L3.BPMC,L3.Q.A6.2, L3.CY,L3.ENAC.A6.2))
+ACC6.3 :LINE=(ACC(L3.STAC.A6.3, L3.C.A6, L3.BPMC,L3.Q.A6.3, L3.CX,L3.ENAC.A6.3))
+ACC6.4 :LINE=(ACC(L3.STAC.A6.4, L3.C.A6, L3.BPMC,L3.Q.A6.4, L3.CY,L3.ENAC.A6.4))
+ACC7.1 :LINE=(ACC(L3.STAC.A7.1, L3.C.A7, L3.BPMC,L3.Q.A7.1, L3.CX,L3.ENAC.A7.1))
+ACC7.2 :LINE=(ACC(L3.STAC.A7.2, L3.C.A7, L3.BPMC,L3.Q.A7.2, L3.CY,L3.ENAC.A7.2))
+ACC7.3 :LINE=(ACC(L3.STAC.A7.3, L3.C.A7, L3.BPMC,L3.Q.A7.3, L3.CX,L3.ENAC.A7.3))
+ACC7.4 :LINE=(ACC(L3.STAC.A7.4, L3.C.A7, L3.BPMR,L3.Q.A7.4, L3.CY,L3.ENAC.A7.4))
+ACC8.1 :LINE=(ACC(L3.STAC.A8.1, L3.C.A8, L3.BPMC,L3.Q.A8.1, L3.CX,L3.ENAC.A8.1))
+ACC8.2 :LINE=(ACC(L3.STAC.A8.2, L3.C.A8, L3.BPMC,L3.Q.A8.2, L3.CY,L3.ENAC.A8.2))
+ACC8.3 :LINE=(ACC(L3.STAC.A8.3, L3.C.A8, L3.BPMR,L3.Q.A8.3, L3.CX,L3.ENAC.A8.3))
+ACC8.4 :LINE=(ACC(L3.STAC.A8.4, L3.C.A8, L3.BPMR,L3.Q.A8.4, L3.CY,L3.ENAC.A8.4))
+ACC9.1 :LINE=(ACC(L3.STAC.A9.1, L3.C.A9, L3.BPMR,L3.Q.A9.1, L3.CX,L3.ENAC.A9.1))
+ACC9.2 :LINE=(ACC(L3.STAC.A9.2, L3.C.A9, L3.BPMR,L3.Q.A9.2, L3.CY,L3.ENAC.A9.2))
+ACC9.3 :LINE=(ACC(L3.STAC.A9.3, L3.C.A9, L3.BPMC,L3.Q.A9.3, L3.CX,L3.ENAC.A9.3))
+ACC9.4 :LINE=(ACC(L3.STAC.A9.4, L3.C.A9, L3.BPMC,L3.Q.A9.4, L3.CY,L3.ENAC.A9.4))
+ACC10.1:LINE= &
+ (ACC(L3.STAC.A10.1,L3.C.A10,L3.BPMC,L3.Q.A10.1,L3.CX,L3.ENAC.A10.1))
+ACC10.2:LINE= &
+ (ACC(L3.STAC.A10.2,L3.C.A10,L3.BPMC,L3.Q.A10.2,L3.CY,L3.ENAC.A10.2))
+ACC10.3:LINE= &
+ (ACC(L3.STAC.A10.3,L3.C.A10,L3.BPMC,L3.Q.A10.3,L3.CX,L3.ENAC.A10.3))
+ACC10.4:LINE= &
+ (ACC(L3.STAC.A10.4,L3.C.A10,L3.BPMC,L3.Q.A10.4,L3.CY,L3.ENAC.A10.4))
+ACC11.1:LINE= &
+ (ACC(L3.STAC.A11.1,L3.C.A11,L3.BPMC,L3.Q.A11.1,L3.CX,L3.ENAC.A11.1))
+ACC11.2:LINE= &
+ (ACC(L3.STAC.A11.2,L3.C.A11,L3.BPMC,L3.Q.A11.2,L3.CY,L3.ENAC.A11.2))
+ACC11.3:LINE= &
+ (ACC(L3.STAC.A11.3,L3.C.A11,L3.BPMR,L3.Q.A11.3,L3.CX,L3.ENAC.A11.3))
+ACC11.4:LINE= &
+ (ACC(L3.STAC.A11.4,L3.C.A11,L3.BPMR,L3.Q.A11.4,L3.CY,L3.ENAC.A11.4))
+ACC12.1:LINE= &
+ (ACC(L3.STAC.A12.1,L3.C.A12,L3.BPMR,L3.Q.A12.1,L3.CX,L3.ENAC.A12.1))
+ACC12.2:LINE= &
+ (ACC(L3.STAC.A12.2,L3.C.A12,L3.BPMR,L3.Q.A12.2,L3.CY,L3.ENAC.A12.2))
+ACC12.3:LINE= &
+ (ACC(L3.STAC.A12.3,L3.C.A12,L3.BPMC,L3.Q.A12.3,L3.CX,L3.ENAC.A12.3))
+ACC12.4:LINE= &
+ (ACC(L3.STAC.A12.4,L3.C.A12,L3.BPMC,L3.Q.A12.4,L3.CY,L3.ENAC.A12.4))
+ACC13.1:LINE= &
+ (ACC(L3.STAC.A13.1,L3.C.A13,L3.BPMC,L3.Q.A13.1,L3.CX,L3.ENAC.A13.1))
+ACC13.2:LINE= &
+ (ACC(L3.STAC.A13.2,L3.C.A13,L3.BPMC,L3.Q.A13.2,L3.CY,L3.ENAC.A13.2))
+ACC13.3:LINE= & 
+(ACC(L3.STAC.A13.3,L3.C.A13,L3.BPMC,L3.Q.A13.3,L3.CX,L3.ENAC.A13.3))
+ACC13.4:LINE= & 
+(ACC(L3.STAC.A13.4,L3.C.A13,L3.BPMC,L3.Q.A13.4,L3.CY,L3.ENAC.A13.4))
+ACC14.1:LINE= & 
+(ACC(L3.STAC.A14.1,L3.C.A14,L3.BPMC,L3.Q.A14.1,L3.CX,L3.ENAC.A14.1))
+ACC14.2:LINE= & 
+(ACC(L3.STAC.A14.2,L3.C.A14,L3.BPMC,L3.Q.A14.2,L3.CY,L3.ENAC.A14.2))
+ACC14.3:LINE= & 
+(ACC(L3.STAC.A14.3,L3.C.A14,L3.BPMR,L3.Q.A14.3,L3.CX,L3.ENAC.A14.3))
+ACC14.4:LINE= & 
+(ACC(L3.STAC.A14.4,L3.C.A14,L3.BPMR,L3.Q.A14.4,L3.CY,L3.ENAC.A14.4))
+ACC15.1:LINE= & 
+(ACC(L3.STAC.A15.1,L3.C.A15,L3.BPMR,L3.Q.A15.1,L3.CX,L3.ENAC.A15.1))
+ACC15.2:LINE= & 
+(ACC(L3.STAC.A15.2,L3.C.A15,L3.BPMR,L3.Q.A15.2,L3.CY,L3.ENAC.A15.2))
+ACC15.3:LINE= &  
+(ACC(L3.STAC.A15.3,L3.C.A15,L3.BPMC,L3.Q.A15.3,L3.CX,L3.ENAC.A15.3))
+ACC15.4:LINE= &
+ (ACC(L3.STAC.A15.4,L3.C.A15,L3.BPMC,L3.Q.A15.4,L3.CY,L3.ENAC.A15.4))
+ACC16.1:LINE= &
+ (ACC(L3.STAC.A16.1,L3.C.A16,L3.BPMC,L3.Q.A16.1,L3.CX,L3.ENAC.A16.1))
+ACC16.2:LINE= & 
+(ACC(L3.STAC.A16.2,L3.C.A16,L3.BPMC,L3.Q.A16.2,L3.CY,L3.ENAC.A16.2))
+ACC16.3:LINE= & 
+(ACC(L3.STAC.A16.3,L3.C.A16,L3.BPMC,L3.Q.A16.3,L3.CX,L3.ENAC.A16.3))
+ACC16.4:LINE= & 
+(ACC(L3.STAC.A16.4,L3.C.A16,L3.BPMC,L3.Q.A16.4,L3.CY,L3.ENAC.A16.4))
+ACC17.1:LINE= & 
+(ACC(L3.STAC.A17.1,L3.C.A17,L3.BPMC,L3.Q.A17.1,L3.CX,L3.ENAC.A17.1))
+ACC17.2:LINE= & 
+(ACC(L3.STAC.A17.2,L3.C.A17,L3.BPMC,L3.Q.A17.2,L3.CY,L3.ENAC.A17.2))
+ACC17.3:LINE= & 
+(ACC(L3.STAC.A17.3,L3.C.A17,L3.BPMR,L3.Q.A17.3,L3.CX,L3.ENAC.A17.3))
+ACC17.4:LINE= & 
+(ACC(L3.STAC.A17.4,L3.C.A17,L3.BPMR,L3.Q.A17.4,L3.CY,L3.ENAC.A17.4))
+ACC18.1:LINE= & 
+(ACC(L3.STAC.A18.1,L3.C.A18,L3.BPMR,L3.Q.A18.1,L3.CX,L3.ENAC.A18.1))
+ACC18.2:LINE= & 
+(ACC(L3.STAC.A18.2,L3.C.A18,L3.BPMR,L3.Q.A18.2,L3.CY,L3.ENAC.A18.2))
+ACC18.3:LINE= & 
+(ACC(L3.STAC.A18.3,L3.C.A18,L3.BPMC,L3.Q.A18.3,L3.CX,L3.ENAC.A18.3))
+ACC18.4:LINE= & 
+(ACC(L3.STAC.A18.4,L3.C.A18,L3.BPMC,L3.Q.A18.4,L3.CY,L3.ENAC.A18.4))
+ACC19.1:LINE= & 
+(ACC(L3.STAC.A19.1,L3.C.A19,L3.BPMC,L3.Q.A19.1,L3.CX,L3.ENAC.A19.1))
+ACC19.2:LINE= & 
+(ACC(L3.STAC.A19.2,L3.C.A19,L3.BPMC,L3.Q.A19.2,L3.CY,L3.ENAC.A19.2))
+ACC19.3:LINE= & 
+(ACC(L3.STAC.A19.3,L3.C.A19,L3.BPMC,L3.Q.A19.3,L3.CX,L3.ENAC.A19.3))
+ACC19.4:LINE= & 
+(ACC(L3.STAC.A19.4,L3.C.A19,L3.BPMC,L3.Q.A19.4,L3.CY,L3.ENAC.A19.4))
+ACC20.1:LINE= &
+ (ACC(L3.STAC.A20.1,L3.C.A20,L3.BPMC,L3.Q.A20.1,L3.CX,L3.ENAC.A20.1))
+ACC20.2:LINE= &
+ (ACC(L3.STAC.A20.2,L3.C.A20,L3.BPMC,L3.Q.A20.2,L3.CY,L3.ENAC.A20.2))
+ACC20.3:LINE= &
+ (ACC(L3.STAC.A20.3,L3.C.A20,L3.BPMR,L3.Q.A20.3,L3.CX,L3.ENAC.A20.3))
+ACC20.4:LINE= &
+ (ACC(L3.STAC.A20.4,L3.C.A20,L3.BPMR,L3.Q.A20.4,L3.CY,L3.ENAC.A20.4))
+ACC21.1:LINE= &
+ (ACC(L3.STAC.A21.1,L3.C.A21,L3.BPMR,L3.Q.A21.1,L3.CX,L3.ENAC.A21.1))
+ACC21.2:LINE= &
+ (ACC(L3.STAC.A21.2,L3.C.A21,L3.BPMR,L3.Q.A21.2,L3.CY,L3.ENAC.A21.2))
+ACC21.3:LINE= &
+ (ACC(L3.STAC.A21.3,L3.C.A21,L3.BPMC,L3.Q.A21.3,L3.CX,L3.ENAC.A21.3))
+ACC21.4:LINE= &
+ (ACC(L3.STAC.A21.4,L3.C.A21,L3.BPMC,L3.Q.A21.4,L3.CY,L3.ENAC.A21.4))
+ACC22.1:LINE= &
+ (ACC(L3.STAC.A22.1,L3.C.A22,L3.BPMC,L3.Q.A22.1,L3.CX,L3.ENAC.A22.1))
+ACC22.2:LINE= &
+ (ACC(L3.STAC.A22.2,L3.C.A22,L3.BPMC,L3.Q.A22.2,L3.CY,L3.ENAC.A22.2))
+ACC22.3:LINE= &
+ (ACC(L3.STAC.A22.3,L3.C.A22,L3.BPMC,L3.Q.A22.3,L3.CX,L3.ENAC.A22.3))
+ACC22.4:LINE= &
+ (ACC(L3.STAC.A22.4,L3.C.A22,L3.BPMC,L3.Q.A22.4,L3.CY,L3.ENAC.A22.4))
+ACC23.1:LINE= &
+ (ACC(L3.STAC.A23.1,L3.C.A23,L3.BPMC,L3.Q.A23.1,L3.CX,L3.ENAC.A23.1))
+ACC23.2:LINE= &
+ (ACC(L3.STAC.A23.2,L3.C.A23,L3.BPMC,L3.Q.A23.2,L3.CY,L3.ENAC.A23.2))
+ACC23.3:LINE= &
+ (ACC(L3.STAC.A23.3,L3.C.A23,L3.BPMR,L3.Q.A23.3,L3.CX,L3.ENAC.A23.3))
+ACC23.4:LINE= &
+ (ACC(L3.STAC.A23.4,L3.C.A23,L3.BPMR,L3.Q.A23.4,L3.CY,L3.ENAC.A23.4))
+ACC24.1:LINE= &
+ (ACC(L3.STAC.A24.1,L3.C.A24,L3.BPMR,L3.Q.A24.1,L3.CX,L3.ENAC.A24.1))
+ACC24.2:LINE= &
+ (ACC(L3.STAC.A24.2,L3.C.A24,L3.BPMR,L3.Q.A24.2,L3.CY,L3.ENAC.A24.2))
+ACC24.3:LINE= &
+ (ACC(L3.STAC.A24.3,L3.C.A24,L3.BPMC,L3.Q.A24.3,L3.CX,L3.ENAC.A24.3))
+ACC24.4:LINE= &
+ (ACC(L3.STAC.A24.4,L3.C.A24,L3.BPMC,L3.Q.A24.4,L3.CY,L3.ENAC.A24.4))
+ACC25.1:LINE= &
+ (ACC(L3.STAC.A25.1,L3.C.A25,L3.BPMC,L3.Q.A25.1,L3.CX,L3.ENAC.A25.1))
+ACC25.2:LINE= &
+ (ACC(L3.STAC.A25.2,L3.C.A25,L3.BPMC,L3.Q.A25.2,L3.CY,L3.ENAC.A25.2))
+ACC25.3:LINE= &
+ (ACC(L3.STAC.A25.3,L3.C.A25,L3.BPMC,L3.Q.A25.3,L3.CX,L3.ENAC.A25.3))
+ACC25.4:LINE= &
+ (ACC(L3.STAC.A25.4,L3.C.A25,L3.BPMC,L3.Q.A25.4,L3.CY,L3.ENAC.A25.4))
+ACC26.1:LINE= &
+ (ACC(L3.STAC.A26.1,L3.C.A26,L3.BPMC,L3.Q.A26.1,L3.CX,L3.ENAC.A26.1))
+ACC26.2:LINE= &
+ (ACC(L3.STAC.A26.2,L3.C.A26,L3.BPMC,L3.Q.A26.2,L3.CY,L3.ENAC.A26.2))
+ACC26.3:LINE= &
+ (ACC(L3.STAC.A26.3,L3.C.A26,L3.BPMR,L3.Q.A26.3,L3.CX,L3.ENAC.A26.3))
+ACC26.4:LINE= &
+ (ACC(L3.STAC.A26.4,L3.C.A26,L3.BPMR,L3.Q.A26.4,L3.CY,L3.ENAC.A26.4))
+ACC27.1:LINE= &
+ (ACC(L3.STAC.A27.1,L3.C.A27,L3.BPMC,L3.Q.A27.1,L3.CX,L3.ENAC.A27.1))
+ACC27.2:LINE= &
+ (ACC(L3.STAC.A27.2,L3.C.A27,L3.BPMC,L3.Q.A27.2,L3.CY,L3.ENAC.A27.2))
+ACC27.3:LINE= &
+ (ACC(L3.STAC.A27.3,L3.C.A27,L3.BPMR,L3.Q.A27.3,L3.CX,L3.ENAC.A27.3))
+ACC27.4:LINE= &
+ (ACC(L3.STAC.A27.4,L3.C.A27,L3.BPMR,L3.Q.A27.4,L3.CY,L3.ENAC.A27.4))
+ACC28.1:LINE= &
+ (ACC(L3.STAC.A28.1,L3.C.A28,L3.BPMC,L3.Q.A28.1,L3.CX,L3.ENAC.A28.1))
+ACC28.2:LINE= &
+ (ACC(L3.STAC.A28.2,L3.C.A28,L3.BPMC,L3.Q.A28.2,L3.CY,L3.ENAC.A28.2))
+ACC28.3:LINE= &
+ (ACC(L3.STAC.A28.3,L3.C.A28,L3.BPMR,L3.Q.A28.3,L3.CX,L3.ENAC.A28.3))
+ACC28.4:LINE= &
+ (ACC(L3.STAC.A28.4,L3.C.A28,L3.BPMR,L3.Q.A28.4,L3.CY,L3.ENAC.A28.4))
+ACC29.1:LINE= &
+ (ACC(L3.STAC.A29.1,L3.C.A29,L3.BPMC,L3.Q.A29.1,L3.CX,L3.ENAC.A29.1))
+ACC29.2:LINE= &
+ (ACC(L3.STAC.A29.2,L3.C.A29,L3.BPMC,L3.Q.A29.2,L3.CY,L3.ENAC.A29.2))
+ACC29.3:LINE= &
+ (ACC(L3.STAC.A29.3,L3.C.A29,L3.BPMR,L3.Q.A29.3,L3.CX,L3.ENAC.A29.3))
+ACC29.4:LINE= &
+ (ACC(L3.STAC.A29.4,L3.C.A29,L3.BPMR,L3.Q.A29.4,L3.CY,L3.ENAC.A29.4))
+
+! Main linac Cell without cavity focussing
+ACC00.F:LINE=(ACC(L3.STAC.A26.3,L3.C.00,L3.BPMC,L3.Q.F,L3.CX,L3.ENAC.A26.3))
+ACC00.D:LINE=(ACC(L3.STAC.A26.4,L3.C.00,L3.BPMC,L3.Q.D,L3.CY,L3.ENAC.A26.4))
+L3_fodo0: Line = (ACC00.F, ACC00.D)
+
+! long FODO and matching after LINAC
+L3.QE.1.1  : QUADRUPOLE, L=0.2, K1=  1.537098E-01    
+L3.QE.1.2 : QUADRUPOLE, L=0.2, K1=-L3.QE.1.1[K1]
+L3.CEX   : HKICKER, L=0.1
+L3.CEY   : VKICKER, L=0.1
+L3.QE.2  : Quadrupole, L=0.2, K1=-1.501576E-02
+L3.QF.1:  Quadrupole, L=0.5, K1=+0.0000000001
+L3.QF.2:  Quadrupole, L=0.5, K1=-1.259369E-01  
+L3.CFX   : HKICKER, L=0.1
+L3.CFY   : VKICKER, L=0.1
+
+D359096: DRIFT, L=(12*11.9917+2.9978)/4-0.815  ! L = (n_missing_modules * l_module + n_missing_scb * l_scb)/(n_fodo*2) - l_quadpackage
+
+! 01.02.2013: 73.4491 m long FODO after LINAC with 4 screens
+L3.OTRBW: marker
+D359096a: Drift, L = (D359096[L]+0.290+0.325)/2-0.290-0.200
+D359096b: Drift, L = (D359096[L]+0.290+0.325)/2-0.325-0.400
+D359096c: Drift, L = (D359096[L]+0.290+0.325)/2-0.290-0.200-2
+
+L3F1:LINE=(D359096c, D0200,L3.OTRBW,D0400, D359096b, &
+          QESEC(L3.BPMA, L3.QE.1.1,L3.CEX))
+L3F:LINE=(D359096a, D0200,L3.OTRBW,D0400, D359096b, &
+          QESEC(L3.BPMA, L3.QE.1.1,L3.CEX))
+L3D:LINE=(D359096a, D0200,L3.OTRBW,D0400, D359096b, &
+          QESEC(L3.BPMA, L3.QE.1.2,L3.CEY))
+L3D0:LINE=(D359096a, D0200,D0400, D359096b, &
+          QESEC(L3.BPMA, L3.QE.1.2,L3.CEY))
+
+D1277325: Drift, L = 12.77325
+D5780:    Drift, L = 5.780
+D5745:    Drift, L = 5.745
+D8215:    Drift, L = 8.215
+D11263:   Drift, L = 1.1263
+
+L3TCL:LINE=(D1277325,                                 & 
+            QESEC(L3.BPMA,L3.QE.2,L3.CEY),            &
+            D5780, L3.OTRBW, D5745,                   & 
+            QFSEC(L3.BPMA,L3.QF.1,L3.CFX), D8215,     &
+            QFSEC(L3.BPMA,L3.QF.2,L3.CFY), D11263)    
+
+! LINAC 0 (Injector Linac) ------------------------------------------------
+I1.START.L0: MARKER
+I1.END.L0  : MARKER
+I1.VCST35T78: MARKER
+I1.VCST78T30: MARKER
+I1.VCST30T78: MARKER
+I1.VCST78T40: MARKER
+
+L0: LINE=(I1.START.L0, I1.VCST35T78, I1.CFBI, ACC1,I1.VCST78T30, &
+ACH1,I1.VCST30T78, I1.CTBI, I1.VCST78T40, I1.END.L0)
+L0C8: LINE=(ACC1C8,ACH1,I1.CTBI, I1.END.L0)
+L0C8REV: LINE=(ACC1REV,I1.CFBI,I1.START.L0)
+
+! LINAC 1 -----------------------------------------------------------------
+L1.START.L1: MARKER
+L1.END.L1  : MARKER
+L1.VCST40T78: MARKER
+L1.VCST78T40: MARKER
+
+L1C: LINE=(ACC2.1,ACC2.2,ACC2.3,ACC2.4)
+
+L1: LINE=(L1.START.L1,  L1.VCST40T78, L1.CFB, L1C, L1.CTB,  &
+           L1.VCST78T40, L1.END.L1)
+
+! LINAC 2 ---------------------------------------------------------------
+L2.START.L2: MARKER
+L2.END.L2  : MARKER
+L2.MID.L2: MARKER
+L2.VCST40T78: MARKER
+L2.VCST78T40: MARKER
+
+
+L2C: LINE=(ACC3.1, ACC3.2, ACC3.3, ACC3.4, &
+           ACC4.1, ACC4.2, L2.MID.L2, ACC4.3, ACC4.4, &
+           ACC5.1, ACC5.2, ACC5.3, ACC5.4)
+
+
+L2: LINE=(L2.START.L2, L2.VCST40T78, L2.CFB, L2C, L2.CTB,  &
+          L2.VCST78T40, L2.END.L2)
+
+! ---  Main Linac (84 Modules)   ---------------------------------------
+L3.START.L3   : MARKER
+L3.END.L3     : MARKER 
+L3.MATCH  : MARKER
+L3.VCST40T78: MARKER
+L3.VCST78T40: MARKER
+
+! Definition of Vacuum Components
+L3.VCDST: VCDST
+D002575: DRIFT, L=0.02575
+D042845: DRIFT, L=0.42845-0.2234
+D02308: DRIFT, L=0.2308+0.2234
+
+L3C: LINE = (ACC6.1, ACC6.2, ACC6.3, ACC6.4, L3.MATCH,        &
+             ACC7.1, ACC7.2, ACC7.3, ACC7.4,         &
+             ACC8.1, ACC8.2, ACC8.3, ACC8.4, L3.CSC, &
+             ACC9.1, ACC9.2, ACC9.3, ACC9.4,         &
+             ACC10.1, ACC10.2, ACC10.3, ACC10.4,         &
+             ACC11.1, ACC11.2, ACC11.3, ACC11.4, L3.CSC, &
+             ACC12.1, ACC12.2, ACC12.3, ACC12.4,         &
+             ACC13.1, ACC13.2, ACC13.3, ACC13.4,         &
+             ACC14.1, ACC14.2, ACC14.3, ACC14.4, L3.CSC, &
+             ACC15.1, ACC15.2, ACC15.3, ACC15.4,         &
+             ACC16.1, ACC16.2, ACC16.3, ACC16.4,         &
+             ACC17.1, ACC17.2, ACC17.3, ACC17.4, L3.CSC, &
+             ACC18.1, ACC18.2, ACC18.3, ACC18.4,         &
+             ACC19.1, ACC19.2, ACC19.3, ACC19.4,         &
+             ACC20.1, ACC20.2, ACC20.3, ACC20.4, L3.CSC, &
+             ACC21.1, ACC21.2, ACC21.3, ACC21.4,         &
+             ACC22.1, ACC22.2, ACC22.3, ACC22.4,         &
+             ACC23.1, ACC23.2, ACC23.3, ACC23.4, L3.CSC, &
+             ACC24.1, ACC24.2, ACC24.3, ACC24.4,         &
+             ACC25.1, ACC25.2, ACC25.3, ACC25.4,         &
+             ACC26.1, ACC26.2, ACC26.3, ACC26.4)
+
+L3FULL: LINE = ( L3.CSC, &
+             ACC27.1, ACC27.2, ACC27.3, ACC27.4,         &
+             ACC28.1, ACC28.2, ACC28.3, ACC28.4,         &
+             ACC29.1, ACC29.2, ACC29.3, ACC29.4)
+
+L3: LINE=(L3.START.L3, L3.VCST40T78, &
+          L3.CFB, L3C, L3.CTB, L3.VCST78T40,&
+          D0100, D002575, L3.VCDST, D042845, L3.TORA,D02308,&
+          L3F1,L3D0,L3F,L3TCL,L3.END.L3)
+!L3: LINE=(L3.START.L3, L3.CFB, L3C, L3.CTB, L3.TORA,L3F,L3D0,L3F,L3D, L3.END.L3)
+!L3: LINE=(L3.START.L3, L3.CFB, L3C, L3FULL, L3.CTB, L3.END.L3)
+! Main Linac for Martins S2E Simulation (after Module 24)
+!MMLIN: LINE = (L3.CAVD,D00124, D0300, D0080, L3.ACCEND, &
+!              CSC, &
+!              ACC_F1,ACC_D1,ACC_F2,ACC_D2,ACC_F ,ACC_D, &
+!              7*MLINCELL, ACC_F,ACC_D, L3.END)
+
+MATCH_L3_FODO: SUBROUTINE !-----------------------------------------------------------
+use, L3_fodo0
+cell
+vary,L3.Q.F[K1], step = 0.1
+vary,L3.Q.D[K1], step = 0.1
+constraint,#e,mux=0.125,muy=0.125
+simplex
+endmatch
+savebeta,label=b0_l3.match,#e
+twiss
+
+use,(  ACC7.1, ACC7.2, ACC7.3, ACC7.4,         &
+             ACC8.1, ACC8.2, ACC8.3, ACC8.4, L3.CSC, &
+             ACC9.1, ACC9.2, ACC9.3, ACC9.4)
+beam,energy=3.2
+twiss,beta0=b0_l3.match,save
+plot,table=twiss,haxis=s,vaxis=betx,bety    
+
+beam,energy=3.2
+match,beta0=b0_l3.match
+!vary,L3.Q.A8.1[K1], STEP=0.01,lower=-0.0,upper=0.35     
+!vary,L3.Q.A8.2[K1], STEP=0.01,lower=-0.35,upper=0.0
+vary,L3.Q.A8.3[K1], STEP=0.01,lower=-0.0,upper=0.35     
+vary,L3.Q.A8.4[K1], STEP=0.01,lower=-0.35,upper=0.0   
+vary,L3.Q.A9.1[K1], STEP=0.01,lower=-0.0,upper=0.35       
+vary,L3.Q.A9.2[K1], STEP=0.01,lower=-0.35,upper=0.0 
+!vary,L3.Q.A9.3[K1], STEP=0.01,lower=-0.0,upper=0.35      
+!vary,L3.Q.A9.4[K1], STEP=0.01,lower=-0.35,upper=0.0 
+constraint,#e,beta0=b0_l3.match
+lmdif
+migrad
+simplex,calls=10000
+endmatch
+
+!beam,energy=3.2
+twiss,beta0=b0_l3.match,save
+plot,table=twiss,haxis=s,vaxis=betx,bety    
+
+use,(L3F, L3D)
+savebeta,label=B0_CL.START,#e
+twiss
+  
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+MATCH_L3: SUBROUTINE !-----------------------------------------------------------
+use, (L3)
+beam,energy=2.4
+match,beta0=b0_l3.start
+vary,L3.Q.A26.1[K1], STEP=0.1,lower=-0.25,upper=0.25 
+vary,L3.Q.A26.2[K1], STEP=0.1,lower=-0.25,upper=0.25  
+vary,L3.Q.A26.3[K1], STEP=0.1,lower=-0.25,upper=0.25  
+vary,L3.Q.A26.4[K1], STEP=0.1,lower=-0.25,upper=0.25 
+constraint, #e,beta0=B0_CL.START
+simplex
+migrad
+endmatch
+twiss,beta0=b0_l3.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+LIST_L3: SUBROUTINE !-----------------------------------------------------------
+use,l3
+beam,energy=2.4
+twiss,couple,beta0=b0_l3.start, &
+tape="mag_xfell3.dat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
+     spline,colour=100
+survey,x0=0,z0=471.8451,y0=0, &
+phi0=phicor, tape="lay_xfell3.dat"
+makesequence,label=l3.seq,refer=centre
+
+ENDSUBROUTINE !-----------------------------------------------------------------
+
+return

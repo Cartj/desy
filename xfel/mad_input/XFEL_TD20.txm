@@ -134,6 +134,6 @@ T20D: Line = (D1500,   T20.QF.1,    &
               D6100,   T20.QA.1,    & 
               D6000,   T20.QA.2, D0480)
 
-T20: Line = (T20.START, T20M, T20D, T20.END)
+T20: Line = (T20.STARTT20, T20M, T20D, T20.END)
 
 !TD20:  Line=(TL1, TL2, TL3, TL4, TL5, T20)

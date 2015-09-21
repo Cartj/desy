@@ -1,5 +1,15 @@
 !------------------------------------------------------------------------
-!  27 May 2011
+!  15 November 2013 - Version 8.3.5 - 08.10.2013
+!  18 June     2013 - Version 8.3.2 - 06.05.2013
+!------------------------------------------------------------------------
+!  Natural undulator focusing:
+!     - at 17.5 GeV
+!     - at undulator gap: 
+!       20 mm in Sa1 and Sa2
+!       25 mm in Sa3 
+!  External undulator focusing:
+!     - Sa1 and Sa2: 32 m
+!     - Sa3:         15 m
 !------------------------------------------------------------------------
 ! Definition of XFEL Undulators
 !------------------------------------------------------------------------
@@ -14,7 +24,8 @@
 !TD2: SASE1, XS3, SASE3
 !------------------------------------------------------------------------
 
-Ener  = 14.0;
+! June 2013: 8.5 GeV, 12 GeV, 17.5 GeV (Winni)
+Ener  = 17.5;
 gamma = Ener / EMASS;
 bbeta = 1 / sqrt(1 - 1/(gamma^2));
 
@@ -22,25 +33,25 @@ bbeta = 1 / sqrt(1 - 1/(gamma^2));
 
 UNDULATOR: DRIFT, L = 5.0
 
-D02723:  DRIFT, L = 0.27230
-D019375: DRIFT, L = 0.19375
-D04778:  DRIFT, L = 0.04778
-D00467:  DRIFT, L = 0.04670
-D000447: DRIFT, L = 0.00447
+D01723:  DRIFT, L = 0.17230
+D01935:  DRIFT, L = 0.19350
+D004778:  DRIFT, L = 0.04778
+D000472: DRIFT, L = 0.00472
+D0047: DRIFT, L=0.047
 
-UNDSEC(UNDU,CX,CY,BPM,Q,PHS): LINE =             &
-    (UNDU, D00467, CX,CY, D02723, BPM, D019375,  &
-     Q, D0105, PHS, D000447, CX,CY, D04778)
+UNDSEC(UNDU,CX,CY,ABSP,BPM,Q,PHS): LINE =             &
+    (D0058,PHS, D000472, CX,CY, D004778, UNDU, D00467, CX,CY, D0050, ABSP,&
+     D01723, BPM, D01935,Q, D0047)
 
-UNDSEC0(CX,CY,BPM,Q): LINE =                     &
-    (D5000, D00467, CX,CY, D02723, BPM, D019375, &
-     Q, D0105, D0230, D000447, D0050, D04778)     
-     
 !============================================================================
-! SASE 1 Undulator (35 Sections)
-! Position: TD2
-!           x =    0     m
-!           z = 2238.991 m
+! SASE 1 Undulator (37 Sections, 2 first sections are empty)
+! Position SA1.START: XFEL Lattice Version 8.3.5 - 08.10.2013:
+!    x     =  0.0
+!    y     = -2.526967 m
+!    z     = 2236.077114 m
+!    theta = -0.000365123
+!    phi   =  0.0
+!    chi   =  0.0
 !----------------------------------------------------------------------------
 
 SA1.START: MARKER
@@ -56,6 +67,10 @@ SA1.BPME: MONITOR
 ! PHASESHIFTER --------------------------------------------------------------
 SA1.BPS: DRIFT, L=0.23
 
+! ABSORBER --------------------------------------------------------------
+SA1.ABSP: DRIFT, L=0.05
+
+
 comment
 ! Undulator without natural focusing-----------------------------------------
 SA1.UNDU: UNDULATOR
@@ -67,17 +82,32 @@ endcomment
 ! Undulator with natural focusing--------------------------------------------
 
 ! 02.12.2010: Model using analytical matrix.
-!    Period = 40 mm
-!    Gap    = 10 - 25 mm  => Field  = 1.14 - 0.28 T
+! 03.07.2013, Update of Sase1 parameters:
+!    246 pairs of poles 
+!    Period  = 40 mm
+!    Gap = 10 mm  =>  B_0 = 1.13 T, K = 3.9
+!    Gap = 20 mm  =>  B_0 = ?     , K = 1.7
+! November 2013: 
+!     Usage of even number of periods to mark
+!     the center of 5 m undulator segment: Nund1 = 124
+ 
+Lund1     = 0.040;
+!Nund1    = 123;            ! 246 pairs of poles: 5.0=123*0.040+0.080  
+Nund1     = 124;            ! 5.0=124*0.040+0.040  
+Lund1_124 = Lund1 * 124;
+Lund1_62  = Lund1 * 62;
 
-Lund1    = 0.040;
-Nund1    = 5.0 / Lund1;    ! = 125
-Lund1_10 = Lund1 * 10;
-Lund1_125= Lund1 * 125;
-Bund1    = 1.1442;         ! Lph = 2.7 angstroem
-Kund1    = 4.27351;
+Kund1    = 1.7;
+!Kund1    = 3.9;
+!Kund1    = 2.15;
 kQund1   = (2 * pi * Kund1) / (Lund1 * gamma * bbeta);
 Omega1   = kQund1 / sqrt(2);
+
+! Initial beta_y:
+r11_sa1 = cos(Omega1*Lund1);
+r12_sa1 = sin(Omega1*Lund1) / Omega1;
+Beta0_sa1 = r12_sa1 / sqrt(1.0 - r11_sa1 * r11_sa1);
+!value, beta0_sa1
 
 M_sa1_1: MATRIX, L = Lund1,                &
    RM(1,1) = 1.0,                          &
@@ -89,48 +119,68 @@ M_sa1_1: MATRIX, L = Lund1,                &
    RM(4,3) =-sin(Omega1*Lund1)*Omega1,     &
    RM(4,4) = cos(Omega1*Lund1)
 
-M_sa1_10: MATRIX, L = Lund1_10,            &
+M_sa1_62: MATRIX, L = Lund1_62,            &
    RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund1_10,                     &
+   RM(1,2) = Lund1_62,                     &
    RM(1,3) = 0.0,                          &
    RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega1*Lund1_10),         &
-   RM(3,4) = sin(Omega1*Lund1_10)/Omega1,  &
-   RM(4,3) =-sin(Omega1*Lund1_10)*Omega1,  &
-   RM(4,4) = cos(Omega1*Lund1_10)
+   RM(3,3) = cos(Omega1*Lund1_62),         &
+   RM(3,4) = sin(Omega1*Lund1_62)/Omega1,  &
+   RM(4,3) =-sin(Omega1*Lund1_62)*Omega1,  &
+   RM(4,4) = cos(Omega1*Lund1_62)
    
-SA1.U40: MATRIX, L = Lund1_125,          &
+SA1.U40: MATRIX, L = Lund1_124,            &
    RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund1_125,                    &
+   RM(1,2) = Lund1_124,                    &
    RM(1,3) = 0.0,                          &
    RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega1*Lund1_125),        &
-   RM(3,4) = sin(Omega1*Lund1_125)/Omega1, &
-   RM(4,3) =-sin(Omega1*Lund1_125)*Omega1, &
-   RM(4,4) = cos(Omega1*Lund1_125)   
+   RM(3,3) = cos(Omega1*Lund1_124),        &
+   RM(3,4) = sin(Omega1*Lund1_124)/Omega1, &
+   RM(4,3) =-sin(Omega1*Lund1_124)*Omega1, &
+   RM(4,4) = cos(Omega1*Lund1_124)   
 
-!SA1.UNDU: Line = (125 * M_sa1_1)
-!SA1.UNDU: Line = (12 * M_sa1_10, 5 * M_sa1_1)
-SA1.UNDU: Line = (SA1.U40)
+Lend1 = (5.0 - Nund1 * Lund1) / 2           !  0.020 m
+uD0020: Drift, L = Lend1
 
+!SA1.UNDU: Line = (uD0020, 124 * M_sa1_1, uD0020)
+!SA1.UNDU: Line = (uD0020, 62 * M_sa1_1, 62 * M_sa1_1, uD0020)
+SA1.UNDU: Line = (uD0020, SA1.U40, uD0020)
+SA1.U00: Undulator
 
-! Quadrupoles (depends on energy, undulator gap and operational regime)
-SA1.QA.1:  Quadrupole, L=0.1, K1= -5.915086E-01
-SA1.QA.2:  Quadrupole, L=0.1, K1=  6.063310E-01
+! Quadrupoles (depend on energy, undulator gap, and required betatron functions)
+! Setting for 17.5 GeV, K=1.7, <beta>=32m
+SA1.QA.1: Quadrupole, L=0.10, K1= -6.339604E-01
+SA1.QA.2: Quadrupole, L=0.10, K1=  6.354469E-01
 
 ! Lattice 
-SA1SEC1:  LINE =(UNDSEC(SA1.UNDU,SA1.CXA,SA1.CYA,SA1.BPME,SA1.QA.1,SA1.BPS))
-SA1SEC2:  LINE =(UNDSEC(SA1.UNDU,SA1.CXA,SA1.CYA,SA1.BPME,SA1.QA.2,SA1.BPS))
-SA1SEC1E: LINE =(UNDSEC(SA1.UNDU,SA1.CXA,SA1.CYA,SA1.BPME,SA1.QA.1,D0230))
-SA1:      LINE =(SA1.START, 17*(SA1SEC1,SA1SEC2), SA1SEC1E, SA1.END)
-SA1_fodo: Line =(SA1SEC1, SA1SEC2)
 
+SA1DRIF1:LINE=&
+  (UNDSEC(SA1.U00,D0025,D0025,SA1.ABSP,SA1.BPME,SA1.QA.1,D0230))
+SA1DRIF2:LINE=&
+  (UNDSEC(SA1.U00,D0025,D0025,SA1.ABSP,SA1.BPME,SA1.QA.2,SA1.BPS))
+
+SA1SEC1: LINE=&
+  (UNDSEC(SA1.UNDU,SA1.CXA,SA1.CYA,SA1.ABSP,SA1.BPME,SA1.QA.1,SA1.BPS))
+SA1SEC2: LINE=&
+  (UNDSEC(SA1.UNDU,SA1.CXA,SA1.CYA,SA1.ABSP,SA1.BPME,SA1.QA.2,SA1.BPS))
+
+SA1.35START: marker
+
+!SA1:   LINE =(SA1.35START, 17*(SA1SEC1,SA1SEC2), SA1SEC1E, SA1.END)
+SA1:      LINE =(SA1.START, (SA1DRIF1,SA1DRIF2),    &
+                 17*(SA1SEC1,SA1SEC2), SA1SEC1, SA1.END)
+SA1_fodo:       Line =(SA1SEC1, SA1SEC2)
+SA1_fodo_drift: Line =(SA1DRIF1, SA1DRIF2)
 
 !============================================================================
-! SASE 2 Undulator (35 Sections, beta = 15-46 m)
-! Position: TD1
-!           x =    4.637 m
-!           z = 2171.299 m
+! SASE 2 Undulator (37 Sections, 2 first sections are empty)
+! Position SA2.START: XFEL Lattice Version 8.3.5 - 08.10.2013:
+!    x     =   +5.701887 m
+!    y     =   -2.513108 m
+!    z     = 2197.965134 m
+!    theta = -0.000365234
+!    phi   = -0.039893433
+!    chi   =  0.0
 !----------------------------------------------------------------------------
 
 SA2.START: MARKER
@@ -146,6 +196,9 @@ SA2.BPME: MONITOR
 ! Phase Shifter --------------------------------------------------------------
 SA2.BPS: DRIFT, L=0.23
 
+! ABSORBER --------------------------------------------------------------
+SA2.ABSP: DRIFT, L=0.05
+
 comment
 ! Undulator without natural focusing------------------------------------------
 SA2.UNDU: UNDULATOR
@@ -157,69 +210,100 @@ endcomment
 ! Undulator with natural focusing--------------------------------------------
 
 ! 02.12.2010: Model using analytical matrix.
-!    Period = 40 mm
-!    Gap    = 10 - 25 mm  => Field  = 1.14 - 0.28 T
+! 03.07.2013, Update of Sase2 parameters:
+!    246 pairs of poles 
+!    Period  = 40 mm
+!    Gap = 10 mm  =>  B_0 = 1.13 T, K = 3.9
+!    Gap = 20 mm  =>  B_0 = ?     , K = 1.7
+! November 2013: 
+!     Usage of even number of periods to mark
+!     the center of 5 m undulator segment: Nund1 = 124
 
-Lund2    = 0.040;
-Nund2    = 5.0 / Lund2;    ! = 125
-Lund2_10 = Lund2 * 10;
-Lund2_125= Lund2 * 125;
-Bund2    = 1.1442;         ! Lph = 2.7 angstroem
-Kund2    = 4.27351;
+Lund2     = 0.040;
+!Nund2    = 123;             ! 246 pairs of poles: 5.0=123*0.040+0.080  
+Nund2     = 124;             ! 5.0 = 124*0.040 + 0.040  
+Lund2_124 = Lund2 * 124;
+Lund2_62  = Lund2 * 62;
+
+Kund2    = 1.7;
+!Kund2    = 3.9;
+!Kund2    = 2.15;
 kQund2   = (2 * pi * Kund2) / (Lund2 * gamma * bbeta);
 Omega2   = kQund2 / sqrt(2);
 
-M_sa2_1: MATRIX, L = Lund2,                &
-   RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund2,                        &
-   RM(1,3) = 0.0,                          &
-   RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega2*Lund2),            &
-   RM(3,4) = sin(Omega2*Lund2)/Omega2,     &
-   RM(4,3) =-sin(Omega2*Lund2)*Omega2,     &
+M_sa2_1: MATRIX, L = Lund2,                 &
+   RM(1,1) = 1.0,                           &
+   RM(1,2) = Lund2,                         &
+   RM(1,3) = 0.0,                           &
+   RM(2,2) = 1.0,                           &
+   RM(3,3) = cos(Omega2*Lund2),             &
+   RM(3,4) = sin(Omega2*Lund2)/Omega2,      &
+   RM(4,3) =-sin(Omega2*Lund2)*Omega2,      &
    RM(4,4) = cos(Omega2*Lund2)
 
-M_sa2_10: MATRIX, L = Lund2_10,            &
-   RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund2_10,                     &
-   RM(1,3) = 0.0,                          &
-   RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega2*Lund2_10),         &
-   RM(3,4) = sin(Omega2*Lund2_10)/Omega2,  &
-   RM(4,3) =-sin(Omega2*Lund2_10)*Omega2,  &
-   RM(4,4) = cos(Omega2*Lund2_10)
+M_sa2_62: MATRIX, L = Lund2_62,             &
+   RM(1,1) = 1.0,                           &
+   RM(1,2) = Lund2_62,                      &
+   RM(1,3) = 0.0,                           &
+   RM(2,2) = 1.0,                           &
+   RM(3,3) = cos(Omega2*Lund2_62),          &
+   RM(3,4) = sin(Omega2*Lund2_62)/Omega2,   &
+   RM(4,3) =-sin(Omega2*Lund2_62)*Omega2,   &
+   RM(4,4) = cos(Omega2*Lund2_62)
    
-SA2.U40: MATRIX, L = Lund2_125,            &
-   RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund2_125,                     &
-   RM(1,3) = 0.0,                          &
-   RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega2*Lund2_125),         &
-   RM(3,4) = sin(Omega2*Lund2_125)/Omega2,  &
-   RM(4,3) =-sin(Omega2*Lund2_125)*Omega2,  &
-   RM(4,4) = cos(Omega2*Lund2_125)
+SA2.U40: MATRIX, L = Lund2_124,             &
+   RM(1,1) = 1.0,                           &
+   RM(1,2) = Lund2_124,                     &
+   RM(1,3) = 0.0,                           &
+   RM(2,2) = 1.0,                           &
+   RM(3,3) = cos(Omega2*Lund2_124),         &
+   RM(3,4) = sin(Omega2*Lund2_124)/Omega2,  &
+   RM(4,3) =-sin(Omega2*Lund2_124)*Omega2,  &
+   RM(4,4) = cos(Omega2*Lund2_124)
 
-!SA2.UNDU: Line = (125 * M_sa2_1)
-!SA2.UNDU: Line = (12 * M_sa2_10, 5 * M_sa2_1)
-SA2.UNDU: Line = (SA2.U40)
+Lend2 = (5.0 - Nund2 * Lund2) / 2           !  0.020 m
+!uD0020: Drift, L = Lend2
 
-! Quadrupoles (depends on energy, undulator gap, and operational regime)
-SA2.QA.1:  Quadrupole, L=0.1, K1= -5.915086E-01
-SA2.QA.2:  Quadrupole, L=0.1, K1=  6.063310E-01
+!SA2.UNDU: Line = (uD0020, 124 * M_sa2_1, uD0020)
+!SA2.UNDU: Line = (uD0020, 62 * M_sa2_1, 62 * M_sa2_1, uD0020)
+SA2.UNDU: Line = (uD0020, SA2.U40, uD0020)
+SA2.U00: Undulator
+
+! Quadrupoles (depend on energy, undulator gap, and required betatron functions)
+! Setting for 17.5 GeV, K=1.7, <beta>=32m
+SA2.QA.1:  Quadrupole, L=0.1, K1= -6.339604E-01
+SA2.QA.2:  Quadrupole, L=0.1, K1=  6.354469E-01
 
 ! Lattice 
-SA2SEC1:  LINE =(UNDSEC(SA2.UNDU,SA2.CXA,SA2.CYA,SA2.BPME,SA2.QA.1,SA2.BPS))
-SA2SEC2:  LINE =(UNDSEC(SA2.UNDU,SA2.CXA,SA2.CYA,SA2.BPME,SA2.QA.2,SA2.BPS))
-SA2SEC1E: LINE =(UNDSEC(SA2.UNDU,SA2.CXA,SA2.CYA,SA2.BPME,SA2.QA.1,D0230))
-SA2:      LINE =(SA2.START, 17*(SA2SEC1,SA2SEC2), SA2SEC1E, SA2.END)
-SA2_fodo: Line =(SA2SEC1, SA2SEC2)
 
+SA2DRIF1:LINE=&
+  (UNDSEC(SA2.U00,D0025,D0025,SA2.ABSP,SA2.BPME,SA2.QA.1,D0230))
+SA2DRIF2:LINE=&
+  (UNDSEC(SA2.U00,D0025,D0025,SA2.ABSP,SA2.BPME,SA2.QA.2,SA2.BPS))
+
+SA2SEC1: LINE=&
+  (UNDSEC(SA2.UNDU,SA2.CXA,SA2.CYA,SA2.ABSP,SA2.BPME,SA2.QA.1,SA2.BPS))
+SA2SEC2: LINE=&
+  (UNDSEC(SA2.UNDU,SA2.CXA,SA2.CYA,SA2.ABSP,SA2.BPME,SA2.QA.2,SA2.BPS))
+
+SA2.35START: marker
+
+!SA2:   LINE =(SA2.35START, 17*(SA2SEC1,SA2SEC2), SA2SEC1E, SA2.END)
+SA2:      LINE =(SA2.START, (SA2DRIF1,SA2DRIF2), &
+                 17*(SA2SEC1,SA2SEC2), SA2SEC1, SA2.END)
+
+SA2_fodo:       Line =(SA2SEC1, SA2SEC2)
+SA2_fodo_drift: Line =(SA2DRIF1, SA2DRIF2)
 
 !============================================================================
-! SASE 3 Undulator (22 Sections, beta = 15 m)
-! Position: TD4
-!           x =   -4.675 m
-!           z = 2797.752 m
+! SASE 3 Undulator (23 Sections, two first sections are empty)
+! Position SA3.START: XFEL Lattice Version 8.3.5 - 08.10.2013:
+!           x =   -4.750651 m
+!           y =   -2.733241 m
+!           z = 2801.021531 m
+!       theta =   -0.000365026
+!         phi =   -0.023007002
+!         chi =    0.0 
 !----------------------------------------------------------------------------
 
 SA3.START: MARKER
@@ -235,6 +319,9 @@ SA3.BPME: MONITOR
 ! Phase Shifter ------------------------------------------------------------
 SA3.BPS: DRIFT, L=0.23
 
+! ABSORBER --------------------------------------------------------------
+SA3.ABSP: DRIFT, L=0.05
+
 comment
 ! Undulator without natural focusing------------------------------------------
 SA3.UNDU: UNDULATOR
@@ -246,17 +333,27 @@ endcomment
 ! Undulator with natural focusing---------------------------------------------
 
 ! 02.12.2010: Model using analytical matrix.
-!    Period = 68 mm
-!    Gap    = 10 - 23 mm   => Field  =
+! 18.06.2013: Update of Sase3 parameters:
+!    144 pairs of poles
+!    Period  = 68 mm
+!    Gap     = 10 mm  =>  B_0 = 1.66 T, K = 9.3 
+!    Gap     = 25 mm  =>  B_0 = ?     , K = 4.0
 
 Lund3    = 0.068;
-Nund3    = 73;             ! 5.0=73*0.068+0.036  
-Lund3_10 = Lund3 * 10
-Lund3_73 = Lund3 * 73
-Bund3    = 1.1442;         ! Lph = 2.7 angstroem
-Kund3    = 4.27351;
+Nund3    = 72;             ! 144 pairs of poles: 5.0=72*0.068+0.104  
+Lund3_72 = Lund3 * 72
+Lund3_36 = Lund3 * 36
+
+Kund3    = 4.0;
+!Kund3    = 9.3;
 kQund3   = (2 * pi * Kund3) / (Lund3 * gamma * bbeta);
 Omega3   = kQund3 / sqrt(2);
+
+! Initial beta_y:
+r11 = cos(Omega3*Lund3);
+r12 = sin(Omega3*Lund3) / Omega3;
+Beta0 = r12 / sqrt(1.0 - r11 * r11);
+!value, beta0
 
 M_sa3_1: MATRIX, L = Lund3,                &
    RM(1,1) = 1.0,                          &
@@ -268,45 +365,69 @@ M_sa3_1: MATRIX, L = Lund3,                &
    RM(4,3) =-sin(Omega3*Lund3)*Omega3,     &
    RM(4,4) = cos(Omega3*Lund3)
 
-M_sa3_10: MATRIX, L = Lund3_10,            &
+M_sa3_36: MATRIX, L = Lund3_36,            &
    RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund3_10,                     &
+   RM(1,2) = Lund3_36,                     &
    RM(1,3) = 0.0,                          &
    RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega3*Lund3_10),         &
-   RM(3,4) = sin(Omega3*Lund3_10)/Omega3,  &
-   RM(4,3) =-sin(Omega3*Lund3_10)*Omega3,  &
-   RM(4,4) = cos(Omega3*Lund3_10)
+   RM(3,3) = cos(Omega3*Lund3_36),         &
+   RM(3,4) = sin(Omega3*Lund3_36)/Omega3,  &
+   RM(4,3) =-sin(Omega3*Lund3_36)*Omega3,  &
+   RM(4,4) = cos(Omega3*Lund3_36)
    
-SA3.U68: MATRIX, L = Lund3_73,            &
+SA3.U68: MATRIX, L = Lund3_72,             &
    RM(1,1) = 1.0,                          &
-   RM(1,2) = Lund3_73,                     &
+   RM(1,2) = Lund3_72,                     &
    RM(1,3) = 0.0,                          &
    RM(2,2) = 1.0,                          &
-   RM(3,3) = cos(Omega3*Lund3_73),         &
-   RM(3,4) = sin(Omega3*Lund3_73)/Omega3,  &
-   RM(4,3) =-sin(Omega3*Lund3_73)*Omega3,  &
-   RM(4,4) = cos(Omega3*Lund3_73)
+   RM(3,3) = cos(Omega3*Lund3_72),         &
+   RM(3,4) = sin(Omega3*Lund3_72)/Omega3,  &
+   RM(4,3) =-sin(Omega3*Lund3_72)*Omega3,  &
+   RM(4,4) = cos(Omega3*Lund3_72)
 
-Lend3 = (5.0 - Nund3 * Lund3) / 2           !  0.018 m
-D0018: Drift, L = Lend3
+Lend3 = (5.0 - Nund3 * Lund3) / 2           !  0.052 m
+D0052: Drift, L = Lend3
 
-!SA3.UNDU: Line = (D0018, 73 * M_sa3_1, D0018)
-!SA3.UNDU: Line = (D0018, 7 * M_sa3_10,  3 * M_sa3_1, D0018)
-SA3.UNDU: Line = (D0018, SA3.U68, D0018)
+!SA3.UNDU: Line = (D0052, 72 * M_sa3_1, D0052)
+!SA3.UNDU: Line = (D0052, M_sa3_36,  M_sa3_36, D0052)
+SA3.UNDU: Line = (D0052, SA3.U68, D0052)
+SA3.U00: Undulator
 
-! Quadrupoles (depends on energy, undulator gap, and operational regime)
-! <beta>=15m
-SA3.QA.1:   Quadrupole, L=0.1, K1= -1.303138E+00
-SA3.QA.2:   Quadrupole, L=0.1, K1= +1.336214E+00
+! Quadrupoles (depend on energy, undulator gap, and required betatron functions)
+! Setting for 17.5GeV, K=4.0, <beta>=15m:
+SA3.QA.1: Quadrupole, L=0.1, K1= -1.355866E+00
+SA3.QA.2: Quadrupole, L=0.1, K1= +1.358532E+00
 
 ! Lattice
+comment
+! Before November 2013: no first emply section, 1st quad = defocusing in X 
 SA3SEC1:   LINE =(UNDSEC(SA3.UNDU,SA3.CXA,SA3.CYA,SA3.BPME,SA3.QA.1,SA3.BPS))
 SA3SEC2:   LINE =(UNDSEC(SA3.UNDU,SA3.CXA,SA3.CYA,SA3.BPME,SA3.QA.2,SA3.BPS))
 SA3SEC1E:  LINE =(UNDSEC(SA3.UNDU,SA3.CXA,SA3.CYA,SA3.BPME,SA3.QA.1,D0230))
 SA3:      LINE =(SA3.START, 10*(SA3SEC1,SA3SEC2), SA3SEC1E,SA3.END)
-SA3_fodo: Line =(SA3SEC1, SA3SEC2)
+SA3_fodo: Line =(SA3SEC1,SA3SEC2)
+endcomment
 
+! November 2013: two first undulator sections are empty
+
+SA3DRIF1:LINE=&
+  (UNDSEC(SA3.U00,D0025,D0025,SA3.ABSP,SA3.BPME,SA3.QA.1,D0230))
+SA3DRIF2:LINE=&
+  (UNDSEC(SA3.U00,D0025,D0025,SA3.ABSP,SA3.BPME,SA3.QA.2,SA3.BPS))
+
+SA3SEC1: LINE=&
+  (UNDSEC(SA3.UNDU,SA3.CXA,SA3.CYA,SA3.ABSP,SA3.BPME,SA3.QA.1,SA3.BPS))
+SA3SEC2: LINE=&
+  (UNDSEC(SA3.UNDU,SA3.CXA,SA3.CYA,SA3.ABSP,SA3.BPME,SA3.QA.2,SA3.BPS))
+
+SA3.21START: marker
+
+!SA3:    LINE =(SA3.21START, 10*(SA3SEC1,SA3SEC2), SA3SEC1E, SA3.END)
+SA3:       LINE =(SA3.START, (SA3DRIF1,SA3DRIF2),   &
+                  10*(SA3SEC1,SA3SEC2), SA3SEC1, SA3.END)
+
+SA3_fodo:       Line =(SA3SEC1, SA3SEC2)
+SA3_fodo_drift: Line =(SA3DRIF1, SA3DRIF2)
 
 !============================================================================
 ! UND 1 Undulator (10 Sections, beta = 15 m)
@@ -404,6 +525,53 @@ UN2: LINE=(UN2.START, D7064,                   &
            QESEC(UN2.BPMA,UN2.QE.2,UN2.CEY), D9736,UN2.END)
 
 !============================================================================
+! Diagnsoticundulator with natural focusing--------------------------------------------
+!
+!    3 pairs of poles 
+!    Period  = 40 mm
+!    Gap = 12 mm  =>  B_0 = 0.96 T, K = 3.2784
+ 
+LundS     = 0.040;
+NundS     = 3;            ! 0.34 = 3*0.04+0.11+0.11  
+LundS_3 = LundS * NundS;
+
+KundS    = 3.2784;
+kQundS   = (2 * pi * KundS) / (LundS * gamma * bbeta);
+OmegaS   = kQundS / sqrt(2);
+
+! Initial beta_y:
+r11_udia = cos(OmegaS*LundS);
+r12_udia = sin(OmegaS*LundS) / OmegaS;
+Beta0_udia = r12_udia / sqrt(1.0 - r11_udia * r11_udia);
+!value, beta0_udia
+T1.U40S: MATRIX, L = LundS_3,            &
+   RM(1,1) = 1.0,                          &
+   RM(1,2) = LundS_3,                    &
+   RM(1,3) = 0.0,                          &
+   RM(2,2) = 1.0,                          &
+   RM(3,3) = cos(OmegaS*LundS_3),        &
+   RM(3,4) = sin(OmegaS*LundS_3)/OmegaS, &
+   RM(4,3) =-sin(OmegaS*LundS_3)*OmegaS, &
+   RM(4,4) = cos(OmegaS*LundS_3) 
+T2.U40S: MATRIX, L = LundS_3,            &
+   RM(1,1) = 1.0,                          &
+   RM(1,2) = LundS_3,                    &
+   RM(1,3) = 0.0,                          &
+   RM(2,2) = 1.0,                          &
+   RM(3,3) = cos(OmegaS*LundS_3),        &
+   RM(3,4) = sin(OmegaS*LundS_3)/OmegaS, &
+   RM(4,3) =-sin(OmegaS*LundS_3)*OmegaS, &
+   RM(4,4) = cos(OmegaS*LundS_3)
+T4.U40S: MATRIX, L = LundS_3,            &
+   RM(1,1) = 1.0,                          &
+   RM(1,2) = LundS_3,                    &
+   RM(1,3) = 0.0,                          &
+   RM(2,2) = 1.0,                          &
+   RM(3,3) = cos(OmegaS*LundS_3),        &
+   RM(3,4) = sin(OmegaS*LundS_3)/OmegaS, &
+   RM(4,3) =-sin(OmegaS*LundS_3)*OmegaS, &
+   RM(4,4) = cos(OmegaS*LundS_3)
+
 
 LIST_T1: SUBROUTINE !-----------------------------------------------------------
 use,(SA2, T3, UN1, T5, UN2, T5D)

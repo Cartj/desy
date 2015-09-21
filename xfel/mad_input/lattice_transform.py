@@ -11,29 +11,51 @@ from numpy import *
 
 emass = 0.511e-3
 
-name = "desy/xfel/mad_input/XFEL_DEFS.txm"
+#name = "desy/xfel/mad_input/XFEL_DEFS.txm"
 #xfel2ocelot(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
+lines = lattice_str_from_mad8("XFEL_DEFS.txm")
+save_lattice_str(lines, "XFEL_DEFS.inp")
 
-name = "desy/xfel/mad_input/XFEL_LINAC.txm"
-lines = lattice_str_from_mad8(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
-save_lattice_str(lines, sys.path[0][:ind] + name)
+#name = "desy/xfel/mad_input/XFEL_LINAC.txm"
+lines = lattice_str_from_mad8("XFEL_LINAC.txm") # convert MAD input file to XCODE input file
+save_lattice_str(lines, "XFEL_LINAC.inp")
 
 
 name = "desy/xfel/mad_input/XFEL_I1.txm"
-lines = lattice_str_from_mad8(sys.path[0][:ind] + name) # convert MAD input file to XCODE input file
-save_lattice_str(lines, sys.path[0][:ind] + name)
+lines = lattice_str_from_mad8("XFEL_I1.txm") # convert MAD input file to XCODE input file
+save_lattice_str(lines, "XFEL_I1.inp")
 
 
 
-name = "desy/xfel/mad_input/XFEL_DEFS.inp"
-exec( open(sys.path[0][:ind] + name))
+#name = "desy/xfel/mad_input/XFEL_DEFS.inp"
+exec( open("XFEL_DEFS.inp"))
 
-name = "desy/xfel/mad_input/XFEL_LINAC.inp"
-exec( open(sys.path[0][:ind] + name))
-name = "desy/xfel/mad_input/XFEL_I1.inp"
+#name = "desy/xfel/mad_input/XFEL_LINAC.inp"
+exec( open("XFEL_LINAC.inp"))
 
-exec( open(sys.path[0][:ind] + name))
+#name = "desy/xfel/mad_input/XFEL_I1.inp"
 
+exec( open("XFEL_I1.inp"))
+
+
+bc =(l1, b1, l2, b2)
+lin =(i1, bc, l3, cl)
+line1 =(t1, sa2, t3, un1, t5, un2, t5d)
+td2   =(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, t4d)
+td0   =(tl1, tl2, tld)
+td1   =(tl1, tl2, tl3, tl4, t1, sa2, t3, un1, t5, un2, t5d)
+td20  =(tl1, tl2, tl3, tl4, tl5, t20)
+td6  =(tl1, tl2, tl3, tl4, t1, sa2, sa2tt3, t3m1, t6)
+td7  =(tl1, tl2, tl3, tl4, t1, sa2, t3, un1, t5, un2,un2tt5d,t7)
+td8  =(tl1, tl2, tl3, tl4, t1, sa2, t3, un1, un1tt5, t5m1, t8)
+td9  =(tl1, tl2, tl3, tl4, tl5, t2, sa1, sa1tt4, t4m1, t9)
+td10 =(tl1, tl2, tl3, tl4, tl5, t2, sa1, t4, sa3, sa3tt4d, t10)
+
+
+
+
+
+xfelall = (lin, td2)
 #tw0 = Twiss(Beam())
 lat = MagneticLattice(i1, energy = 2.5)
 print lat.totalLen, len(lat.sequence)
@@ -86,7 +108,7 @@ def collect_drifts(lat):
 #                objs.append(elem)
 #                obj_id.append(elem.id)
 #    return objs
-lat = collect_drifts(lat)
+#lat = collect_drifts(lat)
 write_lattice(lat, "injector2.inp")
 #drifts = find_drifts(lat)
 

@@ -11,6 +11,7 @@ CL.DCM: MARKER     ! Dark Current Monitor
 CL.BPMA: Monitor   ! 40.5 mm button long L = 0.200 m
 
 CL.BPMI.E: Monitor
+CL.MPBPMI.E: Marker
 
 
 CL.CFX: HKICKER, L = 0.1
@@ -34,8 +35,7 @@ D02787: Drift, L =  0.2787
 D0235: Drift, L=0.235
 D0660: Drift, L=0.660
 
-
-LTCL:  Line = (D02787, CL.TORA, D0200, CL.DCM, D0500,    &
+LTCL:  Line = (D02787, CL.TORA, D0100, CL.DCM, D0600,    &
                QFSEC(CL.BPMA,CL.QF.1,CL.CFX), &
                D3715,    &
                QFSEC(CL.BPMA,CL.QF.2,CL.CFY), &
@@ -56,13 +56,19 @@ CL.QH.2:  Quadrupole, L=1.0, K1= 3.287715E-01
 
 D6170:    Drift, L = 6.170
 D70887:   Drift, L = 7.0887-0.7
+D0685: Drift, L=0.685
+D0675: Drift, L=0.675
+D2475: Drift, L=2.475
+D1975: Drift, L=1.975
+D0830: Drift, L=0.830
+D4200: Drift, L=4.200
 
-LTCL: Line = ( D70887, CL.TORA, D0200, CL.DCM, D0500,    &  
+LTCL: Line = ( D70887, CL.TORA, D0100, CL.DCM, D0600,    &  
                QFSEC(CL.BPMA,CL.QF.3,CL.CFX), D6170,     &  
                CL.CHY,D0170,CL.QH.1,D0250,CL.QH.1,       &
-               D0200,D0100,CL.BPMA,D0100,D0200,          &
+               D0200,D0025,CL.BPMA,D0175,D0200,          &
                CL.QH.2,D0250,CL.QH.2,D0170,CL.CHX,D0490, &
-               D0100,CL.BPMI.E,D0170, CL.QFH.4.1)
+               D0100,       D0170, CL.QFH.4.1)
 
 !  Phase shifter
 
@@ -73,20 +79,23 @@ CL.QF.5:  Quadrupole, L = 0.50, k1 = +3.614608E-01;
 CL.QF.6:  Quadrupole, L = 0.50, k1 = -2.470030E-02;
 CL.QFH.7: Quadrupole, L = 0.25, k1 = -8.973852E-02;
 
-CLM: Line = (CL.QFH.4.1,D0170,CL.CFY, D1055,                        &
+D04342: DRIFT, L = 0.4343
+D1975C: DRIFT, L = 1.975-0.4343
+
+CLM: Line = (CL.QFH.4.1,D0170,CL.CFY, D0380, CL.BPMA, D0675,        &
              CL.CHX,D0170,CL.QH.3,D0250,CL.QH.3,                    &  
              D0125,D0100,CL.BPMA,D0100,D0275,                       &
              CL.QH.4,D0250,CL.QH.4,D0170,CL.CHY, D0510,             &
-             D0100,CL.BPMA, D0500,D0100,D0125,CL.QF.5,D0170,CL.CFX, D3405, &
-             D0100,CL.BPMA, D0500, D0100,D0125,CL.QF.6,D0170,CL.CFY, D2905, &
-             D0100,CL.BPMA,D0100,D0125,CL.QFH.7,                    &
-             CL.QFH.7,D0170,CL.CFX, D0100, CL.TORA, D2805,          &
-             D0100,CL.BPMA,D0100,D0125,CL.QF.6,D0170,CL.CFY, D3405, &
-             D0100,CL.BPMA, D0500,D0100,D0125,CL.QF.5,D0170,CL.CFX, D1065, &
+             D0700,D0125,CL.QF.5,D0170,CL.CFX, D0930, CL.BPMA, D2475, &
+             D0700,D0125,CL.QF.6,D0170,CL.CFY, D0930, CL.BPMA, D1975, &
+             D0200,D0125,CL.QFH.7,                    &
+             CL.QFH.7,D0170,CL.CFX,D0930,CL.BPMA,D04342,CL.TORA,D1975C,&
+             D0200,D0125,CL.QF.6,D0170,CL.CFY, D0930, CL.BPMA, D2475, &
+             D0700,D0125,CL.QF.5,D0170,CL.CFX, D0380, CL.BPMA, D0685, &
              CL.CHY,D0170,CL.QH.4,D0250,CL.QH.4,                    &
              D0125,D0100,CL.BPMA,D0100,D0275,                       & 
              CL.QH.3,D0250,CL.QH.3,D0170,CL.CHX, D0500,             &
-             D0100,CL.BPMA,D0500, D0100,D0125,CL.QFH.4.1);
+             D0100,D0500, D0100,D0125,CL.QFH.4.1);
 
 
 !  Collimation arcs
@@ -160,58 +169,67 @@ CL.COLS : ECOLLIMATOR, L = 1.0, XSIZE = 0.002, YSIZE = 0.002;
 !  Arcs
                   
 CLFODO_P1: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.1,   &
-                  D2500, CL.BE.1, D1925,                   &
-                  D0100,CL.BPMA,D0500, D0100,D0125,    &
+                  D02265,&
+                  D0096, D01275,CL.BPMI.E,D0096,CL.MPBPMI.E,D00315,&
+                  D00225,D0350, D1550, CL.BE.1, D1925,&
+                  D0100,D0500, D0100,D0125,    &
                   CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.2,    &
-                  D1500,CL.COLS,D2150,&
-                        CL.BL.1,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
-                  CL.SA.3,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  D0450, CL.BPMA, D1050,CL.COLS,D2150,&
+                        CL.BL.1,D0450,CL.OTRB,D0750,CL.COLM,D0450,&
+                  CL.SA.3,D0125,D0100,               D0100,D0125, &
                   CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.3,    &
-                  D2150, CL.BL.1, D4650,                   &
-                  CL.SA.2,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  D02265, &
+                  D0096, D01275,CL.BPMI.E,D0096,CL.MPBPMI.E,D00315, &
+                  D00225, D1550, CL.BL.1, D4650,  &
+                  CL.SA.2,D0125,D0100,D0100,D0125, &
                   CL.QF.4.2,D0170,CL.CFX,                  & 
-                  D2480, CL.BE.1, D2500,                   &
-                  CL.SA.1,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+                  D0930, CL.BPMA, D1550, CL.BE.1, D2500,               &
+                  CL.SA.1,D0125,D0100,D0100,D0125,CL.QFH.4.1)
 
 CLFODO_P2: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.1,   &
-                  D2500, CL.BE.1, D1925,                   &
-                  D0100,CL.BPMA,D0500, D0100,D0125,               &
+                  D0450,CL.BPMA,D2050, CL.BE.1, D1925,                   &
+                  D0100,        D0500, D0100,D0125,               &
                   CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.2,    &
-                  D1500,CL.COLS,D2150,&
-                        CL.BL.1,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
-                  CL.SA.3,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  D0450, CL.BPMA, D1050,CL.COLS,D2150,&
+                        CL.BL.1,D0450,CL.OTRB,D0750,CL.COLM,D0450,&
+                  CL.SA.3,D0125,D0100,                D0100,D0125, &
                   CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.3,    &
-                  D2150, CL.BL.1, D4650,                   &
-                  CL.SA.2,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  D02265, &
+                  D0096, D01275,CL.BPMI.E,D0096,CL.MPBPMI.E,D00315, &
+                  D00225, D1550, CL.BL.1, D4650,  &
+                  CL.SA.2,D0125,D0100,     D0100,D0125, &
                   CL.QF.4.2,D0170,CL.CFX,                  & 
-                  D2480, CL.BE.1, D2500,                   &
-                  CL.SA.1,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+                  D0930, CL.BPMA, D1550, CL.BE.1, D2500,                   &
+                  CL.SA.1,D0125,D0100,D0100,D0125,CL.QFH.4.1)
 
 CLFODO_M1: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.4,   &
-                  D2500, CL.BE.2, D1925,                   &
-                  D0100,CL.BPMA, D0500, D0100,D0125,               &
+                  D0450,CL.BPMA,D2050, CL.BE.2, D1925,                   &
+                  D0100,        D0500, D0100,D0125,               &
                   CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.5,    &
-                  D1500,CL.COLS,D2150,&
-                        CL.BL.2,D0150,CL.OTRB,D0750,CL.COLM,D0750,&
-                  CL.SA.6,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  D0450, CL.BPMA, D1050, CL.COLS,D2150,&
+                        CL.BL.2,D0450,CL.OTRB,D0750,CL.COLM,D0450,&
+                  CL.SA.6,D0125,D0100,              D0100,D0125, &
                   CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.6,    &
-                  D2150, CL.BL.2, D4650,                   &
-                  CL.SA.5,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  D0450, CL.BPMA, D1700, CL.BL.2, D4650,                   &
+                  CL.SA.5,D0125,D0100,    D0100,D0125, &
                   CL.QF.4.2,D0170,CL.CFX,                  &
-                  D2480, CL.BE.2, D2500,                   &
-                  CL.SA.4,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
+                  D0930, CL.BPMA, D1550, CL.BE.2, D2500,                   &
+                  CL.SA.4,D0125,D0100,D0100,D0125,CL.QFH.4.1)
               
 CLFODO_M2: Line = (CL.QFH.4.1,D0170,CL.CFY,D0180,CL.SA.4,   &
-                  D2500, CL.BE.2, D1925,                   &
-                  D0100,CL.BPMA, D0500, D0100,D0125,               &
+                  D0450,CL.BPMA,D2050, CL.BE.2, D1925,                   &
+                  D0100,        D0500, D0100,D0125,               &
                   CL.QF.4.2,D0170,CL.CFX,D0180,CL.SA.5,    &
-                  D4650, CL.BL.2, D0150, CL.OTRB, D0750, CL.COLM, D0750, &
-                  CL.SA.6,D0125,D0100,CL.BPMI.E,D0100,D0125, &
+                  D0450,CL.BPMA, D4200, &
+                         CL.BL.2, D0450, CL.OTRB, D0750, CL.COLM, D0450, &
+                  CL.SA.6,D0125,D0100,                 D0100,D0125, &
                   CL.QF.4.1,D0170,CL.CFY,D0180,CL.SA.6,    &
-                  D2150, CL.BL.2, D4650,                   &
-                  CL.SA.5,D0125,D0100,CL.BPMA,D0100,D0125, &
+                  D02265, &
+                  D0096, D01275,CL.BPMI.E,D0096,CL.MPBPMI.E,D00315, &
+                  D00225, D1550, CL.BL.2, D4650,  &
+                  CL.SA.5,D0125,D0100,D0100,D0125, &
                   CL.QF.4.2,D0170,CL.CFX,                  &
-                  D2480, CL.BE.2, D2500,                   &
+                  D0930, CL.BPMA, D1550, CL.BE.2, D2500,                  &
                   CL.SA.4,D0125,D0100,CL.BPMA,D0100,D0125,CL.QFH.4.1)
 
 CLARCP:  Line = (CLFODO_P1, CLFODO_P2);

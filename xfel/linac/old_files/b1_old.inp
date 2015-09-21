@@ -1,0 +1,65 @@
+d0196500 = Drift(l = 1.965, id = 'd0196500')
+d0330000 = Drift(l = 3.3, id = 'd0330000')
+d0115000 = Drift(l = 1.15, id = 'd0115000')
+d0110000 = Drift(l = 1.1, id = 'd0110000')
+d0851062 = Drift(l = 8.510621, id = 'd0851062')
+d0150000 = Drift(l = 1.5, id = 'd0150000')
+d0090000 = Drift(l = 0.9, id = 'd0090000')
+d0135000 = Drift(l = 1.35, id = 'd0135000')
+d0010000 = Drift(l = 0.1, id = 'd0010000')
+d0120000 = Drift(l = 1.2, id = 'd0120000')
+d0130000 = Drift(l = 1.3, id = 'd0130000')
+d0170000 = Drift(l = 1.7, id = 'd0170000')
+d0121500 = Drift(l = 1.215, id = 'd0121500')
+d0141800 = Drift(l = 1.418, id = 'd0141800')
+d0080100 = Drift(l = 0.801, id = 'd0080100')
+d0426600 = Drift(l = 4.266, id = 'd0426600')
+d0060000 = Drift(l = 0.6, id = 'd0060000')
+d0146500 = Drift(l = 1.465, id = 'd0146500')
+
+# quadrupoles 
+b1_qi_1 = Quadrupole(l = 0.2, k1 = 0.0, id = 'b1_qi_1')
+b1_qd_3 = Quadrupole(l = 0.2, k1 = 0.939955748342, id = 'b1_qd_3')
+b1_qd_4 = Quadrupole(l = 0.2, k1 = -0.859561397012, id = 'b1_qd_4')
+b1_qi_5 = Quadrupole(l = 0.2, k1 = -1.0827, id = 'b1_qi_5')
+b1_qi_6 = Quadrupole(l = 0.2, k1 = 0.04514739, id = 'b1_qi_6')
+b1_qi_7 = Quadrupole(l = 0.2, k1 = 0.80091, id = 'b1_qi_7')
+b1_qi_8 = Quadrupole(l = 0.2, k1 = 1.351395, id = 'b1_qi_8')
+b1_qd_9 = Quadrupole(l = 0.2, k1 = -2.360288, id = 'b1_qd_9')
+b1_qi_10 = Quadrupole(l = 0.2, k1 = 0.5552337, id = 'b1_qi_10')
+b1_qi_11 = Quadrupole(l = 0.2, k1 = 0.822139, id = 'b1_qi_11')
+b1_qi_12 = Quadrupole(l = 0.2, k1 = -1.041643, id = 'b1_qi_12')
+b1_qi_13 = Quadrupole(l = 0.2, k1 = -1.425494, id = 'b1_qi_13')
+b1_qd_14 = Quadrupole(l = 0.2, k1 = 2.201726, id = 'b1_qd_14')
+b1_qd_15 = Quadrupole(l = 0.2, k1 = -3.029315, id = 'b1_qd_15')
+b1_qd_16 = Quadrupole(l = 0.2, k1 = 2.201726, id = 'b1_qd_16')
+b1_qi_17 = Quadrupole(l = 0.2, k1 = -0.5977811, id = 'b1_qi_17')
+b1_qi_18 = Quadrupole(l = 0.2, k1 = -1.66005, id = 'b1_qi_18')
+b1_qi_19 = Quadrupole(l = 0.2, k1 = 1.501661, id = 'b1_qi_19')
+b1_qd_20 = Quadrupole(l = 0.2, k1 = 1.711929, id = 'b1_qd_20')
+b1_qd_21 = Quadrupole(l = 0.2, k1 = -2.384284, id = 'b1_qd_21')
+b1_qd_22 = Quadrupole(l = 0.2, k1 = 0.4559927, id = 'b1_qd_22')
+
+# bending magnets 
+b1_bb_1_1 = Bend(l = 0.500208101873, angle = 0.049964939363, e1 = 0.0, e2 = 0.049964939363, tilt = 1.5707963268, id = 'b1_bb_1_1')
+b1_bb_1_2 = Bend(l = 0.500208101873, angle = -0.049964939363, e1 = -0.049964939363, e2 = 0.0, tilt = 1.5707963268, id = 'b1_bb_1_2')
+b1_bb_1_3 = Bend(l = 0.500208101873, angle = -0.049964939363, e1 = 0.0, e2 = -0.049964939363, tilt = 1.5707963268, id = 'b1_bb_1_3')
+b1_bb_1_4 = Bend(l = 0.500208101873, angle = 0.049964939363, e1 = 0.049964939363, e2 = 0.0, tilt = 1.5707963268, id = 'b1_bb_1_4')
+
+# sextupoles 
+
+# cavity 
+b1_tdsb = Cavity(l = 1.7, volt = 0.0, delta_e = 0.0, freq = 2800.0, volterr = 0.0, id = 'b1_tdsb')
+
+# Matrices 
+
+# Solenoids 
+
+# lattice 
+b1 = (d0196500, b1_qi_1, d0330000, b1_qd_3, d0115000, b1_qd_4, d0110000,
+b1_bb_1_1, d0851062, b1_bb_1_2, d0150000, b1_bb_1_3, d0851062, b1_bb_1_4, d0150000, 
+b1_qi_5, d0090000, b1_qi_6, d0135000, b1_qi_7, d0010000, b1_tdsb, d0010000, 
+b1_qi_8, d0120000, b1_qd_9, d0130000, b1_qi_10, d0170000, b1_qi_11, d0170000, 
+b1_qi_12, d0170000, b1_qi_13, d0170000, b1_qd_14, d0170000, b1_qd_15, d0170000, 
+b1_qd_16, d0121500, b1_qi_17, d0141800, b1_qi_18, d0080100, b1_qi_19, d0426600, 
+b1_qd_20, d0060000, b1_qd_21, d0060000, b1_qd_22, d0146500)

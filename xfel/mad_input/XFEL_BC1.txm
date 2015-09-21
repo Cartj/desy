@@ -11,12 +11,12 @@ D0101:   DRIFT, L=0.101
 D0199:   DRIFT, L=0.199
 
 D0039: DRIFT, L=0.039
-D0420: DRIFT, L=0.420
 D0144: DRIFT, L=0.144
 D0184: DRIFT, L=0.184
 D0131: DRIFT, L=0.131
 D0248: DRIFT, L=0.248
 D0151: DRIFT, L=0.151
+D015418: DRIFT, L=0.15418
 D0369: DRIFT, L=0.369
 D0530: DRIFT, L=0.530
 D0116: DRIFT, L=0.116
@@ -32,8 +32,8 @@ D03548: DRIFT, L=0.3548
 D01542: DRIFT, L=0.1542
 D0461: DRIFT, L=0.461
 D0223: DRIFT, L=0.223
-D0194: DRIFT, L=0.194
-D0448: DRIFT, L=0.448
+D0169: DRIFT, L=0.169
+D0473: DRIFT, L=0.448+0.025
 D0378: DRIFT, L=0.378
 D0172: DRIFT, L=0.172
 D0379: DRIFT, L=0.379
@@ -42,12 +42,11 @@ D1249: DRIFT, L=1.249
 D0579: DRIFT, L=0.579
 D0501: DRIFT, L=0.501
 D0147: DRIFT, L=0.147
-D0121: DRIFT, L=0.121
 D0244: DRIFT, L=0.244
 D0356: DRIFT, L=0.356
 D0099: DRIFT, L=0.099
 D0679: DRIFT, L=0.679
-D0624: DRIFT, L=0.624
+D046982: DRIFT, L=0.46982
 D0229: DRIFT, L=0.229
 D0384: DRIFT, L=0.384
 D0290: DRIFT, L=0.290
@@ -56,7 +55,7 @@ D03975: DRIFT, L=0.3975
 D03175: DRIFT, L=0.3175
 
 ! LOLA CAVITY FOR DIAGNOSTICS (MAD definition---------------------------=
-B1.TDSB: LCAVITY, L=1.7, PHI0=0,               &
+B1.TDSB: LCAVITY, L=1.5, PHI0=0,               &
                 VOLT=0,    &
                 FREQ=2800000000.0*1e-6
 
@@ -69,7 +68,7 @@ B1.LFS: DRIFT, L=0.6
 
 B1.START : MARKER
 B1.END   : MARKER
-B1D.START : MARKER
+B1D.STARTB1D : MARKER
 B1D.END   : MARKER
 
 B1.START.UP : MARKER
@@ -78,6 +77,14 @@ B1.START.MID : MARKER
 B1.END.MID   : MARKER
 B1.START.DIA : MARKER
 B1.END.DIA   : MARKER
+B1.STARTB1D : MARKER
+
+B1D.VCST40T60: MARKER
+B1.VCST40T400Y: MARKER
+B1.VCST400Y: MARKER
+B1.VCST400YT40: MARKER
+B1.VCST40Y: MARKER
+
 
 ! Define B1 Chicane--------------------------------------------------------------
 !
@@ -92,8 +99,8 @@ l_b1  = 0.5
 ang_b1 =  0.049964939363198
 arc_b1=l_b1/sin(ang_b1)*ang_b1
 CD8900A = 8.5 / cos(ang_b1)
-CD8900B = 1.0535 / cos(ang_b1)
-CD8900C = (8.5-1.0535) / cos(ang_b1)
+CD8900B = 1.05346 / cos(ang_b1)
+CD8900C = (8.5-1.05346) / cos(ang_b1)
 
 B1.BB.1.1 : SBEND,L=arc_b1,ANGLE= ang_b1, &
    e1= 0,e2= ang_b1,TILT = 1.570796326795  
@@ -116,6 +123,7 @@ B1.CIX: HKICKER, L=0.1
 B1.CCX: HKICKER, L=0.1
 B1D.CCX: HKICKER, L=0.1
 
+B1.CFX: HKICKER, L=0.1
 B1.CIY: VKICKER, L=0.1
 B1.CCY: VKICKER, L=0.1
 B1D.CCY: VKICKER, L=0.1
@@ -129,7 +137,13 @@ B1.KAY.1: VKICKER, L = 0.35, KICK = 0.0
 B1.KAY.2: VKICKER, L = 0.35, KICK = 0.0
 B1.KAY.3: VKICKER, L = 0.35, KICK = 0.0
 B1.KAY.4: VKICKER, L = 0.35, KICK = 0.0
-B1.KAX.5: HKICKER, L = 0.35, KICK = 0.0   ! max 2.8E-03, 2.588e-3 provides 20 mm offset at BB entrance
+!B1.KAX.5: HKICKER, L = 0.35, KICK = 0.0   ! max 2.8E-03, 2.588e-3 provides 20 mm offset at BB entrance
+B1.KAX.5: RBEND, L = 0.35, ANGLE = 0.0 
+
+B1.HELP.1a:  RBEND, L=0.000001
+B1.HELP.1b:  RBEND, L=0.000001
+B1.HELP.2a:  RBEND, L=0.000001
+B1.HELP.2b:  RBEND, L=0.000001
 
 !Quadrupoles --------------------------------------------------------
 
@@ -158,17 +172,16 @@ B1.QD.15: Quadrupole, L=0.2, K1=-3.029315E+00   !-3.1041
 B1.QD.16: Quadrupole, L=0.2, K1=B1.QD.14[K1] 
 
 ! Define Diagnostic Section downstream quadrupoles
-B1.QI.17: Quadrupole, L=0.2, K1=-5.977811E-01   !-0.22486 
-B1.QI.18: Quadrupole, L=0.2, K1=-1.660050E+00   !-2.704784E-01 
-B1.QI.19: Quadrupole, L=0.2, K1= 1.501661E+00    !-4.703813E-01 
-B1.QD.20: Quadrupole, L=0.2, K1= 1.711929E+00
-B1.QD.21: Quadrupole, L=0.2, K1= -2.384284E+00  
-
-B1.QD.22: Quadrupole, L=0.2, K1=  4.559927E-01
+B1.QI.17: Quadrupole, L=0.2, K1= -8.980398E-01  
+B1.QI.18: Quadrupole, L=0.2, K1=-6.394101E-01 
+B1.QI.19: Quadrupole, L=0.2, K1=6.977971E-01
+B1.QD.20: Quadrupole, L=0.2, K1= 1.709543E+00
+B1.QD.21: Quadrupole, L=0.2, K1= -2.384218E+00  
+B1.QD.22: Quadrupole, L=0.2, K1=  4.571330E-01
 
 !Spectrometer section
-B1D.QD.25: Quadrupole, L=0.2, K1=-2.175372E+00
-B1D.QD.26: Quadrupole, L=0.2, K1=1.971930E+00
+B1D.QD.25: Quadrupole, L=0.2, K1=-2.440945E+00
+B1D.QD.26: Quadrupole, L=0.2, K1=2.458474E+00
 
 ! Definition of Vacuum Components
 B1.VCDST: VCDST                    
@@ -180,8 +193,7 @@ B1.SRM:   MARKER
 !Definition of OTR Stations ------------------------------------------
 B1.OTRA:   MARKER
 B1.OTRB:   MARKER
-B1D.OTRD:   MARKER
-B1D.OTRA:   MARKER
+B1D.OTRC:   MARKER
 B1.OTRS:   MARKER
 
 !Definition of Beam Arrival Monitors (BAM) ------------------
@@ -189,26 +201,26 @@ B1.BAM:   MARKER
 
 !Definition of Toroids (TOR) ---------------------------------------
 B1.TORA:   MARKER
-B1D.TORC:    MARKER
+B1D.TORA:    MARKER
 
 !Definition of Dark Current Monitors (DC) ---------------------
 B1.DCM:   MARKER
 
 !Definition of BPMs ------------------------------------------
-B1.BPMF:   MARKER
-B1D.BPMA:   MARKER
-B1D.BPMD:   MARKER
-B1.BPMA:   MARKER
-B1.BPMS:   MARKER
+B1.BPMF:   MONITOR
+B1.MPBPMF:   MARKER
+B1D.BPMA:   MONITOR
+B1.BPMA:   MONITOR
+B1.BPMS:   MONITOR
 
 !Definition of Electro Optical stations -----------------------
-B1.EOD:   MARKER
+B1.EOD:   marker
 
 !Definition of PYRO Monitors -----------------------
-B1.PYR:   MARKER
+B1.BCM:   marker
 
 !Definition of Coherent Radiation Monitors -----------------------
-B1.CRD:   MARKER
+B1.CRD:   marker
 
 
 !Definition of Collimator ---------------------------------
@@ -237,44 +249,47 @@ B1.START.G9: MARKER
 B1.END.G9:   MARKER
 
 ! Define Transverse Deflecting Structure (TDS) ------------------
-B1TDS:  LINE=(B1.TDSB,LTWAKETDS)
+B1TDS:  LINE=(D0100,B1.TDSB,LTWAKETDS,D0100)
+
+D012573: DRIFT, L=0.12573
+D007427: DRIFT, L=0.07427
 
 !Matching from Linac1 into BC1---------------------------------------
 B1U : LINE = &
-  (B1.START.UP,D0100, B1.VCDST, D0100,&
+  (B1.START.UP,D012573, B1.VCDST, D007427,&
    B1.START.G1,&
    D0131,B1.TORA,D0248,B1.BPMA,D0171,B1.QI.1,D0101,B1.CIY,&
    D0369,B1.DCM,D0530,D0200,D0116,B1.CIX,D0884,&
    B1.END.G1,&
    D0050, &
    B1.START.G2,&
-   D0330,B1.EOD,D0349,B1.BPMA,D0171,B1.QD.3,D0150,B1.CCX,D0150,B1.PYR,&
+   D0330,B1.EOD,D0349,B1.BPMA,D0171,B1.QD.3,D0150,B1.CCX,D0150,B1.BCM,&
    D0500,B1.OTRA,D0250,B1.QD.4,D0120,B1.CCY,D0103,&
-   B1.BAM,D02525,B1.BPMF,D01745,&
+   B1.BAM,D0125,D00315,B1.MPBPMF,D0096,B1.BPMF,D01275,D0047,&
    B1.END.G2,&
    D0250, B1.END.UP)
 
 !Definition of BC1----------------------------------------------------------
-B1M : LINE = (B1.START.MID,D0100, B1.BB.1.1,D89B1A, B1.BB.1.2,B1.CBB.2, &
-              D03975, B1.COLO,D0085,B1.COLU,D03175, D0100, B1.BPMS, D0100,&
-              D0200, B1.OTRS, D0200, D0100, &
-              B1.BB.1.3,B1.CBB.3,D89B1B,B1.SRM,D89B1C,&
-              B1.BB.1.4,B1.CBB.4,&
+B1M : LINE = (B1.START.MID,D0100, B1.BB.1.1,&
+              B1.VCST40T400Y, D89B1A, B1.VCST400Y, B1.BB.1.2,B1.CBB.2, &
+              D03975, B1.COLO,D0085,B1.COLU,D03825, B1.BPMS, D0310,&
+              B1.OTRS, D0325, &
+              B1.BB.1.3,B1.CBB.3,B1.VCST400YT40,D89B1B,B1.SRM,D89B1C,&
+              B1.VCST40Y,B1.BB.1.4,B1.CBB.4,&
               D0100, B1.END.MID)
-
-
 
 !Definition of BC1 Diagnsotics up to Spectrometer---------------------------
 D0570: DRIFT, L=0.57
 D0265: DRIFT, L=0.265
 D1220: DRIFT, L=1.220
+D02273: DRIFT, L=0.2273
 
 B1TTDS: LINE=&
   (D0300,&
    B1.START.G3,&
-   D01225,B1.BAM,D02525,B1.BPMF,D03548,&
+   D01225,B1.BAM,D0125,D00315,B1.MPBPMF,D0096,B1.BPMF,D01275,D02273,&
    B1.TORA,D01542,B1.CIY,D0116,B1.QI.5,D0461,B1.EOD,D0223,B1.CIX,D0116,&
-   B1.QI.6,D0194,B1.PYR,D0448,B1.OTRA,D0108,&
+   B1.QI.6,D0169,B1.BCM,D0473,B1.OTRA,D0108,&
    B1.END.G3,D0050,B1.START.G4,&
    D0378,B1.BPMA,D0172,B1.QI.7,&
    D0100,B1TDS,D0100,&
@@ -288,138 +303,100 @@ B1TTDS: LINE=&
    D0150,B1.KAY.1,D0579,B1.BPMA,D0171,B1.QI.12,D0116,B1.CIX, D0215,B1.KAY.2,&
    D0501,B1.CCY,D0147,B1.BPMA,D0121)
    
-   B1DIAFODO: LINE = &
+B1DIAFODO: LINE = &
   (D0050,B1.QI.13,D0144,B1.KAY.3,D0356,B1.OTRB,D0400,&
    B1.END.G6,D0200,B1.START.G7,&
-   D0099,B1.BPMA,D0151,B1.QD.14,D0144, & 
+   D0099,B1.BPMA,D0151,B1.QD.14,D0144, &
    B1.KAY.4,D0356,B1.OTRB,D0679,B1.BPMA,D0171,B1.QD.15,&
-    D0126,B1.CCX,D0624,B1.OTRB, &
-   D0679,B1.BPMA,D0171,B1.QD.16,D0200,B1.CCY,D0050, &
+    D0126,B1.CCY,D015418,B1.DCM, D046982, B1.OTRB, &
+   D0679,B1.BPMA,D0171,B1.QD.16,D0200,B1.CFX,D0050, &
    B1.END.G7,D0200,B1.START.G8, &
    D0300,B1.OTRB,D0315)
  
-comment
-B1TSPEC: LINE=( &
-   D0050,B1.QI.17,D0265,B1.KAX.5,D0070,B1.KAX.5,D0229,B1.BPMA, &
-   D0171,B1.QI.18,D0150,B1.CIX,D0200,B1.CRD, D0679,B1.BPMA,&
-   D0171,B1.QI.19,D0116,B1.CIY,D0384, &
-   B1.END.G8,D0400)
-
-endcomment
-
-! 16.4.2013 New Design from Minjie with slightly adjusted length, G8 and G9 ready, Spectrometer needs work
-
-Dvary1: DRIFT, L=0.212
-Dvary2: DRIFT, L=0.18
+Dvary1: DRIFT, L=0.332
+Dvary2: DRIFT, L=0.08
 Dvary3: DRIFT, L=0.9
+D039725:DRIFT,L=0.39725
 
 B1TSPEC: LINE=( &
-   D0050,B1.QI.17,D0265,B1.KAX.5,D0070,B1.KAX.5,Dvary1,B1.BPMA, &
-   D0171,B1.QI.18,D0150,B1.CIX,D0200,B1.CRD, Dvary2,B1.BPMA,&
-   D0171,B1.QI.19,D0116,B1.CIY,Dvary3, &
-   B1.END.G8,D0400)
-
-!B1TSPEC: LINE=( &
-!    D0050,D0039,B1.KAX.5,D0070,B1.KAX.5,D0190,D0265,B1.QI.17,B1.BPMA, &
-!    D0171,D0150,B1.QI.18,B1.CIX,D0200,B1.CRD, D0379,B1.DCM,D0300,B1.BPMA,&
-!    D0171,B1.QI.19,D0116,B1.CIY,D0384, &
-!  B1.END.G8,D0400)
-
+   D0050,B1.QI.17,D0145,B1.KAX.5,D0070,B1.KAX.5,Dvary1,B1.BPMA, &
+   D0171,B1.HELP.1a,B1.QI.18,B1.HELP.1b, &
+         D0100,B1.CIY,D0150,B1.CFX, Dvary2,D0100,B1.BPMA,&
+   D0171,B1.HELP.2a,B1.QI.19,B1.HELP.2b, &
+         D0116,D0100,Dvary3, &
+   B1.END.G8, D039725)
 
 ! Define Diagnostic SPECTROMETER------------------------------------------------ 
+D000275: DRIFT, L=0.00275
+D000275D: DRIFT, L=0.00275-0.000004
+comment
+len_BS = 1;
+ANG_B1D_Y = 12/180*acos(-1);
+ANG_B1D_X = -4.75e-3;
+DELTA_TILT = atan(ANG_B1D_X/ANG_B1D_Y);
+TILT_B1D = 1.570796326795 -  DELTA_TILT;
+ANG_B1D = ANG_B1D_Y / cos(DELTA_TILT);
+ARCLEN_B1D = (len_BS * ANG_B1D) / sin(ANG_B1D);
+B1D.BZ.1 : SBEND, L=ARCLEN_B1D, ANGLE=ANG_B1D, TILT=TILT_B1D, &
+                                 E1=0.0, E2=ANG_B1D
+B1D.BZ.0 : SBEND, L=len_BS, ANGLE=0   ! Placeholder in straight line for BC.1
+B1BEND0: LINE=(B1.BBSTART, B1D.BZ.0,D000275D)
+B1DBEND: LINE=(B1D.BZ.1)
+endcomment
 
-!B1.BS.0 : DRIFT, L=1.0   ! Placeholder in straight line for BC.1
-!len_BS = 1.0;
-!ANG_B1D = 12/180*acos(-1);
-!ARCLEN_B1D = (len_BS * ANG_B1D) / sin(ANG_B1D);
-!B1D.BS.1 : SBEND, L=ARCLEN_B1D, ANGLE=ANG_B1D, TILT=1.570796326795, &
-!                                 E1=0.0, E2=ANG_B1D
 
-B1.BB.0 : DRIFT, L=0.5   ! Placeholder in straight line for BC.1
-
+!comment
+D0250D: DRIFT, L = 0.249996
+D0250DD: DRIFT, L = 0.24997+0.000055
+B1D.CBB.1: VKICKER, L=0
 len_BB = 0.5;
 ANG_B1D = 12/180*acos(-1);
 ARCLEN_B1D = (len_BB * ANG_B1D) / sin(ANG_B1D);
 B1D.BB.1 : SBEND, L=ARCLEN_B1D, ANGLE=ANG_B1D, TILT=1.570796326795, &
                                  E1=0.0, E2=ANG_B1D
-B1D.DUMP: MARKER
-B1.STARTB1D: MARKER
+B1.BB.0 : DRIFT, L=0.5   ! Placeholder in straight line for BC.1
+B1BEND0: LINE=(D0250,D000275,B1.BBSTART, B1.BB.0,D0250D)
+B1DBEND: LINE=(D0250,D000275, B1D.BB.1,B1D.CBB.1,D000275,D0250DD)
+!endcomment
 
-!Ddump1: drift, L=5.2E-01    
-!Ldump2 = 3.0
-!DeltaD: = 0
-!Ddump2: drift, L=2.400E+00-DeltaD    
-!Ddump3: drift, L=2.00E+00+DeltaD    
+B1D.DUFLANGE: MARKER
+B1D.DUABSORB: MARKER
+B1D.START.DU: MARKER
 
-!B1SPEC: LINE=(B1D.START, &
-!   D0250,B1D.BB.1,D0015,D0250,Ddump1,D0300,D0050,B1D.BPMA,D0150,B1D.QD.25,&
-!   D0150,B1D.CCY,D0050,Ddump2,B1D.QD.26, &
-!   D0150,B1D.BPMA,D0050,D0200,B1D.CCX, &
-!   Ddump3,&
-!   D01075, B1D.TORC, D01075, D0050, B1D.BPMD, D0050, D0150, B1D.OTRD,D0150,&
-!   D0250, B1D.DUMP,B1D.END)
+Ddump1: drift, L=0.715-0.000055
+Ddump2: drift, L=1.2
+Ddump3: drift, L=2.229
+Ddump4: drift, L=0.2779-0.1178
+D0708: drift, L=0.708
+D0181: drift, L=0.181
+DKICKSEP: DRIFT, L=0.0
+D0225D: DRIFT, L= 0.225-0.0767
+D0125D: DRIFT, L= 0.125+0.0767-0.0474
+D0100D: DRIFT, L= 0.100+0.0474+0.1178
+D0724: DRIFT, L=0.724
 
-comment
-! 28.2.2013 New Design from Minjie
-Ddump1: drift, L=1.5    
-Ldump2 = 3.0
-DeltaD= 0
-Ddump2: drift, L=1.500E+00-DeltaD    
-Ddump3: drift, L=1.0E+00+DeltaD
-
-D047517: DRIFT, L=0.47517
-D034483: DRIFT, L=0.34483
-
-B1SPEC: LINE=(B1D.START, &
-   D0250,B1D.BB.1,D0015,D0250,Ddump1,D0300,D0050,B1D.BPMA,D0150,B1D.QD.25,&
-   D0150,B1D.CCY,D0050,Ddump2,B1D.QD.26, &
-   D0150,B1D.BPMA,D0050,D0200,B1D.CCX, &
-   D0500, Ddump3,B1D.OTRA,&
-   D047517,D0115,&
-   B1D.OTRD, D0225, B1D.TORC, D0125,B1D.BPMD, &
-   D034483, B1D.DUMP,B1D.END)
-
-endcomment
-
-! 14.6.2013 New Design from Minjie
-DeltaD1 = 3.275436E-01
-DeltaD2 = 1.092565E+00
-DeltaD3 = -8.029536E-01
-
-Ddump1: drift, L=5.2E-01+DeltaD1
-Ldump2 = 3.0
-Ddump2: drift, L=2.400E+00-DeltaD2
-Ddump3: drift, L=2.00E+00-DeltaD3
-Ddump4: drift, L=0.25-DeltaD1+DeltaD2+DeltaD3
-
-B1SPEC: LINE=(B1D.START, &
-    D0250,B1D.BB.1,D0015,D0250,Ddump1,D0300,D0050,B1D.BPMA,D0150,B1D.QD.25,&
+B1SPEC: LINE=(DKICKSEP,B1D.STARTB1D, &
+    B1DBEND,Ddump1,D0300,D0050,B1D.BPMA,D0169,B1D.QD.25,&
     D0150,B1D.CCY,D0050,Ddump2,B1D.QD.26, &
-    D0150,B1D.BPMA,D0050,D0200,B1D.CCX, &
+    D0708,B1D.BPMA,D0181,B1D.CCX,D0050,D0200, &
     Ddump3,&
-    D01075, B1D.TORC, D01075, D0050, B1D.BPMD, D0050, D0150, &
-     B1D.OTRD,D0150,&
-    Ddump4, B1D.DUMP,B1D.END)
-
-
-
+    D0105, &
+    B1D.OTRC, D0225D, B1D.TORA, D0125D,B1D.BPMA, &
+    D0100D, B1D.VCST40T60, Ddump4, &
+    B1D.START.DU, B1D.DUFLANGE,D0724,B1D.DUABSORB,B1D.END)
 
 B1.BBSTART: MARKER
 ! Define Matching to Linac 2------------------------------------------------ 
-!B1TL2: LINE=(&
-!   D0250,B1.BBSTART, B1.BB.0,D0250,D1700,&
-!   B1.START.G9,D0150, &
-!   B1.TORA,D0200,B1.QD.20,D0151,B1.DCM, &
-!   D0199, B1.CCX,D0179,B1.BPMA,D0171,B1.QD.21, &
-!   D0100,B1.CCY, D0150,B1.END.G9,D0100, B1.VCDST, D0100)
+D007423: DRIFT, L = 0.07423
+D012577: DRIFT, L = 0.12577
 
 
 B1TL2: LINE=(&
-   D0250,B1.BBSTART, B1.BB.0,D0250,D1600,B1.DCM, D0100,&
-   B1.START.G9,D0050,B1.QD.20,D0200, &
-   B1.CCX, D0100,B1.TORA,D0200,B1.QD.21, D0200,&
-   B1.CCY,D0100,B1.BPMA,D0200,B1.QD.22, D0050, B1.END.G9,&
-   D0100, B1.VCDST, D0100)
+   B1BEND0,D1600, D0100,&
+   B1.START.G9,D0050,B1.QD.20,D0130, &
+   B1.CCX, D0150,B1.TORA,D0170,B1.QD.21, D0140,&
+   B1.CCY,D0150,B1.BPMA,D0160,B1.QD.22, D0150, B1.END.G9,&
+   D007423, B1.VCDST, D012577)
 
 ! Define whole B1 sections------------------------------------------------ 
 
@@ -427,12 +404,9 @@ B1DIA: LINE=(B1.START.DIA,B1TTDS,B1DIAFODO,&
              B1TSPEC,B1.END.DIA, &
                 B1.STARTB1D)
 
-
 B1: LINE=(B1.START,B1U,B1M,B1DIA,B1TL2,B1.END)
 
-
 B1DUMP: LINE=(B1.START, B1U, B1M, B1DIA,B1SPEC)
-
 
 MATCH_B1SUB: SUBROUTINE !==================================
 use,b1
@@ -535,17 +509,18 @@ ENDSUBROUTINE !=========================================
 MATCH_B1D_OFFSET: SUBROUTINE !=================================
 !match 20 mm offset at septum entrance
 use,b1dump
-set,B1.QI.17[K1],0
 beam,energy=0.7
 match,beta0=b0_b1.start
 !vary,B1.KAX.5[kick],step=0.1
-vary,B1.QI.18[K1],step=0.1
-constraint,b1d.start,x=30e-3,px=0
+!vary,b1d.bz.1[tilt],step=0.1
+constraint,b1d.start,x=20e-3
+!constraint,b1d.bz.1,px=0
 migrad
 !simplex
-!endmatch
+endmatch
 
 twiss,chrom,beta0=b0_b1.start,tape="testbc1d2.dat",save
+
 plot,table=twiss,haxis=s,vaxis=x &
      spline, colour=100
 ENDSUBROUTINE !====================================
@@ -616,4 +591,22 @@ phi0=phicor, tape="lay_xfelb1d.dat"
 makesequence,label=b1d.seq,refer=centre
 
 
+ENDSUBROUTINE !===============================================
+
+SET_B1DLAY: SUBROUTINE
+set, DKICKSEP[L], 0.000054
+set, B1.KAX.5[ANGLE], 2.890379E-03
+set, B1.HELP.1a[ANGLE],-5.133E-03*B1.QI.18[K1]*B1.QI.18[L]/2
+set, B1.HELP.1b[ANGLE],-6.360E-03*B1.QI.18[K1]*B1.QI.18[L]/2
+set, B1.HELP.2a[ANGLE],-1.158E-02*B1.QI.19[K1]*B1.QI.19[L]/2
+set, B1.HELP.2b[ANGLE],-1.271E-02*B1.QI.19[K1]*B1.QI.19[L]/2
+ENDSUBROUTINE !===============================================
+
+RESET_B1DLAY: SUBROUTINE
+set,  DKICKSEP[L], 0.0
+set, B1.KAX.5[ANGLE], 0
+set, B1.HELP.1a[ANGLE],0
+set, B1.HELP.1b[ANGLE],0
+set, B1.HELP.2a[ANGLE],0
+set, B1.HELP.2b[ANGLE],0
 ENDSUBROUTINE !===============================================

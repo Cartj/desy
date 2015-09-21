@@ -1,22 +1,23 @@
-#option, -echo
-
-
-
-#------------------------------------------------------------------------------
-
-# last work: 16 december 2011
+option, -echo
 
 #------------------------------------------------------------------------------
 
 d00645 = Drift(l=0.0645, id = 'd00645')
 d0082 = Drift(l=0.082, id = 'd0082')
 d00052 = Drift(l=0.0052, id = 'd00052')
-d03236 = Drift(l=0.3236, id = 'd03236')
+d0324 = Drift(l=0.324, id = 'd0324')
 d0276 = Drift(l=0.276, id = 'd0276')
-d0208 = Drift(l=0.208, id = 'd0208')
-d04488 = Drift(l=0.4488, id = 'd04488')
-d12744 = Drift(l=1.2744, id = 'd12744')
+d01988 = Drift(l=0.198782, id = 'd01988')
+d02292 = Drift(l=0.229218, id = 'd02292')
+d0111 = Drift(l=0.111, id = 'd0111')
+d0088 = Drift(l=0.088, id = 'd0088')
+d03988 = Drift(l=0.3988-0.0124, id = 'd03988')
+#d04488: Drift, l = 0.4488
+
+d12964 = Drift(l=1.2964, id = 'd12964')
 d0285 = Drift(l=0.285, id = 'd0285')
+d02675 = Drift(l=0.2675, id = 'd02675')
+d02335 = Drift(l=0.23352, id = 'd02335')
 # lola cavity for diagnostics (mad definition---------------------------------
 
 
@@ -24,51 +25,68 @@ d0285 = Drift(l=0.285, id = 'd0285')
 i1_tdsa = Cavity(l=0.7, phi=0, volt=0, freq=2800000000.0*1e-6, id = 'i1_tdsa')
 
 
-# section Scavengers --------------------------------------------------------------
+# section Markers --------------------------------------------------------------
 
-i1_start_i1 = Scavenger(id = 'i1_start_i1')
-i1_end_i1 = Scavenger(id = 'i1_end_i1')
-i1_gun = Scavenger(id = 'i1_gun')
-i1_s2e = Scavenger(id = 'i1_s2e')
-i1_start_darm = Scavenger(id = 'i1_start_darm')
-i1_end_darm = Scavenger(id = 'i1_end_darm')
-i1_start_lh = Scavenger(id = 'i1_start_lh')
-i1_end_lh = Scavenger(id = 'i1_end_lh')
-i1_start_dia = Scavenger(id = 'i1_start_dia')
-i1_start_dog = Scavenger(id = 'i1_start_dog')
-i1_end_dog = Scavenger(id = 'i1_end_dog')
-i1_start_mid = Scavenger(id = 'i1_start_mid')
-i1_end_mid = Scavenger(id = 'i1_end_mid')
-i1_start_i1d = Scavenger(id = 'i1_start_i1d')
-i1d_start_i1d = Scavenger(id = 'i1d_start_i1d')
-i1d_end_i1d = Scavenger(id = 'i1d_end_i1d')
+i1_start_i1 = Marker(id = 'i1_start_i1')
+i1_end_i1 = Marker(id = 'i1_end_i1')
+i1_gun = Marker(id = 'i1_gun')
+i1_s2e = Marker(id = 'i1_s2e')
+i1_startdrm = Marker(id = 'i1_startdrm')
+i1_startdrmd = Marker(id = 'i1_startdrmd')
+i1_end_drm = Marker(id = 'i1_end_drm')
+i1_start_lh = Marker(id = 'i1_start_lh')
+i1_end_lh = Marker(id = 'i1_end_lh')
+i1_start_dia = Marker(id = 'i1_start_dia')
+i1_start_dog = Marker(id = 'i1_start_dog')
+i1_end_dog = Marker(id = 'i1_end_dog')
+i1_start_mid = Marker(id = 'i1_start_mid')
+i1_end_mid = Marker(id = 'i1_end_mid')
+i1_starti1d = Marker(id = 'i1_starti1d')
+i1d_starti1d = Marker(id = 'i1d_starti1d')
+i1d_start_du = Marker(id = 'i1d_start_du')
+i1d_duflange = Marker(id = 'i1d_duflange')
+i1d_duconcrete = Marker(id = 'i1d_duconcrete')
+i1d_duabsorb = Marker(id = 'i1d_duabsorb')
+i1d_end_i1d = Marker(id = 'i1d_end_i1d')
 
 
-# diagnostics Scavenger -----------------------------------------------------------
+# diagnostics Marker -----------------------------------------------------------
 
 i1_bpma = Monitor(id = 'i1_bpma')
 i1_bpmb = Monitor(id = 'i1_bpmb')
 i1_bpmg = Monitor(id = 'i1_bpmg')
 i1_bpmf = Monitor(id = 'i1_bpmf')
+i1_mpbpmf = Marker(id = 'i1_mpbpmf')
 i1d_bpma = Monitor(id = 'i1d_bpma')
 i1d_bpmd = Monitor(id = 'i1d_bpmd')
 i1_bpms = Monitor(id = 'i1_bpms')
-i1_scrn = Scavenger(id = 'i1_scrn')
-i1_otra = Scavenger(id = 'i1_otra')
-i1_otrl = Scavenger(id = 'i1_otrl')
-i1_otrs = Scavenger(id = 'i1_otrs')
-i1_otrc = Scavenger(id = 'i1_otrc')
-i1d_otrc = Scavenger(id = 'i1d_otrc')
-i1d_otrd = Scavenger(id = 'i1d_otrd')
-i1_dcm = Scavenger(id = 'i1_dcm')
-i1_bam = Scavenger(id = 'i1_bam')
-i1_tora = Scavenger(id = 'i1_tora')
-i1_torb = Scavenger(id = 'i1_torb')
-i1d_torc = Scavenger(id = 'i1d_torc')
-i1_eod = Scavenger(id = 'i1_eod')
-i1_srm = Scavenger(id = 'i1_srm')
-i1_fcup = Scavenger(id = 'i1_fcup')
-i1d_bhm = Scavenger(id = 'i1d_bhm')
+i1_scrn = Marker(id = 'i1_scrn')
+i1_otra = Marker(id = 'i1_otra')
+i1_otrl = Marker(id = 'i1_otrl')
+i1_otrs = Marker(id = 'i1_otrs')
+i1_otrc = Marker(id = 'i1_otrc')
+i1d_otrc = Marker(id = 'i1d_otrc')
+i1d_otrd = Marker(id = 'i1d_otrd')
+i1_dcm = Marker(id = 'i1_dcm')
+i1_bam = Marker(id = 'i1_bam')
+i1_tora = Marker(id = 'i1_tora')
+i1_torb = Marker(id = 'i1_torb')
+i1d_torc = Marker(id = 'i1d_torc')
+i1_eod = Marker(id = 'i1_eod')
+i1_fcup = Marker(id = 'i1_fcup')
+i1d_bhm = Marker(id = 'i1d_bhm')
+
+
+# vacuum Markers
+
+i1_vcst40t35 = Marker(id = 'i1_vcst40t35')
+i1_vcst35t40 = Marker(id = 'i1_vcst35t40')
+i1d_vcst40t98 = Marker(id = 'i1d_vcst40t98')
+i1d_vcst98t60 = Marker(id = 'i1d_vcst98t60')
+i1_vcst40t400y = Marker(id = 'i1_vcst40t400y')
+i1_vcst400y = Marker(id = 'i1_vcst400y')
+i1_vcst400yt40 = Marker(id = 'i1_vcst400yt40')
+i1_vcst40y = Marker(id = 'i1_vcst40y')
 
 
 # undulator with natural focusing--------------------------------------------
@@ -83,13 +101,13 @@ enerlh  = 0.13
 
 gammalh = enerlh / emass
 
-bbetalh = 1. / sqrt(1 - 1./(gammalh**2))
+bbetalh = 1 / sqrt(1 - 1/(gammalh**2))
 
 lundlh    = 0.074
 
 nundlh    = 0.74 / lundlh    # = 10
 
-lundlh_10= lundlh * 10.
+lundlh_10= lundlh * 10
 
 bundlh    = 0.28         
 
@@ -97,14 +115,14 @@ kundlh    = 0.934*lundlh*100*bundlh
 
 kqundlh   = (2 * pi * kundlh) / (lundlh * gammalh * bbetalh)
 
-omegalh   = kqundlh / sqrt(2.)
+omegalh   = kqundlh / sqrt(2)
 
    
 
-i1_undu = Matrix(l=lundlh_10, rm11=1.0, rm12=lundlh_10, rm13=0.0, rm22=1.0, rm33=cos(omegalh*lundlh_10), rm34=sin(omegalh*lundlh_10)/omegalh, rm43=-sin(omegalh*lundlh_10)*omegalh, rm44=cos(omegalh*lundlh_10), id = 'i1_undu')
+i1_undu = Matrix(l=lundlh_10, rm(1, 1)=1.0, rm(1, 2)=lundlh_10, rm(1, 3)=0.0, rm(2, 2)=1.0, rm(3, 3)=cos(omegalh*lundlh_10), rm(3, 4)=sin(omegalh*lundlh_10)/omegalh, rm(4, 3)=-sin(omegalh*lundlh_10)*omegalh, rm(4, 4)=cos(omegalh*lundlh_10), id = 'i1_undu')
 
 
-l_lhbp  = lundlh/2.
+l_lhbp  = lundlh/2
 
 ang_lhbp = 0.2998*bundlh/sqrt(2)/enerlh*l_lhbp
 
@@ -112,9 +130,9 @@ arc_lhbp = (0.5 * l_lhbp * ang_lhbp) / sin(0.5 * ang_lhbp)
 
 
 
-lh_bp_1 = Bend(l=arc_lhbp/2., angle=ang_lhbp/2., e1=0, e2=ang_lhbp/2., id = 'lh_bp_1')
+lh_bp_1 = Bend(l=arc_lhbp/2, angle=ang_lhbp/2, e1=0, e2=ang_lhbp/2, id = 'lh_bp_1')
 lh_bp_2 = Bend(l=arc_lhbp, angle=-ang_lhbp, e1=-ang_lhbp, e2=-ang_lhbp, id = 'lh_bp_2')
-lh_bp_3 = Bend(l=arc_lhbp/2., angle=ang_lhbp/2., e1=ang_lhbp/2., e2=0, id = 'lh_bp_3')
+lh_bp_3 = Bend(l=arc_lhbp/2, angle=ang_lhbp/2, e1=ang_lhbp/2, e2=0, id = 'lh_bp_3')
 
 
 #i1_undulator: line=(d0030,10*(lh_bp_1,lh_bp_2,lh_bp_3),d0030)
@@ -127,40 +145,47 @@ i1_undulator  = (d0030,i1_undu,d0030)
 
 
 
-i1_bk = Bend(l=0.3, angle=45/180*pi, id = 'i1_bk')
-i1_sola = Solenoid(l=0, id = 'i1_sola')
-i1_solb = Solenoid(l=0, id = 'i1_solb')
+i1_bk_1 = Bend(l=0.3, angle=45/180*pi, id = 'i1_bk_1')
+i1_sola_1 = Solenoid(l=0, id = 'i1_sola_1')
+i1_solb_1 = Solenoid(l=0, id = 'i1_solb_1')
 
 
-# vacuum system Scavenger
+# vacuum system Marker
 
 i1_vcdst = Drift(l=1.215, id = 'i1_vcdst')
 i1_vcbshut = Drift(l=0.3, id = 'i1_vcbshut')
 
 
-i1d_dump = Scavenger(id = 'i1d_dump')
-i1d_dustart = Scavenger(id = 'i1d_dustart')
+i1d_dump = Marker(id = 'i1d_dump')
+i1d_dustart = Marker(id = 'i1d_dustart')
 
 
 
 
-i1_bsec = RBend(l=0.3, angle=0, id = 'i1_bsec')
-i1_cix = Scavenger(l=0.100, id = 'i1_cix')
-i1_ciy = Scavenger(l=0.100, id = 'i1_ciy')
+i1_bseci = RBend(l=0.4, angle=0, id = 'i1_bseci')
+i1_cix = UnknownElement(l=0.100, id = 'i1_cix')
+i1_ciy = UnknownElement(l=0.100, id = 'i1_ciy')
+i1_cbl = UnknownElement(l=0n, id = 'i1_cbl')
+i1d_cbb_5 = UnknownElement(l=0n, id = 'i1d_cbb_5')
 
 
-i1_ckxy = Scavenger(l=0.050, id = 'i1_ckxy')
+i1_ckx = UnknownElement(l=0.025, id = 'i1_ckx')
+i1_cky = UnknownElement(l=0.025, id = 'i1_cky')
+i1_ckxy =(i1_ckx,i1_cky)
+
+#i1_ckxy: UnknownElement, l=0.05
 
 
-i1_kax = Scavenger(l=0.350, id = 'i1_kax')
-i1_kdc = Scavenger(l=0.200, id = 'i1_kdc')
+
+i1_kax = UnknownElement(l=0.350, id = 'i1_kax')
+i1_kdc = UnknownElement(l=0.200, id = 'i1_kdc')
 
 
 #definition of collimator ---------------------------------
 
-i1_colo = Scavenger(xsize=0.02, ysize=0.02, id = 'i1_colo')
-i1_colu = Scavenger(xsize=0.02, ysize=0.02, id = 'i1_colu')
-i1_dccol = Scavenger(xsize=0.02, ysize=0.02, id = 'i1_dccol')
+i1_colo = UnknownElement(xsize=0.02, ysize=0.02, id = 'i1_colo')
+i1_colu = UnknownElement(xsize=0.02, ysize=0.02, id = 'i1_colu')
+i1_dccol = UnknownElement(xsize=0.02, ysize=0.02, id = 'i1_dccol')
 
 
 bpm = (d0050, i1_bpmb, d0050)
@@ -300,7 +325,7 @@ i1_bl_7_2 = Bend(l=arc_injdip2, angle=-ang_injdip2, e1=-end_injdip2, e2=-end_inj
 i1_bb_0 = Drift(l=0.5, id = 'i1_bb_0')
 l_i1d  = 0.5
 
-ang_i1d= 30./180.*arccos(-1)
+ang_i1d= 30/180*arccos(-1)
 
 arc_i1d= l_i1d/sin(0.5*ang_i1d)*0.5*ang_i1d #l_b0/sin(ang_b0)*ang_b0
 
@@ -314,7 +339,7 @@ arc_i1d= l_i1d/sin(0.5*ang_i1d)*0.5*ang_i1d #l_b0/sin(ang_b0)*ang_b0
 
 #arclen_i1d = (0.5 * len_bb * ang_i1d) / sin(0.5 * ang_i1d)
 
-i1d_bb_5 = Bend(l=arc_i1d, angle=ang_i1d, e1=ang_i1d/2., e2=ang_i1d/2., id = 'i1d_bb_5')
+i1d_bb_5 = Bend(l=arc_i1d, angle=ang_i1d, e1=ang_i1d/2, e2=ang_i1d/2, id = 'i1d_bb_5')
 
 
 #----------------- laser heater magnets ---------------------------
@@ -337,7 +362,7 @@ i1_bl_4 = Bend(l=arc_lh, angle=ang_lh, e1=ang_lh, e2=0, id = 'i1_bl_4')
 
 
 
-i1u = (i1_gun, i1_sola, d0276, i1_solb, d03236, d0100,                     d0050, i1_ckxy, i1_kdc, d0100,                     i1_bpmg, i1_scrn, i1_fcup, d0015, i1_start_darm,                    d0300, d0300, i1_ckxy,                     i1_bpmg, i1_scrn, d0100,                     d0020,  d0020, i1_dccol, d0200, i1_dcm, d0100,                     i1_torb, d0045, i1_ckxy, d04488)
+i1u = (i1_gun, i1_sola_1, d0276, i1_solb_1, d0324, d0100,                     d0050, i1_ckxy, i1_kdc, d0050,                     i1_bpmg, d0150, i1_scrn, i1_fcup, d01988, i1_startdrm,                    d02292, d0100, i1_ckxy,                     d0060,  i1_tora, d0225,i1_scrn, i1_fcup, i1_dccol,d0088,                     i1_bpmg, d0111, i1_dcm, d0050,                    i1_ckxy, d03988)
 
 
 
@@ -345,13 +370,13 @@ i1u = (i1_gun, i1_sola, d0276, i1_solb, d03236, d0100,                     d0050
 
 
 
-i1darm = (i1_gun, i1_sola, d05996, i1_solb, d0100,                     d0050, i1_ckxy, i1_kdc, d0100,                     i1_bpmg, i1_scrn, i1_fcup, d0015, i1_start_darm,                    i1_bk, d0200, i1_bpmg, i1_scrn, i1_fcup, i1_end_darm)
+i1drm = (i1_gun, i1_sola_1, d0276, i1_solb_1, d0324, d0100,                  d0050, i1_ckxy, i1_kdc, d0050,                 i1_bpmg, d0150, i1_scrn, i1_fcup, d01988, i1_startdrmd,                i1_bk_1, d02335, i1_fcup, i1_scrn, d0088, i1_bpmg, d0100,                i1_end_drm)
 
 
 
 #----------------- laser heater -----------------------------------
 
-
+i1lh1 =                  (d12964,i1_tora,d02519,d0100,i1_qi_1,d0105,                   i1_bam, d0090,                   d01275,i1_bpmf,d0096,i1_mpbpmf,d00315,                   d00862, i1_dcm, d01423,                   i1_qi_2, d0100)
 
 
 
@@ -359,10 +384,12 @@ deltalh  = 0.100
 
 cd0100i = Drift(l=deltalh/cos(ang_lh), id = 'cd0100i')
 d0043 = Drift(l=0.043, id = 'd0043')
+d0051 = Drift(l=0.051, id = 'd0051')
 d00002 = Drift(l=0.0002, id = 'd00002')
 d0064 = Drift(l=0.064, id = 'd0064')
 d01087 = Drift(l=0.1087, id = 'd01087')
 d019625 = Drift(l=0.19625, id = 'd019625')
+d018825 = Drift(l=0.18825, id = 'd018825')
 d027175 = Drift(l=0.27175, id = 'd027175')
 d00785 = Drift(l=0.0785, id = 'd00785')
 d010849 = Drift(l=0.10849, id = 'd010849')
@@ -373,24 +400,18 @@ d01975 = Drift(l=0.1975, id = 'd01975')
 d02025 = Drift(l=0.2025, id = 'd02025')
 d0122 = Drift(l=0.122, id = 'd0122')
 d0260 = Drift(l=0.260, id = 'd0260')
-d0035 = Drift(l=0.035, id = 'd0035')
 d01817 = Drift(l=0.1817, id = 'd01817')
 d00183 = Drift(l=0.0183, id = 'd00183')
-d02739 = Drift(l=0.2739, id = 'd02739')
 d00835 = Drift(l=0.0835, id = 'd00835')
-# my Drift
+d02175 = Drift(l=0.2175, id = 'd02175')
+d02137 = Drift(l=0.2137, id = 'd02137')
+d02519 = Drift(l=0.2519, id = 'd02519')
+d01423 = Drift(l=0.1423, id = 'd01423')
+d006075 = Drift(l=0.06075, id = 'd006075')
+d014425 = Drift(l=0.14425, id = 'd014425')
+ 
 
-d03975 = Drift(l=0.3975, id = 'd03975')
-d0085 = Drift(l=0.085, id = 'd0085')
-d03175 = Drift(l=0.3175, id = 'd03175')
-d0325 = Drift(l=0.325, id = 'd0325')
-
-
-i1lh1 =                  (d12744,i1_tora,d02739,d0100,i1_qi_1,d0130,                   i1_bam, d0170, i1_bpmf, d0150, i1_dcm, d0150,                   d00785, i1_qi_2, d0100)
-
-
-
-i1lh2  = (i1_start_lh,                   d0043, (i1_bl_1_1), cd0100i,                   (i1_bl_1_2), d019625, i1_bpmf,                   d027175, i1_otrl, d0064, d0100,                   i1_undulator, d0100, d0064,                  i1_otrl,d0128,                  (i1_bl_3), cd0100i, (i1_bl_4), d0043,                   i1_end_lh)
+i1lh2  = (i1_start_lh, i1_vcst40t35,                   d0051, 1*(i1_bl_1_1), cd0100i,                   1*(i1_bl_1_2), d006075,                   d00315,i1_mpbpmf,d0096,i1_bpmf,d01275,                   d014425, i1_otrl, d0064, d0100,                   i1_undulator, d0100, d0064,                  i1_otrl,d0120,                  1*(i1_bl_3), cd0100i, 1*(i1_bl_4), d0051,                   i1_vcst35t40, i1_end_lh)
 
 
 
@@ -402,7 +423,7 @@ i1lh =(i1lh1, i1lh2)
 
 #------------------ diagniostcis ----------------------------------
 
-i1diau = (d0100, i1_qi_3, d010849, d0100, i1_eod,                    d0200, i1_ciy, d0100,                   d0200, d0003, i1_cix, d01975, i1_bpmf, d02025,                   i1_qi_4, d0070)
+i1diau = (d0100, i1_qi_3, d010849, d0100, i1_eod,                    d0200, i1_ciy, d0100,                   d0200, d0003, i1_cix, d0070,                   d01275,i1_bpmf,d0096,i1_mpbpmf,d00315,                    d0075, i1_qi_4, d0070)
 
                  
 
@@ -414,11 +435,15 @@ i1diacore  = (i1_tdsa,d0070,                    i1_qi_5,d0122,d0175,i1_kax,d0105
 
 
 
-i1diad1  =  (d0100,i1_qi_11,d0100,d01817,i1_tora,d00183,d0350,i1_bpma,                    d0100, d0300, i1_qi_12, d0150,                      d0400, i1_start_i1d)
+d00143 = Drift(l=0.0143, id = 'd00143')
+d0054 = Drift(l=0.054, id = 'd0054')
+
+
+i1diad1  =  (d0100,i1_qi_11,d0100,d01817,i1_tora,d00143,d0350,i1_bpma,                    d0150, i1_bpma, d0054, d0200, i1_qi_12, d0150,                      d0400, i1_starti1d)
 
 
 
-i1diad2  =      (i1_bb_0,                                          d0200, d0200, d0040,d0100,                                           d0200, i1_ciy, d0100, i1_qi_13, d0150, i1_bpma,                        d0200, i1_bsec, d0950, i1_cix,                       d0150, i1_vcbshut,d0200,i1_qi_14)                   
+i1diad2  =      (i1_bb_0,                                          d0200, d0200, d0040,d0100,                                           d0200, i1_ciy, d0100, i1_qi_13, d0150, i1_bpma,                        d0150, d0400, i1_bseci, d0500, i1_cix,                       d0150, i1_vcbshut,d0200,i1_qi_14)                   
 
                    
 
@@ -443,29 +468,26 @@ d01409819 = Drift(l=0.1409819890, id = 'd01409819')
 d01086082 = Drift(l=0.1086082922, id = 'd01086082')
 d05086082 = Drift(l=0.5086082922, id = 'd05086082')
 d03586082 = Drift(l=0.3586082922, id = 'd03586082')
+d01625 = Drift(l=0.1625, id = 'd01625')
+d00875 = Drift(l=0.0875, id = 'd00875')
+d01125 = Drift(l=0.1125, id = 'd01125')
+d01375 = Drift(l=0.1375, id = 'd01375')
+d00375 = Drift(l=0.0375, id = 'd00375')
 
 
-#fodo_injdog: line = (i1_qih_18, d02012268, i1_bl_6_1,     &
-
-#                     d0200, i1_bpma, d02804818,           &
-
-#                     i1_sc_1_1, d0100, i1_qi_19, d0100,   &
-
-#                     i1_sc_2_1, d01409819, i1_bl_7_1,     &
-
-#                     d03586082, i1_bpma, d0150, i1.qih.20)
+fodo_injdog  = (i1_qih_18, d02012268, i1_bl_6_1,                           d0200, i1_bpma, d02804818,                                 i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d03586082, i1_bpma, d0150, i1.qih.20)
 
 
 
-dlg1a  = (i1_qih_18, d02012268, i1_bl_6_1,                           d0150,i1_cix,d0150,d00804818,                              i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_20, d0150, i1_cix, d0150, d01086082,                 i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_19, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_18)
+dlg1a  = (i1_qih_18, d02012268, i1_bl_6_1, i1_cbl,                   d0135,i1_cix,d0165,d00804818,                              i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d01325,i1_ciy,d01175,                i1_qi_20, d0135, i1_cix, d0165, d01086082,                 i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_19, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_18)
 
-dlg1b  = (i1_qih_18,d02012268, i1_bl_6_1,                            d0150, i1_cix, d0150,d00804818,                            i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_20, d0150, i1_cix, d0150, d01086082,                        i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_21, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_22)
+dlg1b  = (i1_qih_18,d02012268, i1_bl_6_1, i1_cbl,                    d0135, i1_cix, d0165,d00804818,                            i1_sc_1_1, d0100, i1_qi_19, d0100,                         i1_sc_2_1, d01409819, i1_bl_7_1,                           d01086082,d0050,i1_bpma,d01325,i1_ciy,d01175,                i1_qi_20, d0135, i1_cix, d0165, d01086082,                        i1_bl_7_1, d01409819, i1_sc_2_1,                           d0100, i1_qi_21, d0100, i1_sc_1_1,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_6_1, d02012268, i1_qih_22)
 
-dlg3a  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_21, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                   i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
+dlg3a  = (i1_qih_22,d02012268, i1_bl_8_2, i1_cbl,                    d0135,i1_cix,d0165,d00804818,                              i1_sc_1_2, d0100, i1_qi_21, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d01325,i1_ciy,d01175,                i1_qi_24, d0135, i1_cix, d0165, d01086082,                   i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,d0100,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
 
-dlg3b  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,i1_ciy,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
+dlg3b  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d01125,i1_ciy,d01375,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d00375,i1_ciy,d01125,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qih_22)
 
-dlg3bm  = (i1_qih_22,d02012268, i1_bl_8_2,                            d0150,i1_cix,d0150,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d0100,i1_ciy,d0150,                i1_qi_24, d0150, i1_cix, d0150, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d0050,i1_ciy,d0100,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qi_25)
+dlg3bm  = (i1_qih_22,d02012268, i1_bl_8_2, i1_cbl,                   d0135,i1_cix,d0165,d00804818,                              i1_sc_1_2, d0100, i1_qi_23, d0100,                         i1_sc_2_2, d01409819, i1_bl_7_2,                           d01086082,d0050,i1_bpma,d01325,i1_ciy,d01175,                i1_qi_24, d0135, i1_cix, d0165, d01086082,                  i1_bl_7_2, d01409819, i1_sc_2_2,                           d0100, i1_qi_23, d0100, i1_sc_1_2,                         d00804818,d00175,i1_ciy,d01325,i1_bpma,d0150,                i1_bl_8_2, d02012268, i1_qi_25)
 
 
 
@@ -505,24 +527,20 @@ d1000i = Drift(l=cd1000i, id = 'd1000i')
 d1000im = Drift(l=cd1000i-0.6, id = 'd1000im')
 
 
-i1_cbb_2 = Scavenger(l=0, id = 'i1_cbb_2')
-i1_cbb_3 = Scavenger(l=0, id = 'i1_cbb_3')
-i1_cbb_4 = Scavenger(l=0, id = 'i1_cbb_4')
+i1_cbb_2 = UnknownElement(l=0, id = 'i1_cbb_2')
+i1_cbb_3 = UnknownElement(l=0, id = 'i1_cbb_3')
+i1_cbb_4 = UnknownElement(l=0, id = 'i1_cbb_4')
 
 
-bc0u  = (d000013, d0900, i1_tora, d0200,                i1_ciy,d0110,i1_qi_26,d0300,i1_bpmf,                 d0300,                 i1_cix,d0110,i1_qi_27,d0200,                 d0200)
-
-
-
-bc0d  =     (d0200,                    d0100,d0110,i1_qi_28,d0110,i1_cix,d0250,i1_bpmf,                     d0240,                     i1_ciy,d0110,i1_qi_29,d0200,i1_bpma,                     d0500,d0060,                     i1_cix,d0110,i1_qi_30)
+bc0u  = (d000013, d0900, i1_tora, d0200,                i1_ciy,d0110,i1_qi_26,d01725,                d01275, i1_bpmf,d0096,i1_mpbpmf,d00315,                 d01725,                 i1_cix,d0110,i1_qi_27,d0200,                 d0200)
 
 
 
+bc0d  =     (d0200,                    d0100,d0110,i1_qi_28,d0110,i1_cix,d01225,                    d01275,i1_bpmf,d0096,i1_mpbpmf,d00315,                     d01125, i1_ciy,d0110,i1_qi_29,d0200,i1_bpma,                     d0500,d0060,                     i1_cix,d0110,i1_qi_30)
 
 
 
-
-bc0core  =(i1_start_mid,                  d0100, i1_bb_1_1, d1000i, i1_bb_1_2,i1_cbb_2,                  d03975, i1_colo,d0085,i1_colu,d03175, d0100, i1_bpms, d0100,                 d0200, i1_otrs, d0200, d0100,                  i1_bb_1_3, i1_cbb_3, d0600, i1_srm, d1000im,                  i1_bb_1_4, i1_cbb_4, d0100,                      i1_end_mid)
+bc0core  =(i1_start_mid,                  d0100, i1_bb_1_1, i1_vcst40t400y,                  d1000i, i1_vcst400y, i1_bb_1_2,i1_cbb_2                  d03975, i1_colo,d0085,i1_colu,d03825, i1_bpms, d0310,                 i1_otrs, d0325,                  i1_bb_1_3, i1_cbb_3, i1_vcst400yt40, d0600, d1000im,                  i1_vcst40y, i1_bb_1_4, i1_cbb_4, d0100,                      i1_end_mid)
 
 
 
@@ -540,16 +558,24 @@ i1ps_fodo =(d0200,i1_bpma,                 d1800, d0090,                 i1_ciy,
 
 
 
-i1_start_ps = Scavenger(id = 'i1_start_ps')
+i1_start_ps = Marker(id = 'i1_start_ps')
 i1ps   = (                  i1_start_ps,d0200,i1_bpma,                 d1800, d0090,                 i1_ciy,d0110,i1_qi_31,d0200,i1_bpma,                 d1800,d0090,                 i1_cix,d0110,i1_qi_32,d0200,i1_bpma,                 d1800,d0090,                 i1_ciy,d0110,i1_qi_31,d0200,i1_bpma,                 d0500,i1_vcdst,d0325)
 
-                
 
+
+d03643 = Drift(l=0.3643, id = 'd03643')
+d09007 = Drift(l=0.9007, id = 'd09007')
+d01585 = Drift(l=0.1585, id = 'd01585')
+d109132 = Drift(l=1.09132, id = 'd109132')
+d034903 = Drift(l=0.34903, id = 'd034903')
+d009115 = Drift(l=0.09115, id = 'd009115')
+d01628 = Drift(l=0.1628, id = 'd01628')
+d03522 = Drift(l=0.3522, id = 'd03522')
 #----------------- match to linac ---------------------------------
 
                                 
 
-l1u   = (  i1_cix,d0110,i1_qi_33,d0200,i1_bpma,                 d1200,d0065,                 i1_ciy,d0110,i1_qi_34,d0200,i1_bpma,                 d0500,d0090,                 i1_tora,d0400,i1_otra,d0300,i1_dcm,d0200,                 i1_cix,d0110,i1_qi_35,d0200,i1_bpma,                 d0315)
+l1u   = (  i1_cix,d0110,i1_qi_33,d0200,i1_bpma,                 d03643,i1_tora, d09007,                 i1_ciy,d0110,i1_qi_34,d01585                 i1_bpma,d109132,i1_otra,d034903,i1_dcm,d009115,                 i1_cix,d0110,i1_qi_35,d01628,i1_bpma,                 d03522)
 
 
 
@@ -557,19 +583,21 @@ l1u   = (  i1_cix,d0110,i1_qi_33,d0200,i1_bpma,                 d1200,d0065,    
 
 d0156 = Drift(l=0.156, id = 'd0156')
 d0019 = Drift(l=0.019, id = 'd0019')
-d026806 = Drift(l=0.26806, id = 'd026806')
+d016806 = Drift(l=0.16806, id = 'd016806')
 d029694 = Drift(l=0.29694, id = 'd029694')
-    
+d023523 = Drift(l=0.23523, id = 'd023523')
+d0252 = Drift(l=0.252, id = 'd0252')
+d1696 = Drift(l=1.696, id = 'd1696')
+d0098 = Drift(l=0.098, id = 'd0098')
+d0118 = Drift(l=0.118, id = 'd0118')
+d015006 = Drift(l=0.15006, id = 'd015006')
 
 
-
-i1d30  = (i1d_start_i1d, i1d_bb_5, d0250, d0135,                    d0500, d0100, i1d_qi_41, d0175,                    i1d_bpma, d0250, d0156, i1d_otrc, d0150, d0019,                    i1d_qi_42, d026806,                    i1d_otrd, d0225, i1d_torc, d0125,i1d_bpmd,                    d029694, i1d_dustart, i1d_dump, i1d_bhm, i1d_end_i1d)                                    
+i1d30  = (i1d_starti1d, i1d_bb_5, i1d_cbb_5, d0250, d0135,                    d0500, d0100, i1d_qi_41, d0175,                    i1d_bpma, d0250, d0156, i1d_otrc, d0150, d0019,                    i1d_qi_42, d0118, i1d_vcst40t98, d015006,                    i1d_otrd, d0225, i1d_torc, d0125,i1d_bpmd, d0050,                   i1d_vcst98t60, d023523, i1d_start_du,                   i1d_duflange, d0252,i1d_duconcrete,d1696,i1d_bhm, d0098,                     i1d_duabsorb,i1d_end_i1d)                                    
 
                                  
 
-#----------------- basic injector lines ---------------------------
-
-
+#----------------- basic injector lines ---------------------------                                 
 
 i1tdump  = (i1_start_i1, i1u, l0, i1lh,                   i1diau, i1diacore, i1diad1, i1d30)
 
@@ -724,7 +752,7 @@ backtr_acc1_gun = (l0c8rev,i1u,i1_start_i1)
 
     #
 
-    #title, "xfel injector "
+    ##title, "xfel injector "
 
     #use,i1
 
@@ -758,7 +786,7 @@ backtr_acc1_gun = (l0c8rev,i1u,i1_start_i1)
 
     #
 
-    #title, "xfel injector+linac1+bc1 "
+    ##title, "xfel injector+linac1+bc1 "
 
     #set,l1.q.a2.1.k1, 0.1  
 
@@ -1017,7 +1045,7 @@ backtr_acc1_gun = (l0c8rev,i1u,i1_start_i1)
 
     #twiss,beta0=b0_i1.gun,save
 
-    #title, "xfel injector+linac1+bc1 "
+    ##title, "xfel injector+linac1+bc1 "
 
     #plot,table=twiss,haxis=s,vaxis=betx,bety
 

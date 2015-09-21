@@ -36,6 +36,8 @@ B0_B2.MEND  :   BETA0,  energy=2.4, &
 B0_B2.G5START:   BETA0, energy=2.4, &
                         betx = 62.905, alfx = 1.042, &
                         bety = 10.458, alfy =  1.769
+B0_B2.F1START: BETA0, energy=2.4, betx = 55.8838 ,   alfx = 0.9231, &
+                                  bety = 2.8550, alfy =  0.3567 
 B0_L3.START:    BETA0,  energy=2.4, &
                         betx=   15.8633, alfx=  0.4840, &
                         bety=  16.8758, alfy= -0.4812   

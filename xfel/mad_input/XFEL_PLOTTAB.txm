@@ -39,12 +39,18 @@ plot,table=twiss,haxis=s,vaxis=betx,bety,&
      spline,vmin=0,vmax=500,colour=100
 
 title, "XFEL TD1 (SASE2, UND1, UND2)  "
-settd1twiss
 use,(CL.QFH.4.1,td1)
+settd1twiss
 savebeta,label=undfree_end,#e
 twiss,couple,line=cl_arcs,save
 plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
 vmin=0-1,vmax=100,1
+use,(t1,SA2, T3, UN1, T5, UN2, T5D)
+twiss,couple,betx=11.686,alfx=-0.763,dx=-0.025,dpx=-0.007,&
+             bety=40.416,alfy= 2.076,dy=-0.026,dpy=0.00244,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy,spline,colour=100,&
+vmin=0,-1,vmax=100,1
+
 
 
 title, "XFEL TD2 (SASE1, SASE3) "
@@ -102,7 +108,7 @@ beam,energy=0.005
 
 title, "XFEL I1 Diagnostic Arm"
 
-use,(I1DARM)
+use,(I1DRM)
 beam,energy=0.005
 twiss,couple,beta0=b0_i1.gun, &
 tape="mag_xfeli1darm.dat",save
@@ -139,9 +145,11 @@ twiss,couple,beta0=b0_i1.gun,&
        tape="mag_dia1spec.dat",save
 plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy, &
      spline,colour=100
+!set_b1dlay
 survey,x0=xcor,z0=zcor,y0=ycor, &
 phi0=0, tape="lay_dia1spec.dat"
 makesequence,label=I1_B1D.seq,refer=centre
+!reset_b1dlay
 
 title, "XFEL I1 to B2D"
 use,(I1,L1,B1,L2,b2dump)

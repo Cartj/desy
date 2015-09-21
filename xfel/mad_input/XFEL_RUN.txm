@@ -1,5 +1,5 @@
 !assign,print="print"
-option, -echo,-info,-warn
+option, -echo,-info,warn
 call,"XFEL_DEFS.txm"
 call,"XFEL_LINAC.txm"
 call,"XFEL_BC1.txm"
@@ -19,11 +19,175 @@ call,"XFEL_PLOTTAB.txm"
 !MATCH_CL
 !MATCH_B1MAIN1
 !MATCH_B1MAIN2
-!MATCH_B1MAIN3
 !MATCH_B2TL3
 !match_cl2tl
-plotxfel
+!match_b1sub
+!plotxfel
 listmagnew
+!match_septld
+
+stop
+
+!!!!! calculate Dump Sweep
+
+use, TLD3
+TLD.SWEEP.1: VKICK, L=0.64, KICK=0
+TLD.SWEEP.2: HKICK, L=0.64, KICK=0
+match,betx=1
+vary,TLD.SWEEP.1[KICK],step=0.1 !,lower=0e-3,upper=8e-3
+vary,TLD.SWEEP.2[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+constraint,TLD.DUWINDOW,x=0.05,y=0.05
+lmdif
+endmatch
+
+
+!!!!!
+
+stop
+use,(td0) 
+settd0lay     
+survey, tape="lay_dump0.dat"
+
+stop
+
+
+use,(I1,L1,b1dump)
+set_b1dlay
+survey,x0=xcor,z0=zcor,y0=ycor, &
+phi0=0, tape="lay_dia1spec.dat"
+stop
+use,(b1,l2.cfb,acc3.1,acc3.2,acc3.3,acc3.4)
+!twiss,beta0=b0_b1.start,,rtape="test.rmat",save
+!plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy
+
+match,betx=1
+vary,B1.KAX.5[KICK],step=0.1
+constraint,B1.BBSTART,x=0.02
+simplex
+endmatch
+print,full
+twiss,beta0=b0_b1.start,save, tape="twiss1.dat"
+plot,table=twiss,haxis=s,vaxis=x,hmin=50,hmax=55,vmin=0,vmax=0.025
+set,B1.KAX.5[KICK],0.0
+set,B1.CFX.4[KICK],6.e-3
+match,betx=1
+vary,B1.CFX.4[KICK],step=0.1,lower=0e-3,upper=8e-3
+vary,B1.CFX.2[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+constraint,B1.BBSTART,x=0.02,px=4.056e-3
+lmdif
+migrad
+simplex
+endmatch
+print,full
+twiss,beta0=b0_b1.start,rtape="test.rmat",save,tape="twiss2.dat"
+plot,table=twiss,haxis=s,vaxis1=x,hmin=50,hmax=55,vmin=0,vmax=0.025
+
+stop
+!list_b2
+use,(b1,l2.cfb,acc3.1,acc3.2,acc3.3,acc3.4)
+twiss,beta0=b0_b1.start,,rtape="test.rmat",save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy
+survey,tape="test.lay"
+
+match,betx=1
+vary,B1.KAX.5[KICK],step=0.1
+constraint,B1.BBSTART,x=0.02
+simplex
+endmatch
+twiss,beta0=b0_b1.start,save
+plot,table=twiss,haxis=s,vaxis=x,hmin=50,hmax=55,vmin=0,vmax=0.05,grid
+
+set,B1.KAX.5[KICK],0.0
+set,B1.CCX5[KICK],0.1
+match,betx=1
+!vary,B1.CCX2[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+!vary,B1.CCX3[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+!vary,B1.CCX4[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+vary,B1.CCX5[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+vary,B1.CCX5a[KICK],step=0.1 !,lower=-4e-3,upper=4e-3
+vary,B1.CCX6[KICK],step=0.1,lower=-4e-3,upper=4e-3
+vary,L2.CX1[KICK],step=0.1,lower=-3e-3,upper=3e-3
+vary,L2.CX2[KICK],step=0.1,lower=-3e-3,upper=3e-3
+constraint,B1.BBSTART,x=-0.015,px=0
+constraint,#e,x=0,px=0
+lmdif
+migrad
+simplex
+endmatch
+twiss,beta0=b0_b1.start,rtape="test.rmat",save
+plot,table=twiss,haxis=s,vaxis1=x,hmin=50,hmax=55,vmin=0,vmax=0.05,grid
+
+
+stop
+
+match,betx=1
+vary,B1.KAX.5[KICK],step=0.1
+constraint,B1.BBSTART,x=0.005
+simplex
+endmatch
+twiss,beta0=b0_b1.start,save
+plot,table=twiss,haxis=s,vaxis=x,hmin=47.5,hmax=56
+
+stop
+
+match_septld
+
+use,(tltd2)
+twiss,beta0=b0_tl.start,save
+setplot,lscale=1.5,rscale=1.5,ascale=1.0,sscale=1.0
+plot,table=twiss,haxis=s,vaxis=betx,bety,colour=100
+stop
+use,tld
+setTD0twiss
+twiss,beta0=b0_tld.start,save
+plot,table=twiss,haxis=s,vaxis=betx,bety,vmin=0,0,vmax=100,100
+select,optics,#s/#e
+SECTORMAP,FILENAME="forward",DELTAP=0.00
+
+stop
+
+
+
+
+use,(b2dump_s)
+
+twiss,couple,beta0=b0_b2.f1start,save
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dy,vmin=0,vmax=100,colour=100
+plot,table=twiss,haxis=s,vaxis1=betx,bety,vaxis2=dy,colour=100
+BEAM, EX=2e-10, EY=2e-10, SIGT=6e-3, SIGE=1.e-4, NPART =5e11,&
+      RADIATE=.false., ENERGY = 2.5,particle=electron
+
+XIN = sqrt(beam[ex]*betx)*10
+PXIN = sqrt(beam[ex]/betx)*10
+YIN = sqrt(beam[ey]*bety)*10
+PYIN = sqrt(beam[ey]/bety)*10
+track,onepass
+call,track.in
+comment
+set,n,0
+do,times=100
+       start, x =  xin*cos(n/loops*2*Pi)-0.01, &
+       px=-pxin*(alfx*cos(n/loops*2*Pi)+sin(n/loops*2*Pi)), &
+       y =  yin*cos((n/loops*2)*Pi), &
+       py=-pyin*(alfy*cos(n/loops*2*Pi)+sin(n/loops*2*Pi)), &
+       t = 0.0, &
+       deltap = -0.02
+set,n,n+1
+enddo
+endcomment
+RUN,method=lie4,TURNS=1,FPRINT=1,TABLE=fred
+tsave,file=track1.out
+endtrack
+archive,table=fred,filename=track2.out
+plot, table=fred,TURNS=0,haxis=x,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=t,vaxis=x,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=t,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=t,vaxis=pt,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=x,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=t,vaxis=x,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=t,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=t,vaxis=pt,multiple,symbol=3
+
 stop
 
 option, -echo,info,warn
@@ -437,8 +601,40 @@ endmatch
 endcomment
 
 
-plotxfel
-listmagnew
+BEAM, EX=1e-10, EY=1e-10, SIGT=6e-3, SIGE=1.e-4, NPART =5e11,&
+      RADIATE=.false., ENERGY = 2.5,particle=electron
+
+XIN = sqrt(beam[ex]*betx)*1
+PXIN = sqrt(beam[ex]/betx)*1
+YIN = sqrt(beam[ey]*bety)*1
+PYIN = sqrt(beam[ey]/bety)*1
+track,onepass
+n:=0
+loops:=100
+
+set,n,0
+do,times=100
+       start, x =  xin*cos(n/loops*2*Pi), &
+       px=-pxin*(alfx*cos(n/loops*2*Pi)+sin(n/loops*2*Pi)), &
+       y =  yin*cos((n/loops*2)*Pi), &
+       py=-pyin*(alfy*cos(n/loops*2*Pi)+sin(n/loops*2*Pi)), &
+       t = 0.0, &
+       deltap = 0.0
+set,n,n+1
+enddo
+RUN,method=lie4,TURNS=1,FPRINT=1,TABLE=fred
+tsave,file=track.out
+endtrack
+archive,table=fred,filename=track1.out
+plot, table=fred,TURNS=0,haxis=x,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=x,vaxis=px,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=y,vaxis=py,multiple,symbol=3
+plot, table=fred,TURNS=0,haxis=t,vaxis=pt,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=x,vaxis=y,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=x,vaxis=px,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=y,vaxis=py,multiple,symbol=3
+plot, table=fred,TURNS=1,haxis=t,vaxis=pt,multiple,symbol=3
+
 
 
 stop
