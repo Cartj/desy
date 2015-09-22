@@ -48,6 +48,10 @@ lat = MagneticLattice(L1)
 tws = twiss(lat, tws_L1, nPoints=1000)
 #print "L1               : length = ", lat.totalLen, "s = ", tws[-1].s
 print "L1               : delta on the end:  bx =", tws[-1].beta_x - tws_B1.beta_x , " by =", tws[-1].beta_y - tws_B1.beta_y
+#L= tws_L1.s
+#for elem in lat.sequence:
+#    L+= elem.l
+#    print L - elem.l/2., elem.type, elem.id, elem.l
 #plot_opt_func(lat, tws, top_plot=["E"], fig_name= "L1")
 #plt.show()
 
@@ -138,7 +142,7 @@ print "i1 to SA3        : length = ", lat.totalLen, "s = ", tws[-1].s
 plot_opt_func(lat, tws, top_plot=["Dx", "Dy"], fig_name="S2E SASE1 and SASE3")
 #plt.show()
 
-
+#print len(lat.sequence)
 lat = MagneticLattice((i1_150M,L1, B1, L2, B2, L3, CL, CL2SA2, SA2))
 tws = twiss(lat, tws_150M, nPoints=1000)
 print "i1 to SA2        : length = ", lat.totalLen, "s = ", tws[-1].s

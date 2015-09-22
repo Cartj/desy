@@ -51,7 +51,7 @@ sa1_bpme = Monitor(id = 'sa1_bpme')
 
 # Matrices 
 sa1_u40 = Matrix(l = 4.96, rm11 = 1.0, rm12 = 4.96, rm13 = 0.0, rm21 = 0.0, rm22 = 1.0, rm33 = 0.999626080602, rm34 = 4.95938177118, rm43 = -0.000150764553993, rm44 = 0.999626080602, id = 'sa1_u40')
-
+#sa1_u40 =  Undulator(lperiod = 0.04, nperiods = 124, Kx = 1., Ky=0, field_file=None, id='sa1_u40')
 # Solenoids 
 
 # lattice 

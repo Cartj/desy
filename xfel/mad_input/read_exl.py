@@ -43,7 +43,7 @@ for rownum in range(2, 4246):
     if row[0] == "I1":
         #print rownum, row[0], tw.s
         tws_I1.append(tw)
-    if row[0] == "L1":
+    if row[0] == "L3":
         print z
         tws_L1.append(tw)
 tws = tws_L1# np.append(tws_I1, tws_L1)
