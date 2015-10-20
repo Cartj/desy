@@ -9,7 +9,6 @@ mpi_comm = MPI.COMM_WORLD
 size = mpi_comm.Get_size()
 rank = mpi_comm.Get_rank()
 
-
 beam = Beam()
 beam.E = 6
 beam.sigma_E = 0.001
