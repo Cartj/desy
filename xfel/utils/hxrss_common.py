@@ -150,7 +150,7 @@ def update_beam(beam_new, g, beam):
     g0 = g0[:-i_diff]
     dg = dg[:-i_diff]
     I = I[:-i_diff]
-    beam_new.z = beam_new.z[:-i_diff]
+    #beam_new.z = beam_new.z[:-i_diff]
 
     '''
     plt.figure()
