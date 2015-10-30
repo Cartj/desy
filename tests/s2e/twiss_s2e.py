@@ -1,10 +1,10 @@
 #from xls2xcode import *
-from eleg2xcode import *
+from pylab import *
+
+from ocelot.adaptors.eleg2xcode import *
 from ocelot.cpbd.beam import *
 from ocelot.cpbd.optics import *
 from ocelot.cpbd.io import *
-from pylab import *
-import csv
 
 E00=5.109986258350895e+05
 

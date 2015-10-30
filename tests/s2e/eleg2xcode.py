@@ -6,13 +6,13 @@ import csv
 from ocelot.cpbd.elements import *
 from math import *
 
-def read_lattice_elegant(file_flo,file_par):
+def read_lattice_elegant(file_flo, file_par):
     f=open(file_flo,'rb')
     data_flo=csv.reader(f,delimiter='\t')
     data_flo=[row for row in data_flo]
     f.close()
     f=open(file_par,'rb')
-    data_par=csv.reader(f,delimiter='\t')
+    data_par=csv.reader(f, delimiter='\t')
     data_par=[row for row in data_par]
     f.close()
     lattice=[]
@@ -36,7 +36,7 @@ def read_lattice_elegant(file_flo,file_par):
             sext.s=eval(v[i_s])
             sext.z=eval(v[i_Z])
             lattice=lattice+[sext]
-        elif (stype=='CSBEND') or (stype== 'CSRCSBEND') or (stype=='SBEN'):
+        elif (stype=='CSBEND') or (stype == 'CSRCSBEND') or (stype == 'SBEN'):
             sben = Bend(l=1,id=sname)
             sben.s=eval(v[i_s])
             sben.z=eval(v[i_Z])
@@ -71,8 +71,6 @@ def read_lattice_elegant(file_flo,file_par):
             monitor.s=eval(v[i_s])
             monitor.z=eval(v[i_Z])
             lattice=lattice+[monitor]
- 
-                   
             
     n_par=len(data_par)
     pos=6
@@ -124,7 +122,7 @@ def read_lattice_elegant(file_flo,file_par):
         elem.id=elem.id.replace('.','_')              
     return lattice
 
-def insert_drifts(z_start,z_stop,lat_def):
+def insert_drifts(z_start, z_stop, lat_def):
     lattice= []
     s0=z_start
     for elem in lat_def:

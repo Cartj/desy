@@ -1,7 +1,7 @@
 '''
 utilities to add externaly calculated wakes to beam files
 '''
-from xframework.adaptors.genesis import *
+from ocelot.adaptors.genesis import *
 try:
     import matplotlib.animation as anim
 except:

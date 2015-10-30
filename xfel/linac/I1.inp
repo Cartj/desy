@@ -246,9 +246,9 @@ i1_sc_2_2 = Sextupole(l = 0.1, k2 = 59.4821133431, tilt = 1.5707963268, id = 'i1
 # undulator 
 
 # cavity 
-i1_c_a1 = Cavity(l = 1.0377, volt = 0.0, delta_e = 0.01815975, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'i1_c_a1')
-#i1_c3_ah1 = Cavity(l = 0.346, volt = 0.0, delta_e = 0.0024999884, freq = 3900.0, phi = 0.5*2*pi, volterr = 0.0, id = 'i1_c3_ah1')
-i1_c3_ah1 = Cavity(l = 0.346, volt = 0.0, delta_e = -0.0024999884, freq = 3900.0, phi = 0., volterr = 0.0, id = 'i1_c3_ah1')
+i1_c_a1 = Cavity(l = 1.0377, volt = 0.01815975*1e+9, delta_e = 0.01815975, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'i1_c_a1')
+#i1_c3_ah1 = Cavity(l = 0.346, volt = 0.0, delta_e = 0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, id = 'i1_c3_ah1')
+i1_c3_ah1 = Cavity(l = 0.346, volt = 0.00249998841*1e+9, delta_e = -0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, id = 'i1_c3_ah1')
 i1_tdsa = Cavity(l = 0.7, volt = 0.0, delta_e = 0.0, freq = 2800.0, phi = 0.0, volterr = 0.0, id = 'i1_tdsa')
 
 # rfcavity 

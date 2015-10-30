@@ -1,4 +1,4 @@
-from ocelot.cpbd.tracking import *
+from ocelot.cpbd.track import *
 from ocelot.cpbd.chromaticity import *
 from time import time
 from ocelot.gui.accelerator import *
@@ -20,7 +20,7 @@ def RFcavity(l, volt, lag, harmon, id):
 exec( open("petra_after_ext.inp"))
 
 
-lat = MagneticLattice(lattice, energy = beam.E)
+lat = MagneticLattice(lattice)
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)
