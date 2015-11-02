@@ -5,6 +5,7 @@ from ocelot.cpbd.optics import *
 from ocelot.cpbd.beam import *
 from ocelot.gui.accelerator import *
 from ocelot.cpbd.io import *
+from ocelot.cpbd.track import *
 
 #lat_def = read_lattice_elegant(file_flo="flash_s2e_flo.txt", file_par="flash_s2e_par.txt")
 #for elem in lat_def:
@@ -57,10 +58,24 @@ def read_twi_file(namefile):
         S.append(float(d[0]))
         Bx.append(float(d[1]))
         By.append(float(d[7]))
+    return S, Bx, By
 
-#S, Bx, By = read_twi_file("flash_s2e_twi1.txt")
-S, Bx, By = read_sig_file("flash_s2e_sig.txt")
+S, Bx, By = read_twi_file("flash_s2e_twi.txt")
+#S, Bx, By = read_sig_file("flash_s2e_sig.txt")
 
-plt.plot(S, Bx, [t.s for t in tws], np.array([t.beta_x for t in tws]))
-plt.plot(S, By, [t.s for t in tws], np.array([t.beta_y for t in tws]))
+beta_x = np.array([t.beta_x for t in tws])
+beta_y = np.array([t.beta_y for t in tws])
+print "d_beta_x/beta_x = ", (Bx[-1] - beta_x[-1])/beta_x[-1]
+print "d_beta_y/beta_y = ", (By[-1] - beta_y[-1])/beta_y[-1]
+print len(S), len([t.s for t in tws])
+plt.title(r"$\beta_x$")
+plt.plot(S, Bx, "b", [t.s for t in tws], beta_x, "r")
+plt.grid(True)
+plt.legend(["elegant", "ocelot"])
 plt.show()
+plt.title(r"$\beta_y$")
+plt.plot(S, By, "b", [t.s for t in tws], beta_y, "r")
+plt.grid(True)
+plt.legend(["elegant", "ocelot"])
+plt.show()
+
