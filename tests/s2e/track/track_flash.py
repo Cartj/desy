@@ -133,7 +133,7 @@ beam.tlen=2e-3 # in m
 
 
 tw0 = Twiss(beam)
-exec(open('lattice_FLASH_S2E.txt'))
+exec(open('/lattice_FLASH_S2E.txt'))
 lat = MagneticLattice(lattice)
 tws=twiss(lat, tw0, nPoints=None)
 
