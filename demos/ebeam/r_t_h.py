@@ -239,8 +239,9 @@ def H2H3(vec_x, h, k1, k2, k3, beta=1., g_inv=0):
     return array([x1, x11, y1, y11, 0., 0.])
 
 
-p1 = Particle(x=0.00, p=0.05)
-p2 = Particle(x=0.00, p=0.05)
+p_ref = Particle(x=0.0, y = 0.1, py = 0.01, p=0.0)
+p1 = Particle(x=p_ref.x, y=p_ref.y, py=p_ref.py, p=p_ref.p)
+p2 = Particle(x=p_ref.x, y=p_ref.y, py=p_ref.py, p=p_ref.p)
 P1 = [copy(p1)]
 P2 = [copy(p2)]
 navi1 = Navigator()
@@ -256,6 +257,8 @@ for i in range(int(lat.totalLen/dz)):
 s = [p.s for p in P1]
 x1_tr = [p.x for p in P1]
 x2_tr = [p.x for p in P2]
+y1_tr = [p.y for p in P1]
+y2_tr = [p.y for p in P2]
 px1_tr = [p.px for p in P1]
 px2_tr = [p.px for p in P2]
 tau1_tr = [p.tau for p in P1]
@@ -264,7 +267,8 @@ tau2_tr = [p.tau for p in P2]
 Btest = SBend(l = 5, angle=30.*pi/180., k1=1)
 lat_test = MagneticLattice([Btest])
 
-p3 = Particle(x=0.00, p=0.05)
+p3 = Particle(x=p_ref.x, y=p_ref.y, py=p_ref.py, p=p_ref.p)
+print p_ref.x, p_ref.y, p_ref.p
 P3 = [copy(p3)]
 navi3 = Navigator()
 
@@ -275,7 +279,7 @@ for i in range(int(lat_test.totalLen/dz_test)):
     P3.append(copy(p3))
 s_test = [p.s for p in P3]
 x_test = [p.x for p in P3]
-
+y_test = [p.y for p in P3]
 
 from scipy.integrate import odeint
 
@@ -323,7 +327,7 @@ def func_H_eq(vec_x, s):
 
 z = np.arange(0.000, lat.totalLen, dz)
 
-vec_x0 = array([0, 0, 0, 0, 0, 0.05])
+vec_x0 = array([p_ref.x, p_ref.px, p_ref.y, p_ref.py, 0, p_ref.p])
 
 y1 = odeint(func_H234, vec_x0, z, args=(0., 0.), hmax=0.01, rtol=1e-12, atol=1e-14)
 y2 = odeint(func_H234, vec_x0, z, args=(1., 0.), hmax=0.01, rtol=1e-12, atol=1e-14)
@@ -336,34 +340,42 @@ plt.figure(1)
 plt.title("Tracks $\Delta p/p = 0.05$")
 plt.xlabel("S, m")
 plt.ylabel("X, m")
-plt.plot(s, x1_tr - y1[:, 0], 'r', label="$R-H_2$")
-plt.plot(s, x2_tr - y2[:, 0], 'b', label="$(R+T)-H_{2+3}$")
+plt.plot(s, y1_tr - y1[:, 2], 'r', label="$R-H_2$")
+plt.plot(s, y2_tr - y2[:, 2], 'b', label="$(R+T)-H_{2+3}$")
 plt.legend()
 
 plt.figure(2)
 plt.title("Tracks $\Delta p/p = 0.05$")
 plt.xlabel("S, m")
 plt.ylabel("X, m")
-plt.plot(s, y2[:, 0] - y3[:, 0], 'y', label="$H_{2+3}-H_{2+3+4}$")
-plt.plot(s, y3[:, 0] - y4[:, 0], 'k', label="$H_{2+3+4}-H_{exact}$")
+plt.plot(s, y2[:, 2] - y3[:, 2], 'y', label="$H_{2+3}-H_{2+3+4}$")
+plt.plot(s, y3[:, 2] - y4[:, 2], 'k', label="$H_{2+3+4}-H_{exact}$")
 plt.legend()
 
 plt.figure(3)
 plt.title("Tracks in dipole $\Delta p/p = 0.05$")
 plt.xlabel("S, m")
 plt.ylabel("X, m")
-plt.plot(s_test, x_test- y5[:, 0], 'y', label="(R+T)-Brown's eq.")
-plt.plot(s_test,  y5[:, 0] - y6[:, 0], 'k', label="Brown's eq - $H_{2+3}$")
+plt.plot(s_test, y_test, 'b', label="(R+T)")
+plt.plot(s_test, y5[:, 2], 'y', label="Brown's eq.")
+plt.plot( s_test, y6[:, 2], 'k', label="$H_{2+3}$")
 plt.legend(loc=3)
 
 plt.figure(4)
 plt.title("Tracks $\Delta p/p = 0.05$")
 plt.xlabel("S, m")
+"""
 plt.ylabel("X, m")
 plt.plot(s, x1_tr, 'r', label="$R$")
 plt.plot(s, x2_tr, 'b', label="$R+T$")
 plt.plot(s, y2[:, 0], 'g', label="$H_{2+3}$")
 plt.plot(s, y3[:, 0], 'k', label="$H_{2+3+4}$")
+"""
+plt.ylabel("Y, m")
+plt.plot(s, y1_tr, 'r', label="$R$")
+plt.plot(s, y2_tr, 'b', label="$R+T$")
+plt.plot(s, y2[:, 2], 'g', label="$H_{2+3}$")
+plt.plot(s, y3[:, 2], 'k', label="$H_{2+3+4}$")
 plt.legend()
 plt.show()
 
