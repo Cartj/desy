@@ -48,7 +48,7 @@ p_array.particles[5::6] = xxstg[:,5]
 p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
 
 # plot current
-bins_start, hist_start = sc.get_current(p_array, charge=Q[0], num_bins=200)
+bins_start, hist_start = get_current(p_array, charge=Q[0], num_bins=200)
 
 tw0 = get_envelope(p_array)
 tws_track = [tw0]
@@ -69,6 +69,7 @@ for i, zi in enumerate(Z[1:]):
     print zi
     dz = zi - Z[i]
     step(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
     if SC:
         sc.sc_apply(p_array, q_array=Q, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
     tw = get_envelope(p_array)
@@ -101,7 +102,7 @@ plt.ylabel("I, A")
 plt.grid(True)
 
 # plot current at the end of accelerator
-bins, hist = sc.get_current(p_array, charge=Q[0], num_bins=200)
+bins, hist = get_current(p_array, charge=Q[0], num_bins=200)
 plt.figure(2)
 plt.title("current: end")
 plt.plot(bins, hist)
