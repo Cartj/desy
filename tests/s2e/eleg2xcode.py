@@ -1,6 +1,6 @@
-'''
+﻿'''
 Created on 05.04.2013
-@author: zagor
+@author: zagorodnov
 '''
 import csv
 from ocelot.cpbd.elements import *
