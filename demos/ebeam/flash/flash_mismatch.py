@@ -84,6 +84,7 @@ for tm, te in zip(tws_m, tws_e):
     gy_n = -2.*te.alpha_y*tm.alpha_y + tm.alpha_y**2*by_n + tm.beta_y*te.gamma_y
 
     mx = 0.5*(bx_n + gx_n) + sqrt((bx_n + gx_n)**2 - 4.)
+    #print (by_n + gy_n)**2 - 4.
     my = 0.5*(by_n + gy_n) + sqrt((by_n + gy_n)**2 - 4.)
 
     Mx.append(sqrt(mx))

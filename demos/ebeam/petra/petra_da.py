@@ -56,7 +56,7 @@ err_list = {"quadrupole": {"offset": k_error*0.1e-3, "dtilt": k_error*0.0001},
 #print "error = ", errors[1][3]
 
 
-nturns = 2000
+nturns = 200
 
 
 nx = 80
@@ -70,7 +70,7 @@ y_array = linspace(0.0001, 0.04, ny)
 start = time()
 
 pxy_list = create_track_list(x_array, y_array, p_array=[0])
-pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors=err_list, nsuperperiods=1, order=1)
+pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors=err_list, nsuperperiods=1, order=2)
 
 
 
