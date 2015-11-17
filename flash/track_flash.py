@@ -21,7 +21,6 @@ from space_charge import SC_xxstg_update
 
 import sys
 
-
 q0=1.60217733e-19
 me=9.10938188e-31
 c=299792458
