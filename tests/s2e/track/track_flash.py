@@ -117,7 +117,7 @@ SC = False
 MSlice = 10000
 nxnynz = np.r_[63, 63, 63]
 
-order = 2 # order ##
+order = 1 # order ##
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -131,6 +131,10 @@ beam.emit_x = beam.emit_xn / (beam.E*1e9  / E_ele_eV)
 beam.emit_y = beam.emit_yn / (beam.E*1e9  / E_ele_eV)
 beam.tlen=2e-3 # in m
 
+
+import os
+os.chdir('tests/s2e/track')
+print os.getcwd()
 
 tw0 = Twiss(beam)
 exec(open('lattice_FLASH_S2E.txt'))
