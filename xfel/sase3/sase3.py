@@ -7,37 +7,28 @@ from ocelot.cpbd.beam import *
 import numpy as np
 
 und = Undulator(nperiods=73, lperiod=0.068, Kx=0.0, id = "und"); voodoo = 1.5
-#und = Undulator(nperiods=140, lperiod=0.036, Kx=0.0, id = "und"); voodoo = 0.8
 
 
 
 d = Drift (l=1.0, id = "d")
 
 d1 = Drift (l=0.55, id = "d1")
-#d2 = Drift (l=0.45, id = "d2")
-d2 = Drift (l=und.lperiod, id = "d2")
-#d3 = Drift (l=0.27, id = "d0.05nm3")
-d3 = Drift (l=und.lperiod, id = "d0.05nm3")
+d2 = Drift (l=2*und.lperiod, id = "d2")
+d3 = Drift (l=2*und.lperiod, id = "d0.05nm3")
 
 # phase shifter
 
-#b1 = RBend (l=0.0575, angle=0.0, id = "b1")
-#b2 = RBend (l=0.0575, angle=-0.0, id = "b2")
-b1 = RBend (l=und.lperiod, angle=0.0, id = "b1")
-b2 = RBend (l=und.lperiod, angle=-0.0, id = "b2")
+b1 = RBend (l=2*und.lperiod, angle=0.0, id = "b1")
+b2 = RBend (l=2*und.lperiod, angle=-0.0, id = "b2")
 
 
 #psu=(b1,b2,b2,b1)
 psu= Drift (l=b1.l*2 + b2.l*2 + d3.l, id = "d1")
 
-#qf = Quadrupole (l=0.1, id = "qf")
-#qd = Quadrupole (l=0.1, id = "qd")
-qf = Quadrupole (l=und.lperiod*2, id = "qf")
-qd = Quadrupole (l=und.lperiod*2, id = "qd")
+qf = Quadrupole (l=und.lperiod*5, id = "qf")
+qd = Quadrupole (l=und.lperiod*5, id = "qd")
 
 
-#qfh = Quadrupole (l=0.05, id = "qfh")
-#qdh = Quadrupole (l=0.05, id = "qdh")
 qfh = Quadrupole (l=qf.l / 2., id = "qfh")
 qdh = Quadrupole (l=qd.l / 2., id = "qdh")
 
