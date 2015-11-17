@@ -23,6 +23,12 @@ from lattice_FLASH_S2E import *
 #exec(open('lattice_FLASH_S2E.py'))
 lat = MagneticLattice(lattice)
 
+for elem in lat.sequence:
+    if elem.id == 'D1BC2':
+        print elem.transfer_map.T[2]
+        print elem.transfer_map.T[3]
+
+
 tws=twiss(lat, tw0, nPoints=None)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 plt.show()
@@ -50,15 +56,18 @@ p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
 # plot current
 bins_start, hist_start = get_current(p_array, charge=Q[0], num_bins=200)
 
-tw0 = get_envelope(p_array)
-tws_track = [tw0]
 
 dz = 1.
 order = 2
 SC = False
 debug = False
 
-Z = np.arange(0, lat.totalLen, dz)
+Z = np.linspace(0, lat.totalLen, num=int(lat.totalLen/dz))
+
+twsi=twiss(lat, tw0, nPoints=len(Z) )
+tw0 = get_envelope(p_array, tws_i = twsi[0])
+tws_track = [tw0]
+"""
 if debug:
     f=plt.figure()
     plt.ion()
@@ -72,8 +81,9 @@ for i, zi in enumerate(Z[1:]):
     #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
     if SC:
         sc.sc_apply(p_array, q_array=Q, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
-    tw = get_envelope(p_array)
+    tw = get_envelope(p_array,tws_i=twsi[i+1])
     tw.s = navi.z0
+    #print tw.s, twsi[i+1].s
     tws_track.append(tw)
     if debug:
         f.add_subplot(211)
@@ -92,7 +102,7 @@ for elem in lat.sequence:
     tw.s += L
     print tw.s
     tws_track.append(tw)
-"""
+
 # plot current at the beginning of accelerator
 plt.figure(1)
 plt.title("current: start")
