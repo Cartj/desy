@@ -60,6 +60,25 @@ def read_twi_file(namefile):
         By.append(float(d[7]))
     return S, Bx, By
 
+
+def write_sdds_file(namefile):
+    f=open(namefile, 'rb')
+    data=f.readlines()
+    f.close()
+    lines = data[:20]
+    for d in data[20:]:
+        numbers = d.split(" ")
+        #numbers[-2] = '+0.0000000000000000E+00'
+        #numbers[-1] = '+0.0000000000000000E+00\r\n'
+        line = " ".join(numbers)
+        lines.append(line)
+    fn=open("flash_new.txt", 'w')
+    fn.writelines(lines)
+    fn.close()
+    return 0
+
+
+write_sdds_file("flash.sdds")
 S, Bx, By = read_twi_file("flash_s2e_twi.txt")
 #S, Bx, By = read_sig_file("flash_s2e_sig.txt")
 
