@@ -22,8 +22,8 @@ beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
-#from lattice_FLASH_S2E import *
-exec(open('lattice.inp'))
+from lattice_FLASH_S2E import *
+#exec(open('lattice.inp'))
 lat = MagneticLattice(lattice)
 
 #for elem in lat.sequence:
