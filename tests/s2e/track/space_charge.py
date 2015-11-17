@@ -43,7 +43,7 @@ def Phi(q,steps):
     out[:Nx,:Ny,:Nz]=out[:Nx,:Ny,:Nz]/(4*pi*eps0*hx*hy*hz)
     return out[:Nx,:Ny,:Nz]
 
-def exact_xp_2_xxstg(xp,gamref):
+def exact_xp_2_xxstg(xp, gamref):
     N=xp.shape[0]
     xxstg=np.zeros((N,6))
     pref=E_ele_eV*sqrt(gamref**2-1)
@@ -132,7 +132,7 @@ def SC_xxstg_update(xxstg,Q,gamref,dS,L0,nxyz):
         xxstg[:,5]=xxstg[:,5]+dpxyz_q_pref_z*betref2;
         
         
-def SC_xp_update(xp,Q,gamref,dS,nxyz):
+def SC_xp_update(xp, Q, gamref, dS, nxyz):
     #Lorentz transformation with z-axis and gamref
     betref2=1-gamref**-2
     betref=sqrt(betref2)
