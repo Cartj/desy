@@ -3,14 +3,10 @@ import sys
 ind = sys.path[0].find("scripts")
 sys.path.append(sys.path[0][:ind])
 
-from ocelot.cpbd.optics import *
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.e_beam_params import *
-from ocelot.cpbd.track import *
-from ocelot.cpbd.chromaticity import *
-from ocelot.gui.accelerator import *
+from ocelot import *
+from ocelot.gui import *
 #from codes.genera.src.python.trajectory import undulator
-import pylab as plt
+from pylab import *
 from time import time
 from copy import deepcopy
 
@@ -63,8 +59,8 @@ start = time()
 start = time()
 
 pxy_list = create_track_list(x_array, y_array = [0], p_array=p_array)
-pxy_list_2 = tracking(lat, nturns, deepcopy(pxy_list), order=3, nsuperperiods = 6)
-pxy_list_1 = tracking(lat, nturns, deepcopy(pxy_list), order=1, nsuperperiods = 6)
+pxy_list_2 = track_nturns(lat, nturns, deepcopy(pxy_list), order=3, nsuperperiods = 6)
+pxy_list_1 = track_nturns(lat, nturns, deepcopy(pxy_list), order=1, nsuperperiods = 6)
 rank = 0
 
 

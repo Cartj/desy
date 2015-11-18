@@ -2,13 +2,10 @@ import ocelot.adaptors.astra2ocelot
 
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.beam import *
-from ocelot.cpbd.optics import *
-from ocelot.cpbd.track import *
-from ocelot.cpbd import sc
-from ocelot.gui.accelerator import *
-from ocelot.adaptors.astra2ocelot import *
+
+from ocelot import *
+from ocelot.gui import *
+from ocelot.adaptors import *
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -37,7 +34,7 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 plt.show()
 
 
-p_array, charge_array = astra_beam2particleArray(filename='elegant_files/flash_out_200000.ast')
+p_array, charge_array = astraBeam2particleArray(filename='elegant_files/flash_out_200000.ast')
 
 #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
 
@@ -65,10 +62,10 @@ navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
     print zi
     dz = zi - Z[i]
-    step(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    track(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
     #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
     if SC:
-        sc.sc_apply(p_array, q_array=charge_array, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
+        sc_apply(p_array, q_array=charge_array, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
     tw = get_envelope(p_array,tws_i=twsi[i+1])
     tw.s = navi.z0
     #print tw.s, twsi[i+1].s

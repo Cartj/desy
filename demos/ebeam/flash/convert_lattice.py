@@ -1,11 +1,11 @@
 __author__ = 'Sergey Tomin'
 
-from ocelot.adaptors.elegant2ocelot import *
-from ocelot.cpbd.beam import *
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
-from ocelot.gui.accelerator import *
-from ocelot.cpbd.io import *
+from ocelot.adaptors import *
+from ocelot import *
+from ocelot.gui import *
+
+
+
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
 beam.beta_x = 14.8821

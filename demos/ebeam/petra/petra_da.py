@@ -8,11 +8,7 @@ sys.path.append(sys.path[0][:ind4mpi])
 #print sys.path[0][:ind4mpi]
 #print sys.path
 
-from ocelot.cpbd.track import *
-from ocelot.cpbd.beam import *
-
-#from ocelot.adaptors.madx import lattice_str_from_madx, madx_seq2ocelot_seq
-#from ocelot.cpbd.io import *
+from ocelot import *
 
 from time import time
 from mpi4py import MPI
@@ -70,7 +66,7 @@ y_array = linspace(0.0001, 0.04, ny)
 start = time()
 
 pxy_list = create_track_list(x_array, y_array, p_array=[0])
-pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors=err_list, nsuperperiods=1, order=2)
+pxy_list = track_nturns_mpi(mpi_comm, lat, nturns, pxy_list, errors=err_list, nsuperperiods=1, order=2)
 
 
 

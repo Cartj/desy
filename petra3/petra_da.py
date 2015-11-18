@@ -56,7 +56,7 @@ y_array = linspace(0.0001, 0.04, ny)
 start = time()
 
 pxy_list = create_track_list(x_array, y_array)
-pxy_list = tracking_mpi(mpi_comm, lat, nturns, pxy_list, errors = err_list, nsuperperiods = 1)
+pxy_list = track_nturns_mpi(mpi_comm, lat, nturns, pxy_list, errors = err_list, nsuperperiods = 1)
 
 
 

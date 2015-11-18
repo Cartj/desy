@@ -4,19 +4,17 @@ ind = sys.path[0].find("repository")
 
 sys.path.append(sys.path[0][:ind] + "repository")
 print sys.path[-1]
-from ocelot.cpbd.beam import *
-from ocelot.cpbd import track
+from pylab import *
 from time import time
-from ocelot.gui.accelerator import *
-from copy import deepcopy
-from ocelot.cpbd.elements import *
+from ocelot.gui import *
+from copy import deepcopy, copy
+from ocelot import *
+
+
 beam = Beam()
 beam.E = 6.
 beam.sigma_E = 0.001
 beam.I = 0.1
-
-
-tw0 = Twiss(beam)
 
 exec( open("petra3.inp" ))
 lat = MagneticLattice(lattice)
@@ -37,8 +35,8 @@ navi2 = Navigator()
 dz = 1.
 
 for i in range(int(lat.totalLen/dz)):
-    track.step(lat, [p1], dz=dz, navi=navi1, order=2)  # R only
-    track.step(lat, [p2], dz=dz, navi=navi2, order=3)  # R + T
+    track(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
+    track(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
     P1.append(copy(p1))
     P2.append(copy(p2))
 
@@ -66,8 +64,8 @@ for xi, yi in zip(x,y):
 plist_1 = deepcopy(plist)
 navi = Navigator()
 # lat.totalLen
-track.step(lat, plist_1, dz=lat.totalLen, navi=copy(navi), order=3)
-track.step(lat, plist, dz=lat.totalLen, navi=copy(navi), order=1)
+track(lat, plist_1, dz=lat.totalLen, navi=copy(navi), order=3)
+track(lat, plist, dz=lat.totalLen, navi=copy(navi), order=1)
 #for i, p in enumerate(plist_1):
 #    print p.x, x[i], p.y, y[i]
 x2 = [f.x for f in plist]

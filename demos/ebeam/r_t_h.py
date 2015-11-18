@@ -1,11 +1,10 @@
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
-from ocelot.cpbd.track import *
-from ocelot.gui.accelerator import *
-import matplotlib.pyplot as plt
-from copy import deepcopy
+
+from ocelot import *
+from ocelot.gui import *
+from pylab import *
+from copy import deepcopy, copy
 
 Q1 = Quadrupole(l=0.2, k1=5)
 Q2 = Quadrupole(l=0.2, k1=-5)
@@ -249,8 +248,8 @@ navi2 = Navigator()
 dz = 0.01
 
 for i in range(int(lat.totalLen/dz)):
-    step(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
-    step(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
+    track(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
+    track(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
     P1.append(copy(p1))
     P2.append(copy(p2))
 
@@ -275,7 +274,7 @@ navi3 = Navigator()
 dz_test = 0.001
 
 for i in range(int(lat_test.totalLen/dz_test)):
-    step(lat_test, [p3], dz=dz, navi=navi3, order=2)
+    track(lat_test, [p3], dz=dz, navi=navi3, order=2)
     P3.append(copy(p3))
 s_test = [p.s for p in P3]
 x_test = [p.x for p in P3]

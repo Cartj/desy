@@ -1,5 +1,5 @@
 import numpy as np
-from ocelot.gui.accelerator import *
+from ocelot.gui import *
 import pickle
 #f = open("da_test.txt")
 #lines = f.readlines()

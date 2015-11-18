@@ -1,11 +1,8 @@
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.beam import *
-from ocelot.common.globals import *
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
-from ocelot.gui.accelerator import *
-import numpy as np
+from ocelot import *
+from ocelot.gui import *
+from pylab import *
 
 
 exec( open("lattice_FLASH_S2E.py" ))

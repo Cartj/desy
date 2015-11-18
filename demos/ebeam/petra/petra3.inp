@@ -1714,27 +1714,27 @@ qs3 = Quadrupole(l = 1.0426, k1 = 0, id = 'qs3')
 qs4 = Quadrupole(l = 1.0426, k1 = 0, id = 'qs4')
 
 # bending magnets 
-dk = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'dk')
-d = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, id = 'd')
-pda_nr_66 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, id = 'pda_nr_66')
-pde_nr_72 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, id = 'pde_nr_72')
-pda_nr_77 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, id = 'pda_nr_77')
-pdd_nr_87 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, id = 'pdd_nr_87')
-pde_nr_93 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, id = 'pde_nr_93')
-pda_nr_99 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, id = 'pda_nr_99')
-pda = Bend(l = 1.0527, angle = 0.0436332312999, e1 = 0.0218166156499, e2 = 0.0218166156499, tilt = 0.0, id = 'pda')
-pdak = Bend(l = 1.0526915784, angle = 0.0411332312999, e1 = 0.0205666156499, e2 = 0.0205666156499, tilt = 0.0, id = 'pdak')
-pdc_nor_53 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, id = 'pdc_nor_53')
-pdc_nor_99 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, id = 'pdc_nor_99')
-pdc_ol_143 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, id = 'pdc_ol_143')
-pdc_ol_97 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, id = 'pdc_ol_97')
-pdc_ol_74 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, id = 'pdc_ol_74')
-pda_or_66 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, id = 'pda_or_66')
-pde_or_72 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, id = 'pde_or_72')
-pda_or_77 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, id = 'pda_or_77')
-pdd_or_87 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, id = 'pdd_or_87')
-pde_or_93 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, id = 'pde_or_93')
-pda_or_99 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, id = 'pda_or_99')
+dk = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, fint = 0.0, id = 'dk')
+d = Bend(l = 5.378, angle = 0.0280499344071, e1 = 0.0140249672035, e2 = 0.0140249672035, tilt = 0.0, fint = 0.0, id = 'd')
+pda_nr_66 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, fint = 0.0, id = 'pda_nr_66')
+pde_nr_72 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, fint = 0.0, id = 'pde_nr_72')
+pda_nr_77 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, fint = 0.0, id = 'pda_nr_77')
+pdd_nr_87 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, fint = 0.0, id = 'pdd_nr_87')
+pde_nr_93 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, fint = 0.0, id = 'pde_nr_93')
+pda_nr_99 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, fint = 0.0, id = 'pda_nr_99')
+pda = Bend(l = 1.0527, angle = 0.0436332312999, e1 = 0.0218166156499, e2 = 0.0218166156499, tilt = 0.0, fint = 0.0, id = 'pda')
+pdak = Bend(l = 1.0526915784, angle = 0.0411332312999, e1 = 0.0205666156499, e2 = 0.0205666156499, tilt = 0.0, fint = 0.0, id = 'pdak')
+pdc_nor_53 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, fint = 0.0, id = 'pdc_nor_53')
+pdc_nor_99 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, fint = 0.0, id = 'pdc_nor_99')
+pdc_ol_143 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, fint = 0.0, id = 'pdc_ol_143')
+pdc_ol_97 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, fint = 0.0, id = 'pdc_ol_97')
+pdc_ol_74 = Bend(l = 0.31, angle = 0.005, e1 = 0.0025, e2 = 0.0025, tilt = 0.0, fint = 0.0, id = 'pdc_ol_74')
+pda_or_66 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, fint = 0.0, id = 'pda_or_66')
+pde_or_72 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, fint = 0.0, id = 'pde_or_72')
+pda_or_77 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, fint = 0.0, id = 'pda_or_77')
+pdd_or_87 = Bend(l = 1.0527, angle = 0.02707490161, e1 = 0.01353745081, e2 = 0.01353745081, tilt = 0.0, fint = 0.0, id = 'pdd_or_87')
+pde_or_93 = Bend(l = 0.5, angle = 0.02, e1 = 0.01, e2 = 0.01, tilt = 0.0, fint = 0.0, id = 'pde_or_93')
+pda_or_99 = Bend(l = 1.0527, angle = 0.03707490161, e1 = 0.01853745081, e2 = 0.01853745081, tilt = 0.0, fint = 0.0, id = 'pda_or_99')
 
 # correctors 
 
@@ -1782,7 +1782,6 @@ bpm = Monitor(id = 'bpm')
 
 # sextupoles 
 sdu = Sextupole(l = 0.286, k2 = 0, tilt = 0, id = 'sdu')
-#sdu = Drift(l = 0.286,id = 'sdu')
 s4 = Sextupole(l = 0.286, k2 = 3.2120295801, tilt = 0, id = 's4')
 s3 = Sextupole(l = 0.286, k2 = -5.253509535, tilt = 0, id = 's3')
 s2 = Sextupole(l = 0.286, k2 = 3.2120295801, tilt = 0, id = 's2')
@@ -1793,8 +1792,8 @@ s1 = Sextupole(l = 0.286, k2 = -5.253509535, tilt = 0, id = 's1')
 # undulator 
 
 # cavity 
-rf7 = Cavity(l = 2.1, volt = 0.0, delta_e = 0.0, freq = 0.0, phi = 0.0, volterr = 0.0, id = 'rf7')
-#rf7 = Drift(l = 2.1, id = 'rf7')
+rf7 = Cavity(l = 2.1, volt = 1.66, delta_e = 0.0, freq = 0.0, phi = 0.0, volterr = 0.0, id = 'rf7')
+
 # rfcavity 
 
 # Matrices 
