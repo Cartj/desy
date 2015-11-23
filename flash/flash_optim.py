@@ -36,34 +36,48 @@ def cut_lattice(old_seq, elem_id):
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
-beam.beta_x = 14.8821
-beam.beta_y = 18.8146
-beam.alpha_x =  -0.61309
-beam.alpha_y = -0.54569
+
+beam.beta_x = 10.9733713084512
+beam.beta_y = 11.2722473383384
+beam.alpha_x =  6.40057977716866
+beam.alpha_y = 6.57866536141042
 beam.emit_xn = 1.5e-6
 beam.emit_yn = 1.5e-6
 beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
-#sequence = read_lattice_elegant(file_flo="elegant_files/flash_s2e_und_flo.txt", file_par="elegant_files/flash_s2e_und_par.txt")
-#lat = MagneticLattice(sequence)
-#tw0 = Twiss(beam)
-#tws=twiss(lat, tw0, nPoints=None)
-#plot_opt_func(lat, tws, top_plot=["E"])
-#write_lattice(lat, file_name="lattice_und.inp")
+sequence = read_lattice_elegant(file_flo="elegant_files/FLASH1_flo.txt", file_par="elegant_files/FLASH1_par.txt")
+lat = MagneticLattice(sequence)
+for elem in lat.sequence:
+    print elem.type, elem.id
+tw0 = Twiss(beam)
+tws=twiss(lat, tw0, nPoints=None)
+plot_opt_func(lat, tws, top_plot=["E"])
+write_lattice(lat, file_name="lattice_und.inp")
 
 exec(open('lattice_und.inp'))
 
-seq = cut_lattice(old_seq=lattice, elem_id="D6DUMP")
+#seq = cut_lattice(old_seq=lattice, elem_id="D6DUMP")
 
 
-lat = MagneticLattice(seq[:-1])
+lat = MagneticLattice(lattice)
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot="E")
 
-#S, Bx, By = read_twi_file("elegant_files/flash_s2e_und_twi.txt")
+S, Bx, By = read_twi_file("elegant_files/FLASH1_twi.txt")
+
+plt.plot(S, Bx, "r")
+plt.plot([p.s for p in tws], [p.s for p in tws], "b")
+plt.show()
+
+
+
+
+
+
+exit()
 p_array, charge_array = astraBeam2particleArray(filename='../demos/ebeam/flash/elegant_files/flash_out_200000.ast')
 
 #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
