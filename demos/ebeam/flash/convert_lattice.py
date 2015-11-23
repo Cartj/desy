@@ -17,7 +17,7 @@ beam.emit_yn = 1.5e-6
 beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
-sequence = read_lattice_elegant(file_flo="elegant_files/flash_s2e_flo.txt", file_par="elegant_files/flash_s2e_par.txt")
+sequence = read_lattice_elegant(file_flo="elegant_files/flash_s2e_und_flo.txt", file_par="elegant_files/flash_s2e_und_par.txt")
 
 lat = MagneticLattice(sequence)
 
@@ -27,8 +27,8 @@ tws=twiss(lat, tw0, nPoints=None)
 plot_opt_func(lat, tws, top_plot=["E"])
 plt.show()
 
-write_lattice(lat, file_name="lattice.inp")
-exec(open("lattice.inp"))
+write_lattice(lat, file_name="lattice_und.inp")
+exec(open("lattice_und.inp"))
 
 lat = MagneticLattice(lattice)
 
