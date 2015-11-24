@@ -1,12 +1,16 @@
-__author__ = 'tomins'
+__author__ = 'Sergey Tomin'
+"""
+athor Mathias Vogt DESY
+translate to Python by Sergey Tomin XFEL
+"""
+
 from ocelot import *
 import numpy as np
 
 def p1(a, x):
     return a[0] + a[1] * x
 
-def p1p(a
-        , x):
+def p1p(a, x):
     return a[1]
 
 
@@ -144,5 +148,6 @@ def tpk2i(id, p, k):
     di = p3inv( a, p*p2brho*dk/km )
     return di
 
-print tpi2k(id = "TCA40", p = 0.7, dI=-3)
-print tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779)
+if __name__ == "__main__":
+    print tpi2k(id = "TCA40", p = 0.7, dI=-3)
+    print tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779)

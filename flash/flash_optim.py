@@ -4,6 +4,7 @@ from ocelot.gui import *
 from ocelot.adaptors import *
 import csv
 import numpy as np
+from converter import *
 
 
 def read_file(filename):
@@ -168,3 +169,4 @@ plt.legend()
 plt.grid(True)
 
 plt.show()
+
