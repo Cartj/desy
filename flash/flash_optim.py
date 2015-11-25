@@ -3,12 +3,16 @@ from ocelot import *
 from ocelot.gui import *
 from ocelot.adaptors import *
 import csv
+import sys
 import numpy as np
-from converter import *
+from .converter import *
 
 
 def read_file(filename):
-    f=open(filename, 'rb')
+    if sys.version_info[0] < 3:
+        f=open(filename, 'rb')
+    else:
+        f = open(filename, 'r', newline='', encoding='utf8')
     data=csv.reader(f, delimiter='\t')
     data=[row for row in data]
     f.close()
@@ -57,7 +61,7 @@ plot_opt_func(lat, tws, top_plot=["E"])
 write_lattice(lat, file_name="lattice_und.inp")
 """
 #exec(open('lattice_und.inp'))
-from  lattice_und_inp import *
+from  .lattice_und_inp import *
 #seq = cut_lattice(old_seq=lattice, elem_id="D6DUMP")
 
 tw0 = Twiss(beam)
@@ -69,9 +73,10 @@ E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type in ["quadrupole"]:
-        print elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ",E, "GeV"
+        print( elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ", E, "GeV")
     if elem.type in ["hcor", "vcor"]:
-        print elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ",E, "GeV"
+        print( elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ", E, "GeV")
+
 #names = []
 #ID = []
 #for elem in lat.sequence:
@@ -181,7 +186,7 @@ for elem in lat.sequence:
     tw = get_envelope(p_array, tws_i=tw0)
     L += elem.l
     tw.s += L
-    print tw.s
+    print( tw.s)
     tws_track.append(tw)
 
 # plot current at the beginning of accelerator

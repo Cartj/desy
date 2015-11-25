@@ -104,12 +104,12 @@ def tpi2k(id, p, dI):
     p2brho = 10./2.99792458
     deg = pi/180.0
     if id not in table.keys():
-        print "type identifier is unknown"
-        print "known types:"
-        print table.keys()[:10]
-        print table.keys()[10:20]
-        print table.keys()[20:30]
-        print table.keys()[35:]
+        print( "type identifier is unknown")
+        print( "known types:")
+        print( list(table.keys())[:10])
+        print( list(table.keys())[10:20])
+        print( list(table.keys())[20:30])
+        print( list(table.keys())[35:])
         return None
     magnet_type = table[id]["type"]
     a = table[id]["A"]
@@ -137,12 +137,12 @@ def tpk2i(id, p, k):
     p2brho = 10./2.99792458
     deg = pi/180.0
     if id not in table.keys():
-        print "type identifier is unknown"
-        print "known types:"
-        print table.keys()[:10]
-        print table.keys()[10:20]
-        print table.keys()[20:30]
-        print table.keys()[35:]
+        print( "type identifier is unknown")
+        print( "known types:")
+        print( list(table.keys())[:10])
+        print( list(table.keys())[10:20])
+        print( list(table.keys())[20:30])
+        print( list(table.keys())[35:])
         return None
     magnet_type = table[id]["type"]
     a = table[id]["A"]
@@ -165,5 +165,5 @@ def tpk2i(id, p, k):
     return di
 
 if __name__ == "__main__":
-    print tpi2k(id = "TCA40", p = 0.7, dI=-3)
-    print tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779)
+    print (tpi2k(id = "TCA40", p = 0.7, dI=-3))
+    print (tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779))
