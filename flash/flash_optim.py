@@ -5,30 +5,23 @@ from ocelot.adaptors import *
 import csv
 import sys
 import numpy as np
-from .converter import *
+from desy.flash.converter import *
+from ocelot.utils.flash_read_log import *
+from ocelot.cpbd.elements import *
+from ocelot.rad.undulator_params import *
+from ocelot.cpbd.track import lattice_track
+from copy import copy
+from lattice_rf_mod import *
+from ocelot.gui.accelerator import *
 
+#plot_log("exp_files/h3-v3dbc3_1.txt")
+#dict_data = read_log("exp_files/h3-v3dbc3_1.txt")
 
-def read_file(filename):
-    if sys.version_info[0] < 3:
-        f=open(filename, 'rb')
-    else:
-        f = open(filename, 'r', newline='', encoding='utf8')
-    data=csv.reader(f, delimiter='\t')
-    data=[row for row in data]
-    f.close()
-    return data
+plot_log("exp_files/optim.txt")
+dict_data = read_log("exp_files/optim.txt")
 
-
-def read_twi_file(namefile):
-    data = read_file(namefile)
-    S = []
-    Bx = []
-    By = []
-    for d in data[59:]:
-        S.append(float(d[0]))
-        Bx.append(float(d[1]))
-        By.append(float(d[7]))
-    return S, Bx, By
+print dict_data.keys()
+print "E = ", lambda2Ebeam(Lambda = 10.4e-9, lu=0.0272634730539, K=1.2392)
 
 def cut_lattice(old_seq, elem_id):
     seq = []
@@ -38,7 +31,7 @@ def cut_lattice(old_seq, elem_id):
             return seq
     return seq
 
-
+"""
 beam = Beam()
 beam.E = 5e-3 #in GeV ?!
 
@@ -50,6 +43,27 @@ beam.emit_xn = 1.5e-6
 beam.emit_yn = 1.5e-6
 beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
+
+lat = MagneticLattice(lattice)
+E = beam.E
+for elem in lat.sequence:
+    elem.e_ref = E
+    E += elem.transfer_map.delta_e
+
+"""
+
+beam = Beam()
+beam.E = 148.3148e-3 #in GeV ?!
+beam.beta_x = 14.8821
+beam.beta_y = 18.8146
+beam.alpha_x =  -0.61309
+beam.alpha_y = -0.54569
+beam.emit_xn = 1.5e-6
+beam.emit_yn = 1.5e-6
+beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
+beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
+
+tw0 = Twiss(beam)
 """
 sequence = read_lattice_elegant(file_flo="elegant_files/FLASH1_flo.txt", file_par="elegant_files/FLASH1_par.txt")
 lat = MagneticLattice(sequence)
@@ -61,21 +75,95 @@ plot_opt_func(lat, tws, top_plot=["E"])
 write_lattice(lat, file_name="lattice_und.inp")
 """
 #exec(open('lattice_und.inp'))
-from  .lattice_und_inp import *
+
 #seq = cut_lattice(old_seq=lattice, elem_id="D6DUMP")
 
-tw0 = Twiss(beam)
-lat = MagneticLattice(lattice)
 
+lat = MagneticLattice(lattice, start=STARTACC39)
+#lat = MagneticLattice(lattice)
+tws=twiss(lat, tw0)
+plot_opt_func(lat, tws, top_plot="E")
 #for e in lattice.sequence:
 #    obj = e.transfer_map*obj
 E = beam.E
+L = 0
+
 for elem in lat.sequence:
+
+    #if "ACC1" in elem.id and elem.type == "cavity":
+    #    elem.v = elem.v*0.923
+    #    elem.transfer_map = create_transfer_map(elem)
+    #    print elem.v
+    if "ACC45" in elem.id and elem.type == "cavity":
+        elem.v = elem.v*0.87
+        elem.transfer_map = create_transfer_map(elem)
+        #print elem.v
+    if "ACC67" in elem.id and elem.type == "cavity":
+        elem.v = 0.
+        elem.transfer_map = create_transfer_map(elem)
+        #print elem.v
+    #if elem.type == "quadrupole":
+    #    elem.k1 = elem.k1*E/elem.e_ref
+    #    print E, elem.e_ref
     E += elem.transfer_map.delta_e
-    if elem.type in ["quadrupole"]:
-        print( elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ", E, "GeV")
-    if elem.type in ["hcor", "vcor"]:
-        print( elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ", E, "GeV")
+    L+=elem.l
+    #if elem.id == "C8_M1_ACC1":
+    #    print "**********************", E
+    #if elem.type in ["quadrupole"]:
+    #    print( elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ", E, "GeV", " s = ", L)
+    #if elem.type in ["hcor", "vcor"]:
+    #    print( elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ", E, "GeV", " s = ", L)
+
+H = 0
+V = 0
+n= 0
+n_end = len(dict_data["H3DBC3"][::10])
+ax = plot_API(lat)
+for h, v in zip(dict_data["H3DBC3"][::10], dict_data["V3DBC3"][::10]):
+    n +=1
+
+
+    E = beam.E
+    p = Particle(E=beam.E)
+    for elem in lat.sequence:
+        if elem.id == "H3DBC3":
+            if n == 1:
+                H = tpi2k(elem.dev_type, E, h)*1e-3
+            elem.angle = tpi2k(elem.dev_type, E, h)*1e-3 - H
+            #H = tpi2k(elem.dev_type, E, h)*1e-3
+            #print "dsf", h, H
+            elem.transfer_map = create_transfer_map(elem)
+        if elem.id == "V3DBC3":
+            if n == 1:
+                V = tpi2k(elem.dev_type, E, v)*1e-3
+            elem.angle = tpi2k(elem.dev_type, E, v)*1e-3 - V
+            #V = tpi2k(elem.dev_type, E, v)*1e-3
+            elem.transfer_map = create_transfer_map(elem)
+        E += elem.transfer_map.delta_e
+        L+=elem.l
+    #tw = twiss(lat, tw0)
+    #print p.x, p.y
+    plist = lattice_track(lat, copy(p), order=1)
+
+    if n == n_end:
+        #plot_trajectory(lat, plist)
+        ax.plot([p.s for p in plist], [p.x for p in plist], "ro-", lw=2)
+        ax.plot([p.s for p in plist], [p.y for p in plist], "bo-", lw=2)
+
+    else:
+        ax.plot([p.s for p in plist], [p.x for p in plist], "r", alpha = 0.3)
+        ax.plot([p.s for p in plist], [p.y for p in plist], "b", alpha = 0.3)
+    #print H, V
+ax.set_xlabel("X/Y, m")
+plt.xlim([0, lat.totalLen])
+
+ax.legend(["X", "Y"], loc=1)
+plt.show()
+#plt.grid(True)
+#plt.legend(["X", "Y"])
+#plt.xlabel("S, m")
+#plt.ylabel("X/Y, m")
+#plt.show()
 
 #names = []
 #ID = []
@@ -117,16 +205,19 @@ for elem in lat.sequence:
 #            print id + ".dev_type = '"+type+"'"
 #    #print "'"+name+"',"
 
-
-
-tw0 = Twiss(beam)
+#for elem in lat.sequence:
+#    print elem.type, elem.id
+#    if elem.type == "cavity":
+#        print elem.v, elem.delta_e
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot="E")
 
+
+
 S, Bx, By = read_twi_file("elegant_files/FLASH1_twi.txt")
 
-plt.plot(S, Bx, "r")
-plt.plot([p.s for p in tws], [p.beta_x for p in tws], "b")
+plt.plot(S, By, "r")
+plt.plot([p.s for p in tws], [p.beta_y for p in tws], "b")
 plt.show()
 
 
