@@ -56,12 +56,63 @@ tws=twiss(lat, tw0, nPoints=None)
 plot_opt_func(lat, tws, top_plot=["E"])
 write_lattice(lat, file_name="lattice_und.inp")
 """
-exec(open('lattice_und.inp'))
-
+#exec(open('lattice_und.inp'))
+from  lattice_und_inp import *
 #seq = cut_lattice(old_seq=lattice, elem_id="D6DUMP")
 
-
+tw0 = Twiss(beam)
 lat = MagneticLattice(lattice)
+
+#for e in lattice.sequence:
+#    obj = e.transfer_map*obj
+E = beam.E
+for elem in lat.sequence:
+    E += elem.transfer_map.delta_e
+    if elem.type in ["quadrupole"]:
+        print elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ",E, "GeV"
+    if elem.type in ["hcor", "vcor"]:
+        print elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ",E, "GeV"
+#names = []
+#ID = []
+#for elem in lat.sequence:
+#    if elem.type == "vcor":
+#        name = elem.id
+#        #print elem.id, tpi2k(elem.dev_type, 0.7, elem.k1)
+#        #name = name.replace("_U", "")
+#        #name = name.replace("_D", "")
+#        name = name.replace("_", ".")
+#        if name in names:
+#            continue
+#        names.append(name)
+#        print name
+#        ID.append(elem.id)
+#
+#print len(ID), len(names)
+#f=open("elegant_files/FLASH_LATTICE.mad", 'rb')
+#lines = f.readlines()
+#f.close()
+#
+#for name, id in zip(names,ID):
+#    #print "********  QUAD *********** ", name
+#    for line in lines:
+#        if name in line:
+#            if "!" in line:
+#                continue
+#            #print line
+#            parts = line.split(",")
+#            p = parts[0].split(":")
+#            #print p
+#            type = "".join(p[1].split())
+#
+#            #print parts.remove("")
+#            #type = type.replace(".H","")
+#            #type = type.replace("QTSE", "QTS_E")
+#            #type = type.replace("QTSI", "QTS_I")
+#            #type = type.replace("H", "")
+#            print id + ".dev_type = '"+type+"'"
+#    #print "'"+name+"',"
+
+
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)

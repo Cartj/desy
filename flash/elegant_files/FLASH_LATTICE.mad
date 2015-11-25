@@ -1,0 +1,2643 @@
+!OPTION, DOUBLE
+!OPTION, -ECHO
+!-------------------------------------------------------------------------------
+! for determine the orbit offset for FLASH2 switch on the quads and kicker
+!          => all quads downstream are now passed offset
+! if angles by quads are determined use combined function magnets and bends 
+! for kicker
+!          => orbit offset == 0.0 but survey have now the offset
+!-------------------------------------------------------------------------------
+!
+!2345678901234567890123456789012345678901234567890123456789012345678901234567890
+!
+!------------------------------------------------------------------------------
+!
+!
+!
+!LAST CHANGES
+!2015-08-31: (vogtm) changed lpo/lef_tqg70 from .110/.12716 to .080/.076
+!                     after field profile measurement was discovered in
+!                     some randomly distributed magnet certificates from
+!                     Efremov... :-(
+!
+!2015-08-06: (vogtm) took out BPM7FL2BURN, & BPM8FL2BURN and put in
+!                     BPM6FL2DUMP. The two in FL2BURN are the XFEL re-entrant
+!                     cavity BPMs (Claire Simone) which are NOT in the
+!                     controllsystem and thus usesless while BPM6FL2DUMP
+!                     was simply missing (!) (maybe OLD Bart.xlsx?)
+!
+!2015-03-12: (jzemella) change names of OTR in SFUND:
+!                            OTR1SFUND -> OTR1SFUND1
+!                            OTR2SFUND -> OTR1SFUND2
+!                            OTR3SFUND -> OTR1SFUND3
+!                            OTR4SFUND -> OTR1SFUND4
+!
+!2015-02-20: (vogtm) shift long. positions of steerers in DBC2 section 
+!            according to measurement (w/ tape measure!)
+!
+!2014-12-02: add H16FL2EXTR, move H3FL2SEED5 -> H3FL2SEED1, V3FL2SEED6-> V3FL2SEED3
+!            add new steerer type H/VTCA50S
+!
+!2014-10-24: add UNDSEGSASE3-14 with individual undulator parameters
+!            add some markers
+!            split undulator quads with marker in the middle 
+!
+!2014-07-31: change variable name in vkickEXTR -> vkickEXTR1, vkickEXTR2, resp. 
+!            for SBENDs FL2KICKER1,2,3
+!
+!
+!2014-07-22: add steerer V21FL2EXTR
+!
+!
+!2014-07-04: change position of the cavity BPMs by 18.5 mm (D. Lipka) 
+!
+!
+!2014-06-30: change in FL2 the TQG70 position from len_tqg70/2 -> len_tqg70/4 
+!            to have no spance between the splitted quads
+!
+!2014-03-04: change the type of five steerers, V10EXP -> TCA70
+!                                              H10EXP -> TCA70
+!                                              V3EXP  -> TCA70
+!                                              V1ORS  -> TCA100mm (modified steerer gap~100mm)
+!                                              H6ECOL -> TCA40
+!
+!2013-10-30: change all steerer and trim coils to the types they have
+!            e.g. H6TCOL:  HKICKTCS, ...     => H6TCOL:  HTCS40,... 
+!                 H10ACC7: HKICKNOLENGTH, ...=> H10ACC7: HCAX, ...  
+!                 H1BC2: HKICKNOLENGTH,...   => H1BC2: TRIMTDD, ...
+!            slight position change of D10BC3,D11BC3,D14BC3 to close dispersion, 
+!            since magnetic length of dipole was 0.5 now 0.5083.           
+!
+!2013/09/18: Add some missing screens in extraction section. 
+!            Change all quads=> Have now a global parameter for a K1 named like
+!            k1<Quadrupolename> for example k1Q9ACC1 or k1Q1UBC2. Done for the 
+!            use of one parameter definition list with ONE lattice file. 
+!            Lattice file do not changed any more for focussing and defecting.
+!            To run the file you have to define all quads parameter
+! 
+!
+!2013/08/15: Extraktion nach dem Septum getrannt um FLASH2 zu integrieren
+!            FLASH2 Lattice hinzugefuegt. Quad-Pos stimmen mit Barts Liste ueberein.
+!            - Weglaengenaenderung durch Dipole noch nicht beruecksichtigt
+!            - Stirnflaechen der Dipole noch nicht abgewinkelt
+!            - FLASH1 stimmt mit BF Liste ueberein
+!            - DUMP Laengen sind aus Siggis Liste mit cos(a) skaliert!
+!
+!2013/08/12: BC3-Dipole um 0.005 mm verschoben damit BC symmetrisch ist!!
+!            Quads & Dipole stimmen ueberein
+!            Steerer & BPM nicht immer <= sind aber auch in die Quad-Mitte gerutscht
+!            
+!
+!2013/07/31: Dispersion: Zum schliessen der Dispersion hinter BC3 ist die 
+!            Position der letzten drei Magnete um -6.498085E-04 verschoben worden!!
+!
+!2013/07/30: Steerer in ACCs !? Wo sollen sie sein?
+!            BPMs in SFUND stimmen mit Siggis Liste ueberein 
+!            aber nicht mit der MVogt
+!            DUMP: Projektion auf z-Achse (Laborsystem) stimmt nicht mit MVogt
+!            ueberein!! Etwas laenger
+!
+!2013/07/29: BPM length set to zero
+!            EXTRACTION changed to B.Faatz Excel list
+!            Length of KICKER TCA40 and TCA70 looks strange => both 170 mm long
+!
+!
+!
+!-------------------------------------------------------------------------------
+!
+! MAD LATTICE FOR FLASH 2010, 1.2GeV AND WITH ACC39 (J. Zemella, July 2013)
+! 
+! Starting point: after the main solenoid
+! 
+! Based on FLASH beamline master file (S. Schreiber, 29-09-2010)
+!                              and on E. Prat mad-file for FLASH           
+! 
+!-------------------------------------------------------------------------------
+!
+! SEQUENCES:
+!
+! GUN, ACC1, ACC39, 
+! UBC2, MBC2, DBC2, 
+! ACC2, ACC3, 
+! UBC3, MBC3, DBC3, 
+! ACC4, ACC5, ACC6, ACC7
+! EXTRACTION, ECOL
+! ORS, SFUND, SFELC, SMATCH, (SDUMP)
+! UNDULATOR
+! EXP, DUMP
+!
+!-------------------------------------------------------------------------------
+!  Energy profile:             After ACC1:       160 MeV
+!                              BC2:              160 MeV
+!                              BC3:              470 MeV
+!                              final:            1200 MeV // can be changed
+!                         all modules ON-crest 
+!-------------------------------------------------------------------------------
+!-------------------------------------------------------------------------------
+!                  COLD MAGNETS FOR FLASH 2010
+!
+! Section     Module      Quads Q9/Q10            H9 Steerer      H10 Steerer      
+! V9 Steerer  V10 Steerer
+! ACC1        3,3      Doublet                  H9/H10 in series            
+! V9/V10 in series      
+! ACC2        1,1      Doublet                  H9/H10 in series            
+! V9/V10 in series      
+! ACC3        7        Separate power supplies  not connected      connected      
+! not connected        connected
+! ACC4        4        Separate power supplies  not connected      connected      
+! not connected        connected
+! ACC5        5        Separate power supplies  H9/H10 in series            
+! V9/V10 in series      
+! ACC6        6        Separate power supplies  H9/H10 in series            
+! V9/V10 in series      
+! ACC7        12       Single Quad              Single Steerer                  
+! Single Steerer
+!-------------------------------------------------------------------------------
+!       Conventions:
+!       Wakefields, wirescanners and screens are defined as INSTRUMENTS.
+!       Usable BPMs are defined as monitors with there length in the Siggi-file.
+!       Toroids and phase monitors (including BAMs) are defined as INSTRUMENTS.
+!-------------------------------------------------------------------------------
+! Initial twiss functions
+!-------------------------------------------------------------------------------
+
+!INITIAL_TWISS: BETA0 , &
+!               BETX = 14.9286, ALFX = 7.4896, & 
+!               BETY = 15.3373, ALFY = 7.6972
+
+
+!INIT_01SMT:    BETA0, &
+!               BETX =  9.51388292234  ALFX =  0.695456974286, & 
+!               BETY = 18.41903482430, ALFY = -1.700233895130
+
+!-------------------------------------------------------------------------------
+!                  GRADIENTS AND PHASES OF THE MODULES
+!-------------------------------------------------------------------------------
+
+!!
+!! vogtm 15.03.2010: set the energy
+!!                  ReferenceEnergy -> EREF <- determined by wavelength
+!!                 : ActualEnergy   -> EACT <- normally =EREF / .NE. for BBA
+!! vogtm : // TO BE REMATCHED
+!!==================================================>>>>>>>>>>
+!EACT     = 1200.0    ! <<<< VARY for wavelen-change <<<< VARY for bba
+!EREF     = 1200.0    ! <<<< VARY for wavelen-change <<<< KEEP for bba
+!ESCALE   = EREF/EACT ! <<<< KEEP ALWAYS <<<< KEEP ALWAYS <<<< KEEP ALWAYS
+!SE_FINAL = EACT      ! <<<< KEEP ALWAYS <<<< KEEP ALWAYS <<<< KEEP ALWAYS
+!!==================================================<<<<<<<<<<
+
+!  Cavity length
+len_cav13  = 1.0363
+len_cav39  = 0.3459
+
+!  Cavity resonace frequency
+freq_cav13  = 1300 
+freq_cav39  = 3900
+   
+!  Effective length of accelerating cavities
+Coef_E = 1.027   
+
+! ACC1
+Volts1 = Volt1_1+Volt1_2+Volt1_3+Volt1_4+Volt1_5+Volt1_6+Volt1_7+Volt1_8
+E_ACC1 = Coef_E * Volts1
+Volts39= Volt39_1+Volt39_2+Volt39_3+Volt39_4
+E_ACC39= Volts39
+SE_ACC1= E_GUN + E_ACC1 + E_ACC39
+! ACC23
+Volts2 = Volt2_1+Volt2_2+Volt2_3+Volt2_4+Volt2_5+Volt2_6+Volt2_7+Volt2_8
+E_ACC2 = Coef_E * Volts2 
+SE_ACC2= SE_ACC1 + E_ACC2
+E_ACC3 = SE_ACC3-SE_ACC2
+Volt3_all= E_ACC3 / Coef_E / 8
+! E.Prat :            deltaE_470 = 21.15847
+Volt3_1 = Volt3_all ! deltaE_470 / Coef_E
+Volt3_2 = Volt3_all 
+Volt3_3 = Volt3_all 
+Volt3_4 = Volt3_all 
+Volt3_5 = Volt3_all 
+Volt3_6 = Volt3_all 
+Volt3_7 = Volt3_all 
+Volt3_8 = Volt3_all 
+
+!!
+!!  ACC4 & ACC5 & ACC6 & ACC7:  equal E_acc in all cavities
+!!  Final energy = 1200 MeV 
+!!
+
+Volt4_all = E_ACC4 / Coef_E / 8
+Volt4_1 = Volt4_all ! deltaE_1200 / Coef_E
+Volt4_2 = Volt4_all 
+Volt4_3 = Volt4_all 
+Volt4_4 = Volt4_all 
+Volt4_5 = Volt4_all 
+Volt4_6 = Volt4_all 
+Volt4_7 = Volt4_all 
+Volt4_8 = Volt4_all 
+SE_ACC4 = SE_ACC3 + E_ACC4
+
+Volt5_all = E_ACC5 / Coef_E / 8
+Volt5_1 = Volt5_all ! deltaE_1200 / Coef_E
+Volt5_2 = Volt5_all 
+Volt5_3 = Volt5_all 
+Volt5_4 = Volt5_all 
+Volt5_5 = Volt5_all 
+Volt5_6 = Volt5_all 
+Volt5_7 = Volt5_all 
+Volt5_8 = Volt5_all 
+SE_ACC5 = SE_ACC4 + E_ACC5
+
+Volt6_all = E_ACC6 / Coef_E / 8
+Volt6_1 = Volt6_all ! deltaE_1200 / Coef_E
+Volt6_2 = Volt6_all 
+Volt6_3 = Volt6_all 
+Volt6_4 = Volt6_all 
+Volt6_5 = Volt6_all 
+Volt6_6 = Volt6_all 
+Volt6_7 = Volt6_all 
+Volt6_8 = Volt6_all 
+SE_ACC6 = SE_ACC5 + E_ACC6
+
+Volt7_all = E_ACC7 / Coef_E / 8
+Volt7_1 = Volt7_all ! deltaE_1200 / Coef_E
+Volt7_2 = Volt7_all 
+Volt7_3 = Volt7_all 
+Volt7_4 = Volt7_all 
+Volt7_5 = Volt7_all 
+Volt7_6 = Volt7_all 
+Volt7_7 = Volt7_all 
+Volt7_8 = Volt7_all 
+SE_ACC7 = SE_ACC6 + E_ACC7
+
+VALUE, E_GUN,  E_ACC1, E_ACC2, E_ACC3
+VALUE, E_ACC4, E_ACC5, E_ACC6, E_ACC7
+VALUE, E_GUN,   SE_ACC1, SE_ACC2, SE_ACC3
+VALUE, SE_ACC4, SE_ACC5, SE_ACC6, SE_ACC7
+
+
+!lencav = 2*0.5181
+
+CAV13:    LCAV, L = len_cav13,  FREQ = freq_cav13,  &
+          PHI0   = acc1_phase, &
+          DELTAE = 0.0
+
+CAV39:    LCAV, L = len_cav39,  FREQ = freq_cav39,  &
+          PHI0   = acc39_phase, & 
+          DELTAE = Volt39_1 * L_cav39
+
+
+!===============================================================================
+!  QUADRUPOLEES AND SEXTUPOLES
+!===============================================================================
+
+! EFFECTIVE LENGTHS 
+! Quadrupole Type TQA_tqa 
+lpo_tqa = 0.25
+lef_tqa = 0.2768
+len_tqa = lef_tqa
+
+TQA:    QUADRUPOLE, L = len_tqa,   K1= 1
+TQA.H:  QUADRUPOLE, L = len_tqa/2, K1= 1
+TQAEXT: SBEND, L = len_tqa, ANGLE = 1, K1= 1,TILT, FINTX =-1
+
+
+! Quadrupole Type TQB (collimator)
+lpo_tqb = 0.30
+lef_tqb = 0.3286
+len_tqb = lef_tqb
+
+TQB:    QUADRUPOLE, L = len_tqb,   K1= 1
+TQB.H:  QUADRUPOLE, L = len_tqb/2, K1= 1
+
+
+! Quadrupole Type TQD
+lpo_tqd = 0.3000
+lef_tqd = 0.3046
+len_tqd = lef_tqd
+
+TQD:    QUADRUPOLE, L = len_tqd,   K1= 1
+TQD.H:  QUADRUPOLE, L = len_tqd/2, K1= 1
+
+
+! Quadrupole Type TQG (undulator)
+lpo_tqg = 0.110
+lef_tqg = 0.12716
+len_tqg = lef_tqg
+
+TQG:    QUADRUPOLE, L = len_tqg,   K1= 1
+TQG.H:  QUADRUPOLE, L = len_tqg/2, K1= 1
+
+
+! Quadrupole Type TQG (undulator)
+lpo_tqg70 = 0.080 ! old/false -> 0.110   ! 
+lef_tqg70 = 0.076 ! old/false -> 0.12716 ! 
+len_tqg70 = lef_tqg70
+
+TQG70:    QUADRUPOLE, L = len_tqg70,   K1= 1
+TQG70.H:  QUADRUPOLE, L = len_tqg70/2, K1= 1
+
+
+! Quadrupole Type TQF
+lpo_tqf = 0.34
+lef_tqf = 0.3728
+len_tqf = lef_tqf
+
+TQF:    QUADRUPOLE, L = len_tqf,   K1= 1
+TQF.H:  QUADRUPOLE, L = len_tqf/2, K1= 1
+
+TQFEXT: SBEND, L = len_tqf, ANGLE = 1, K1= 1, &
+        E1 = 0.0, E2 = 0.0, TILT, FINTX =-1
+
+! Quadrupole Type QA (cold)
+lpo_qa  = 0.15
+lef_qa  = 0.185
+len_qa  = lef_qa
+
+QA:     QUADRUPOLE, L = len_qa,    K1= 1
+QA.H:   QUADRUPOLE, L = len_qa/2,  K1= 1
+
+! Quadrupole Type QA (cold)
+lpo_qa7 = 0.15
+lef_qa7 = 0.2975
+len_qa7 = lef_qa7
+
+QA7:    QUADRUPOLE, L = len_qa7,    K1= 1
+QA7.H:  QUADRUPOLE, L = len_qa7/2,  K1= 1
+
+! Quadrupole Type QC (dump)
+lpo_qc = 1.00
+lef_qc = 0.0
+len_qc = lpo_qc
+
+QC:     QUADRUPOLE, L = len_qc,    K1= 1
+QC.H:   QUADRUPOLE, L = len_qc/2,  K1= 1
+
+
+! Quadrupole type QTS (S-band triplet):
+lpo_qtsE = 0.05
+lpo_qtsI = 0.100
+lef_qtsE = 0.093
+lef_qtsI = 0.131
+len_qtsE = lef_qtsE
+len_qtsI = lef_qtsI
+
+QTSE:    QUADRUPOLE, L = len_qtsE,  K1= 1
+QTSI:    QUADRUPOLE, L = len_qtsI,  K1= 1
+
+
+! Quadrupol type QL
+lpo_ql = 0.45
+lef_ql = 0.48
+len_ql = lpo_ql
+
+QL:     QUADRUPOLE, L = len_ql,    K1= 1
+QL.H:   QUADRUPOLE, L = len_ql/2,  K1= 1
+
+
+! Sextupoles type TSB
+lpo_tsb = 0.200  
+lef_tsb = 0.215 
+len_tsb = lef_tsb
+
+TSB:      SEXTUPOL, L = len_tsb,   K2 = 1
+
+! Sextupoles type HSK
+lpo_hsk = 0.30  
+lef_hsk = 0.312
+len_hsk = lef_hsk
+
+HSK:      SEXTUPOL, L = len_hsk,   K2 = 1
+
+! ==============================================================================
+! STEERER
+! ==============================================================================
+
+HGUN:                   HKICKER,       L = 0.0225
+VGUN:                   VKICKER,       L = 0.0225
+
+HCV:                    HKICKER,       L = 0.3
+VCV:                    VKICKER,       L = 0.3
+
+HTCA40S:                HKICKER,       L = 0.02
+VTCA40S:                VKICKER,       L = 0.02
+HTCA50S:                HKICKER,       L = 0.02
+VTCA50S:                VKICKER,       L = 0.02
+HTCA40:                 HKICKER,       L = 0.1
+VTCA40:                 VKICKER,       L = 0.1
+HTCA50:                 HKICKER,       L = 0.1
+VTCA50:                 VKICKER,       L = 0.1
+HTCA70:                 HKICKER,       L = 0.1
+VTCA70:                 VKICKER,       L = 0.1
+VTCA100mm:              VKICKER,       L = 0.1
+HPCN:                   HKICKER,       L = 0.31
+VPCN:                   VKICKER,       L = 0.31
+
+TRIMTDA:                HKICKER,       L = 0.0
+TRIMTDB:                HKICKER,       L = 0.0
+TRIMTDC:                HKICKER,       L = 0.0
+TRIMTDD:                HKICKER,       L = 0.0
+TRIMTB1:                HKICKER,       L = 0.0
+
+HCA:                    HKICKER,       L = 0.0
+VCA:                    VKICKER,       L = 0.0
+HCAX:                   HKICKER,       L = 0.0
+VCAX:                   VKICKER,       L = 0.0
+
+HUND:                   HKICKER,       L = 0.0
+
+! ==============================================================================
+! KICKER
+! ==============================================================================
+
+KICKLOLASPEC:           HKICKER,        L = 0.6
+KICKERFB:               HKICKER,        L = 1.0
+KICKERSMATCH:           HKICKER,        L = 0.65
+KICKEROBIER:            HKICKER,        L = 0.4
+KICKEXT:                VKICKER,        L = 0.6
+
+
+! ==============================================================================
+! special DRIFTs 
+! ==============================================================================
+
+ PSsFLASH:               DRIFT,         L = 0.135 ! Phase shifter in sFLASH
+
+! ==============================================================================
+! BPM
+! ==============================================================================
+
+BPMPICKUP:              MONITOR,       L = 0.0!0.034
+BPMButton01:            MONITOR,       L = 0.0!0.02
+BPMButton02:            MONITOR,       L = 0.0!0.019
+BPMButton03:            MONITOR,       L = 0.0!0.15
+
+BPMCRYO01:              MONITOR,       L = 0.0!0.087
+BPMCRYO02:              MONITOR,       L = 0.0!0.17
+BPMSL01:                MONITOR,       L = 0.0!0.13
+BPMSL02:                MONITOR,       L = 0.0!0.23
+BPMSL03:                MONITOR,       L = 0.0!0.45
+BPMSL04:                MONITOR,       L = 0.0!0.35
+BPMSL05:                MONITOR,       L = 0.0!0.345
+BPMNOLENGTH:            MONITOR,       L = 0.0
+
+ BPMXFELTEST:            INSTRUMENT
+
+! ==============================================================================
+! Various INSTRUMENTS
+! ==============================================================================
+
+ EBPMSL01:               INSTRUMENT,    L = 0.0
+ CTR01:                  INSTRUMENT,    L = 0.177
+ OTRNOLENGTH:            INSTRUMENT,    L = 0.0
+ CTRNOLENGTH:            INSTRUMENT,    L = 0.0
+ OTRSCREEN01:            INSTRUMENT,    L = 0.00 !0.23
+ OTRSCREEN02:            INSTRUMENT,    L = 0.0 !0.2
+ OTRSCREEN03:            INSTRUMENT,    L = 0.0! 0.166
+ OTRXFELTYP:             INSTRUMENT,    L = 0.3
+ BLM:                    INSTRUMENT,    L = 0.05
+ TOR01:                  INSTRUMENT,    L = 0.09
+ TOR02:                  INSTRUMENT,    L = 0.1578
+ TOR05:                  INSTRUMENT,    L = 0.116
+
+ TORA:                   INSTRUMENT,    L = 0.1586
+ TOR44:                  INSTRUMENT,    L = 0.216
+ TORC:                   INSTRUMENT,    L = 0.15
+
+ PHASEMON01:             INSTRUMENT,    L = 0.04
+ PHASEMON02:             INSTRUMENT,    L = 0.05
+
+ WIRESCANNER:            INSTRUMENT,    L = 0.0
+ WIRESCAN01:             INSTRUMENT,    L = 0.0  !0.123
+ EO01:                   INSTRUMENT,    L = 0.194
+ EO02:                   INSTRUMENT,    L = 0.23
+ EO03:                   INSTRUMENT,    L = 0.2
+ DIAGEO:                 INSTRUMENT,    L = 1.155
+ DCMON:                  INSTRUMENT,    L = 0.175
+ WCMON:                  INSTRUMENT,    L = 0.175
+ TDRPYRO:                INSTRUMENT,    L = 0.00 ! 0.23
+ BLDIAG:                 INSTRUMENT,    L = 0.06442
+ LOLACAV:                INSTRUMENT,    L = 3.826
+                        !! Exists a travilling wave structure in MAD!?
+ DIAGBLOCK:              INSTRUMENT,    L = 0.08
+ UNDMINI:                INSTRUMENT,    L = 0.053
+
+ PMNOLENGTH:             INSTRUMENT,    L = 0.0
+ BCM:                    INSTRUMENT,    L = 0.0
+ U32AC:                  INSTRUMENT,    L = 0.0
+ PSU32:                  INSTRUMENT,    L = 0.0 
+
+
+! ==============================================================================
+! COLLIMATOR
+! ==============================================================================
+
+COLL01:                 ECOLLIMATOR,   L = 0.12,  XSIZE = 0.008, YSIZE = 0.008
+COLLBC2:                ECOLLIMATOR,   L = 0.353, XSIZE = 1.0,   YSIZE = 1.0
+TCOLLIMATOR:            ECOLLIMATOR,   L = 0.8
+ECOL01:                 ECOLLIMATOR,   L = 0.5,   XSIZE = 0.003, YSIZE = 0.003
+ECOL02:                 ECOLLIMATOR,   L = 0.5,   XSIZE = 0.002, YSIZE = 0.002
+
+! ==============================================================================
+! BENDs
+! ==============================================================================
+
+!ang_bend_dgun = 1.0E-20 ! 0 do not work since 1/sin(0)
+lll_dgun      = 0.09
+ang_dgun      = (angleD1IDUMP / 180.0) * PI
+larc_dgun     = (lll_dgun * ang_dgun) / sin(ang_dgun)
+len_dgun      = larc_dgun
+dposdgun      = larc_dgun-lll_dgun
+VALUE,dposdgun
+
+TCAspecial:             RBEND,         L = lll_dgun , ANGLE = ang_dgun
+
+! ------------------------------------------------------------------------------
+!                                   BC2
+! ------------------------------------------------------------------------------
+
+!ang_bend_bc2 = 18.0 ! bending angle of magnets of bc2
+lll_bc2      = 0.50
+ang_bc2      = (angleD1BC2 / 180.0) * PI
+larc_bc2     = (lll_bc2 * ang_bc2) / sin(ang_bc2)
+len_bc2      = larc_bc2
+
+
+s1_bc2       = 21.141 ! position of first dipole
+s2_bc2       = 22.141 ! position of second dipole
+s3_bc2       = 23.604 ! position of third dipole
+s4_bc2       = 24.604 ! position of fourth dipole
+
+! orbit distance between end of first/third and begin of second/fourth dipole
+stmp1_bc2    =(s2_bc2 - s1_bc2 - lll_bc2) / cos(ang_bc2)
+! orbit distance between end of second and begin of third dipole
+stmp2_bc2    = s3_bc2 - s2_bc2 - lll_bc2
+
+! position of the first bend of bc2 (D1BC2) in dependence of 
+! the bend length and the bending angle
+s1_b1_bc2    = 0.5 * larc_bc2
+! position of the second bend of bc2 (D2BC2) in dependence of 
+! the bend length and the bending angle
+s2_b1_bc2    = 1.5 * larc_bc2 + stmp1_bc2
+! position of the second bend of bc2 (D3BC2) in dependence of 
+! the bend length and the bending angle
+s3_b1_bc2    = 2.5 * larc_bc2 + stmp1_bc2 + stmp2_bc2
+! position of the second bend of bc2 (D4BC2) in dependence of 
+! the bend length and the bending angle
+s4_b1_bc2    = 3.5 * larc_bc2 + 2 * stmp1_bc2 + stmp2_bc2
+! length of the chicane of bc2 in dependence of the bending angle
+! from begin of first dipole to the end of fourth diople
+s_bc2        = 4 * larc_bc2 + 2 * stmp1_bc2 + stmp2_bc2
+
+
+VALUE, s1_b1_bc2,s2_b1_bc2,s3_b1_bc2,s4_b1_bc2,s_bc2
+
+TDD01BC2:      SBEND, L = len_bc2,  ANGLE =-ang_bc2, E1 = 0.0,     E2 =-ang_bc2
+TDD02BC2:      SBEND, L = len_bc2,  ANGLE = ang_bc2, E1 = ang_bc2, E2 = 0.0
+TDD03BC2:      SBEND, L = len_bc2,  ANGLE = ang_bc2, E1 = 0.0,     E2 = ang_bc2
+TDD04BC2:      SBEND, L = len_bc2,  ANGLE =-ang_bc2, E1 =-ang_bc2, E2 = 0.0
+
+! ------------------------------------------------------------------------------
+!                                   BC3
+! ------------------------------------------------------------------------------
+
+!ang_bend_bc3 = 3.8    ! bending angle of magnets of bc3
+lll_bc3      = 0.50
+ang_bc3      = (angleD1BC3 / 180.0) * PI
+larc_bc3     = (lll_bc3 * ang_bc3) / sin(ang_bc3)
+len_bc3      = larc_bc3
+ 
+s1_bc3       = 67.582  ! position of first dipole
+s2_bc3       = 70.462  ! position of second dipole
+s3_bc3       = 71.462  ! position of third dipole
+s4_bc3       = 77.221  ! position of fourth dipole 
+s5_bc3       = 78.221  ! position of fifth dipole  
+s6_bc3       = 81.101  ! position of sixth dipole  
+
+! orbit distance between end of first and begin of second dipole
+stmp1_bc3    =(s2_bc3 - s1_bc3 - lll_bc3) / cos(ang_bc3)
+! orbit distance between end of second and begin of third dipole
+stmp2_bc3    = s3_bc3 - s2_bc3 - lll_bc3
+! orbit distance between end of third and begin of fourth dipole
+stmp3_bc3    =(s4_bc3 - s3_bc3 - lll_bc3) / cos(ang_bc3)
+! orbit distance between end of fourth and begin of fifth dipole
+stmp4_bc3    = s5_bc3 - s4_bc3 - lll_bc3
+! orbit distance between end of fifth and begin of sixth dipole
+stmp5_bc3    =(s6_bc3 - s5_bc3 - lll_bc3) / cos(ang_bc3)
+
+
+! position of the first bend of bc3 (D1BC3) in dependence of 
+! the orbit length and the bending angle
+s1_b1_bc3    = 0.5 * larc_bc3
+
+! position of the second bend of bc3 (D4BC3) in dependence of 
+! the orbit length and the bending angle
+s2_b1_bc3    = 1.5 * larc_bc3 + stmp1_bc3
+
+! position of the second bend of bc3 (D5BC3) in dependence of 
+! the orbit length and the bending angle
+s3_b1_bc3    = 2.5 * larc_bc3 + stmp1_bc3 + stmp2_bc3
+
+! position of the second bend of bc3 (D10BC3) in dependence of 
+! the orbit length and the bending angle
+s4_b1_bc3    = 3.5 * larc_bc3 + stmp1_bc3 + stmp2_bc3 + &
+                                stmp3_bc3
+
+! position of the second bend of bc3 (D11BC3) in dependence of 
+! the orbit length and the bending angle
+s5_b1_bc3    = 4.5 * larc_bc3 + stmp1_bc3 + stmp2_bc3 + &
+                                stmp3_bc3 + stmp4_bc3 
+
+! position of the second bend of bc3 (D14BC3) in dependence of 
+! the orbit length and the bending angle
+s6_b1_bc3    = 5.5 * larc_bc3 + stmp1_bc3 + stmp2_bc3 + &
+                                stmp3_bc3 + stmp4_bc3 + stmp5_bc3
+
+! length of the chicane of bc3 in dependence of the bending angle
+! from begin of first dipole to the end of sixth diople
+s_bc3        = 6.0 * larc_bc3 + stmp1_bc3 + stmp2_bc3 + &
+                                stmp3_bc3 + stmp4_bc3 + stmp5_bc3
+
+! Positions of the magnets for the first three magnets vary from the previous 
+! file FLASH_med_sharp.mad in 0.0247437, fot the last three magnets the 
+! difference is 0.036231!!!
+
+VALUE, s_bc2,s_bc3
+
+TDDD1BC3:      SBEND, L = len_bc3,  ANGLE=-ang_bc3, E1 = 0.0,      E2 =-ang_bc3
+TDDD4BC3:      SBEND, L = len_bc3,  ANGLE= ang_bc3, E1 = ang_bc3,  E2 = 0.0
+TDDD5BC3:      SBEND, L = len_bc3,  ANGLE= ang_bc3, E1 = 0.0,      E2 = ang_bc3
+TDDD10BC3:     SBEND, L = len_bc3,  ANGLE=-ang_bc3, E1 =-ang_bc3,  E2 = 0.0 
+TDDD11BC3:     SBEND, L = len_bc3,  ANGLE=-ang_bc3, E1 = 0.0,      E2 =-ang_bc3
+TDDD14BC3:     SBEND, L = len_bc3,  ANGLE= ang_bc3, E1 = ang_bc3,  E2 = 0.0
+
+!-------------------------------------------------------------------------------
+! EXTRACTION
+!-------------------------------------------------------------------------------
+
+!ang_EXTK1= 1.0E-20
+!ang_EXTK  = (ang_EXTK1 / 180.0) * PI
+
+lll_EXTK  = 0.6
+larc_EXTK1 = (lll_EXTK * vkickFL2EXTR1) / sin(vkickFL2EXTR1)
+larc_EXTK2 = (lll_EXTK * vkickFL2EXTR2) / sin(vkickFL2EXTR2)
+
+KICKEXT1:    SBEND,  L = larc_EXTK1, ANGLE = vkickFL2EXTR1, &
+                     E1 = 0.0, E2 = vkickFL2EXTR1, TILT
+KICKEXT2:    SBEND,  L = larc_EXTK2, ANGLE = vkickFL2EXTR2, &
+                     E1 = 0.0, E2 = vkickFL2EXTR22TILT
+
+
+!ang_B1     = 1.0E-20
+ang_bextr  = (angleD1FL2EXTR / 180.0) * PI
+lll_bextr  = 1.00
+larc_bextr = (lll_bextr * ang_bextr) / sin(ang_bextr)
+len_bextr  = larc_bextr
+
+TB1:         SBEND, L = len_bextr, ANGLE = ang_bextr, E1 = 0.0, E2 = ang_bextr
+
+!ang_B01    =-0.9
+lll_TDB01  = 0.22
+ang_TDB01  = (angleD8FL2EXTR / 180.0) * PI
+larc_TDB01 = (lll_TDB01 * ang_TDB01) / sin(ang_TDB01)
+len_TDB01  = larc_TDB01
+
+TDB01EXTR2:  RBEND, L = len_TDB01, ANGLE = ang_TDB01
+
+
+!ang_B02    = 3.2
+lll_TDA02  = 0.42
+ang_TDA02  = (angleD12FL2EXTR / 180.0) * PI
+larc_TDA02 = (lll_TDA02 * ang_TDA02) / sin(ang_TDA02)
+len_TDA02  = larc_TDA02
+
+TDA02EXTR2:  RBEND, L = len_TDA02, ANGLE = ang_TDA02
+
+!ang_B03    = 3.2
+lll_TDA03  = 0.42
+ang_TDA03  = (angleD13FL2EXTR / 180.0) * PI
+larc_TDA03 = (lll_TDA03 * ang_TDA03) / sin(ang_TDA03)
+len_TDA03  = larc_TDA03
+
+TDA03EXTR2:  RBEND, L = len_TDA03, ANGLE = ang_TDA03
+
+
+lll_TDB04  = 0.22
+!ang_TDB04  =-1.20762e-02
+ang_TDB04  = (angleD16FL2EXTR / 180 )*PI
+larc_TDB04 = (lll_TDB04 * ang_TDB04) / sin(ang_TDB04)
+len_TDB04  = larc_TDB04
+
+TDB04EXTR2:  RBEND, L = len_TDB04, ANGLE = ang_TDB04, &
+             E1 = 0.0, E2 = ang_TDB04, TILT
+
+
+lll_TDB05  = 0.22
+!ang_TDB05  = 1.20762e-02
+ang_TDB05  = (angleD17FL2EXTR / 180 )*PI
+larc_TDB05 = (lll_TDB05 * ang_TDB05) / sin(ang_TDB05)
+len_TDB05  = larc_TDB05
+
+TDB05EXTR2:  RBEND, L = len_TDB05, ANGLE = ang_TDB05, & 
+             E1 = 0.0, E2 = ang_TDB05, TILT
+
+!-------------------------------------------------------------------------------
+! DOGLEG
+!-------------------------------------------------------------------------------
+
+lll_col  = 0.4463
+ang_col  = (angleD1ECOL / 180.0) * PI
+larc_col = (lll_col * ang_col) / sin(ang_col)
+len_col  = larc_col
+
+TDAECOL01:   SBEND, L = len_col,  ANGLE= ang_col, E1 = 0.0     ,  E2 = ang_col    
+TDAECOL02:   SBEND, L = len_col,  ANGLE=-ang_col, E1 = -ang_col,  E2 = 0.0
+
+!-------------------------------------------------------------------------------
+! ORS
+!-------------------------------------------------------------------------------
+
+ORS_angle = 1.0E-20!085
+HHG_angle = 1.0E-20!085
+!First ORS chicane
+DV5ORS:      SBEND, angle = ORS_angle, L = 0.1, e1 = 0.0,  & 
+                   e2 = ORS_angle, TILT = pi / 2     
+DV6ORS:      SBEND, angle =-ORS_angle, L = 0.1, e1 =-ORS_angle,  &
+                   e2 = 0.0,       TILT = pi / 2
+DV6_4ORS:    SBEND, angle =-ORS_angle, L = 0.1, e1 = 0.0,  & 
+                   e2 =-ORS_angle, TILT = pi / 2
+DV7ORS:      SBEND, angle = ORS_angle, L = 0.1, e1 = ORS_angle,  & 
+                   e2 = 0.0,       TILT = pi / 2  
+DH5ORS:      SBEND, angle = 0.0 , L = 0.1, e1 = 0.0,  & 
+                   e2 = 0.0, tilt = 0.0
+
+!second ORS chicane 
+DV9ORS:      SBEND, angle = ORS_angle, L = 0.1, e1 = 0.0,  &
+                   e2 = ORS_angle,  TILT = pi / 2  
+DV10ORS:     SBEND, angle =-ORS_angle, L = 0.1, e1 =-ORS_angle,  &
+                   e2 = 0.0, TILT = pi / 2
+DV11ORS:     SBEND, angle =-ORS_angle, L = 0.1, e1 = 0.0,  &
+                   e2 =-ORS_angle, TILT = pi / 2
+DV12ORS:     SBEND, angle = ORS_angle, L = 0.1, e1 = ORS_angle,  &
+                   e2 = 0.0,  TILT = pi / 2
+DH10ORS:     SBEND, angle = 0.0,       L = 0.1, e1 = 0.0,  &
+                   e2 = 0.0, tilt = 0.0 
+
+
+DV2SFELC:     SBEND, angle = HHG_angle, L = 0.1, e1 = 0.0,  &
+                    e2 = ORS_angle,  TILT = pi / 2
+DV3SFELC:     SBEND, angle =-HHG_angle, L = 0.1, e1 =-ORS_angle,  &
+                    e2 = 0.0, TILT = pi / 2
+DV4SFELC:     SBEND, angle =-HHG_angle, L = 0.1, e1 = 0.0,  &
+                    e2 =-ORS_angle,  TILT = pi / 2
+DV6SFELC:     SBEND, angle = HHG_angle, L = 0.1, e1 = ORS_angle,  &
+                    e2 = 0.0,   TILT = pi / 2
+
+!-------------------------------------------------------------------------------
+! SMATCH
+!-------------------------------------------------------------------------------
+
+TDB01SMATCH: SBEND, L = 0.22, angle = anglD9SMATCH
+
+DTCA40:      SBEND, L = 0.1 , angle = anglD11SMATCH
+
+!-------------------------------------------------------------------------------
+! DUMP
+!-------------------------------------------------------------------------------
+
+dump_tilt =-(83.00 / 180.0) * PI
+lll_dump  = 1.2
+ang_dump  = (angleD6DUMP / 180.0) * PI
+larc_dump = (lll_dump * ang_dump) / sin(ang_dump)
+len_dump  = larc_dump
+
+TDC01DUMP:    SBEND, L  = len_dump,   ANGLE = -ang_dump,  &
+                     E1 = 0.0,        E2    = -ang_dump,  &
+                     TILT=dump_tilt
+
+HSKDUMP:      DRIFT, L = 0.28
+
+! FLASH 2
+
+!ang_BU  = 3.5
+lll_BURN  = 0.42
+ang_BURN  = (angleD4FL2BURN / 180.0) * PI
+larc_BURN = (lll_BURN * ang_BURN) / sin(ang_BURN)
+len_BURN  = larc_BURN
+
+TDA01BURN: SBEND, L = len_BURN, ANGLE = ang_BURN, E1 = 0.0, E2 = ang_BURN
+
+!ang_DU  = -21
+lll_DUM  = 1.3
+ang_DUM  = (angleD1FL2DUMP / 180.0) * PI
+larc_DUM = (lll_DUM * ang_DUM) / sin(ang_DUM)
+len_DUM  = larc_DUM
+
+D1FL2DUMP: SBEND, L = len_DUM, ANGLE = ang_DUM, E1 = 0.0, E2 = ang_DUM, TILT
+
+! ==============================================================================
+! UNDULATORs
+! ==============================================================================
+
+KORS = 0!7.7
+UNDORS01:               DRIFT,         L = 1.45
+! VERONICA - the vertical one
+!UNDORS02:   WIGGLER, L = 1.45, K = KORS , POLES=14, TILT = 0.0 
+UNDORS02:               DRIFT,         L = 1.45
+! HILDA - the horizontal one
+
+
+UNDK = 0 !2.83
+!UND1SFUND:  WIGGLER, L = 2.0, K = UNDK, POLES=127
+!UND2SFUND:  WIGGLER, L = 4.0, K = UNDK, POLES=242
+UND1SFUND:              DRIFT,         L = 2.0
+UND2SFUND:              DRIFT,         L = 4.0
+
+!>>>>>>>>>> now defined above (vogtm : 15.03.2010)
+!  EACT    = 1200. ! VOGTM 11.03.2010 : VARY THIS FOR HLOOS-TYPE BBA 
+!<<<<<<<<<< now defined above (vogtm : 15.03.2010)
+  UL00    = 4.553
+  UK      = 1.2392
+  UPOLES1 = 111
+  UPOLES2 = 112
+  UPOLES3 = 111
+  UPOLES  = UPOLES1 + UPOLES2 + UPOLES3
+  ULPOLE  = UL00 / UPOLES
+  UL01    = UPOLES1 * ULPOLE
+  UL02    = UPOLES2 * ULPOLE
+  UL03    = UPOLES3 * ULPOLE
+  ULAMBDA = ULPOLE*2
+  UGAMMA  = EACT/0.511
+  UK1     = 2*PI^2 * UK^2 / ( ULAMBDA^2 * UGAMMA^2)
+  VALUE, UL00*UK1, UL00*SQRT(UK1)
+  UPHI1   = UL01*SQRT(UK1)
+  UPHI2   = UL02*SQRT(UK1)
+  UPHI3   = UL03*SQRT(UK1)
+  UPHI    = UL00*SQRT(UK1)
+
+UND_PART1:   MATRIX, L=UL01, &
+                     RM(1,1) = 1, RM(1,2) = UL01, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,    RM(1,6) = 0, &
+                     RM(2,1) = 0, RM(2,2) = 1,    RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,    RM(2,6) = 0, &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHI1)),  &
+                     RM(3,4) = (1/SQRT(UK1))*SIN(UPHI1),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UK1)*SIN(UPHI1), RM(4,4) = COS(UPHI1), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0,    RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1,    RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0,    RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0,    RM(6,6) = 1
+
+UND_PART2:   MATRIX, L=UL02, &
+                     RM(1,1) = 1, RM(1,2) = UL02, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,    RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,    RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,    RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHI2)),   &
+                     RM(3,4) = (1/SQRT(UK1))*SIN(UPHI2),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UK1)*SIN(UPHI2), RM(4,4) = COS(UPHI2), &
+                     RM(4,5) = 0, RM(4,6) = 0, &
+                     RM(5,1) = 0, RM(5,2) = 0,    RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1,    RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0,    RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0,    RM(6,6) = 1
+
+UND_PART3:   MATRIX, L=UL03, &
+                     RM(1,1) = 1, RM(1,2) = UL03, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,    RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,    RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,    RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHI3)),  &
+                     RM(3,4) = (1/SQRT(UK1))*SIN(UPHI3),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UK1)*SIN(UPHI3), RM(4,4) = COS(UPHI3), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+
+! FLASH 2 UNDULATOR segments are defined seperately since of variable gap
+
+  ULFL2   = 2.3864
+  ULAMFL2 = 0.0314
+
+
+  UKFL2S3  = 2*PI^2 * KUNDFL2SASE3^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S3 = ULFL2*SQRT(UKFL2S3)
+
+  UNDSEGSASE3:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S3)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S3))*SIN(UPHIFL2S3),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S3)*SIN(UPHIFL2S3),  &
+                     RM(4,4) = COS(UPHIFL2S3), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S4  = 2*PI^2 * KUNDFL2SASE4^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S4 = ULFL2*SQRT(UKFL2S4)
+
+  UNDSEGSASE4:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S4)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S4))*SIN(UPHIFL2S4),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S4)*SIN(UPHIFL2S4),  &
+                     RM(4,4) = COS(UPHIFL2S4), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S5  = 2*PI^2 * KUNDFL2SASE5^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S5 = ULFL2*SQRT(UKFL2S5)
+
+  UNDSEGSASE5:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S5)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S5))*SIN(UPHIFL2S5),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S5)*SIN(UPHIFL2S5),  &
+                     RM(4,4) = COS(UPHIFL2S5), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S6  = 2*PI^2 * KUNDFL2SASE6^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S6 = ULFL2*SQRT(UKFL2S6)
+
+  UNDSEGSASE6:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S6)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S6))*SIN(UPHIFL2S6),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S6)*SIN(UPHIFL2S6),  &
+                     RM(4,4) = COS(UPHIFL2S6), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S7  = 2*PI^2 * KUNDFL2SASE7^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S7 = ULFL2*SQRT(UKFL2S7)
+
+  UNDSEGSASE7:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S7)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S7))*SIN(UPHIFL2S7),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S7)*SIN(UPHIFL2S7),  &
+                     RM(4,4) = COS(UPHIFL2S7), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S8  = 2*PI^2 * KUNDFL2SASE8^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S8 = ULFL2*SQRT(UKFL2S8)
+
+  UNDSEGSASE8:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S8)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S8))*SIN(UPHIFL2S8),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S8)*SIN(UPHIFL2S8),  &
+                     RM(4,4) = COS(UPHIFL2S8), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+
+  UKFL2S9  = 2*PI^2 * KUNDFL2SASE9^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S9 = ULFL2*SQRT(UKFL2S9)
+
+  UNDSEGSASE9:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S9)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S9))*SIN(UPHIFL2S9),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S9)*SIN(UPHIFL2S9),  &
+                     RM(4,4) = COS(UPHIFL2S9), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S10  = 2*PI^2 * KUNDFL2SASE10^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S10 = ULFL2*SQRT(UKFL2S10)
+
+  UNDSEGSASE10:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S10)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S10))*SIN(UPHIFL2S10),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S10)*SIN(UPHIFL2S10),  &
+                     RM(4,4) = COS(UPHIFL2S10), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S11 = 2*PI^2 * KUNDFL2SASE11^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S11 = ULFL2*SQRT(UKFL2S11)
+
+  UNDSEGSASE11:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S11)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S11))*SIN(UPHIFL2S11),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S11)*SIN(UPHIFL2S11),  &
+                     RM(4,4) = COS(UPHIFL2S11), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S12  = 2*PI^2 * KUNDFL2SASE12^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S12 = ULFL2*SQRT(UKFL2S12)
+
+  UNDSEGSASE12:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S12)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S12))*SIN(UPHIFL2S12),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S12)*SIN(UPHIFL2S12),  &
+                     RM(4,4) = COS(UPHIFL2S12), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S13  = 2*PI^2 * KUNDFL2SASE13^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S13 = ULFL2*SQRT(UKFL2S13)
+
+  UNDSEGSASE13:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S13)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S13))*SIN(UPHIFL2S13),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S13)*SIN(UPHIFL2S13),  &
+                     RM(4,4) = COS(UPHIFL2S13), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+  UKFL2S14  = 2*PI^2 * KUNDFL2SASE14^2 / ( ULAMFL2^2 * UGAMMA^2)
+  UPHIFL2S14 = ULFL2*SQRT(UKFL2S14)
+
+  UNDSEGSASE14:  MATRIX, L=ULFL2, &
+                     RM(1,1) = 1, RM(1,2) = ULFL2, RM(1,3) = 0,  &
+                     RM(1,4) = 0, RM(1,5) = 0,     RM(1,6) = 0,  &
+                     RM(2,1) = 0, RM(2,2) = 1,     RM(2,3) = 0,  &
+                     RM(2,4) = 0, RM(2,5) = 0,     RM(2,6) = 0,  &
+                     RM(3,1) = 0, RM(3,2) = 0,  &
+                     RM(3,3) = (COS(UPHIFL2S14)),  &
+                     RM(3,4) = (1/SQRT(UKFL2S14))*SIN(UPHIFL2S14),  &
+                     RM(3,5) = 0, RM(3,6) = 0,  &
+                     RM(4,1) = 0, RM(4,2) = 0,  &
+                     RM(4,3) =-SQRT(UKFL2S14)*SIN(UPHIFL2S14),  &
+                     RM(4,4) = COS(UPHIFL2S14), &
+                     RM(4,5) = 0, RM(4,6) = 0,  &
+                     RM(5,1) = 0, RM(5,2) = 0, RM(5,3) = 0,  &
+                     RM(5,4) = 0, RM(5,5) = 1, RM(5,6) = 0,  &
+                     RM(6,1) = 0, RM(6,2) = 0, RM(6,3) = 0,  &
+                     RM(6,4) = 0, RM(6,5) = 0, RM(6,6) = 1
+
+
+
+
+
+KFIR = 0
+!FIR_UND:       WIGGLER, L = 3.8 , K = KFIR, POLES = 10
+FIR_UND:                DRIFT,         L = 3.8
+
+! ------------------------------------------------------------------------------
+! section length
+! ------------------------------------------------------------------------------
+dposQcold = 0.0174804
+
+sendGUN   =  1.389
+sendACC1  = 14.2202
+sendACC39 = 19.0 
+
+sendUBC2  = 20.891 
+sendMBC2  = 24.854   !20.891 + s_bc2 + 0.1 !24.854 
+sendDBC2  = 37.4127
+sendBC2   = 37.4127
+!VALUE, sendMBC2
+!VALUE, sendMBC2-24.854 
+
+sendACC2  = 50.4361 
+sendACC3  = 64.2087
+
+sendUBC3  = 67.322 + 0.0247437 
+sendMBC3  = 81.351  !67.322 + s_bc3 + 0.0969873 + 0.0247437  !81.351 
+sendDBC3  = 86.1680 
+sendBC3   = 86.1680
+
+sendACC4  = 99.2077 
+sendACC5  =111.3727 
+sendACC6  =123.5377 
+sendACC7  =137.231 - 0.0285
+
+sendTCOL  =152.1840 
+sendECOL  =159.3868 
+
+sendORS   =171.0713 
+sendSFUND =184.0298 
+sendSFELC =189.1243 
+sendSMATCH=203.3548 
+sendUND   =233.9428 
+ 
+sendEXP   =246.2909 
+sendDUMP  =257.9734 
+
+!===============================================================================
+!===============================================================================
+!  BEAM LINE DEFINITION
+!===============================================================================
+!===============================================================================
+
+
+!===============================================================================
+!  INJECTOR: FROM EXIT OF SOLENOID UP TO ACC1
+!===============================================================================
+
+GUN: SEQUENCE
+  STARTGUN:             MARKER,        AT = 0
+  H1GUN:                HGUN,          AT = 0.296             
+  V1GUN:                VGUN,          AT = 0.341
+  H2GUN:                HGUN,          AT = 0.573
+  V2GUN:                VGUN,          AT = 0.618
+  BPM1GUN:              BPMButton01,   AT = 0.663 
+  OTR2GUN:              OTRNOLENGTH,   AT = 0.784         
+  D1IDUMP:              TCAspecial,    AT = 0.938 + dposdgun          
+  TOR3GUN:              TOR01,         AT = 1.081     
+  OTR3GUN:              OTRNOLENGTH,   AT = 1.17
+  COLL3GUN:             COLL01,        AT = 1.231
+  BPM3GUN:              BPMButton01,   AT = 1.299
+  ENDGUN:               MARKER,        AT = sendGUN 
+ENDSEQUENCE
+
+!===============================================================================
+!  ACC1
+!===============================================================================
+
+ACC1: SEQUENCE
+  STARTACC1:            MARKER,        AT = 0
+  SETPHASEACC1:         MARKER,        AT = 0
+  H3GUN:                HGUN,          AT = 0.1415
+  V3GUN:                VGUN,          AT = 0.164
+  C1.M1.ACC1:           CAV13,         AT = 1.6076,   DELTAE = Volt1_1 * Coef_E
+  WAKE01ACC1:           MARKER,        AT = 1.6076 + len_cav13/2
+  C2.M1.ACC1:           CAV13,         AT = 2.9919,   DELTAE = Volt1_2 * Coef_E
+  WAKE02ACC1:           MARKER,        AT = 2.9919 + len_cav13/2
+  C3.M1.ACC1:           CAV13,         AT = 4.3767,   DELTAE = Volt1_3 * Coef_E
+  WAKE03ACC1:           MARKER,        AT = 4.3767 + len_cav13/2
+  C4.M1.ACC1:           CAV13,         AT = 5.7615,   DELTAE = Volt1_4 * Coef_E
+  WAKE04ACC1:           MARKER,        AT = 5.7615 + len_cav13/2
+  C5.M1.ACC1:           CAV13,         AT = 7.1463,   DELTAE = Volt1_5 * Coef_E
+  WAKE05ACC1:           MARKER,        AT = 7.1463 + len_cav13/2
+  C6.M1.ACC1:           CAV13,         AT = 8.5311,   DELTAE = Volt1_6 * Coef_E
+  WAKE06ACC1:           MARKER,        AT = 8.5311 + len_cav13/2
+  C7.M1.ACC1:           CAV13,         AT = 9.9159,   DELTAE = Volt1_7 * Coef_E
+  WAKE07ACC1:           MARKER,        AT = 9.9159 + len_cav13/2
+  C8.M1.ACC1:           CAV13,         AT =11.3017,   DELTAE = Volt1_8 * Coef_E
+  WAKE08ACC1:           MARKER,        AT =11.3017 + len_cav13/2
+  SETREFEACC1:          MARKER,        AT =11.3017 + len_cav13/2
+  BPM9ACC1:             BPMCRYO01,     AT =12.0419
+!
+  Q9ACC1.U:             QA.H,          AT =12.2884 - len_qa/4,  K1=k1Q9ACC1
+!  V9ACC1:               VCA,           AT =12.2884
+!  H9ACC1:               HCA,           AT =12.2884
+  Q9ACC1.D:             QA.H,          AT =12.2884 + len_qa/4,  K1=k1Q9ACC1
+!
+  Q10ACC1.U:            QA.H,          AT =12.5384 - len_qa/4,  K1=k1Q10ACC1
+  V10ACC1:              VCA,           AT =12.5384
+  H10ACC1:              HCA,           AT =12.5384
+  Q10ACC1.D:            QA.H,          AT =12.5384 + len_qa/4,  K1=k1Q10ACC1
+!
+  ENDACC1:              MARKER,        AT = sendACC1 - sendGUN
+ENDSEQUENCE
+
+!===============================================================================
+!  3rd HARMONIC CAVITY: ACC39
+!===============================================================================
+
+ACC39: SEQUENCE
+  STARTACC39:           MARKER,        AT = 0
+  SETPHASEACC39:        MARKER,        AT = 0
+  C1.M1.ACC39:          CAV39,         AT = 0.5986,    DELTAE = Volt39_1
+  WAKE01ACC39:          MARKER,        AT = 0.5986 + len_cav39/2
+  C2.M1.ACC39:          CAV39,         AT = 1.19872,   DELTAE = Volt39_2
+  WAKE02ACC39:          MARKER,        AT = 1.19872 + len_cav39/2
+  C3.M1.ACC39:          CAV39,         AT = 1.80658,   DELTAE = Volt39_3
+  WAKE03ACC39:          MARKER,        AT = 1.80658 + len_cav39/2
+  C4.M1.ACC39:          CAV39,         AT = 2.41444,   DELTAE = Volt39_4
+  WAKE04ACC39:          MARKER,        AT = 2.41444 + len_cav39/2
+  SETREFEACC39:         MARKER,        AT = 2.41444 + len_cav39/2
+  ENDACC39:             MARKER,        AT = sendACC39 - sendACC1
+ENDSEQUENCE
+
+!===============================================================================
+!  BC2   = UBC2 + MBC2 + DBC2
+!===============================================================================
+!-------------------------------------------------------------------------------
+!  UBC2
+!-------------------------------------------------------------------------------
+
+UBC2: SEQUENCE
+  STARTUBC2:            MARKER,        AT = 0
+  PHA1UBC2:             PHASEMON01,    AT = 0.143
+  Q1.1UBC2:             QTSE,          AT = 0.31,               K1=k1Q1.1UBC2
+  Q1.2UBC2:             QTSI,          AT = 0.435,              K1=k1Q1.2UBC2
+  Q1.3UBC2:             QTSE,          AT = 0.56,               K1=k1Q1.3UBC2
+  H1UBC2:               HTCA40S,       AT = 0.697
+  V1UBC2:               VTCA40S,       AT = 0.964
+  BPM2UBC2:             BPMSL01,       AT = 1.236
+  BAMUBC2:              PHASEMON01,    AT = 1.481
+  TOR3UBC2:             TOR02,         AT = 1.5801
+  ENDUBC2:              MARKER,        AT =  sendUBC2 - sendACC39
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!  MBC2
+!-------------------------------------------------------------------------------
+
+MBC2: SEQUENCE
+  STARTMBC2:            MARKER,        AT = 0
+  D1BC2:                TDD01BC2,      AT = s1_b1_bc2
+  H1BC2:                TRIMTDD,       AT = s1_b1_bc2 + len_bc2/2
+  D2BC2:                TDD02BC2,      AT = s2_b1_bc2
+  H2BC2:                TRIMTDD,       AT = s2_b1_bc2 + len_bc2/2
+  BPMBC2EBPM:           EBPMSL01,      AT = 1.83541
+  COLL2BC2:             COLLBC2,       AT = 2.07691
+  OTR3BC2:              OTRNOLENGTH,   AT = 2.31091
+  D3BC2:                TDD03BC2,      AT = s3_b1_bc2
+  H3BC2:                TRIMTDD,       AT = s3_b1_bc2 + len_bc2/2
+  D4BC2:                TDD04BC2,      AT = s4_b1_bc2
+  H4BC2:                TRIMTDD,       AT = s4_b1_bc2 + len_bc2/2
+  ENDMBC2:              MARKER,        AT = s_bc2 + 0.1 
+ENDSEQUENCE
+VALUE, sendMBC2 - sendUBC2
+
+!-------------------------------------------------------------------------------
+!  DBC2 
+!-------------------------------------------------------------------------------
+
+DBC2: SEQUENCE
+  STARTDBC2:            MARKER,        AT = 0
+  H1DBC2:               HTCA40S,       AT = 0.176
+  Q1DBC2.U:             TQA.H,         AT = 0.486 - len_tqa/4,  K1= k1Q1DBC2
+  BPM1DBC2:             BPMNOLENGTH,   AT = 0.486
+  Q1DBC2.D:             TQA.H,         AT = 0.486 + len_tqa/4,  K1= k1Q1DBC2
+  V1DBC2:               VTCA40S,       AT = 0.796
+  Q1.1DBC2:             TQA,           AT = 1.086,              K1=k1Q1.1DBC2
+  H2DBC2:               HTCA40S,       AT = 1.361
+  Q2DBC2:               TQA,           AT = 1.686,              K1=k1Q2DBC2
+  V2DBC2:               VTCA40S,       AT = 2.011
+  Q2.2DBC2:             TQA,           AT = 2.286,              K1=k1Q2.2DBC2
+  BAMDBC2:              PHASEMON01,    AT = 2.641
+  Q3DBC2.U:             TQA.H,         AT = 2.886 - len_tqa/4,  K1= k1Q3DBC2
+  BPM3DBC2:             BPMNOLENGTH,   AT = 2.886
+  Q3DBC2.D:             TQA.H,         AT = 2.886 + len_tqa/4,  K1= k1Q3DBC2
+  H4DBC2:               HTCA40S,       AT = 3.211 - 0.015 ! 2015-02-12
+  Q4DBC2:               TQA,           AT = 3.486,              K1= k1Q4DBC2
+  V4DBC2:               VTCA40S,       AT = 3.756 - 0.010 ! 2015-02-12
+  OTR4DBC2:             OTRNOLENGTH,   AT = 3.946
+  WIRE4DBC2:            WIRESCANNER,   AT = 3.971
+  Q5DBC2.U:             TQA.H,         AT = 4.436 - len_tqa/4,  K1= k1Q5DBC2
+  BPM5DBC2:             BPMNOLENGTH,   AT = 4.436
+  Q5DBC2.D:             TQA.H,         AT = 4.436 + len_tqa/4,  K1= k1Q5DBC2
+  H5DBC2:               HTCA40S,       AT = 4.761 + 0.010 ! 2015-02-12
+  Q6DBC2:               TQA,           AT = 5.386,              K1= k1Q6DBC2
+  V6DBC2:               VTCA40S,       AT = 5.591 + 0.010 ! 2015-02-12
+!  H6DBC2:               HTCA40S,       AT = 5.671
+  OTR6DBC2:             OTRNOLENGTH,   AT = 5.846
+  WIRE6DBC2:            WIRESCANNER,   AT = 5.871
+  Q7DBC2.U:             TQA.H,         AT = 6.336 - len_tqa/4,  K1= k1Q7DBC2
+  BPM7DBC2:             BPMNOLENGTH,   AT = 6.336
+  Q7DBC2.D:             TQA.H,         AT = 6.336 + len_tqa/4,  K1= k1Q7DBC2 
+  EODBC2:               EO01,          AT = 6.661
+  DCMONITOR:            DCMON,         AT = 6.948
+  Q8DBC2:               TQA,           AT = 7.286,              K1= k1Q8DBC2
+  V8DBC2:               VTCA40S,       AT = 7.556 - 0.010 ! 2015-02-12
+  OTR8DBC2:             OTRNOLENGTH,   AT = 7.746
+  WIRE8DBC2:            WIRESCANNER,   AT = 7.771
+  Q9DBC2.U:             TQA.H,         AT = 8.236 - len_tqa/4,  K1= k1Q9DBC2
+  BPM9DBC2:             BPMNOLENGTH,   AT = 8.236
+  Q9DBC2.D:             TQA.H,         AT = 8.236 + len_tqa/4,  K1= k1Q9DBC2
+  H9DBC2:               HTCA40S,       AT = 8.561 + 0.015 ! 2015-02-12
+  OTR9DBC2:             TDRPYRO,       AT = 8.831
+  Q10DBC2:              TQA,           AT = 9.186,              K1= k1Q10DBC2
+  V10DBC2:              VTCA40S,       AT = 9.456 - 0.015 ! 2015-02-12
+  OTR10DBC2:            OTRNOLENGTH,   AT = 9.646
+  WIRE10DBC2:           WIRESCANNER,   AT = 9.671
+  TOR10DBC2:            TOR44,         AT =10.019
+  Q10.3DBC2:            TQD,           AT =10.363,              K1=k1Q10.3DBC2
+  H11DBC2:              HTCA40S,       AT =10.643 - 0.010 ! 2015-02-12
+  Q11DBC2.U:            TQD.H,         AT =10.963 - len_tqd/4,  K1= k1Q11DBC2
+  BPM11DBC2:            BPMNOLENGTH,   AT =10.963
+  Q11DBC2.D:            TQD.H,         AT =10.963 + len_tqd/4,  K1= k1Q11DBC2
+  V11DBC2:              VTCA40S,       AT =11.283
+  Q12DBC2:              TQD,           AT =11.563,              K1=k1Q12DBC2
+  ENDDBC2:              MARKER,        AT = sendDBC2 - sendMBC2 -  0.1847
+ENDSEQUENCE
+
+BC2:                    LINE = (UBC2,MBC2,DBC2)
+
+!===============================================================================
+!  ACC2
+!===============================================================================
+
+ACC2: SEQUENCE
+  STARTACC2:            MARKER,        AT = 0
+  SETPHASEACC2:         MARKER,        AT = 0
+  C1.M1.ACC23:          CAV13,         AT = 1.5956,   DELTAE = Volt2_1 * Coef_E
+  WAKE01ACC02:          MARKER,        AT = 1.5956 + len_cav13/2
+  C2.M1.ACC23:          CAV13,         AT = 2.9799,   DELTAE = Volt2_2 * Coef_E
+  WAKE02ACC02:          MARKER,        AT = 2.9799 + len_cav13/2
+  C3.M1.ACC23:          CAV13,         AT = 4.3647,   DELTAE = Volt2_3 * Coef_E
+  WAKE03ACC02:          MARKER,        AT = 4.3647 + len_cav13/2
+  C4.M1.ACC23:          CAV13,         AT = 5.7495,   DELTAE = Volt2_4 * Coef_E
+  WAKE04ACC02:          MARKER,        AT = 5.7495 + len_cav13/2
+  C5.M1.ACC23:          CAV13,         AT = 7.1343,   DELTAE = Volt2_5 * Coef_E
+  WAKE05ACC02:          MARKER,        AT = 7.1343 + len_cav13/2
+  C6.M1.ACC23:          CAV13,         AT = 8.5191,   DELTAE = Volt2_6 * Coef_E
+  WAKE06ACC02:          MARKER,        AT = 8.5191 + len_cav13/2
+  C7.M1.ACC23:          CAV13,         AT = 9.9039,   DELTAE = Volt2_7 * Coef_E
+  WAKE07ACC02:          MARKER,        AT = 9.9039 + len_cav13/2
+  C8.M1.ACC23:          CAV13,         AT =11.2887,   DELTAE = Volt2_8 * Coef_E
+  WAKE08ACC02:          MARKER,        AT =11.2887 + len_cav13/2
+  SETREFEACC02:         MARKER,        AT =11.2887 + len_cav13/2
+  BPM9ACC2:             BPMCRYO01,     AT =12.0299
+  Q9ACC2.U:             QA.H,          AT =12.2589 - len_qa/4,  K1=k1Q9ACC2
+!  V9ACC2:               VCA,           AT =12.2589
+!  H9ACC2:               HCA,           AT =12.2589
+  Q9ACC2.D:             QA.H,          AT =12.2589 + len_qa/4,  K1=k1Q9ACC2
+  Q10ACC2.U:            QA.H,          AT =12.5089 - len_qa/4,  K1=k1Q10ACC2
+  V10ACC2:              VCA,           AT =12.5089
+  H10ACC2:              HCA,           AT =12.5089
+  Q10ACC2.D:            QA.H,          AT =12.5089 + len_qa/4,  K1=k1Q10ACC2
+  ENDACC2:              MARKER,        AT = sendACC2 - sendDBC2
+ENDSEQUENCE
+
+!===============================================================================
+!  ACC3
+!===============================================================================
+
+
+ACC3: SEQUENCE
+  STARTACC3:            MARKER,        AT = 0
+  SETPHASEACC3:         MARKER,        AT = 0
+  C1.M2.ACC23:          CAV13,         AT = 0.7397,   DELTAE = Volt3_1 * Coef_E
+  WAKE01ACC3:           MARKER,        AT = 0.7397 + len_cav13/2
+  C2.M2.ACC23:          CAV13,         AT = 2.1245,   DELTAE = Volt3_2 * Coef_E
+  WAKE02ACC3:           MARKER,        AT = 2.1245 + len_cav13/2
+  C3.M2.ACC23:          CAV13,         AT = 3.5093,   DELTAE = Volt3_3 * Coef_E
+  WAKE03ACC3:           MARKER,        AT = 3.5093 + len_cav13/2
+  C4.M2.ACC23:          CAV13,         AT = 4.8941,   DELTAE = Volt3_4 * Coef_E
+  WAKE04ACC3:           MARKER,        AT = 4.8941 + len_cav13/2
+  C5.M2.ACC23:          CAV13,         AT = 6.2789,   DELTAE = Volt3_5 * Coef_E
+  WAKE05ACC3:           MARKER,        AT = 6.2789 + len_cav13/2
+  C6.M2.ACC23:          CAV13,         AT = 7.6637,   DELTAE = Volt3_6 * Coef_E
+  WAKE06ACC3:           MARKER,        AT = 7.6637 + len_cav13/2
+  C7.M2.ACC23:          CAV13,         AT = 9.0485,   DELTAE = Volt3_7 * Coef_E
+  WAKE07ACC3:           MARKER,        AT = 9.0485 + len_cav13/2
+  C8.M2.ACC23:          CAV13,         AT =10.4333,   DELTAE = Volt3_8 * Coef_E
+  WAKE10ACC3:           MARKER,        AT =10.4333 + len_cav13/2
+  SETREFEACC3:          MARKER,        AT =10.4333 + len_cav13/2
+  BPM9ACC3:             BPMCRYO01,     AT =11.1745
+  Q9ACC3.U:             QA.H,          AT =11.4035 - len_qa/4,  K1=k1Q9ACC3
+  Q9ACC3.D:             QA.H,          AT =11.4035 + len_qa/4,  K1=k1Q9ACC3
+  Q10ACC3.U:            QA.H,          AT =11.6535 - len_qa/4,  K1=k1Q10ACC3
+  V10ACC3:              VCA,           AT =11.6535
+  H10ACC3:              HCA,           AT =11.6535
+  Q10ACC3.D:            QA.H,          AT =11.6535 + len_qa/4,  K1=k1Q10ACC3
+  ENDACC3:              MARKER,        AT = sendACC3 - sendACC2
+ENDSEQUENCE
+
+ACC23:                  LINE = (ACC2,ACC3)
+
+!===============================================================================
+!  BC3 = UBC3 + MBC3 + DBC3 
+!===============================================================================
+!-------------------------------------------------------------------------------
+!  UBC3
+!-------------------------------------------------------------------------------
+
+UBC3: SEQUENCE
+  STARTUBC3:            MARKER,        AT = 0.0
+  TOR1UBC3:             TOR44,         AT = 0.564
+  Q1UBC3.U:             TQD.H,         AT = 0.897 - len_tqd/4,  K1=k1Q1UBC3
+  BPM1UBC3:             BPMNOLENGTH,   AT = 0.897
+  Q1UBC3.D:             TQD.H,         AT = 0.897 + len_tqd/4,  K1=k1Q1UBC3
+  Q2UBC3:               TQD,           AT = 1.397,              K1=k1Q2UBC3 !0.0
+  H2UBC3:               HTCA40,        AT = 1.9025
+  V2UBC3:               VTCA70,        AT = 2.302
+  BPM2UBC3:             BPMNOLENGTH,   AT = 2.302 + 0.115 ! Neg Drift
+  OTR3UBC3:             OTRNOLENGTH,   AT = 2.642
+  ENDUBC3:              MARKER,        AT = sendUBC3 - sendACC3
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!  MBC3
+!-------------------------------------------------------------------------------
+deltasbc3 =0.0
+
+MBC3: SEQUENCE
+  STARTMBC3:            MARKER,        AT = 0.0
+  D1BC3:                TDDD1BC3,      AT = s1_b1_bc3
+  H1BC3:                TRIMTDD,       AT = s1_b1_bc3 + len_bc3/2
+  D4BC3:                TDDD4BC3,      AT = s2_b1_bc3
+  H4BC3:                TRIMTDD,       AT = s2_b1_bc3 + len_bc3/2
+  EBPM4BC3:             EBPMSL01,      AT = 3.75982
+  D5BC3:                TDDD5BC3,      AT = s3_b1_bc3
+  H5BC3:                TRIMTDD,       AT = s3_b1_bc3 + len_bc3/2
+  OTR8BC3:              OTRSCREEN01,   AT = 7.11884
+  D10BC3:               TDDD10BC3,     AT = s4_b1_bc3 + deltasbc3
+  H10BC3:               TRIMTDD,       AT = s4_b1_bc3 + len_bc3/2 + deltasbc3
+  OTR11BC3:             OTRSCREEN01,   AT =10.53006 
+  D11BC3:               TDDD11BC3,     AT = s5_b1_bc3 + deltasbc3
+  H11BC3:               TRIMTDD,       AT = s5_b1_bc3 + len_bc3/2 + deltasbc3 
+  D14BC3:               TDDD14BC3,     AT = s6_b1_bc3 + deltasbc3
+  H14BC3:               TRIMTDD,       AT = s6_b1_bc3 + len_bc3/2 + deltasbc3
+  ENDMBC3:              MARKER,        AT = s_bc3 + 0.0969560796
+ENDSEQUENCE
+VALUE, sendMBC3 - sendUBC3
+
+!-------------------------------------------------------------------------------
+!  DBC3
+!-------------------------------------------------------------------------------
+
+DBC3: SEQUENCE
+  STARTDBC3:            MARKER,        AT = 0.0
+  V1DBC3:               VTCA70,        AT = 0.122
+  H1DBC3:               HTCA40,        AT = 0.35
+  Q1DBC3.U:             TQA.H,         AT = 1.15 - len_tqa/4,   K1=k1Q1DBC3
+  BPM1DBC3:             BPMNOLENGTH,   AT = 1.15
+  Q1DBC3.D:             TQA.H,         AT = 1.15 + len_tqa/4,   K1=k1Q1DBC3
+  Q2DBC3:               TQA,           AT = 1.7001,             K1=k1Q2DBC3
+  Q3DBC3:               TQA,           AT = 2.2501,             K1=k1Q3DBC3
+  H3DBC3:               HTCA40,        AT = 2.7181
+  V3DBC3:               VTCA70,        AT = 3.0306
+  BPM3DBC3:             BPMNOLENGTH,   AT = 3.0806
+  OTR4DBC3:             OTRSCREEN01,   AT = 3.4606
+  BAM4DBC3:             PHASEMON01,    AT = 3.5956
+  OTR5DBC3:             OTRSCREEN02,   AT = 3.8156
+  WIRE5DBC3:            WIRESCANNER,   AT = 3.9431
+  TOR5DBC3:             TOR44,         AT = 4.1536
+  RMON4DBC3:            WCMON,         AT = 4.3491
+!  EMARKERACC4:          MARKER,        AT = sendDBC3 - sendMBC3 - 0.039
+  ENDDBC3:              MARKER,        AT = sendDBC3 - sendMBC3 - 0.136
+ENDSEQUENCE
+
+BC3:                    LINE = (UBC3,MBC3,DBC3)
+
+!===============================================================================
+!  ACC4567
+!===============================================================================
+!-------------------------------------------------------------------------------
+!  ACC4 
+!-------------------------------------------------------------------------------
+
+ACC4: SEQUENCE
+  STARTACC4:            MARKER,        AT = 0
+  SETPHASEACC4:         MARKER,        AT = 0
+  C1.M1.ACC45:          CAV13,         AT = 1.6149,   DELTAE = Volt4_1 * Coef_E 
+  WAKE01ACC4:           MARKER,        AT = 1.6149 + len_cav13/2
+  C2.M1.ACC45:          CAV13,         AT = 2.9992,   DELTAE = Volt4_2 * Coef_E
+  WAKE02ACC4:           MARKER,        AT = 2.9992 + len_cav13/2
+  C3.M1.ACC45:          CAV13,         AT = 4.384,    DELTAE = Volt4_3 * Coef_E
+  WAKE03ACC4:           MARKER,        AT = 4.384  + len_cav13/2
+  C4.M1.ACC45:          CAV13,         AT = 5.7688,   DELTAE = Volt4_4 * Coef_E
+  WAKE04ACC4:           MARKER,        AT = 5.7688 + len_cav13/2
+  C5.M1.ACC45:          CAV13,         AT = 7.1536,   DELTAE = Volt4_5 * Coef_E
+  WAKE05ACC4:           MARKER,        AT = 7.1536 + len_cav13/2
+  C6.M1.ACC45:          CAV13,         AT = 8.5384,   DELTAE = Volt4_6 * Coef_E
+  WAKE06ACC4:           MARKER,        AT = 8.5384 + len_cav13/2
+  C7.M1.ACC45:          CAV13,         AT = 9.9232,   DELTAE = Volt4_7 * Coef_E
+  WAKE07ACC4:           MARKER,        AT = 9.9232 + len_cav13/2
+  C8.M1.ACC45:          CAV13,         AT =11.308,    DELTAE = Volt4_8 * Coef_E
+  WAKE08ACC4:           MARKER,        AT =11.308  + len_cav13/2
+  SETREFEACC4:          MARKER,        AT =11.308  + len_cav13/2
+  BPM9ACC4:             BPMCRYO01,     AT =12.0492
+  Q9ACC4.U:             QA.H,          AT =12.2782 - len_qa/4,  K1=k1Q9ACC4
+  Q9ACC4.D:             QA.H,          AT =12.2782 + len_qa/4,  K1=k1Q9ACC4
+  Q10ACC4.U:            QA.H,          AT =12.5282 - len_qa/4,  K1=k1Q10ACC4
+  V10ACC4:              VCA,           AT =12.5282
+  H10ACC4:              HCA,           AT =12.5282
+  Q10ACC4.D:            QA.H,          AT =12.5282 + len_qa/4,  K1=k1Q10ACC4
+  ENDACC4:              MARKER,        AT = sendACC4 - sendDBC3
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!  ACC5
+!-------------------------------------------------------------------------------
+
+ACC5: SEQUENCE
+  STARTACC5:            MARKER,        AT = 0
+  SETPHASEACC5:         MARKER,        AT = 0
+  C1.M2.ACC45:          CAV13,         AT = 0.7397,   DELTAE = Volt5_1 * Coef_E 
+  WAKE01ACC5:           MARKER,        AT = 0.7397 + len_cav13/2
+  C2.M2.ACC45:          CAV13,         AT = 2.1245,   DELTAE = Volt5_2 * Coef_E
+  WAKE02ACC5:           MARKER,        AT = 2.1245 + len_cav13/2
+  C3.M2.ACC45:          CAV13,         AT = 3.5093,   DELTAE = Volt5_3 * Coef_E
+  WAKE03ACC5:           MARKER,        AT = 3.5093 + len_cav13/2
+  C4.M2.ACC45:          CAV13,         AT = 4.8941,   DELTAE = Volt5_4 * Coef_E
+  WAKE04ACC5:           MARKER,        AT = 4.8941 + len_cav13/2
+  C5.M2.ACC45:          CAV13,         AT = 6.2789,   DELTAE = Volt5_5 * Coef_E
+  WAKE05ACC5:           MARKER,        AT = 6.2789 + len_cav13/2
+  C6.M2.ACC45:          CAV13,         AT = 7.6637,   DELTAE = Volt5_6 * Coef_E
+  WAKE06ACC5:           MARKER,        AT = 7.6637 + len_cav13/2
+  C7.M2.ACC45:          CAV13,         AT = 9.0485,   DELTAE = Volt5_7 * Coef_E
+  WAKE07ACC5:           MARKER,        AT = 9.0485 + len_cav13/2
+  C8.M2.ACC45:          CAV13,         AT =10.4333,   DELTAE = Volt5_8 * Coef_E
+  WAKE08ACC5:           MARKER,        AT =10.4333 + len_cav13/2
+  SETREFEACC5:          MARKER,        AT =10.4333 + len_cav13/2
+  BPM9ACC5:             BPMCRYO01,     AT =11.1745
+  Q9ACC5.U:             QA.H,          AT =11.4035 - len_qa/4,  K1=k1Q9ACC5
+  V9ACC5:               VCA,           AT =11.4035
+  H9ACC5:               HCA,           AT =11.4035
+  Q9ACC5.D:             QA.H,          AT =11.4035 + len_qa/4,  K1=k1Q9ACC5
+  Q10ACC5.U:            QA.H,          AT =11.6535 - len_qa/4,  K1=k1Q10ACC5
+  V10ACC5:              VCA,           AT =11.6535
+  H10ACC5:              HCA,           AT =11.6535
+  Q10ACC5.D:            QA.H,          AT =11.6535 + len_qa/4,  K1=k1Q10ACC5
+  ENDACC5:              MARKER,        AT = sendACC5 - sendACC4
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!  ACC6 
+!-------------------------------------------------------------------------------
+
+ACC6: SEQUENCE
+  STARTACC6:            MARKER,        AT = 0
+  SETPHASEACC6:         MARKER,        AT = 0
+  C1.M1.ACC67:          CAV13,         AT = 0.7397,   DELTAE = Volt6_1 * Coef_E 
+  WAKE01ACC6:           MARKER,        AT = 0.7397 + len_cav13/2
+  C2.M1.ACC67:          CAV13,         AT = 2.1245,   DELTAE = Volt6_2 * Coef_E 
+  WAKE02ACC6:           MARKER,        AT = 2.1245 + len_cav13/2
+  C3.M1.ACC67:          CAV13,         AT = 3.5093,   DELTAE = Volt6_3 * Coef_E 
+  WAKE03ACC6:           MARKER,        AT = 3.5093 + len_cav13/2
+  C4.M1.ACC67:          CAV13,         AT = 4.8941,   DELTAE = Volt6_4 * Coef_E 
+  WAKE04ACC6:           MARKER,        AT = 4.8941 + len_cav13/2
+  C5.M1.ACC67:          CAV13,         AT = 6.2789,   DELTAE = Volt6_5 * Coef_E 
+  WAKE05ACC6:           MARKER,        AT = 6.2789 + len_cav13/2
+  C6.M1.ACC67:          CAV13,         AT = 7.6637,   DELTAE = Volt6_6 * Coef_E 
+  WAKE06ACC6:           MARKER,        AT = 7.6637 + len_cav13/2
+  C7.M1.ACC67:          CAV13,         AT = 9.0485,   DELTAE = Volt6_7 * Coef_E 
+  WAKE07ACC6:           MARKER,        AT = 9.0485 + len_cav13/2
+  C8.M1.ACC67:          CAV13,         AT =10.4333,   DELTAE = Volt6_8 * Coef_E 
+  WAKE08ACC6:           MARKER,        AT =10.4333 + len_cav13/2
+  SETREFEACC6:          MARKER,        AT =10.4333 + len_cav13/2
+  BPM9ACC6:             BPMCRYO01,     AT =11.1745
+  Q9ACC6.U:             QA.H,          AT =11.4035 - len_qa/4,  K1=k1Q9ACC6
+  V9ACC6:               VCA,           AT =11.4035
+  H9ACC6:               HCA,           AT =11.4035
+  Q9ACC6.D:             QA.H,          AT =11.4035 + len_qa/4,  K1=k1Q9ACC6
+  Q10ACC6.U:            QA.H,          AT =11.6535 - len_qa/4,  K1=k1Q10ACC6
+  V10ACC6:              VCA,           AT =11.6535
+  H10ACC6:              HCA,           AT =11.6535
+  Q10ACC6.D:            QA.H,          AT =11.6535 + len_qa/4,  K1=k1Q10ACC6
+  ENDACC6:              MARKER,        AT = sendACC6 - sendACC5
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!  ACC7
+!-------------------------------------------------------------------------------
+
+! k1Q10ACC7=-5.340468E-01
+
+
+ACC7: SEQUENCE
+  STARTACC7:            MARKER,        AT = 0
+  SETPHASEACC7:            MARKER,        AT = 0
+  C1.M2.ACC67:          CAV13,         AT = 0.7347,   DELTAE = Volt7_1 * Coef_E 
+  WAKE01ACC7:           MARKER,        AT = 0.7347  + len_cav13/2
+  C2.M2.ACC67:          CAV13,         AT = 2.11885,  DELTAE = Volt7_2 * Coef_E 
+  WAKE02ACC7:           MARKER,        AT = 2.11885 + len_cav13/2
+  C3.M2.ACC67:          CAV13,         AT = 3.503,    DELTAE = Volt7_3 * Coef_E 
+  WAKE03ACC7:           MARKER,        AT = 3.503   + len_cav13/2
+  C4.M2.ACC67:          CAV13,         AT = 4.88715,  DELTAE = Volt7_4 * Coef_E 
+  WAKE04ACC7:           MARKER,        AT = 4.88715 + len_cav13/2
+  C5.M2.ACC67:          CAV13,         AT = 6.2713,   DELTAE = Volt7_5 * Coef_E 
+  WAKE05ACC7:           MARKER,        AT = 6.2713  + len_cav13/2
+  C6.M2.ACC67:          CAV13,         AT = 7.65545,  DELTAE = Volt7_6 * Coef_E 
+  WAKE06ACC7:           MARKER,        AT = 7.65545 + len_cav13/2
+  C7.M2.ACC67:          CAV13,         AT = 9.0397,   DELTAE = Volt7_7 * Coef_E 
+  WAKE07ACC7:           MARKER,        AT = 9.0397  + len_cav13/2
+  C8.M2.ACC67:          CAV13,         AT =10.32475,  DELTAE = Volt7_8 * Coef_E 
+  WAKE08ACC7:           MARKER,        AT =10.32475 + len_cav13/2
+  SETREFEACC7:          MARKER,        AT =10.32475 + len_cav13/2
+  Q10ACC7.U:            QA7.H,         AT =11.2985 - len_qa7/4, K1=k1Q10ACC7
+  V10ACC7:              VCAX,          AT =11.2985
+  H10ACC7:              HCAX,          AT =11.2985
+  Q10ACC7.D:            QA7.H,         AT =11.2985 + len_qa7/4, K1=k1Q10ACC7
+  EMARKERACC7:          MARKER,        AT =11.2985 + len_qa7/2
+  BPM11ACC7:            BPMCRYO01,     AT =11.53225
+  ENDACC7:              MARKER,        AT = sendACC7 - sendACC6
+ENDSEQUENCE
+
+ACC4567:                LINE = (ACC4,ACC5,ACC6,ACC7)
+
+!===============================================================================
+!  EXTRACTION  
+!===============================================================================
+! for determine the orbit offset for FLASH2 switch on the quads and kicker
+!          => all quads downstream are now passed offset
+! if angles by quads are determined use combined function magnets and bends 
+! for kicker
+!          => orbit offset == 0.0 but survey have now the offset
+
+lext1     = 8.9915 + len_bextr/2
+dsFL2     = len_bextr-lll_bextr
+
+FLEXTR: SEQUENCE
+  STARTFLEXTR:          MARKER,        AT = 0
+  FSHUTTER:             MARKER,        AT = 0.5795
+  BAM15ACC7:            PHASEMON02,    AT = 0.7595
+  BPM15ACC7:            BPMNOLENGTH,   AT = 0.8595
+  COLL15ACC7:           TCOLLIMATOR,   AT = 1.3345
+!  FL2KICKER1:           KICKEXT,       AT = 2.0845,          KICK=vkickFL2EXTR1
+!  FL2KICKER2:           KICKEXT,       AT = 2.7845,          KICK=vkickFL2EXTR2
+!  FL2KICKER3:           KICKEXT,       AT = 3.4845,          KICK=vkickFL2EXTR3
+  FL2KICKER1:           KICKEXT1,      AT = 2.0845,         ANGLE=vkickFL2EXTR1
+  FL2KICKER2:           KICKEXT1,      AT = 2.7845,         ANGLE=vkickFL2EXTR2
+  FL2KICKER3:           KICKEXT1,      AT = 3.4845,         ANGLE=vkickFL2EXTR3
+  EOS18ACC7:            EO03,          AT = 3.9315
+  H18ACC7:              HTCA40,        AT = 4.4355
+  TOR18ACC7:            TOR44,         AT = 4.6355
+  BPM19ACC7:            BPMNOLENGTH,   AT = 4.9855
+!  Q19ACC7:              TQA,           AT = 5.3095,             K1=k1Q19ACC7
+  Q19ACC7:              TQAEXT,  AT = 5.3095, ANGLE=angle19ACC7,K1=-k1Q19ACC7
+  OTR19ACC7:            OTRNOLENGTH,   AT = 5.6852
+  H1TCOL:               HTCA70,            AT = 6.1815
+  V1TCOL:               VTCA70,            AT = 6.3815
+!  Q1TCOL:               TQF,           AT = 6.9665,             K1=k1Q1TCOL
+  Q1TCOL:               TQFEXT,  AT = 6.9665, ANGLE=angle1TCOL, K1=-k1Q1TCOL
+  BPM1TCOL:             BPMNOLENGTH,   AT = 7.2915  
+  OTR1TCOL:             OTRNOLENGTH,   AT = 7.4915
+!  Q2TCOL:               TQF,           AT = 7.9165,             K1=k1Q2TCOL
+  Q2TCOL:               TQFEXT,  AT = 7.9165, ANGLE=angle2TCOL, K1=-k1Q2TCOL
+  MQ2TCOL:              MARKER,        AT = 7.9165 + len_tqf/2
+  V2TCOL:               VTCA40S,       AT = 8.2265
+  MSEPT:                MARKER,        AT =(8.9915 - 0.6)
+  SEPTUM:               MARKER,        AT =(8.9915 - 0.5)
+  D1FL2EXTR:            TB1,           AT = 8.9915 + dsFL2/2,   ANGLE=ang_bextr
+  T1FL2EXTR:            TRIMTB1,       AT = 8.9915 + len_bextr/2 + dsFL2/2
+  ENDFLEXTR:            MARKER,        AT = 8.9915 + len_bextr/2 + dsFL2/2
+ENDSEQUENCE
+
+
+
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+! FLASH1
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+
+FL1EXTR: SEQUENCE
+  STARTFL1EXTR:         MARKER,        AT = 0
+  H4TCOL:               HTCA40,        AT = 0.398
+  V4TCOL:               VTCA40,        AT = 0.805
+  TOR4TCOL:             TOR01,         AT = 0.9165
+!  FL1KICKER:            KICKER,        AT = 1.83
+  BPM6TCOL:             BPMNOLENGTH,   AT = 2.418
+  Q6TCOL:               TQA,           AT = 2.742,             K1=k1Q6TCOL
+  COLL8TCOL:            TCOLLIMATOR,   AT = 3.61
+  Q8TCOL.U:             TQA.H,         AT = 4.235 - len_tqa/4, K1=k1Q8TCOL
+  BPM8TCOL:             BPMNOLENGTH,   AT = 4.235
+  Q8TCOL.D:             TQA.H,         AT = 4.235 + len_tqa/4, K1=k1Q8TCOL
+  H8TCOL:               HTCA40,        AT = 4.542
+  V8TCOL:               VTCA40,        AT = 4.726
+  Q9TCOL:               TQA,           AT = 5.035,             K1=k1Q9TCOL
+  OTR9TCOL:             OTRNOLENGTH,   AT = 5.035 + len_tqa/2
+!  MOLDFLASHOPTIC:       MARKER,        AT = 5.035 + len_tqa/2
+  ENDFL1EXTR:           MARKER,        AT =sendTCOL - sendACC7 -9.4913225 
+ENDSEQUENCE
+
+FL1EXTRACTION: LINE = (FLEXTR,FL1EXTR)
+
+!===============================================================================
+! DOGLEG
+!===============================================================================
+
+ECOL: SEQUENCE
+  STARTECOL:            MARKER,        AT = 0
+  D1ECOL:               TDAECOL01,     AT = 0.32496125
+  H1ECOL:               TRIMTDA,       AT = 0.32496125 + len_col/2 
+  COLL2ECOL:            ECOL01,        AT = 1.1976
+  H2ECOL:               HTCA50,        AT = 1.7326
+  S2ECOL:               TSB,           AT = 1.9711,             K2=167.261
+  Q3ECOL.U:             TQB.H,         AT = 2.3512 - len_tqb/4, K1=k1Q3ECOL
+  BPM3ECOL:             BPMNOLENGTH,   AT = 2.3512
+  Q3ECOL.D:             TQB.H,         AT = 2.3512 + len_tqb/4, K1=k1Q3ECOL
+  COLL3ECOL:            ECOL02,        AT = 2.9757
+  Q4ECOL:               TQB,           AT = 3.6012,             K1=k1Q4ECOL  
+  H4ECOL:               HTCA50,        AT = 3.9761
+  V4ECOL:               VTCA50,        AT = 4.2461
+  OTR5ECOL:             OTRNOLENGTH,   AT = 4.5111
+  WIRE5ECOL:            WIRESCANNER,   AT = 4.5111
+  Q5ECOL.U:             TQB.H,         AT = 4.8512 - len_tqb/4, K1=k1Q5ECOL
+  BPM5ECOL:             BPMNOLENGTH,   AT = 4.8512
+  Q5ECOL.D:             TQB.H,         AT = 4.8512 + len_tqb/4, K1=k1Q5ECOL
+  S6ECOL:               TSB,           AT = 5.2311,             K2=-167.261 
+  H6ECOL:               HTCA40,        AT = 6.4073 
+  D7ECOL:               TDAECOL02,     AT = 6.87743875
+  H7ECOL:               TRIMTDA,       AT = 6.87743875 + len_col/2 
+  ENDECOL:              MARKER,        AT = sendECOL - sendTCOL-0.000222499
+ENDSEQUENCE
+
+!===============================================================================
+!  ORS
+!===============================================================================
+
+ORS1: SEQUENCE
+  STARTORS1:            MARKER,        AT = 0
+  V1ORS:                VTCA100mm,     AT = 0.32
+  Q1ORS:                TQA,           AT = 1.015,              K1=k1Q1ORS
+  OTR1ORS:              OTRNOLENGTH,   AT = 1.355
+  WIRE1ORS:             WIRESCANNER,   AT = 1.355
+  OTR2ORS:              OTRNOLENGTH,   AT = 1.355
+  Q2ORS.U:              TQA.H,         AT = 1.695 - len_tqa/4,  K1=k1Q2ORS
+  BPM2ORS:              BPMNOLENGTH,   AT = 1.695
+  Q2ORS.D:              TQA.H,         AT = 1.695 + len_tqa/4,  K1=k1Q2ORS
+  U2ORS:                UNDORS01,      AT = 2.69
+  OTR4ORS:              OTRNOLENGTH,   AT = 3.575
+  WIRE4ORS:             WIRESCANNER,   AT = 3.575
+  Q4ORS:                TQA,           AT = 3.915,              K1=k1Q4ORS
+  V5ORS:                VCV,           AT = 4.225
+  H5ORS:                HTCA40,        AT = 4.49
+  V6ORS:                VCV,           AT = 5.07
+  OTR6ORS:              OTRNOLENGTH,   AT = 5.27
+  V6.4ORS:              VCV,           AT = 5.47
+  TOR7ORS:              TORA,          AT = 6.01
+  V7ORS:                VCV,           AT = 6.315
+  ENDORS1:              MARKER,        AT = 6.465
+ENDSEQUENCE
+
+ORS2: SEQUENCE
+  STARTORS2:            MARKER,        AT = 0.0
+  Q7ORS.U:              TQA.H,         AT = 0.16 - len_tqa/4,  K1=k1Q7ORS
+  BPM7ORS:              BPMNOLENGTH,   AT = 0.16
+  Q7ORS.D:              TQA.H,         AT = 0.16 + len_tqa/4,  K1=k1Q7ORS
+  U7ORS:                UNDORS02,      AT = 1.15
+  Q9ORS.U:              TQA.H,         AT = 2.15 - len_tqa/4,  K1=k1Q9ORS
+  BPM9ORS:              BPMNOLENGTH,   AT = 2.15
+  Q9ORS.D:              TQA.H,         AT = 2.15 + len_tqa/4,  K1=k1Q9ORS
+  V9ORS:                VTCA40,        AT = 2.46
+  H10ORS:               HTCA40,        AT = 2.735
+  V10ORS:               VTCA40,        AT = 3.305
+  OTR10ORS:             OTRNOLENGTH,   AT = 3.505
+  V11ORS:               VTCA40,        AT = 3.705
+  V12ORS:               VTCA40,        AT = 4.127
+  Q12ORS.U:             TQA.H,         AT = 4.86 - len_tqa/4,  K1=k1Q12ORS 
+  BPM12ORS:             BPMNOLENGTH,   AT = 4.86
+  Q12ORS.D:             TQA.H,         AT = 4.86 + len_tqa/4,  K1=k1Q12ORS 
+  ENDORS2:              MARKER,        AT = 5.2195
+ENDSEQUENCE
+
+STARTORS: MARKER
+ENDORS: MARKER
+ORS:  LINE= (STARTORS,ORS1,ORS2,ENDORS)
+
+
+!===============================================================================
+!  SFUND
+!===============================================================================
+
+SFUND: SEQUENCE
+  STARTSFUND:           MARKER,        AT = 0
+  BL1SFUND11:           BLDIAG,        AT = 0.03221
+  WIREH1SFUND1:         WIRESCANNER,   AT = 0.06442
+  WIREV1SFUND1:         WIRESCANNER,   AT = 0.07059
+  OTR1SFUND1:           OTRNOLENGTH,   AT = 0.155
+  Q1SFUND1:             TQA,           AT = 0.4905,             K1=k1Q1SFUND1
+!  H1SFUND1:             HKICKERAC01,   AT = 0.75185
+  U1SFUND1:             UND1SFUND,     AT = 1.7975
+  Q1SFUND2:             TQG,           AT = 2.9315,             K1=k1Q1SFUND2
+  BPM1SFUND2:           BPMButton02,   AT = 3.00835
+  BL1SFUND21:           BLDIAG,        AT = 3.0506
+  WIREH1SFUND2:         WIRESCANNER,   AT = 3.083 
+  WIREV1SFUND2:         WIRESCANNER,   AT = 3.08844
+  OTR1SFUND2:           OTRNOLENGTH,   AT = 3.17285
+  P1SFUND2:             PSsFLASH,     AT = 3.32345
+!  H1SFUND2:             HKICKERAC01,   AT = 3.45185
+  U1SFUND2:             UND1SFUND,     AT = 4.4795
+  Q1SFUND3:             TQG,           AT = 5.6315,             K1=k1Q1SFUND3
+  BPM1SFUND3:           BPMButton02,   AT = 5.70835
+  BL1SFUND31:           BLDIAG,        AT = 5.78256
+  OTR1SFUND3:            OTRNOLENGTH,   AT = 5.87285
+  P1SFUND3:             PSsFLASH,     AT = 6.02345
+!  H1SFUND3:             HKICKERAC01,   AT = 6.15185
+  U1SFUND3:             UND1SFUND,     AT = 7.19750
+  Q1SFUND4:             TQG,           AT = 8.33150,            K1=k1Q1SFUND4
+  BPM1SFUND4:           BPMButton02,   AT = 8.40835
+  BL1SFUND41:           BLDIAG,        AT = 8.45006 
+  OTR1SFUND4:           OTRNOLENGTH,   AT = 8.57285
+  P1SFUND4:             PSsFLASH,     AT = 8.72345 
+!  H1SFUND4:             HKICKERAC01,   AT = 8.85185
+  U1SFUND4:             UND2SFUND,     AT =10.8975
+  ENDSFUND:             MARKER,        AT = sendSFUND - sendORS
+ENDSEQUENCE
+
+!===============================================================================
+!  SFELC
+!===============================================================================
+
+SFELC: SEQUENCE
+  STARTSFELC:           MARKER,        AT = 0
+  Q1SFELC.U:            TQA.H,         AT = 0.247 - len_tqa/4,  K1=k1Q1SFELC 
+  BPM1SFELC:            BPMNOLENGTH,   AT = 0.247
+  Q1SFELC.D:            TQA.H,         AT = 0.247 + len_tqa/4,  K1=k1Q1SFELC 
+  BAM1SFELC:            PHASEMON01,    AT = 0.492
+  Q2SFELC:              TQA,           AT = 0.737,              K1=k1Q2SFELC
+  V2SFELC:              VTCA40,        AT = 1.047
+!  KICKER2SFELC:         KICKERFB,      AT = 1.647
+  H3SFELC:              HTCA40,        AT = 2.387
+  V3SFELC:              VTCA40,        AT = 2.572
+  V4SFELC:              VTCA40,        AT = 3.492
+  H4SFELC:              HTCA40S,       AT = 3.752
+!  KICKER4SFELC:         KICKERFB,      AT = 4.417
+  V6SFELC:              VTCA40,        AT = 5.017
+  ENDSFELC:             MARKER,        AT = sendSFELC - sendSFUND
+ENDSEQUENCE
+
+!===============================================================================
+!  SMATCH
+!===============================================================================
+
+lenSMATCH1 = 7.7525
+
+SMATCH1: SEQUENCE
+  STARTSMATCH1:         MARKER,        AT = 0
+  BPM1SMATCH:           BPMSL03,       AT = 0.232
+  LOLA:                 LOLACAV,       AT = 2.59
+  Q6SMATCH.U:           TQA.H,         AT = 5.0285 - len_tqa/4, K1=k1Q6SMATCH
+  BPM6SMATCH:           BPMNOLENGTH,   AT = 5.0285
+  Q6SMATCH.D:           TQA.H,         AT = 5.0285 + len_tqa/4, K1=k1Q6SMATCH
+  KICKER6SMATCH:        KICKERSMATCH,  AT = 5.5975
+  V7SMATCH:             VTCA40S,       AT = 6.2535
+  PHMON7SMATCH:         PHASEMON01,    AT = 6.3595
+  TEOSMATCH:            EO02,          AT = 6.4945
+  Q8SMATCH:             TQA,           AT = 7.2275,             K1=k1Q8SMATCH
+  OTR8SMATCH:           OTRNOLENGTH,   AT = 7.5525
+  WIRE8SMATCH:          WIRESCANNER,   AT = 7.5525
+  ENDSMATCH1:           MARKER,        AT = lenSMATCH1
+ENDSEQUENCE
+
+SMATCH2: SEQUENCE
+  STARTSMATCH2:         MARKER,        AT = 0
+  D9SMATCH:             TDB01SMATCH,   AT = 0.33
+  D10SMATCH:            TDB01SMATCH,   AT = 0.90356
+  H10SMATCH:            HTCA40S,       AT = 2.356
+  Q10SMATCH:            TQA,           AT = 2.779,              K1=k1Q10SMATCH
+  TOR11SMATCH:          TOR05,         AT = 3.083
+  OTR11SMATCH:          OTRNOLENGTH,   AT = 3.33
+  WIRE11SMATCH:         WIRESCANNER,   AT = 3.33
+  D11SMATCH:            DTCA40,        AT = 3.61
+  D12SMATCH:            DTCA40,        AT = 3.81
+  H12SMATCH:            HTCA40S,       AT = 4.01
+  Q13SMATCH.U:          TQA.H,         AT = 4.535 - len_tqa/4,  K1=k1Q13SMATCH
+  BPM13SMATCH:          BPMNOLENGTH,   AT = 4.535
+  Q13SMATCH.D:          TQA.H,         AT = 4.535 + len_tqa/4,  K1=k1Q13SMATCH
+  OTR13SMATCH:          OTRSCREEN03,   AT = 5.046
+  V14SMATCH:            VTCA40S,       AT = 5.687
+  MINIUND:              UNDMINI,       AT = 5.8305
+  Q14SMATCH:            TQG,           AT = 6.012,              K1=k1Q14SMATCH
+  WIRE14SMATCH:         WIRESCAN01,    AT = 6.2045
+  BPM14SMATCH:          BPMNOLENGTH,   AT = 6.317
+  Q15SMATCH:            TQG,           AT = 6.397,              K1=k1Q15SMATCH
+  ENDSMATCH2:           MARKER,        AT = 14.2305 - lenSMATCH1
+ENDSEQUENCE
+
+! SDUMP
+SDUMP: SEQUENCE
+  STARTSDUMP:           MARKER,        AT = 0
+  D9SMATCHa:            TDB01SMATCH,   AT = 0.33,              ANGLE=anglSDUMP    
+  D10SMATCHa:           TDB01SMATCH,   AT = 0.90356,           ANGLE=anglSDUMP 
+  TOR2SDUMP:            TOR44,         AT = 2.2306
+  BPM2SDUMP:            BPMSL03,       AT = 2.56306
+  Q3SDUMP:              TQA,           AT = 3.01306,            K1=k1Q3SDUMP
+  OTR1SDUMP:            OTRXFELTYP,    AT = 5.36306
+  OTR2SDUMP:            OTRNOLENGTH,   AT = 5.62006
+  ENDSDUMP:             MARKER,        AT = 6.55706
+ENDSEQUENCE
+
+SMATCH:                 LINE = (SMATCH1,SMATCH2)
+
+!===============================================================================
+!  UNDULATOR
+!===============================================================================
+
+
+UND1: SEQUENCE
+  STARTUND1:            MARKER,        AT = 0
+  UND3UND1a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND1:             BPMNOLENGTH,   AT = UL01
+  UND3UND1b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND1:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND1c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND1:               HUND,          AT = 4.553
+  Q5UND1.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND1
+  MQ5UND1:              MARKER,        AT = 4.633
+  Q5UND1.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND1
+  WIRE5UND1:            WIRESCANNER,   AT = 4.8255
+  BPM5UND1:             BPMNOLENGTH,   AT = 4.887
+  Q6UND1.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND1
+  MQ6UND1:              MARKER,        AT = 5.018
+  Q6UND1.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND1
+  ENDUND1:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+UND2: SEQUENCE
+  STARTUND2:            MARKER,        AT = 0
+  UND3UND2a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND2:             BPMNOLENGTH,   AT = UL01
+  UND3UND2b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND2:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND2c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND2:               HUND,          AT = 4.553
+  Q5UND2.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND2
+  MQ5UND2:              MARKER,        AT = 4.633
+  Q5UND2.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND2
+  WIRE5UND2:            WIRESCANNER,   AT = 4.8255
+  BPM5UND2:             BPMNOLENGTH,   AT = 4.887
+  Q6UND2.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND2
+  MQ6UND2:              MARKER,        AT = 5.018
+  Q6UND2.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND2
+  ENDUND2:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+UND3: SEQUENCE
+  STARTUND3:            MARKER,        AT = 0
+  UND3UND3a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND3:             BPMNOLENGTH,   AT = UL01
+  UND3UND3b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND3:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND3c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND3:               HUND,          AT = 4.553
+  Q5UND3.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND3
+  MQ5UND3:              MARKER,        AT = 4.633
+  Q5UND3.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND3
+  WIRE5UND3:            WIRESCANNER,   AT = 4.8255
+  BPM5UND3:             BPMNOLENGTH,   AT = 4.887
+  Q6UND3.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND3
+  MQ6UND3:              MARKER,        AT = 5.018
+  Q6UND3.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND3
+  ENDUND3:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+UND4: SEQUENCE
+  STARTUND4:            MARKER,        AT = 0
+  UND3UND4a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND4:             BPMNOLENGTH,   AT = UL01
+  UND3UND4b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND4:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND4c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND4:               HUND,          AT = 4.553
+  Q5UND4.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND4
+  MQ5UND4:              MARKER,        AT = 4.633
+  Q5UND4.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND4
+  WIRE5UND4:            WIRESCANNER,   AT = 4.8255
+  BPM5UND4:             BPMNOLENGTH,   AT = 4.887
+  Q6UND4.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND4
+  MQ6UND4:              MARKER,        AT = 5.018
+  Q6UND4.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND4
+  ENDUND4:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+UND5: SEQUENCE
+  STARTUND5:            MARKER,        AT = 0
+  UND3UND5a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND5:             BPMNOLENGTH,   AT = UL01
+  UND3UND5b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND5:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND5c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND5:               HUND,          AT = 4.553
+  Q5UND5.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND5
+  MQ5UND5:              MARKER,        AT = 4.633
+  Q5UND5.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND5
+  WIRE5UND5:            WIRESCANNER,   AT = 4.8255
+  BPM5UND5:             BPMNOLENGTH,   AT = 4.887
+  Q6UND5.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND5
+  MQ6UND5:              MARKER,        AT = 5.018
+  Q6UND5.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND5
+  ENDUND5:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+UND6: SEQUENCE
+  STARTUND6:            MARKER,        AT = 0
+  UND3UND6a:            UND_PART1,     AT = UL01 / 2
+  BPM2UND6:             BPMNOLENGTH,   AT = UL01
+  UND3UND6b:            UND_PART2,     AT = UL01 + UL02 / 2
+  BPM4UND6:             BPMNOLENGTH,   AT = UL01 + UL02
+  UND3UND6c:            UND_PART3,     AT = UL01 + UL02 + UL03 / 2
+!  H3UND6:               HUND,          AT = 4.553
+  Q5UND6.U:             TQG.H,         AT = 4.633-len_tqg/4,    K1= k1Q5UND6
+  MQ5UND6:              MARKER,        AT = 4.633
+  Q5UND6.D:             TQG.H,         AT = 4.633+len_tqg/4,    K1= k1Q5UND6
+  WIRE5UND6:            WIRESCANNER,   AT = 4.8255
+  BPM5UND6:             BPMNOLENGTH,   AT = 4.887
+  Q6UND6.U:             TQG.H,         AT = 5.018-len_tqg4,     K1= k1Q6UND6
+  MQ6UND6:              MARKER,        AT = 5.018
+  Q6UND6.D:             TQG.H,         AT = 5.018+len_tqg4,     K1= k1Q6UND6
+  ENDUND6:              MARKER,        AT = 5.098
+ENDSEQUENCE
+
+STARTUND:               MARKER
+ENDUND:                 MARKER
+UNDULATOR:              LINE = (STARTUND,UND1,UND2,UND3,UND4,UND5,UND6,ENDUND)
+
+!===============================================================================
+!  EXP section
+!===============================================================================
+
+EXPSEC: SEQUENCE
+  STARTEXP:             MARKER,        AT = 0
+  BPM11EXP:             BPMXFELTEST,   AT = 0.293
+  BPM12EXP:             BPMXFELTEST,   AT = 0.468
+  BPM13EXP:             BPMXFELTEST,   AT = 0.646
+  BPM21EXP:             BPMXFELTEST,   AT = 0.976
+  BPM22EXP:             BPMXFELTEST,   AT = 1.269
+  H1EXP:                HTCA40,        AT = 1.464
+  V1EXP:                VTCA40,        AT = 1.664
+  H3EXP:                HTCA40,        AT = 3.25425
+  V3EXP:                VTCA70,        AT = 3.52925
+  BPM3EXP:              BPMNOLENGTH,   AT = 3.52925 + 0.05 ! Neg Drift
+  U6EXP:                FIR_UND,       AT = 6.296
+  Q9EXP.U:              TQA.H,         AT = 8.921 - len_tqa/4,  K1=k1Q9EXP
+  BPM9EXP:              BPMNOLENGTH,   AT = 8.921
+  Q9EXP.D:              TQA.H,         AT = 8.921 + len_tqa/4,  K1=k1Q9EXP
+  OTR1EXP:              OTRNOLENGTH,   AT = 9.261
+  WIRE1EXP:             WIRESCANNER,   AT = 9.261
+  Q10EXP:               TQB,           AT = 9.691,              K1=k1Q10EXP
+  H10EXP:               HTCA70,        AT =10.066
+  V10EXP:               VTCA70,        AT =10.266
+  Q11EXP:               TQB,           AT =10.641,              K1=k1Q11EXP
+  TOR12EXP:             TOR44,         AT =10.974
+  ENDEXP:               MARKER,        AT = sendEXP - sendUND - len_dump/2
+ENDSEQUENCE
+
+!===============================================================================
+!  DUMP
+!===============================================================================
+
+DUMP: SEQUENCE
+  STARTDUMP:            MARKER,        AT = 0
+  D6DUMP:               TDC01DUMP,     AT = len_dump/2
+  T6DUMP:               TRIMTDC,       AT = len_dump
+  H7DUMP:               HCV,           AT = 1.57957
+  OTR9DUMP:             OTRNOLENGTH,   AT = 2.55857
+  TOR9DUMP:             TORC,          AT = 2.99857
+  BPM9DUMP:             BPMSL04,       AT = 3.24857
+  Q10DUMP:              QC,     AT = 4.35356, TILT=2*dump_tilt, K1=k1Q10DUMP
+  BPM10DUMP:            BPMNOLENGTH,   AT = 4.99137
+  Q11DUMP:              QC,     AT = 5.75356, TILT=2*dump_tilt, K1=k1Q11DUMP
+  RD13DUMP:             HSKDUMP,       AT = 6.73357
+  BPM13DUMP:            BPMBUTTON03,   AT = 7.45356
+  DIAGDUMP:             DIAGBLOCK,     AT = 9.92812
+  BPMDUMPair:           BPMNOLENGTH,   AT = 9.96812
+  DUMPBLCK:             MARKER,        AT = 9.96812
+  ENDDUMP:              MARKER,        AT = 9.96812!sendDUMP - sendEXP + len_dump
+ENDSEQUENCE
+
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+! FLASH2
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+!===============================================================================
+
+! Quad-Positionen stimmen 
+! Quad-Pos stimmen in EXTR auch mit MS ueberein 
+
+! BEND-Pos stimmen in EXTR mit MS ueberein 
+
+
+!===============================================================================
+! EXTRACTION FL2
+!===============================================================================
+
+dposSep = -(len_bextr + 0.099 )
+
+FL2EXTR: SEQUENCE
+  STARTFL2EXTR:         MARKER,        AT = 0
+  H2FL2EXTR:            HTCA50,        AT = 2.435 + dposSep
+  V3FL2EXTR:            VTCA50,        AT = 3.16  + dposSep
+  BLM3FL2EXTR:          BLM,           AT = 3.3   + dposSep
+  BPM4FL2EXTR:          BPMNOLENGTH,   AT = 3.413 + dposSep
+  Q4FL2EXTR:            TQB,           AT = 3.638 + dposSep,    K1=k1Q4FL2EXTR
+  MQ4FL2EXTR:           MARKER,        AT = 3.638 + dposSep + len_tqb/2
+  OTR4FL2EXTR:          OTRNOLENGTH,   AT = 4.19  + dposSep          
+  TOR4FL2EXTR:          TORA,          AT = 4.4892+ dposSep
+  S5FL2EXTR:            TSB,           AT = 4.76  + dposSep,    K2=2.85891E+01
+  H5FL2EXTR:            HTCA50,        AT = 5.02  + dposSep
+  BPM5FL2EXTR:          BPMNOLENGTH,   AT = 5.185 + dposSep
+  Q6FL2EXTR:            TQB,           AT = 5.515 + dposSep,    K1=k1Q6FL2EXTR
+  BLM6FL2EXTR:          BLM,           AT = 5.75  + dposSep
+  BLM7FL2EXTR:          BLM,           AT = 6.84  + dposSep
+  S7FL2EXTR:            TSB,           AT = 7.033 + dposSep,    K2=-3.88749E+01
+  BPM8FL2EXTR:          BPMNOLENGTH,   AT = 7.346 + dposSep
+  Q8FL2EXTR:            TQB,           AT = 7.571 + dposSep,    K1=k1Q8FL2EXTR
+  D8FL2EXTR:            TDB01EXTR2,    AT = 8.205 + dposSep
+  T8FL2EXTR:            TRIMTDB,       AT = 8.205 + dposSep + len_TDB01/2+1e-6
+  V9FL2EXTR:            VTCA50,        AT = 8.5   + dposSep
+  Q9FL2EXTR:            TQB,           AT = 8.948 + dposSep,    K1=k1Q9FL2EXTR
+  S9FL2EXTR:            TSB,           AT = 9.439 + dposSep,    K2=2.07259E+01
+  H10FL2EXTR:           HTCA50,        AT = 9.7   + dposSep
+  Q10FL2EXTR:           TQB,           AT =10.284 + dposSep,    K1=k1Q10FL2EXTR
+  BPM11FL2EXTR:         BPMNOLENGTH,   AT =10.665 + dposSep
+  H11FL2EXTR:           HTCA50,        AT =11.0   + dposSep
+  V11FL2EXTR:           VTCA50,        AT =11.2   + dposSep
+  BLM12FL2EXTR:         BLM,           AT =11.96  + dposSep 
+!  MEXTR:                MARKER,        AT =12.34  + dposSep - len_TDA02/2
+  D12FL2EXTR:           TDA02EXTR2,    AT =12.34  + dposSep
+  T12FL2EXTR:           TRIMTDA,       AT =12.34  + dposSep + len_TDA02/2+1e-6
+  D13FL2EXTR:           TDA03EXTR2,    AT =12.96  + dposSep
+  T13FL2EXTR:           TRIMTDA,       AT =12.96 + dposSep + len_TDA03/2+1e-6
+  MD13:                 MARKER,        AT =12.96  + dposSep + len_TDA03/2
+  BPM13FL2EXTR:         BPMNOLENGTH,   AT =13.363 + dposSep
+  V14FL2EXTR:           VTCA40,        AT =13.539 + dposSep
+  Q14FL2EXTR:           TQA,           AT =13.798 + dposSep,    K1=k1Q14FL2EXTR
+  BLM15FL2EXTR:         BLM,           AT =14.733 + dposSep
+  BPM15FL2EXTR:         BPMNOLENGTH,   AT =14.785 + dposSep
+  Q15FL2EXTR:           TQA,           AT =15.01  + dposSep,    K1=k1Q15FL2EXTR
+  D16FL2EXTR:           TDB04EXTR2,    AT =15.519 + dposSep
+  T16FL2EXTR:           TRIMTDB,       AT =15.519 + dposSep + len_TDB04/2+1e-6
+  H16FL2EXTR:           HTCA50S,       AT =15.519 + dposSep + 0.41
+  D17FL2EXTR:           TDB05EXTR2,    AT =16.819 + dposSep
+  T17FL2EXTR:           TRIMTDB,       AT =16.819 + dposSep + len_TDB05/2+1e-6
+  BLM17FL2EXTR:         BLM,           AT =17.1   + dposSep
+  Q17FL2EXTR:           TQA,           AT =17.315 + dposSep,    K1=k1Q17FL2EXTR
+  BPM18FL2EXTR:         BPMNOLENGTH,   AT =17.641 + dposSep
+  TOR18FL2EXTR:         TORA,          AT =18.15  + dposSep
+  BLM18FL2EXTR:         BLM,           AT =18.3   + dposSep
+  V19FL2EXTR:           VTCA50,        AT =18.5   + dposSep
+  MFLFEXT:              MARKER,        AT =19.0804+ dposSep
+  H21FL2EXTR:           HTCA50,        AT =20.7   + dposSep
+  V21FL2EXTR:           VTCA50,        AT =21.0   + dposSep
+  BAM21FL2EXTR:         PMNOLENGTH,    AT =21.184 + dposSep
+  BPM21FL2EXTR:         BPMNOLENGTH,   AT =21.387 + dposSep
+  Q22FL2EXTR:           TQA,           AT =21.713 + dposSep,    K1=k1Q22FL2EXTR
+  H22FL2EXTR:           HTCA50,        AT =22.0   + dposSep
+  BPM22FL2EXTR:         BPMNOLENGTH,   AT =22.4   + dposSep
+  Q23FL2EXTR:           TQA,           AT =22.7   + dposSep,    K1=k1Q23FL2EXTR
+  Q24FL2EXTR:           TQA,           AT =23.5   + dposSep,    K1=k1Q24FL2EXTR
+  MQ24FL2EXTR:          MARKER,        AT =23.5   + dposSep + len_tqa/2
+  ENDFL2EXTR:           MARKER,        AT =29.1592 - 4.468
+ENDSEQUENCE
+
+FL2EXTRACTION:          LINE = (FLEXTR,FL2EXTR)
+
+!===============================================================================
+! FL2SEED
+!===============================================================================
+
+
+!half fodo period
+lfodo = 3.3
+
+FL2SEED1: SEQUENCE
+  STARTFL2SEED1:        MARKER,        AT = 0.0
+  BLM3FL2SEED1:         BLM,           AT = 2.7265
+  H3FL2SEED1:           HTCA40S,       AT = 2.831
+  BPM3FL2SEED1:         BPMNOLENGTH,   AT = 3.064+0.0185
+  Q3FL2SEED1.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED1
+  MQ3FL2SEED1:          MARKER,        AT = 3.177
+  Q3FL2SEED1.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED1
+  ENDFL2SEED1:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED2: SEQUENCE
+  STARTFL2SEED2:        MARKER,        AT = 0.0
+  BLM3FL2SEED2:         BLM,           AT = 2.7035
+  BPM3FL2SEED2:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED2.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED2
+  MQ3FL2SEED2:          MARKER,        AT = 3.177
+  Q3FL2SEED2.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED2
+  ENDFL2SEED2:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED3: SEQUENCE
+  STARTFL2SEED3:        MARKER,        AT = 0.0
+  BLM3FL2SEED3:         BLM,           AT = 2.7035
+  V3FL2SEED3:           VTCA40S,       AT = 2.766
+  BPM3FL2SEED3:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED3.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED3
+  MQ3FL2SEED3:          MARKER,        AT = 3.177
+  Q3FL2SEED3.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED3
+ ENDFL2SEED3:           MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED4: SEQUENCE
+  STARTFL2SEED4:        MARKER,        AT = 0.0  
+  OTR1FL2SEED4:         OTRNOLENGTH,   AT = 0.1175
+  BCM1FL2SEED4:         BCM,           AT = 0.583
+  BLM3FL2SEED4:         BLM,           AT = 2.7035
+  V3FL2SEED4:           VTCA40S,       AT = 2.766
+  H3FL2SEED4:           HTCA40S,       AT = 2.831
+  BPM3FL2SEED4:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED4.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED4
+  MQ3FL2SEED4:          MARKER,        AT = 3.177
+  Q3FL2SEED4.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED4
+  ENDFL2SEED4:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED5: SEQUENCE
+  STARTFL2SEED5:        MARKER,        AT = 0.0
+  OTR1FL2SEED5:         OTRNOLENGTH,   AT = 0.1175
+  TOR1FL2SEED4:         TORA,          AT = 0.8455 
+  BLM3FL2SEED5:         BLM,           AT = 2.7035
+  V3FL2SEED5:           VTCA40S,       AT = 2.766
+  BPM3FL2SEED5:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED5.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED5
+  MQ3FL2SEED5:          MARKER,        AT = 3.177
+  Q3FL2SEED5.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED5
+  ENDFL2SEED5:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED6: SEQUENCE
+  STARTFL2SEED6:        MARKER,        AT = 0.0  
+  OTR1FL2SEED6:         OTRNOLENGTH,   AT = 0.1175
+  BLM3FL2SEED6:         BLM,           AT = 2.7035
+  H3FL2SEED6:           HTCA40S,       AT = 2.831
+  BPM3FL2SEED6:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED6.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED6
+  MQ3FL2SEED6:          MARKER,        AT = 3.177
+  Q3FL2SEED6.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED6
+ ENDFL2SEED6:           MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED7: SEQUENCE
+  STARTFL2SEED7:        MARKER,        AT = 0.0  
+  OTR1FL2SEED7:         OTRNOLENGTH,   AT = 0.1175
+  BLM3FL2SEED7:         BLM,           AT = 2.7035
+  V3FL2SEED7:           VTCA40S,       AT = 2.766
+  H3FL2SEED7:           HTCA40S,       AT = 2.831
+  BPM3FL2SEED7:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SEED7.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SEED7
+  MQ3FL2SEED7:          MARKER,        AT = 3.177
+  Q3FL2SEED7.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SEED7
+  ENDFL2SEED7:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SEED:                LINE = (FL2SEED1,FL2SEED2,FL2SEED3,FL2SEED4, &
+                                FL2SEED5,FL2SEED6,FL2SEED7)
+
+!===============================================================================
+! FL2SASE
+!===============================================================================
+FL2SASE3: SEQUENCE
+  STARTFL2SASE3:        MARKER,        AT = 0.0
+  H2FL2SASE3:           U32AC,         AT = 0.0
+  STARTUNDSASE3:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE3:             UNDSEGSASE3,   AT = 1.309      
+  BLM3FL2SASE3:         BLM,           AT = 2.7035
+  P3FL2SASE3:           PSU32,         AT = 2.81
+  BPM3FL2SASE3:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE3.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE3
+  MQ3FL2SASE3:          MARKER,        AT = 3.177
+  Q3FL2SASE3.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE3
+  ENDFL2SASE3:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE4: SEQUENCE
+  STARTFL2SASE4:        MARKER,        AT = 0.0
+  H2FL2SASE4:           U32AC,         AT = 0.0
+  STARTUNDSASE4:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE4:             UNDSEGSASE4,   AT = 1.309
+  BLM3FL2SASE4:         BLM,           AT = 2.6988
+  P3FL2SASE4:           PSU32,         AT = 2.7845
+  OTR3FL2SASE4:         OTRNOLENGTH,   AT = 2.98525
+  BPM3FL2SASE4:         BPMNOLENGTH,   AT = 3.0865
+  Q3FL2SASE4.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE4
+  MQ3FL2SASE4:          MARKER,        AT = 3.177
+  Q3FL2SASE4.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE4
+  ENDFL2SASE4:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE5: SEQUENCE
+  STARTFL2SASE5:        MARKER,        AT = 0.0
+  H2FL2SASE5:           U32AC,         AT = 0.0
+  STARTUNDSASE5:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE5:             UNDSEGSASE5,   AT = 1.309
+  BLM3FL2SASE5:         BLM,           AT = 2.6988
+  P3FL2SASE5:           PSU32,         AT = 2.7845
+  OTR3FL2SASE5:         OTRNOLENGTH,   AT = 2.98525
+  BPM3FL2SASE5:         BPMNOLENGTH,   AT = 3.0865
+  Q3FL2SASE5.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE5
+  MQ3FL2SASE5:          MARKER,        AT = 3.177
+  Q3FL2SASE5.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE5
+  ENDFL2SASE5:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE6: SEQUENCE
+  STARTFL2SASE6:        MARKER,        AT = 0.0
+  H2FL2SASE6:           U32AC,         AT = 0.0
+  STARTUNDSASE6:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE6:             UNDSEGSASE6,   AT = 1.309
+  BLM3FL2SASE6:         BLM,           AT = 2.6988
+  P3FL2SASE6:           PSU32,         AT = 2.7845 
+  OTR3FL2SASE6:         OTRNOLENGTH,   AT = 2.98525
+  BPM3FL2SASE6:         BPMNOLENGTH,   AT = 3.0865
+  Q3FL2SASE6.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE6
+  MQ3FL2SASE6:          MARKER,        AT = 3.177
+  Q3FL2SASE6.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE6
+  ENDFL2SASE6:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE7: SEQUENCE
+  STARTFL2SASE7:        MARKER,        AT = 0.0
+  H2FL2SASE7:           U32AC,         AT = 0.0
+  STARTUNDSASE7:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE7:             UNDSEGSASE7,   AT = 1.309
+  BLM3FL2SASE7:         BLM,           AT = 2.7035
+  P3FL2SASE7:           PSU32,         AT = 2.81
+  BPM3FL2SASE7:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE7.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE7
+  MQ3FL2SASE7:          MARKER,        AT = 3.177
+  Q3FL2SASE7.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE7
+  ENDFL2SASE7:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE8: SEQUENCE
+  STARTFL2SASE8:        MARKER,        AT = 0.0
+  H2FL2SASE8:           U32AC,         AT = 0.0
+  STARTUNDSASE8:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE8:             UNDSEGSASE8,   AT = 1.309
+  BLM3FL2SASE8:         BLM,           AT = 2.7035
+  P3FL2SASE8:           PSU32,         AT = 2.81 
+  BPM3FL2SASE8:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE8.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE8
+  MQ3FL2SASE8:          MARKER,        AT = 3.177
+  Q3FL2SASE8.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE8
+  ENDFL2SASE8:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE9: SEQUENCE
+  STARTFL2SASE9:        MARKER,        AT = 0.0
+  H2FL2SASE9:           U32AC,         AT = 0.0
+  STARTUNDSASE9:        MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE9:             UNDSEGSASE9,   AT = 1.309
+  BLM3FL2SASE9:         BLM,           AT = 2.7035
+  P3FL2SASE9:           PSU32,         AT = 2.81 
+  BPM3FL2SASE9:         BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE9.U:         TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE9
+  MQ3FL2SASE9:          MARKER,        AT = 3.177
+  Q3FL2SASE9.D:         TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE9
+  ENDFL2SASE9:          MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE10: SEQUENCE
+  STARTFL2SASE10:       MARKER,        AT = 0.0
+  H2FL2SASE10:          U32AC,         AT = 0.0
+  STARTUNDSASE10:       MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE10:            UNDSEGSASE10,  AT = 1.309
+  BLM3FL2SASE10:        BLM,           AT = 2.7035
+  P3FL2SASE10:          PSU32,         AT = 2.81
+  BPM3FL2SASE10:        BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE10.U:        TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE10
+  MQ3FL2SASE10:         MARKER,        AT = 3.177
+  Q3FL2SASE10.D:        TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE10
+  ENDFL2SASE10:         MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE11: SEQUENCE
+  STARTFL2SASE11:       MARKER,        AT = 0.0
+  H2FL2SASE11:          U32AC,         AT = 0.0
+  STARTUNDSASE11:       MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE11:            UNDSEGSASE11,  AT = 1.309
+  BLM3FL2SASE11:        BLM,           AT = 2.7035
+  P3FL2SASE11:          PSU32,         AT = 2.81 
+  BPM3FL2SASE11:        BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE11.U:        TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE11
+  MQ3FL2SASE11:         MARKER,        AT = 3.177
+  Q3FL2SASE11.D:        TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE11
+  ENDFL2SASE11:         MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE12: SEQUENCE
+  STARTFL2SASE12:       MARKER,        AT = 0.0
+  H2FL2SASE12:          U32AC,         AT = 0.0
+  STARTUNDSASE12:       MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE12:            UNDSEGSASE12,  AT = 1.309
+  BLM3FL2SASE12:        BLM,           AT = 2.7035
+  P3FL2SASE12:          PSU32,         AT = 2.81
+  BPM3FL2SASE12:        BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE12.U:        TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE12
+  MQ3FL2SASE12:         MARKER,        AT = 3.177
+  Q3FL2SASE12.D:        TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE12
+  ENDFL2SASE12:         MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE13: SEQUENCE
+  STARTFL2SASE13:       MARKER,        AT = 0.0
+  H2FL2SASE13:          U32AC,         AT = 0.0
+  STARTUNDSASE13:       MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE13:            UNDSEGSASE13,  AT = 1.309
+  BLM3FL2SASE13:        BLM,           AT = 2.7035
+  P3FL2SASE13:          PSU32,         AT = 2.81
+  BPM3FL2SASE13:        BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE13.U:        TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE13
+  MQ3FL2SASE13:         MARKER,        AT = 3.177
+  Q3FL2SASE13.D:        TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE13
+  ENDFL2SASE13:         MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE14: SEQUENCE
+  STARTFL2SASE14:       MARKER,        AT = 0.0
+  H2FL2SASE14:          U32AC,         AT = 0.0
+  STARTUNDSASE14:       MARKER,        AT = 1.309-ULFL2/2 
+  UNDSASE14:            UNDSEGSASE14,  AT = 1.309
+  BLM3FL2SASE14:        BLM,           AT = 2.7035
+  BPM3FL2SASE14:        BPMNOLENGTH,   AT = 3.041+0.0185
+  Q3FL2SASE14.U:        TQG70.H,       AT = 3.177-len_tqg70/4, K1=k1Q3FL2SASE14
+  MQ3FL2SASE14:         MARKER,        AT = 3.177
+  Q3FL2SASE14.D:        TQG70.H,       AT = 3.177+len_tqg70/4, K1=k1Q3FL2SASE14
+  ENDFL2SASE14:         MARKER,        AT = lfodo
+ENDSEQUENCE
+
+FL2SASE:                LINE = (FL2SASE3 ,FL2SASE4 ,FL2SASE5 ,FL2SASE6,  &
+                                FL2SASE7 ,FL2SASE8 ,FL2SASE9 ,FL2SASE10, &
+                                FL2SASE11,FL2SASE12,FL2SASE13,FL2SASE14)
+
+!===============================================================================
+! FL2BURN
+!===============================================================================
+
+FL2BURN: SEQUENCE
+  STARTFL2BURN:         MARKER,        AT = 0
+  BLM2FL2BURN:          BLM,           AT = 2.148
+  Q2FL2BURN:            TQG70,         AT = 2.238,              K1=k1Q2FL2BURN
+  BPM3FL2BURN:          BPMNOLENGTH,   AT = 2.541+0.0185
+  Q3FL2BURN:            TQG70,         AT = 2.677,              K1=k1Q3FL2BURN
+  OTR3FL2BURN:          OTRNOLENGTH,   AT = 3.1025
+  D4FL2BURN:            TDA01BURN,     AT = 3.645
+  T4FL2BURN:            TRIMTDA,       AT = 3.645 + len_BURN/2
+  BLM4FL2BURN:          BLM,           AT = 4.002
+  V4FL2BURN:            VTCA70,        AT = 4.152
+  H4FL2BURN:            HTCA40,        AT = 4.352
+ !!! BPM7FL2BURN:          BPMNOLENGTH,   AT = 7.68 ! XFEL-reentrantCav
+ !!! BPM8FL2BURN:          BPMNOLENGTH,   AT = 7.85 ! Claire Simone
+  BLM8FL2BURN:          BLM,           AT = 8.027
+  BAM8FL2BURN:          PMNOLENGTH,    AT = 8.077
+  H8FL2BURN:            HTCA50,        AT = 8.25
+  BPM9FL2BURN:          BPMNOLENGTH,   AT = 8.38
+  Q9FL2BURN:            TQB,           AT = 8.605,              K1=k1Q9FL2BURN
+  TOR9FL2BURN:          TOR44,         AT = 8.94
+  OTR9FL2BURN:          CTRNOLENGTH,   AT = 9.165
+  Q10FL2BURN:           TQF,           AT = 9.51,               K1=k1Q10FL2BURN
+  ENDFL2BURN:           MARKER,        AT =10.065
+ENDSEQUENCE
+
+!===============================================================================
+! FL2DUMP
+!===============================================================================
+
+FL2DUMP: SEQUENCE
+  STARTFL2DUMP:         MARKER,        AT = 0
+  D1FL2DUMP:            D1FL2DUMP,     AT = 0.72
+  T1FL2DUMP:            TRIMTDC,       AT = 0.72 + len_DUM/2
+  BLM2FL2DUMP:          BLM,           AT = 1.55
+  H2FL2DUMP:            HPCN,          AT = 2.01
+  Q3FL2DUMP:            QL,            AT = 2.77,              K1=k1Q3FL2DUMP
+  OTR3FL2DUMP:          OTRNOLENGTH,   AT = 3.39
+  Q4FL2DUMP:            QL,            AT = 4.02,              K1=k1Q4FL2DUMP
+  BPM5FL2DUMP:          BPMNOLENGTH,   AT = 4.61
+  Q5FL2DUMP:            QL,            AT = 5.27,              K1=k1Q5FL2DUMP
+  BPM6FL2DUMP:          BPMNOLENGTH,   AT = 5.73
+  V6FL2DUMP:            VPCN,          AT = 6.08
+  RD7FL2DUMP:           HSK,           AT = 6.725
+  TOR7FL2DUMP:          TORC,          AT = 7.099
+  BLM7FL2DUMP:          BLM,           AT = 7.27
+  OTR8FL2DUMP:          OTRNOLENGTH,   AT = 7.632
+  BLM10FL2DUMP:         BLM,           AT =10.056 
+!  BLM11FL2DUMP:         BLM,           AT =10.056
+!  BLM12FL2DUMP:         BLM,           AT =10.244 
+  BPM10FL2DUMP:         BPMNOLENGTH,   AT =10.244
+  ENDFL2DUMP:           MARKER,        AT =10.262
+ENDSEQUENCE
+
+!-------------------------------------------------------------------------------
+!-------------------------------------------------------------------------------
+!-------------------------------------------------------------------------------
+!-------------------------------------------------------------------------------
+!-------------------------------------------------------------------------------
+
+FLASH1:       LINE = (GUN,ACC1, ACC39,BC2,ACC23,BC3,ACC4567,FL1EXTRACTION,  &
+                      ECOL,ORS,SFUND,SFELC,SMATCH,UNDULATOR )
+
+FLASH1D:      LINE = (GUN,ACC1,ACC39,BC2,ACC23,BC3,ACC4567,FL1EXTRACTION,  &
+                      ECOL,ORS,SFUND,SFELC,SMATCH,UNDULATOR,EXPSEC,DUMP)
+
+FLASHSDUMP:   LINE = (GUN,ACC1,ACC39,BC2,ACC23,BC3,ACC4567,FL1EXTRACTION,  &
+                      ECOL,ORS,SFUND,SFELC,SMATCH1,SDUMP)
+FLASH2:       LINE = (GUN,ACC1,ACC39,BC2,ACC23,BC3,ACC4567,FL2EXTRACTION,  &
+                      FL2SEED,FL2SASE,FL2BURN)
+
+FLASH2D:      LINE = (GUN,ACC1,ACC39,BC2,ACC23,BC3,ACC4567,FL2EXTRACTION,  &
+                      FL2SEED,FL2SASE,FL2BURN,FL2DUMP)
+
+INJDBC2:      LINE = (GUN,ACC1,ACC39,BC2)
