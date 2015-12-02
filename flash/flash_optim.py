@@ -17,19 +17,21 @@ from ocelot.gui.accelerator import *
 #plot_log("exp_files/h3-v3dbc3_1.txt")
 #dict_data = read_log("exp_files/h3-v3dbc3_1.txt")
 
-plot_log("exp_files/optim.txt")
-dict_data = read_log("exp_files/optim.txt")
+plot_log("exp_files/new_optim.txt")
+dict_data = read_log("exp_files/new_optim.txt")
 
-print dict_data.keys()
-print "E = ", lambda2Ebeam(Lambda = 10.4e-9, lu=0.0272634730539, K=1.2392)
 
-def cut_lattice(old_seq, elem_id):
-    seq = []
-    for elem in old_seq:
-        seq.append(elem)
-        if elem.id == elem_id:
-            return seq
-    return seq
+new_dict = rm_nonwork_devices(dict_data, debug=True, rm_devices=[""])
+save_new_dict(new_dict, "new_optim.txt")
+print ("E = ", lambda2Ebeam(Lambda=13.4e-9, lu=0.0272634730539, K=1.2392))
+
+#def cut_lattice(old_seq, elem_id):
+#    seq = []
+#    for elem in old_seq:
+#        seq.append(elem)
+#        if elem.id == elem_id:
+#            return seq
+#    return seq
 
 """
 beam = Beam()
@@ -95,7 +97,8 @@ for elem in lat.sequence:
     #    elem.transfer_map = create_transfer_map(elem)
     #    print elem.v
     if "ACC45" in elem.id and elem.type == "cavity":
-        elem.v = elem.v*0.87
+        #elem.v = elem.v*0.87
+        elem.v = elem.v*0.63
         elem.transfer_map = create_transfer_map(elem)
         #print elem.v
     if "ACC67" in elem.id and elem.type == "cavity":
@@ -108,44 +111,38 @@ for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     L+=elem.l
     #if elem.id == "C8_M1_ACC1":
-    #    print "**********************", E
+    #print "**********************", E
     #if elem.type in ["quadrupole"]:
     #    print( elem.id , tpk2i(elem.dev_type, E, elem.k1), " A", " E = ", E, "GeV", " s = ", L)
     #if elem.type in ["hcor", "vcor"]:
     #    print( elem.id , tpk2i(elem.dev_type, E, elem.angle), " A", " E = ", E, "GeV", " s = ", L)
 
-H = 0
-V = 0
-n= 0
-n_end = len(dict_data["H3DBC3"][::10])
+
+N = range(0, len(new_dict["time"]), 10)
+devices = list(new_dict.keys())
+devices.remove("time")
+devices.remove("sase")
+#devices.remove('H3DBC3')
+#devices.remove('V3DBC3')
+#devices.remove('V7SMATCH')
+#devices.remove('H10SMATCH')
+#devices.remove('V14SMATCH')
+#devices.remove('H12SMATCH')
+#print(devices)
+n_end = N[-1]
 ax = plot_API(lat)
-for h, v in zip(dict_data["H3DBC3"][::10], dict_data["V3DBC3"][::10]):
-    n +=1
-
-
+for i in N:
     E = beam.E
     p = Particle(E=beam.E)
     for elem in lat.sequence:
-        if elem.id == "H3DBC3":
-            if n == 1:
-                H = tpi2k(elem.dev_type, E, h)*1e-3
-            elem.angle = tpi2k(elem.dev_type, E, h)*1e-3 - H
-            #H = tpi2k(elem.dev_type, E, h)*1e-3
-            #print "dsf", h, H
+        if elem.id in devices:
+
+            elem.angle = tpi2k(elem.dev_type, E, new_dict[elem.id][i])*1e-3 - tpi2k(elem.dev_type, E, new_dict[elem.id][0])*1e-3
+            #print elem.angle
             elem.transfer_map = create_transfer_map(elem)
-        if elem.id == "V3DBC3":
-            if n == 1:
-                V = tpi2k(elem.dev_type, E, v)*1e-3
-            elem.angle = tpi2k(elem.dev_type, E, v)*1e-3 - V
-            #V = tpi2k(elem.dev_type, E, v)*1e-3
-            elem.transfer_map = create_transfer_map(elem)
-        E += elem.transfer_map.delta_e
-        L+=elem.l
-    #tw = twiss(lat, tw0)
-    #print p.x, p.y
     plist = lattice_track(lat, copy(p), order=1)
 
-    if n == n_end:
+    if i == N[-1]:
         #plot_trajectory(lat, plist)
         ax.plot([p.s for p in plist], [p.x for p in plist], "ro-", lw=2)
         ax.plot([p.s for p in plist], [p.y for p in plist], "bo-", lw=2)
@@ -153,7 +150,7 @@ for h, v in zip(dict_data["H3DBC3"][::10], dict_data["V3DBC3"][::10]):
     else:
         ax.plot([p.s for p in plist], [p.x for p in plist], "r", alpha = 0.3)
         ax.plot([p.s for p in plist], [p.y for p in plist], "b", alpha = 0.3)
-    #print H, V
+
 ax.set_xlabel("X/Y, m")
 plt.xlim([0, lat.totalLen])
 
@@ -225,7 +222,7 @@ plt.show()
 
 
 
-exit()
+exit(0)
 p_array, charge_array = astraBeam2particleArray(filename='../demos/ebeam/flash/elegant_files/flash_out_200000.ast')
 
 #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
