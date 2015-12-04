@@ -44,6 +44,9 @@ for bpm in orb.bpms:
 for elem in lat.sequence:
     if elem.type == "quadrupole":
         name = elem.id
+        name = name.replace("_U", "")
+        name = name.replace("_D", "")
+        name = name.replace("_", ".")
         print(name)
         try:
             print(elem.id, name, mi.get_quads_current([name]))
