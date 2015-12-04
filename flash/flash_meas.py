@@ -36,4 +36,7 @@ mi = FLASH1MachineInterface()
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
     print(name)
-    print(bpm.id, name, mi.get_bpms_values([name]))
+    try:
+        print(bpm.id, name, mi.get_bpms_values([name]))
+    except:
+        print(name, "  CAN MOT FIND")
