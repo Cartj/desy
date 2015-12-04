@@ -36,4 +36,4 @@ mi = FLASH1MachineInterface()
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
     print(name)
-    print(bpm.id, name, mi.get_bpms_values([bpm.id]))
+    print(bpm.id, name, mi.get_bpms_values([name]))
