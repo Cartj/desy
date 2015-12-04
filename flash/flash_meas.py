@@ -44,6 +44,8 @@ for bpm in orb.bpms:
 for elem in lat.sequence:
     if elem.type == "quadrupole":
         name = elem.id
+        if "_U" in name:
+            continue
         name = name.replace("_U", "")
         name = name.replace("_D", "")
         name = name.replace("_", ".")
