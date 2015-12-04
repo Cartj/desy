@@ -7,7 +7,7 @@ from ocelot.cpbd.errors import *
 from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
 from copy import copy
-import pyqtgraph as pg
+#import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pytine import *
 
 beam = Beam()
