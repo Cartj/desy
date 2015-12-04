@@ -55,6 +55,7 @@ for i, zi in enumerate(Z[1:]):
     if SC:
         sc_apply(p_array, q_array=charge_array, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
     tw = get_envelope(p_array,tws_i=twsi[i+1])
+    #print "emit_x = ", tw.emit_y, beam.emit_y
     tw.s = navi.z0
     #print tw.s, twsi[i+1].s
     tws_track.append(tw)
