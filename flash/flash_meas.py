@@ -37,6 +37,15 @@ for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
     print(name)
     try:
-        print(bpm.id, name, mi.get_bpms_values([name]))
+        print(bpm.id, name, mi.get_bpms_XY([name]))
     except:
         print(name, "  CAN MOT FIND")
+
+for elem in lat.sequence:
+    if elem.type == "quadrupole":
+        name = elem.id
+        print(name)
+        try:
+            print(elem.id, name, mi.get_quads_current([name]))
+        except:
+            print(name, "  CAN MOT FIND")
