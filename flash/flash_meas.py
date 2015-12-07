@@ -30,7 +30,9 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 orb = Orbit(lat)
 
-
+q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
+print q_resp
+#exit(0)
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
@@ -46,6 +48,20 @@ for bpm in orb.bpms:
     except:
         print(name, "  CAN MOT FIND")
 
+lat = orb.quad_correction(lat, q_resp)
+p = Particle(p=0.0, E=beam.E)
+plist = lattice_track(lat, p, order=1)
+x = np.array([p.x for p in plist])
+y = np.array([p.y for p in plist])
+s = np.array([p.s for p in plist])
+s_bpm = np.array([bpm.s for bpm in orb.bpms])
+x_bpm = np.array([bpm.x for bpm in orb.bpms])
+y_bpm = np.array([bpm.y for bpm in orb.bpms])
+plt.plot(s_bpm, x_bpm, "ro")
+plt.plot(s, x, "r--", label=r"$\sigma_x=$")
+plt.plot(s_bpm, y_bpm, "bo")
+plt.plot(s, y, "b--", label=r"$\sigma_y=$")
+plt.show()
 for elem in lat.sequence:
     if elem.type == "quadrupole":
         name = elem.id
