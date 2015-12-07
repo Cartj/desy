@@ -45,6 +45,7 @@ for bpm in orb.bpms:
         X, Y = mi.get_bpms_xy([bpm.mi_id])
         bpm.x = X[0]
         bpm.y = Y[0]
+        print (bpm.s, bpm.x, bpm.y)
     except:
         print(name, "  CAN MOT FIND")
 
@@ -85,7 +86,7 @@ for elem in lat.sequence:
         except:
             print(name, "  CAN MOT FIND")
 
-plt.plot([bpm.s for bpm in orb.bpms], [bpm.x for bpm in orb.bpms], "r")
-plt.plot([bpm.s for bpm in orb.bpms], [bpm.y for bpm in orb.bpms], "b")
+plt.plot([bpm.s for bpm in orb.bpms], [bpm.x for bpm in orb.bpms], "ro-")
+plt.plot([bpm.s for bpm in orb.bpms], [bpm.y for bpm in orb.bpms], "bo-")
 plt.show()
 
