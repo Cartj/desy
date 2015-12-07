@@ -33,13 +33,14 @@ orb = Orbit(lat)
 
 
 mi = FLASH1MachineInterface()
+dp = FLASH1DeviceProperties()
 
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
     print(name)
     bpm.mi_id = name
     try:
-        print(bpm.id, name, mi.get_bpms_XY([bpm.mi_id]))
+        print(bpm.id, name, mi.get_bpms_xy([bpm.mi_id]))
     except:
         print(name, "  CAN MOT FIND")
 
@@ -58,8 +59,8 @@ for elem in lat.sequence:
             elem.mi_id = name
         try:
             elem.I = mi.get_quads_current([elem.mi_id])
-            elem.polarity = mi.get_polarity([elem.mi_id])
-            type_magnet = mi.get_type_magnet([elem.mi_id])
+            elem.polarity = dp.get_polarity([elem.mi_id])
+            type_magnet = dp.get_type_magnet([elem.mi_id])
             print(type_magnet, elem.dev_type)
             #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
         except:
