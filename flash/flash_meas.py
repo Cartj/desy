@@ -40,7 +40,9 @@ for bpm in orb.bpms:
     print(name)
     bpm.mi_id = name
     try:
-        print(bpm.id, name, mi.get_bpms_xy([bpm.mi_id]))
+        X, Y = mi.get_bpms_xy([bpm.mi_id])
+        bpm.x = X[0]
+        bpm.y = Y[0]
     except:
         print(name, "  CAN MOT FIND")
 
@@ -66,3 +68,8 @@ for elem in lat.sequence:
             #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
         except:
             print(name, "  CAN MOT FIND")
+
+plt.plot([bpm.s for bpm in orb.bpms], [bpm.x for bpm in orb.bpms], "r")
+plt.plot([bpm.s for bpm in orb.bpms], [bpm.y for bpm in orb.bpms], "b")
+plt.show()
+
