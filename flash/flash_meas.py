@@ -52,9 +52,15 @@ for elem in lat.sequence:
         name = name.replace("_D", "")
         name = name.replace("_", ".")
         #print(name)
-        elem.mi_id = name
         try:
-            mi.get_quads_current([elem.mi_id])
+            elem.mi_id
+        except:
+            elem.mi_id = name
+        try:
+            elem.I = mi.get_quads_current([elem.mi_id])
+            elem.polarity = mi.get_polarity([elem.mi_id])
+            type_magnet = mi.get_type_magnet([elem.mi_id])
+            print(type_magnet, elem.dev_type)
             #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
         except:
             print(name, "  CAN MOT FIND")

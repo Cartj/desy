@@ -652,6 +652,36 @@ Q6UND5.dev_type = 'TQG'
 Q5UND6.dev_type = 'TQG'
 Q6UND6.dev_type = 'TQG'
 
+# the same supply
+Q5DBC2_U.mi_id  = 'Q4DBC2'
+Q5DBC2_D.mi_id  = 'Q4DBC2'
+Q6DBC2.mi_id    = 'Q4DBC2'
+Q7DBC2_U.mi_id  = 'Q4DBC2'
+Q7DBC2_D.mi_id  = 'Q4DBC2'
+Q8DBC2.mi_id    = 'Q4DBC2'
+Q9DBC2_U.mi_id  = 'Q4DBC2'
+Q9DBC2_D.mi_id  = 'Q4DBC2'
+Q10DBC2.mi_id   = 'Q4DBC2'
+
+Q10ACC2_U.mi_id = 'Q9ACC2'
+Q10ACC2_D.mi_id = 'Q9ACC2'
+Q10ACC2_U.mi_id = 'Q9ACC2'
+Q10ACC2_D.mi_id = 'Q9ACC2'
+
+Q3ECOL_U.mi_id  = 'Q3.5ECOL'
+Q3ECOL_D.mi_id  = 'Q3.5ECOL'
+Q5ECOL_U.mi_id  = 'Q3.5ECOL'
+Q5ECOL_D.mi_id  = 'Q3.5ECOL'
+Q5UND1.mi_id    = 'Q5UND1.3.5'
+Q5UND3.mi_id    = 'Q5UND1.3.5'
+Q5UND5.mi_id    = 'Q5UND1.3.5'
+Q5UND2.mi_id    = "Q5UND2.4"
+Q5UND4.mi_id    = "Q5UND2.4"
+Q6UND1.mi_id    = 'Q6UND1'
+Q6UND3.mi_id    = 'Q6UND1'
+Q6UND4.mi_id    = 'Q6UND1'
+Q6UND5.mi_id    = 'Q6UND1'
+
 
 # bending magnets 
 D1IDUMP = Bend(l = 0.09, angle = 0, e1 = 0, e2 = 0, tilt = 0, fint = 0.0, id = 'D1IDUMP')
