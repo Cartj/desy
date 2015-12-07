@@ -31,7 +31,7 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 orb = Orbit(lat)
 
 q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
-print q_resp
+#print q_resp
 #exit(0)
 
 mi = FLASH1MachineInterface()
