@@ -1,4 +1,5 @@
 __author__ = 'Sergey Tomin'
+
 from lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 from ocelot import *
@@ -36,8 +37,9 @@ mi = FLASH1MachineInterface()
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
     print(name)
+    bpm.mi_id = name
     try:
-        print(bpm.id, name, mi.get_bpms_XY([name]))
+        print(bpm.id, name, mi.get_bpms_XY([bpm.mi_id]))
     except:
         print(name, "  CAN MOT FIND")
 
@@ -49,8 +51,10 @@ for elem in lat.sequence:
         name = name.replace("_U", "")
         name = name.replace("_D", "")
         name = name.replace("_", ".")
-        print(name)
+        #print(name)
+        elem.mi_id = name
         try:
-            print(elem.id, name, mi.get_quads_current([name]))
+            mi.get_quads_current([elem.mi_id])
+            #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
         except:
             print(name, "  CAN MOT FIND")

@@ -1,7 +1,7 @@
 __author__ = 'Sergey Tomin'
 """
-athor Mathias Vogt DESY
-translate to Python by Sergey Tomin XFEL
+author Mathias Vogt, DESY
+converted to Python by Sergey Tomin XFEL
 """
 
 from ocelot import *
