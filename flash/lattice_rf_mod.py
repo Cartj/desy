@@ -802,7 +802,11 @@ D12SMATCH = Hcor(l = 0.1, angle = 0, id = 'D12SMATCH')
 H12SMATCH = Hcor(l = 0.02, angle = 0, id = 'H12SMATCH')
 V14SMATCH = Vcor(l = 0.02, angle = 0, id = 'V14SMATCH')
 
-
+V9ACC5.mi_id = "V10ACC5"
+H9ACC5.mi_id = "H10ACC5"
+V9ACC6.mi_id = "H10ACC6"
+H9ACC6.mi_id = "V10ACC6"
+V3SFELC.mi_id = "V2SFELC"
 #HCOR
 H1GUN.dev_type = 'HGUN'
 H2GUN.dev_type = 'HGUN'

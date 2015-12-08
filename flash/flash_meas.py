@@ -40,13 +40,18 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
-        elem.mi_id = elem.id
+        name = elem.id
+        name = name.replace("_", ".")
         try:
-            print(elem.mi_id, )
+            elem.mi_id
+        except:
+            elem.mi_id = name
+        try:
+            #print(elem.mi_id, )
             vals = mi.init_corrector_vals([elem.mi_id])
             elem.I = vals[0]
         except:
-            print("UNKNOW")
+            print(elem.mi_id, "UNKNOW")
             elem.type = "drift"
 
 #exit(0)
@@ -62,7 +67,7 @@ q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
-    print(name)
+
     bpm.mi_id = name
     try:
         X, Y = mi.get_bpms_xy([bpm.mi_id])
