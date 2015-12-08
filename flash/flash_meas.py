@@ -25,7 +25,7 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
 
-BPM1TCOL = Drift(id="BPM1TCOL")
+BPM1TCOL.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 
