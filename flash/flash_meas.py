@@ -58,8 +58,8 @@ for elem in lat.sequence:
 
 orb = Orbit(lat)
 
-q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
-pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+#q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
+#pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
@@ -92,10 +92,27 @@ y_bpm = np.array([bpm.y for bpm in orb.bpms])
 
 ax = plot_API(lat)
 
-ax.plot(s_bpm, x_bpm, "ro--")
-ax.plot(s, x, "r", label=r"$\sigma_x=$")
-ax.plot(s_bpm, y_bpm, "bo--")
-ax.plot(s, y, "b", label=r"$\sigma_y=$")
+ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
+ax.plot(s, x, "r", label="X sim. tr.")
+ax.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
+ax.plot(s, y, "b", label="Y sim. tr.")
+ax.legend()
+plt.show()
+L = 0
+S = []
+X = []
+Y = []
+w = []
+for elem in lat.sequence:
+    L += elem.l
+    if elem.type == "quadrupole":
+        S.append(L - elem.l/2.)
+        X.append(elem.dx)
+        Y.append(elem.dy)
+        w.append(elem.l)
+
+plt.bar(S, X, w, color="r" )
+plt.bar(S, Y, w, color="b" )
 plt.show()
 for elem in lat.sequence:
     if elem.type == "quadrupole":
