@@ -12,6 +12,10 @@ from copy import copy
 from ocelot.utils.mint.flash1_interface_pytine import *
 import pickle
 
+mi = FLASH1MachineInterface()
+dp = FLASH1DeviceProperties()
+
+
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
 beam.beta_x = 14.8821
@@ -32,6 +36,18 @@ lat = MagneticLattice(lattice, start=STARTACC39)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
+for elem in lat.sequence:
+    if elem.type in ["hcor", "vcor"]:
+        elem.mi_id = elem.id
+        try:
+            print(elem.mi_id, )
+            vals = mi.init_corrector_vals([elem.mi_id])
+            print(vals)
+        except:
+            print("UNKNOW")
+
+exit(0)
+
 orb = Orbit(lat)
 
 q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
@@ -40,8 +56,6 @@ q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
 
-mi = FLASH1MachineInterface()
-dp = FLASH1DeviceProperties()
 
 for bpm in orb.bpms:
     name = bpm.id.replace("BPM", "")
@@ -54,6 +68,7 @@ for bpm in orb.bpms:
         print (bpm.s, bpm.x, bpm.y)
     except:
         print(name, "  CAN MOT FIND")
+
 
 lat = orb.quad_correction(lat, q_resp)
 p = Particle(p=0.0, E=beam.E)
