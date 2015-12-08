@@ -10,6 +10,7 @@ from ocelot.cpbd.orbit_correction import *
 from copy import copy
 #import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pytine import *
+import pickle
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -31,6 +32,8 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 orb = Orbit(lat)
 
 q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
+pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
 
