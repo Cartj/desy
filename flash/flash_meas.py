@@ -58,9 +58,9 @@ for elem in lat.sequence:
 
 orb = Orbit(lat)
 
-#q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
-#pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
-q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
+q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
+pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+#q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
 
