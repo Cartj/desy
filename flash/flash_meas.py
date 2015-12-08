@@ -42,11 +42,12 @@ for elem in lat.sequence:
         try:
             print(elem.mi_id, )
             vals = mi.init_corrector_vals([elem.mi_id])
-            print(vals)
+            elem.I = vals[0]
         except:
             print("UNKNOW")
+            elem.type = "drift"
 
-exit(0)
+#exit(0)
 
 orb = Orbit(lat)
 
@@ -70,7 +71,9 @@ for bpm in orb.bpms:
         print(name, "  CAN MOT FIND")
 
 
+
 lat = orb.quad_correction(lat, q_resp)
+
 p = Particle(p=0.0, E=beam.E)
 plist = lattice_track(lat, p, order=1)
 x = np.array([p.x for p in plist])
@@ -79,10 +82,13 @@ s = np.array([p.s for p in plist])
 s_bpm = np.array([bpm.s for bpm in orb.bpms])
 x_bpm = np.array([bpm.x for bpm in orb.bpms])
 y_bpm = np.array([bpm.y for bpm in orb.bpms])
-plt.plot(s_bpm, x_bpm, "ro")
-plt.plot(s, x, "r--", label=r"$\sigma_x=$")
-plt.plot(s_bpm, y_bpm, "bo")
-plt.plot(s, y, "b--", label=r"$\sigma_y=$")
+
+ax = plot_API(lat)
+
+ax.plot(s_bpm, x_bpm, "ro--")
+ax.plot(s, x, "r", label=r"$\sigma_x=$")
+ax.plot(s_bpm, y_bpm, "bo--")
+ax.plot(s, y, "b", label=r"$\sigma_y=$")
 plt.show()
 for elem in lat.sequence:
     if elem.type == "quadrupole":
