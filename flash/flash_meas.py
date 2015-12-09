@@ -58,9 +58,9 @@ for elem in lat.sequence:
 
 orb = Orbit(lat)
 
-q_resp = sim_quad_response_matrix(orb, lat, Particle(E=beam.E))
+q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"])
 pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
-#q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
+q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
 
@@ -79,7 +79,7 @@ for bpm in orb.bpms:
 
 
 
-lat = orb.quad_correction(lat, q_resp)
+lat = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"])
 
 p = Particle(p=0.0, E=beam.E)
 plist = lattice_track(lat, p, order=1)
