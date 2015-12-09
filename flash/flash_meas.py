@@ -29,9 +29,9 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
 
-BPM1TCOL.type="drift"
-BPM2UND3.type="drift"
-BPM14SMATCH.type="drift"
+#BPM1TCOL.type="drift"
+#BPM2UND3.type="drift"
+#BPM14SMATCH.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 
@@ -94,9 +94,12 @@ ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
 ax.plot(s, x, "r", label="X sim. tr.")
-ax.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
-ax.plot(s, y, "b", label="Y sim. tr.")
 ax.legend()
+#plt.show()
+ax2 = plot_API(lat)
+ax2.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
+ax2.plot(s, y, "b", label="Y sim. tr.")
+ax2.legend()
 plt.show()
 L = 0
 S = []
@@ -110,8 +113,11 @@ for elem in lat.sequence:
         X.append(elem.dx)
         Y.append(elem.dy)
         w.append(elem.l)
-
+S = arange(len(X))
+w = 0.5
+plt.figure(1)
 plt.bar(S, X, w, color="r" )
+plt.figure(2)
 plt.bar(S, Y, w, color="b" )
 plt.show()
 for elem in lat.sequence:
