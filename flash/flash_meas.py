@@ -113,8 +113,8 @@ for elem in lat.sequence:
         X.append(elem.dx)
         Y.append(elem.dy)
         w.append(elem.l)
-        if abs(elem.dx) > max(abs(np.array(X))) or abs(elem.dy) > max(abs(np.array(Y))):
-            print(elem.id, elem.dx, elem.dy)
+        #if abs(elem.dx) > max(abs(np.array(X))) or abs(elem.dy) > max(abs(np.array(Y))):
+        print(elem.id, elem.dx, elem.dy)
 S = arange(len(X))
 w = 0.3
 plt.figure(1)
