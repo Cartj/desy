@@ -29,8 +29,8 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
 
-BPM1TCOL.type="drift"
-BPM2UND3.type="drift"
+#BPM1TCOL.type="drift"
+#BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
@@ -117,8 +117,8 @@ S = arange(len(X))
 w = 0.5
 plt.figure(1)
 plt.bar(S, X, w, color="r" )
-plt.figure(2)
-plt.bar(S, Y, w, color="b" )
+#plt.figure(2)
+plt.bar(S-0.5, Y, w, color="b" )
 plt.show()
 for elem in lat.sequence:
     if elem.type == "quadrupole":
