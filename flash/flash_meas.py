@@ -79,7 +79,7 @@ for bpm in orb.bpms:
 
 
 
-lat = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elem=["Q9ACC2_U", "Q9ACC2_D", "Q10ACC2_U", "Q10ACC2_D"])
+lat = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elems=["Q9ACC2_U", "Q9ACC2_D", "Q10ACC2_U", "Q10ACC2_D"])
 
 p = Particle(p=0.0, E=beam.E)
 plist = lattice_track(lat, p, order=1)
