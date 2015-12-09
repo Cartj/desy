@@ -58,7 +58,7 @@ for elem in lat.sequence:
 
 orb = Orbit(lat)
 
-q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"])
+q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"], remuve_elem=[])
 pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
@@ -113,6 +113,7 @@ for elem in lat.sequence:
         X.append(elem.dx)
         Y.append(elem.dy)
         w.append(elem.l)
+        print(elem.id, elem.dx, elem.dy)
 S = arange(len(X))
 w = 0.3
 plt.figure(1)
@@ -120,6 +121,8 @@ plt.bar(S+w, X, w, color="r" )
 #plt.figure(2)
 plt.bar(S, Y, w, color="b" )
 plt.show()
+
+
 for elem in lat.sequence:
     if elem.type == "quadrupole":
         name = elem.id
@@ -133,7 +136,7 @@ for elem in lat.sequence:
             elem.mi_id
         except:
             elem.mi_id = name
-        print(elem.mi_id)
+        #print(elem.mi_id)
         try:
             elem.I = mi.get_quads_current([elem.mi_id])
             elem.polarity = dp.get_polarity([elem.mi_id])
