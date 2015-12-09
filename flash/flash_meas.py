@@ -58,7 +58,7 @@ for elem in lat.sequence:
 
 orb = Orbit(lat)
 
-q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"], remuve_elem=[])
+q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"], remove_elem=["Q9ACC2", "Q10ACC2"])
 pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
