@@ -38,11 +38,11 @@ lat = MagneticLattice(lattice, start=STARTACC39)
 for elem in lat.sequence:
     if elem.type == "cavity":
         name = elem.id.split("_")
-        name = name[-1]
+        elem.mi_id = name[-1]
         try:
-            ampls, phases = mi.get_cavity_info(name)
+            ampls, phases = mi.get_cavity_info([elem.mi_id])
         except:
-            print ("UNKNOWN cav", name, elem.id)
+            print ("UNKNOWN cav", elem.mi_id, elem.id)
             continue
         elem.v = ampls[0]*0.001
         elem.phi = phases[0]
