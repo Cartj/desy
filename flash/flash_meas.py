@@ -58,7 +58,7 @@ for elem in lat.sequence:
             elem.v = elem.v/16.
 
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
+plot_opt_func(lat, tws, top_plot=["E"])
 
 for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
