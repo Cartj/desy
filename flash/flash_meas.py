@@ -46,15 +46,15 @@ for elem in lat.sequence:
             continue
         elem.v = ampls[0]*0.001
         elem.phi = phases[0]
-        if name == "ACC1":
+        if elem.mi_id == "ACC1":
             elem.v = elem.v/8.
-        elif name == "ACC39":
+        elif elem.mi_id == "ACC39":
             elem.v = elem.v/4.
-        elif name == "ACC23":
+        elif elem.mi_id == "ACC23":
             elem.v = elem.v/16.
-        elif name == "ACC45":
+        elif elem.mi_id == "ACC45":
             elem.v = elem.v/16.
-        elif name == "ACC67":
+        elif elem.mi_id == "ACC67":
             elem.v = elem.v/16.
 lat.update_transfer_maps()
 tws=twiss(lat, tw0)
