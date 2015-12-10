@@ -56,7 +56,7 @@ for elem in lat.sequence:
             elem.v = elem.v/16.
         elif name == "ACC67":
             elem.v = elem.v/16.
-
+lat.update_transfer_maps()
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
 
