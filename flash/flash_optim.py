@@ -13,12 +13,13 @@ from ocelot.cpbd.track import lattice_track
 from copy import copy
 from lattice_rf_mod import *
 from ocelot.gui.accelerator import *
-
+from scipy.optimize._differentialevolution import DifferentialEvolutionSolver
+print DifferentialEvolutionSolver
 #plot_log("exp_files/h3-v3dbc3_1.txt")
 #dict_data = read_log("exp_files/h3-v3dbc3_1.txt")
 
-plot_log("exp_files/new_opt_4.txt")
-dict_data = read_log("exp_files/new_opt_4.txt")
+plot_log("exp_files/h3-v3dbc3_1.txt")
+dict_data = read_log("exp_files/h3-v3dbc3_1.txt")
 
 
 new_dict = rm_nonwork_devices(dict_data, debug=True, rm_devices=["H3UND4"])
