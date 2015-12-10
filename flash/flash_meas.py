@@ -35,6 +35,28 @@ BPM2UND3.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 
+for elem in lat.sequence:
+    if elem.type == "cavity":
+        name = elem.id.split("_")
+        name = name[-1]
+        try:
+            ampls, phases = mi.get_cavity_info(name)
+        except:
+            print ("UNKNOWN cav", name, elem.id)
+            continue
+        elem.v = ampls[0]*0.001
+        elem.phi = phases[0]
+        if name == "ACC1":
+            elem.v = elem.v/8.
+        elif name == "ACC39":
+            elem.v = elem.v/4.
+        elif name == "ACC23":
+            elem.v = elem.v/16.
+        elif name == "ACC45":
+            elem.v = elem.v/16.
+        elif name == "ACC67":
+            elem.v = elem.v/16.
+
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
