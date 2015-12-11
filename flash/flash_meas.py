@@ -48,7 +48,7 @@ tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
 
 print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
-"""
+
 E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
@@ -59,19 +59,19 @@ for elem in lat.sequence:
 
         print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
         elem.k1 = K1
-    #elif elem.type in ["hcor", "vcor"]:
-    #    angle = tpi2k(elem.dev_type, E, elem.I)
-    #    if angle == None:
-    #        print(elem.id,  elem.I, E, angle, elem.dev_type)
-    #    else:
-    #        elem.angle = angle*0.001
+    elif elem.type in ["hcor", "vcor"]:
+        angle = tpi2k(elem.dev_type, E, elem.I)
+        if angle == None:
+            print(elem.id,  elem.I, E, angle, elem.dev_type)
+        else:
+            elem.angle = angle*0.001
 
 
 lat.update_transfer_maps()
 #exit(0)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
-"""
+
 
 orb = Orbit(lat)
 exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
