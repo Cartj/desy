@@ -21,8 +21,10 @@ def read_quads(lat, mi, dp):
             elem.I = 0
             elem.polarity = 0
             try:
+
                 elem.I = mi.get_quads_current([elem.mi_id])[0]
                 elem.polarity = dp.get_polarity([elem.mi_id])[0]
+                print(elem.id, elem.mi_id, elem.I)
                 #type_magnet = dp.get_type_magnet([elem.mi_id])
                 #print(type_magnet, elem.dev_type)
                 #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
