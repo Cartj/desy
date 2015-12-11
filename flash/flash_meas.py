@@ -42,7 +42,7 @@ beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001
 
 read_cavs(lat, mi)
 read_quads(lat, mi, dp)
-read_cors(lat, mi)
+#read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
@@ -83,9 +83,9 @@ q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 read_bpms(orb, mi)
 
 
-lat = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elems=exclude)
+p = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elems=exclude)
 
-p = Particle(p=0.0, E=beam.E)
+p.E = beam.E
 plist = lattice_track(lat, p, order=1)
 x = np.array([p.x for p in plist])
 y = np.array([p.y for p in plist])
