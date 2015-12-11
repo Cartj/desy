@@ -37,7 +37,7 @@ BPM2UND3.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 
-ampls, phases = mi.get_cavity_info("ACC1")
+ampls, phases = mi.get_cavity_info(["ACC1"])
 beam.E = ampls[0]*cos(phases*pi/180.)*0.001
 
 read_cavs(lat, mi)
