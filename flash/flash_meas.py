@@ -13,7 +13,7 @@ from high_level_mint_flash import *
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 import pickle
 from converter import *
-
+from ocelot.rad.undulator_params import *
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
@@ -46,11 +46,13 @@ read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
-
+print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
 E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "quadrupole":
+        print( elem.I)
+        print (elem.polarity)
         elem.k1 = tpi2k(elem.dev_type, E, elem.I)*elem.polarity
     elif elem.type in ["hcor", "vcor"]:
         elem.angle = tpi2k(elem.dev_type, E, elem.I)
