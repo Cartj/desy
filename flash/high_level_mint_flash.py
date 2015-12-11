@@ -27,7 +27,7 @@ def read_quads(lat, mi, dp):
                 try:
                     #time.sleep(0.01)
                     elem.I = mi.get_quads_current([elem.mi_id])[0]
-                    #elem.polarity = dp.get_polarity([elem.mi_id])[0]
+                    elem.polarity = dp.get_polarity([elem.mi_id])[0]
                     id2I_dict[elem.mi_id] = elem.I
 
                     #type_magnet = dp.get_type_magnet([elem.mi_id])
