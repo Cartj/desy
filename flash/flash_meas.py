@@ -41,14 +41,14 @@ ampls, phases = mi.get_cavity_info(["ACC1"])
 beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001
 
 read_cavs(lat, mi)
-read_quads(lat, mi, dp)
-read_cors(lat, mi)
+#read_quads(lat, mi, dp)
+#read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
 
 print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
-
+"""
 E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
@@ -59,19 +59,19 @@ for elem in lat.sequence:
 
         print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
         elem.k1 = K1
-    elif elem.type in ["hcor", "vcor"]:
-        angle = tpi2k(elem.dev_type, E, elem.I)
-        if angle == None:
-            print(elem.id,  elem.I, E, angle, elem.dev_type)
-        else:
-            elem.angle = angle*0.001
+    #elif elem.type in ["hcor", "vcor"]:
+    #    angle = tpi2k(elem.dev_type, E, elem.I)
+    #    if angle == None:
+    #        print(elem.id,  elem.I, E, angle, elem.dev_type)
+    #    else:
+    #        elem.angle = angle*0.001
 
 
 lat.update_transfer_maps()
 #exit(0)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
-
+"""
 
 orb = Orbit(lat)
 exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
@@ -81,10 +81,18 @@ pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
-
+#Q12DBC2.dx = 0.0001
+#Q12DBC2.dy = -0.0001
+#Q3DBC3.dx = 0.0001
+#Q3DBC3.dy = -0.0001
+#lat.update_transfer_maps()
 read_bpms(orb, mi)
-#orb.read_virtual_orbit(lat, p_init=Particle(x = 0.001, E=beam.E))
-
+#orb.read_virtual_orbit(lat, p_init=Particle(y = 0.001, x = 0.001, E=beam.E))
+#Q12DBC2.dx = 0
+#Q12DBC2.dy = 0
+#Q3DBC3.dx  = 0
+#Q3DBC3.dy  = 0
+lat.update_transfer_maps()
 p = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elems=exclude)
 print ("particle ", p.x, p.px, p.y, p.py)
 p.E = beam.E
@@ -95,7 +103,9 @@ s = np.array([p.s for p in plist])
 s_bpm = np.array([bpm.s for bpm in orb.bpms])
 x_bpm = np.array([bpm.x for bpm in orb.bpms])
 y_bpm = np.array([bpm.y for bpm in orb.bpms])
-
+plt.plot(s, [p.E for p in plist])
+plt.plot(s_bpm, [p.E for p in orb.bpms])
+plt.show()
 ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
