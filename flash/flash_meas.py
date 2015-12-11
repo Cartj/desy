@@ -37,12 +37,12 @@ BPM2UND3.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 
-#ampls, phases = mi.get_cavity_info(["ACC1"])
-#beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001
+ampls, phases = mi.get_cavity_info(["ACC1"])
+beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001
 
 read_cavs(lat, mi)
 #read_quads(lat, mi, dp)
-read_cors(lat, mi)
+#read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
