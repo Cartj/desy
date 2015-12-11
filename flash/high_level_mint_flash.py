@@ -18,10 +18,10 @@ def read_quads(lat, mi, dp):
             except:
                 elem.mi_id = name
             #print(elem.mi_id)
-            elem.I = 0
-            elem.polarity = 0
+            #elem.I = 0
+            #elem.polarity = 0
             try:
-                time.sleep(0.01)
+                #time.sleep(0.01)
                 elem.I = mi.get_quads_current([elem.mi_id])[0]
                 elem.polarity = dp.get_polarity([elem.mi_id])[0]
                 print(elem.id, elem.mi_id, elem.I)
