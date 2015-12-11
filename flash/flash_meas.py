@@ -56,7 +56,7 @@ for elem in lat.sequence:
         K1 = abs(k1)*sign(elem.k1)
 
         print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
-        elem.k1 = k1
+        elem.k1 = K1
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
     #    if angle == None:
