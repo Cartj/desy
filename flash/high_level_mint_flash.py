@@ -35,7 +35,7 @@ def read_quads(lat, mi, dp):
                     #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
                 except:
                     print(name, "  CAN MOT FIND")
-            print(elem.id, elem.mi_id, elem.I)
+            #print(elem.id, elem.mi_id, elem.I)
 
 
 def read_cavs(lat, mi):
