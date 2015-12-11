@@ -1,6 +1,6 @@
 __author__ = 'Sergey Topmin'
 
-
+import time
 
 
 def read_quads(lat, mi, dp):
@@ -21,7 +21,7 @@ def read_quads(lat, mi, dp):
             elem.I = 0
             elem.polarity = 0
             try:
-
+                time.sleep(0.01)
                 elem.I = mi.get_quads_current([elem.mi_id])[0]
                 elem.polarity = dp.get_polarity([elem.mi_id])[0]
                 print(elem.id, elem.mi_id, elem.I)
