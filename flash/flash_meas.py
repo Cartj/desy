@@ -76,8 +76,8 @@ plot_opt_func(lat, tws, top_plot=["E"])
 orb = Orbit(lat)
 exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
 exclude = []
-q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"], remove_elem=exclude)
-pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+#q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=["quadrupole"], remove_elem=exclude)
+#pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #print q_resp
 #exit(0)
