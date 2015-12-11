@@ -42,7 +42,7 @@ lat = MagneticLattice(lattice, start=STARTACC39)
 
 read_cavs(lat, mi)
 #read_quads(lat, mi, dp)
-#read_cors(lat, mi)
+read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
