@@ -52,8 +52,11 @@ for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "quadrupole":
 
-        elem.k1 = tpi2k(elem.dev_type, E, elem.I)*elem.polarity
-        print(elem.id,  elem.I, elem.polarity, E, elem.k1)
+        k1 = tpi2k(elem.dev_type, E, elem.I)
+        K1 = abs(k1)*sign(elem.k1)
+
+        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1)
+        elem.k1 = K1
     elif elem.type in ["hcor", "vcor"]:
         angle = tpi2k(elem.dev_type, E, elem.I)
         if angle == None:
