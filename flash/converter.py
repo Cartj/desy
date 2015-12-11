@@ -2,6 +2,8 @@ __author__ = 'Sergey Tomin'
 """
 author Mathias Vogt, DESY
 converted to Python by Sergey Tomin XFEL
+"USAGE: tpk2i <type-string> <momentum/GeV> <k_i /m^-(i+1) or angle/deg or kick/mrad> \n");
+
 """
 
 from ocelot import *

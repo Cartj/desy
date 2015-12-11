@@ -55,7 +55,7 @@ for elem in lat.sequence:
         elem.k1 = tpi2k(elem.dev_type, E, elem.I)*elem.polarity
         print(elem.id,  elem.I, elem.polarity, E, elem.k1)
     elif elem.type in ["hcor", "vcor"]:
-        elem.angle = tpi2k(elem.dev_type, E, elem.I)
+        elem.angle = tpi2k(elem.dev_type, E, elem.I)*0.001
         print(elem.id,  elem.I, E, elem.angle)
 lat.update_transfer_maps()
 #exit(0)
