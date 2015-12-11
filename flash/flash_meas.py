@@ -86,7 +86,7 @@ read_bpms(orb, mi)
 
 
 p = orb.elem_correction(lat, q_resp, elem_types=["quadrupole"], remove_elems=exclude)
-
+print ("particle ", p.x, p.px, p.y, p.py)
 p.E = beam.E
 plist = lattice_track(lat, p, order=1)
 x = np.array([p.x for p in plist])
