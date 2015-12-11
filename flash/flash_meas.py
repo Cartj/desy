@@ -41,12 +41,14 @@ ampls, phases = mi.get_cavity_info(["ACC1"])
 beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001
 
 read_cavs(lat, mi)
-read_quads(lat, mi, dp)
+#read_quads(lat, mi, dp)
 #read_cors(lat, mi)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
+
 print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
+"""
 E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
@@ -69,7 +71,7 @@ lat.update_transfer_maps()
 #exit(0)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
-
+"""
 
 orb = Orbit(lat)
 exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
