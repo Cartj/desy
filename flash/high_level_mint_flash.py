@@ -4,6 +4,7 @@ import time
 
 
 def read_quads(lat, mi, dp):
+    id2I_dict = {}
     for elem in lat.sequence:
         if elem.type == "quadrupole":
             name = elem.id
@@ -18,18 +19,23 @@ def read_quads(lat, mi, dp):
             except:
                 elem.mi_id = name
             #print(elem.mi_id)
-            #elem.I = 0
-            #elem.polarity = 0
-            try:
-                #time.sleep(0.01)
-                elem.I = mi.get_quads_current([elem.mi_id])[0]
-                elem.polarity = dp.get_polarity([elem.mi_id])[0]
-                print(elem.id, elem.mi_id, elem.I)
-                #type_magnet = dp.get_type_magnet([elem.mi_id])
-                #print(type_magnet, elem.dev_type)
-                #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
-            except:
-                print(name, "  CAN MOT FIND")
+            elem.I = 0
+            elem.polarity = 1
+            if elem.mi_id in id2I_dict.keys():
+                elem.I = id2I_dict[elem.mi_id]
+            else:
+                try:
+                    #time.sleep(0.01)
+                    elem.I = mi.get_quads_current([elem.mi_id])[0]
+                    #elem.polarity = dp.get_polarity([elem.mi_id])[0]
+                    id2I_dict[elem.mi_id] = elem.I
+
+                    #type_magnet = dp.get_type_magnet([elem.mi_id])
+                    #print(type_magnet, elem.dev_type)
+                    #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
+                except:
+                    print(name, "  CAN MOT FIND")
+            print(elem.id, elem.mi_id, elem.I)
 
 
 def read_cavs(lat, mi):
