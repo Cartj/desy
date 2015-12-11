@@ -51,11 +51,12 @@ E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "quadrupole":
-        print( elem.I)
-        print (elem.polarity)
+
         elem.k1 = tpi2k(elem.dev_type, E, elem.I)*elem.polarity
+        print(elem.id,  elem.I, elem.polarity, E, elem.k1)
     elif elem.type in ["hcor", "vcor"]:
         elem.angle = tpi2k(elem.dev_type, E, elem.I)
+        print(elem.id,  elem.I, E, elem.angle)
 lat.update_transfer_maps()
 #exit(0)
 tws=twiss(lat, tw0)
