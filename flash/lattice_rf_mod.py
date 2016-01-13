@@ -1115,8 +1115,8 @@ BPM4UND6 = Monitor(id = 'BPM4UND6')
 BPM5UND6 = Monitor(id = 'BPM5UND6')
 
 # sextupoles 
-S2ECOL = Sextupole(l = 0.215, k2 = 167.261*0, tilt = 0, id = 'S2ECOL')
-S6ECOL = Sextupole(l = 0.215, k2 = -167.261*0, tilt = 0, id = 'S6ECOL')
+S2ECOL = Sextupole(l = 0.215, k2 = 167.261, tilt = 0, id = 'S2ECOL')
+S6ECOL = Sextupole(l = 0.215, k2 = -167.261, tilt = 0, id = 'S6ECOL')
 
 # octupole 
 

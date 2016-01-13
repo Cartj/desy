@@ -32,7 +32,7 @@ bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=2
 
 dz = 1.
 order = 2
-SC = False
+SC = True
 debug = False
 
 Z = np.linspace(0, lat.totalLen, num=int(lat.totalLen/dz))
@@ -57,7 +57,6 @@ for i, zi in enumerate(Z[1:]):
     tw = get_envelope(p_array,tws_i=twsi[i+1])
     #print "emit_x = ", tw.emit_y, beam.emit_y
     tw.s = navi.z0
-    #print tw.s, twsi[i+1].s
     tws_track.append(tw)
     if debug:
         f.add_subplot(211)
@@ -99,6 +98,7 @@ plt.plot([p.s for p in tws_track], [p.beta_y for p in tws_track], "ro-", label =
 plt.plot(s_b, betay_b, "bo-", label = "elegant")
 plt.legend()
 plt.grid(True)
+
 plt.figure(4)
 plt.title(r"$\beta_x - functions$")
 plt.plot([p.s for p in tws_track], [p.beta_x for p in tws_track], "ro-", label = "ocelot")
