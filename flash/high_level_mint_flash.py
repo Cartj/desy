@@ -45,6 +45,7 @@ def read_cavs(lat, mi):
             elem.mi_id = name[-1]
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
+                #print ampls, phases
             except:
                 print ("UNKNOWN cav", elem.mi_id, elem.id)
                 continue
@@ -87,6 +88,7 @@ def read_bpms(orbit, mi):
         name = bpm.id.replace("BPM", "")
 
         bpm.mi_id = name
+        #X, Y = mi.get_bpms_xy([bpm.mi_id])
         try:
             X, Y = mi.get_bpms_xy([bpm.mi_id])
             bpm.x = X[0]
