@@ -89,7 +89,7 @@ for elem in lat.sequence:
 
         k1 = tpi2k(elem.dev_type, E, elem.I)
         K1 = abs(k1)*sign(elem.k1)
-
+        K1 = k1*elem.polarity
         print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
         elem.k1 = K1
@@ -105,7 +105,7 @@ lat.update_transfer_maps()
 """
 constr = {Q6TCOL:{'beta_x':38.25, 'beta_y':18.44}, Q8SMATCH:{'beta_x':14.657, 'beta_y':4.07}}
 vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
-match(lat, constr, vars, tw0, xtol=1e-3)
+match(lat, constr, vars, tw0, xtol=1e-5)
 
 L = 0.
 constr_pos = []
@@ -126,8 +126,8 @@ orb = Orbit(lat)
 #exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
 exclude = []
 elem_types_meas = ["quadrupole", "bend"]
-q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=elem_types_meas, remove_elem=exclude)
-pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+#q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=elem_types_meas, remove_elem=exclude)
+#pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 
 #print q_resp
