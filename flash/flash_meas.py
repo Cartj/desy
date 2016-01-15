@@ -52,11 +52,11 @@ beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001 + gun_energy
 read_cavs(lat, mi)
 
 
-E = gun_energy
-for elem in lat_mi.sequence:
-    E += elem.transfer_map.delta_e
-    elem.E = E
-    #print E
+#E = gun_energy
+#for elem in lat_mi.sequence:
+#    E += elem.transfer_map.delta_e
+#    elem.E = E
+#    #print E
 read_quads(lat, mi, dp)
 read_cors(lat, mi)
 
