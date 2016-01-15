@@ -34,7 +34,7 @@ beam.emit_xn = 1.5e-6
 beam.emit_yn = 1.5e-6
 beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
-gun_energy = 0.005 #GeV
+gun_energy = 0.0053 #GeV
 tw0 = Twiss(beam)
 
 BPM1TCOL.type="drift"
@@ -50,7 +50,11 @@ ampls, phases = mi.get_cavity_info(["ACC1"])
 beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001 + gun_energy
 
 read_cavs(lat, mi)
-
+E = gun_energy
+for elem in lat.sequence:
+    E += elem.transfer_map.delta_e
+    if elem.type == "cavity":
+        print elem.id, elem.v, elem.phi, "energy = ", E
 
 #E = gun_energy
 #for elem in lat_mi.sequence:
@@ -84,7 +88,7 @@ for elem in lat.sequence:
         K1 = abs(k1)*sign(elem.k1)
 
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
-        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1)
+        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
         elem.k1 = K1
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
