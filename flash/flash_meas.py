@@ -195,8 +195,8 @@ w = 0.3
 #plt.show()
 
 ax3 = plot_API(lat)
-ax3.bar(S-w/2., X, w/2., color="r" )
-ax3.bar(S, Y, w/2., color="b" )
+ax3.bar(S-w/2., X, w/2., color="r" , label="dx")
+ax3.bar(S, Y, w/2., color="b", label="dy" )
 ax3.legend()
 plt.show()
 
