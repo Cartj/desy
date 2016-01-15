@@ -51,18 +51,18 @@ def read_cavs(lat, mi):
                 continue
             elem.v = ampls[0]*0.001 # MeV -> GeV
             elem.phi = phases[0]
-            if elem.mi_id == "ACC1":
+            if elem.mi_id == "M1.ACC1":
                 elem.v = elem.v/8.
-            elif elem.mi_id == "ACC39":
+            elif elem.mi_id == "M1.ACC39":
                 # deaccelerator
                 elem.v = elem.v/4.
-                elem.phi = phases[0] + 180.
-            elif elem.mi_id == "ACC23":
-                elem.v = elem.v/16.
-            elif elem.mi_id == "ACC45":
-                elem.v = elem.v/16.
-            elif elem.mi_id == "ACC67":
-                elem.v = elem.v/16.
+                elem.phi = phases[0] - 180.
+            elif "ACC23" in elem.mi_id:
+                elem.v = elem.v/8.
+            elif "ACC45" in elem.mi_id :
+                elem.v = elem.v/8.
+            elif "ACC67" in elem.mi_id:
+                elem.v = elem.v/8.
     lat.update_transfer_maps()
     return lat
 
