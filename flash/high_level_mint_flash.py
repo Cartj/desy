@@ -1,7 +1,7 @@
 __author__ = 'Sergey Topmin'
 
 import time
-
+import numpy as np
 
 def read_quads(lat, mi, dp):
     id2I_dict = {}
@@ -45,11 +45,11 @@ def read_cavs(lat, mi):
             elem.mi_id = name[-1]
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
-                print "read =", elem.mi_id, ampls, phases
+                print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi)
             except:
                 print ("UNKNOWN cav", elem.mi_id, elem.id)
                 continue
-            elem.v = ampls[0]*0.001
+            elem.v = ampls[0]*0.001 # MeV -> GeV
             elem.phi = phases[0]
             if elem.mi_id == "ACC1":
                 elem.v = elem.v/8.
