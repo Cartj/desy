@@ -102,7 +102,7 @@ for elem in lat.sequence:
 
 
 lat.update_transfer_maps()
-
+"""
 constr = {Q6TCOL:{'beta_x':38.25, 'beta_y':18.44}, Q8SMATCH:{'beta_x':14.657, 'beta_y':4.07}}
 vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
 match(lat, constr, vars, tw0, xtol=1e-3)
@@ -114,7 +114,7 @@ for elem in lat.sequence:
     if elem in constr.keys():
         constr_pos.append(L)
 print constr_pos
-
+"""
 tws=twiss(lat, tw0)
 #for tw in tws:
 #    if tw.s in constr_pos:
