@@ -41,16 +41,16 @@ BPM1TCOL.type="drift"
 BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
-#lat = MagneticLattice(lattice, start=STARTACC39)
-lat = MagneticLattice(lattice)
+lat = MagneticLattice(lattice, start=STARTACC39)
+#lat = MagneticLattice(lattice)
 setup = log.MachineSetup()
 
-#ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
+ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
 #ampls2, phases2 = mi.get_cavity_info(["M2.ACC1"])
 
 print "energy gun = ", mi.get_gun_energy()
 
-beam.E = gun_energy
+beam.E = mi.get_gun_energy() + ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 #print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 read_cavs(lat, mi)
 E = beam.E
@@ -90,8 +90,8 @@ for elem in lat.sequence:
         k1 = tpi2k(elem.dev_type, E, elem.I)
         K1 = abs(k1)*sign(elem.k1)
 
-        #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
-        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
+        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
+        #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
         elem.k1 = K1
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
