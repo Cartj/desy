@@ -54,7 +54,7 @@ E = gun_energy
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "cavity":
-        print elem.id, elem.v, elem.phi, "energy = ", E
+        print elem.id, elem.v, elem.phi, "energy = ", E*1000, " MeV "
 
 #E = gun_energy
 #for elem in lat_mi.sequence:
