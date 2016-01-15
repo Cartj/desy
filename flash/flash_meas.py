@@ -89,10 +89,10 @@ for elem in lat.sequence:
 
         k1 = tpi2k(elem.dev_type, E, elem.I)
         #K1 = abs(k1)*sign(elem.k1)
-        K1 = k1
-        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
+        #K1 = k1
+        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", k1, "pol = ", elem.polarity)
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
-        elem.k1 = K1
+        elem.k1 = k1
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
     #    if angle == None:
