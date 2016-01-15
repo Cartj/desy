@@ -45,7 +45,10 @@ def read_cavs(lat, mi):
             elem.mi_id = name[-2] + "." + name[-1]
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
-                print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180.)
+                if elem.mi_id == "M1.ACC39":
+                    print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180. + 180.)
+                else:
+                    print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180.)
             except:
                 print ("UNKNOWN cav", elem.mi_id, elem.id)
                 continue
@@ -56,7 +59,7 @@ def read_cavs(lat, mi):
             elif elem.mi_id == "M1.ACC39":
                 # deaccelerator
                 elem.v = elem.v/4.
-                elem.phi = phases[0] - 180.
+                elem.phi = phases[0] + 180.
             elif "ACC23" in elem.mi_id:
                 elem.v = elem.v/8.
             elif "ACC45" in elem.mi_id :
