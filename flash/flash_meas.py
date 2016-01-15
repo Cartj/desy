@@ -17,13 +17,12 @@ from converter import *
 from ocelot.rad.undulator_params import *
 import copy
 import machine_setup as log
-#mi = FLASH1MachineInterface()
-#dp = FLASH1DeviceProperties()
+mi = FLASH1MachineInterface()
+dp = FLASH1DeviceProperties()
 
-lat_mi = MagneticLattice(copy.deepcopy(lattice))
-
-mi = FLASH1VirtualInterface(lat_mi, gun_energy=0.005)
-dp = FLASH1VirtualProperties()
+#lat_mi = MagneticLattice(copy.deepcopy(lattice))
+#mi = FLASH1VirtualInterface(lat_mi, gun_energy=0.005)
+#dp = FLASH1VirtualProperties()
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
