@@ -83,7 +83,8 @@ for elem in lat.sequence:
         k1 = tpi2k(elem.dev_type, E, elem.I)
         K1 = abs(k1)*sign(elem.k1)
 
-        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
+        #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " k1 = ", k1, "pol = ", elem.polarity)
+        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1)
         elem.k1 = K1
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
@@ -94,10 +95,11 @@ for elem in lat.sequence:
 
 
 lat.update_transfer_maps()
-
+"""
 constr = {Q6TCOL:{'beta_x':38.25, 'beta_y':18.44}, Q8SMATCH:{'beta_x':14.657, 'beta_y':4.07}}
 vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
 match(lat, constr, vars, tw0, xtol=1e-3)
+"""
 L = 0.
 constr_pos = []
 for elem in lat.sequence:
@@ -198,7 +200,6 @@ ax3.legend()
 plt.show()
 
 
-plt.plot([bpm.s for bpm in orb.bpms], [bpm.x for bpm in orb.bpms], "ro-")
-plt.plot([bpm.s for bpm in orb.bpms], [bpm.y for bpm in orb.bpms], "bo-")
-plt.show()
-
+#plt.plot([bpm.s for bpm in orb.bpms], [bpm.x for bpm in orb.bpms], "ro-")
+#plt.plot([bpm.s for bpm in orb.bpms], [bpm.y for bpm in orb.bpms], "bo-")
+#plt.show()
