@@ -42,7 +42,7 @@ def read_cavs(lat, mi):
     for elem in lat.sequence:
         if elem.type == "cavity":
             name = elem.id.split("_")
-            elem.mi_id = name[-1]
+            elem.mi_id = name[-2] + "." + name[-1]
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
                 print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180.)
@@ -54,7 +54,9 @@ def read_cavs(lat, mi):
             if elem.mi_id == "ACC1":
                 elem.v = elem.v/8.
             elif elem.mi_id == "ACC39":
+                # deaccelerator
                 elem.v = elem.v/4.
+                elem.phi = phases[0] + 180.
             elif elem.mi_id == "ACC23":
                 elem.v = elem.v/16.
             elif elem.mi_id == "ACC45":
