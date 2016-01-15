@@ -45,7 +45,7 @@ def read_cavs(lat, mi):
             elem.mi_id = name[-1]
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
-                #print ampls, phases
+                print "read =", elem.mi_id, ampls, phases
             except:
                 print ("UNKNOWN cav", elem.mi_id, elem.id)
                 continue
