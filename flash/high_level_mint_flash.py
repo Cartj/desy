@@ -22,14 +22,17 @@ def read_quads(lat, mi, dp):
             elem.I = 0
             elem.polarity = 1
             if elem.mi_id in id2I_dict.keys():
-                elem.I = id2I_dict[elem.mi_id]
+                elem.I = id2I_dict[elem.mi_id]["I"]
+                elem.polarity = id2I_dict[elem.mi_id]["polarity"]
+
             else:
                 try:
                     #time.sleep(0.01)
                     elem.I = mi.get_quads_current([elem.mi_id])[0]
                     elem.polarity = dp.get_polarity([elem.mi_id])[0]
-                    id2I_dict[elem.mi_id] = elem.I
-
+                    id2I_dict[elem.mi_id] = {}
+                    id2I_dict[elem.mi_id]["I"] = elem.I
+                    id2I_dict[elem.mi_id]["polarity"] = elem.polarity
                     #type_magnet = dp.get_type_magnet([elem.mi_id])
                     #print(type_magnet, elem.dev_type)
                     #print(elem.id, name, mi.get_quads_current([elem.mi_id]))
