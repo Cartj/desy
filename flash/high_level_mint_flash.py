@@ -46,7 +46,7 @@ def read_cavs(lat, mi):
             try:
                 ampls, phases = mi.get_cavity_info([elem.mi_id])
                 if elem.mi_id == "M1.ACC39":
-                    print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180. + 180.)
+                    print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos((phases[0] + 180.)*np.pi/180.)
                 else:
                     print "read =", elem.mi_id, ampls, phases, ampls[0]*np.cos(phases[0]*np.pi/180.)
             except:
