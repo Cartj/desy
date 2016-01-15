@@ -41,16 +41,17 @@ BPM1TCOL.type="drift"
 BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
-lat = MagneticLattice(lattice, start=STARTACC39)
-
+#lat = MagneticLattice(lattice, start=STARTACC39)
+lat = MagneticLattice(lattice)
 setup = log.MachineSetup()
 
-ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
+#ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
 #ampls2, phases2 = mi.get_cavity_info(["M2.ACC1"])
 
+print "energy gun = ", mi.get_gun_energy()
 
-beam.E = ampls1[0]*cos(phases1[0]*pi/180.)*0.001  + gun_energy
-print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
+beam.E = gun_energy
+#print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 read_cavs(lat, mi)
 E = beam.E
 for elem in lat.sequence:
