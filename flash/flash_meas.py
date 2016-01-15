@@ -46,11 +46,11 @@ lat = MagneticLattice(lattice, start=STARTACC39)
 setup = log.MachineSetup()
 
 ampls, phases = mi.get_cavity_info(["ACC1"])
-#print ampls, phases
+print "ACC1 = ", ampls, phases, ampls[0]*cos(phases[0]*pi/180.)*0.001
 beam.E = ampls[0]*cos(phases[0]*pi/180.)*0.001 + gun_energy
 
 read_cavs(lat, mi)
-E = gun_energy
+E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "cavity":
