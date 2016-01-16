@@ -88,6 +88,7 @@ for elem in lat.sequence:
     if elem.type == "quadrupole":
 
         k1 = tpi2k(elem.dev_type, E, elem.I)
+        k1 = abs(k1)*sign(elem.k1)
         if elem.mi_id in ["Q4DBC2","Q9ACC2", 'Q3.5ECOL', 'Q5UND1.3.5', "Q5UND2.4", 'Q6UND1']:
             k1 = abs(k1)*sign(elem.k1)
         #K1 = k1
