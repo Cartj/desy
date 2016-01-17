@@ -1066,6 +1066,8 @@ BPM5DBC2 = Monitor(id = 'BPM5DBC2')
 BPM7DBC2 = Monitor(id = 'BPM7DBC2')
 BPM9DBC2 = Monitor(id = 'BPM9DBC2')
 BPM11DBC2 = Monitor(id = 'BPM11DBC2')
+BPM11DBC2.weight = 1.
+
 BPM9ACC2 = Monitor(id = 'BPM9ACC2')
 BPM9ACC3 = Monitor(id = 'BPM9ACC3')
 BPM1UBC3 = Monitor(id = 'BPM1UBC3')
@@ -1094,6 +1096,8 @@ BPM1SFELC = Monitor(id = 'BPM1SFELC')
 BPM1SMATCH = Monitor(id = 'BPM1SMATCH')
 BPM6SMATCH = Monitor(id = 'BPM6SMATCH')
 BPM13SMATCH = Monitor(id = 'BPM13SMATCH')
+BPM13SMATCH.weight = 1
+
 BPM14SMATCH = Monitor(id = 'BPM14SMATCH')
 BPM2UND1 = Monitor(id = 'BPM2UND1')
 BPM4UND1 = Monitor(id = 'BPM4UND1')

@@ -42,6 +42,9 @@ BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
 lat = MagneticLattice(lattice, start=STARTACC39)
+orb = Orbit(lat)
+
+
 #lat = MagneticLattice(lattice)
 setup = log.MachineSetup()
 
@@ -63,9 +66,10 @@ for elem in lat.sequence:
 #for elem in lat_mi.sequence:
 #    E += elem.transfer_map.delta_e
 #    elem.E = E
-#    #print E
+    #print E
 read_quads(lat, mi, dp)
 read_cors(lat, mi)
+read_bpms(lat, mi)
 
 setup.save_lattice(lat, "init.txt")
 setup.load_lattice("init.txt", lat)
@@ -124,12 +128,12 @@ tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
 
 
-orb = Orbit(lat)
+
 #exclude = ["Q9ACC3_U", "Q9ACC3_D", "Q10ACC3_U", "Q10ACC3_D"]
 exclude = []
 elem_types_meas = ["quadrupole", "bend"]
-#q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=elem_types_meas, remove_elem=exclude)
-#pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
+q_resp = elem_response_matrix(orb, lat, Particle(E=beam.E), elem_types=elem_types_meas, remove_elem=exclude)
+pickle.dump(q_resp, open("quad_resp_mat.text", "wb"))
 q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 
 #print q_resp
@@ -139,10 +143,10 @@ q_resp = pickle.load(open("quad_resp_mat.text", "rb"))
 #Q3DBC3.dx = 0.0001
 #Q3DBC3.dy = -0.0001
 #lat.update_transfer_maps()
-read_bpms(orb, mi)
+read_bpms(lat, mi)
 
-setup.save_orbit(orb, "orbit.txt")
-setup.load_orbit("orbit.txt", orb)
+setup.save_orbit(lat, "orbit.txt")
+setup.load_orbit("orbit.txt", lat)
 
 
 #orb.read_virtual_orbit(lat, p_init=Particle(y = 0.001, x = 0.001, E=beam.E))

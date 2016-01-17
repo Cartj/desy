@@ -92,16 +92,17 @@ def read_cors(lat, mi):
                 elem.type = "drift"
 
 
-def read_bpms(orbit, mi):
-    for bpm in orbit.bpms:
-        name = bpm.id.replace("BPM", "")
+def read_bpms(lat, mi):
+    for elem in lat.sequence:
+        if elem.type == "monitor":
+            name = elem.id.replace("BPM", "")
 
-        bpm.mi_id = name
-        #X, Y = mi.get_bpms_xy([bpm.mi_id])
-        try:
-            X, Y = mi.get_bpms_xy([bpm.mi_id])
-            bpm.x = X[0]
-            bpm.y = Y[0]
-            print (bpm.s, bpm.x, bpm.y)
-        except:
-            print(name, "  CAN MOT FIND")
+            elem.mi_id = name
+            #X, Y = mi.get_bpms_xy([bpm.mi_id])
+            try:
+                X, Y = mi.get_bpms_xy([elem.mi_id])
+                elem.x = X[0]
+                elem.y = Y[0]
+                print (elem.s, elem.x, elem.y)
+            except:
+                print(name, "  CAN MOT FIND")

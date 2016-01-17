@@ -64,36 +64,38 @@ class MachineSetup:
         #pickle.dump(data, open(filename, "wb"))
         return data
 
-    def get_orbit(self, orbit):
+    def get_orbit(self, lat):
         data = {}
-        for bpm in orbit.bpms:
-            try:
-                mi_id = bpm.mi_id
-            except:
-                print ("bpm: ", bpm.id, " No mi_id")
-                continue
-            data[bpm.id] = {}
-            data[bpm.id]["type"] = "monitor"
-            data[bpm.id]["mi_id"] = bpm.mi_id
-            data[bpm.id]["x"] = bpm.x
-            data[bpm.id]["y"] = bpm.y
+        for bpm in lat.sequence:
+            if bpm.type == "monitor":
+                try:
+                    mi_id = bpm.mi_id
+                except:
+                    print ("bpm: ", bpm.id, " No mi_id")
+                    continue
+                data[bpm.id] = {}
+                data[bpm.id]["type"] = "monitor"
+                data[bpm.id]["mi_id"] = bpm.mi_id
+                data[bpm.id]["x"] = bpm.x
+                data[bpm.id]["y"] = bpm.y
         #pickle.dump(data, open(filename, "wb"))
         return data
 
-    def save_orbit(self, orbit, filename):
-        print "getting currents of quad ... "
-        self.dict_orbit = self.get_orbit(orbit)
+    def save_orbit(self, lat, filename):
+        print "getting beam positions ... "
+        self.dict_orbit = self.get_orbit(lat)
         print "OK"
         pickle.dump(self.dict_orbit, open(filename, "wb"))
 
-    def load_orbit(self, filename, orbit):
+    def load_orbit(self, filename, lat):
         data = pickle.load(open(filename, "rb"))
-        for bpm in orbit.bpms:
-            if bpm.id in data.keys():
-                bpm.mi_id = data[bpm.id]["mi_id"]
-                bpm.x = data[bpm.id]["x"]
-                bpm.y = data[bpm.id]["y"]
-        return orbit
+        for elem in lat.sequence:
+            if elem.type == "monitor":
+                if elem.id in data.keys():
+                    elem.mi_id = data[elem.id]["mi_id"]
+                    elem.x = data[elem.id]["x"]
+                    elem.y = data[elem.id]["y"]
+        return lat
 
     def save_lattice(self, lat, filename):
         print "getting currents of quad ... "
@@ -112,6 +114,10 @@ class MachineSetup:
         self.dict_cav = self.get_cav_params(lat)
         print "OK"
 
+        print "getting beam positions ...  "
+        self.dict_orbit = self.get_orbit(lat)
+        print "OK"
+
         #print ("getting orbit ... ", )
         #self.dict_orbit = self.get_cav_params(lat)
         #print ("OK")
@@ -120,6 +126,7 @@ class MachineSetup:
         data["bend"] = self.dict_bend
         data["cor"] = self.dict_cor
         data["cav"] = self.dict_cav
+        data["orbit"] = self.dict_orbit
         pickle.dump(data, open(filename, "wb"))
 
     def load_lattice(self, filename, lat):
@@ -128,6 +135,7 @@ class MachineSetup:
         self.dict_bend = data["bend"]
         self.dict_cor = data["cor"]
         self.dict_cav = data["cav"]
+        self.dict_orbit = data["orbit"]
 
         for elem in lat.sequence:
 
@@ -150,3 +158,8 @@ class MachineSetup:
                 elem.mi_id = self.dict_cav[elem.id]["mi_id"]
                 elem.v = self.dict_cav[elem.id]["v"]
                 elem.phi = self.dict_cav[elem.id]["phi"]
+
+            if elem.type == "monitor" and elem.id in self.dict_orbit.keys():
+                elem.mi_id = self.dict_orbit[elem.id]["mi_id"]
+                elem.x = self.dict_orbit[elem.id]["x"]
+                elem.y = self.dict_orbit[elem.id]["y"]

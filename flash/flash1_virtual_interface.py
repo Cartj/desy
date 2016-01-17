@@ -102,10 +102,16 @@ class FLASH1VirtualInterface():
             ampl = 0.
             phase = 0.
             for elem in self.lattice.sequence:
-                if elem.type == "cavity" and cavs[i] in elem.id:
-                    ampl += elem.v
-                    #print ampl, elem.v
-                    phase = elem.phi
+                if elem.type == "cavity":
+                    name = elem.id.split("_")
+                    elem.mi_id = name[-2] + "." + name[-1]
+
+                    if cavs[i] == elem.mi_id:
+                        ampl += elem.v
+                        #print ampl, elem.v
+                        phase = elem.phi
+                        if "ACC39" in cavs[i]:
+                            phase -= 180
             #print(ampl_channel)
             #print(phase_channel)
             ampls[i] = ampl*1000.
@@ -145,9 +151,12 @@ class FLASH1VirtualInterface():
             I = 0.
             for elem in self.lattice.sequence:
                 if elem.type == "quadrupole" and quads[i] == elem.mi_id:
-                    I = converter.tpk2i(elem.dev_type, elem.E, elem.k1)*(1.+np.random.randn(1)*0.01)
+                    I = converter.tpk2i(elem.dev_type, elem.E, elem.k1)*(1.+np.random.randn(1)*0.001)
             vals[i] = I
         return vals
+
+    def get_gun_energy(self):
+        return 0.005
 
     def get_alarms(self):
         alarm_vals = np.zeros(len(self.blm_names))
