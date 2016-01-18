@@ -8,6 +8,13 @@ from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
 from copy import copy
 import pyqtgraph as pg
+lat = MagneticLattice(lattice)
+for elem in lat.sequence:
+    if elem.type == "quadrupole":
+        name = elem.id.replace("_D", "")
+        name = elem.id.replace("_U", "")
+        print "k1"+name, " = ", elem.k1
+
 
 
 beam = Beam()
