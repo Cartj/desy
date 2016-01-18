@@ -169,5 +169,5 @@ def tpk2i(id, p, k):
     return di
 
 if __name__ == "__main__":
-    print (tpi2k(id = "QTS_I", p = 0.146, dI=-8.43))
+    print (tpi2k(id = "TSB", p = 0.700, dI=50))
     print (tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779))
