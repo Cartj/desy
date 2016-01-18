@@ -57,6 +57,7 @@ beam.E = mi.get_gun_energy() + ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 read_cavs(lat, mi)
 E = beam.E
+print "initial energy = ", E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
     if elem.type == "cavity":
