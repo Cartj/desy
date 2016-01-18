@@ -65,7 +65,7 @@ def read_cavs(lat, mi):
                 elem.phi = phases[0] + 180.
             elif "ACC23" in elem.mi_id:
                 elem.v = elem.v/8.
-                print "ACC23 = ", elem.v
+                #print "ACC23 = ", elem.v
             elif "ACC45" in elem.mi_id :
                 elem.v = elem.v/8.
             elif "ACC67" in elem.mi_id:
@@ -103,6 +103,6 @@ def read_bpms(lat, mi):
                 X, Y = mi.get_bpms_xy([elem.mi_id])
                 elem.x = X[0]
                 elem.y = Y[0]
-                print (elem.s, elem.x, elem.y)
+                #print (elem.s, elem.x, elem.y)
             except:
                 print(name, "  CAN MOT FIND")
