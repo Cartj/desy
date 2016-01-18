@@ -68,7 +68,7 @@ table ={
     "QC":     {"type": "Q", "EL": 1.02000, "KM": 1.000, "A": [    0.039929,       0.042478,     1.8915e-05,   -4.9054e-08 ]}, # //12 QC
     "QL":     {"type": "Q", "EL": 0.45000, "KM": 1.000, "A": [        0.00,     1.1666e-02,            0.0,           0.0 ]}, # //13 QL    : provisonal 25.04.2017 vogtm
     "QTS_E":  {"type": "Q", "EL": 0.09300, "KM": 0.759, "A": [        0.12,         0.1356,            0.0,           0.0 ]}, # //14 QTS_EXT
-    "QTS_I":  {"type": "B", "EL": 0.13100, "KM": 0.914, "A": [        0.12,         0.1356,            0.0,           0.0 ]}, # //15 QTS_INT
+    "QTS_I":  {"type": "Q", "EL": 0.13100, "KM": 0.914, "A": [        0.12,         0.1356,            0.0,           0.0 ]}, # //15 QTS_INT
     "TDA":    {"type": "B", "EL": 0.44600, "KM": 1.000, "A": [   3.3070e-3,      2.4110e-3,      2.3900e-6,    -6.2599e-9 ]}, #//16 TDA
     "TDB":    {"type": "B", "EL": 0.22000, "KM": 1.000, "A": [   2.1930e-3,      1.3792e-3,      1.1715e-6,    -3.1038e-9 ]}, #//17 TDB
     "TDC":    {"type": "B", "EL": 1.20000, "KM": 1.000, "A": [  5.7368e-03,     4.1344e-03,     2.1649e-06,   -5.4703e-09 ]}, #//18 TDC
@@ -117,7 +117,9 @@ def tpi2k(id, p, dI):
     a = table[id]["A"]
     el = table[id]["EL"]
     km = table[id]["KM"]
+    print magnet_type, a, el, km, p
     dk0 = p3(a, dI ) * km/(p*p2brho)
+    print dk0
     dk = 0.
     #print magnet_type, a, el, km, dk0
     if magnet_type == "S" or magnet_type == "Q":
@@ -167,5 +169,5 @@ def tpk2i(id, p, k):
     return di
 
 if __name__ == "__main__":
-    print (tpi2k(id = "TCA40", p = 0.7, dI=-3))
+    print (tpi2k(id = "QTS_I", p = 0.146, dI=-8.43))
     print (tpk2i(id = "TCA40", p = 0.7, k=-12.3061297779))
