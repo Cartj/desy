@@ -60,6 +60,7 @@ E = beam.E
 print "initial energy = ", E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
+    print elem.transfer_map.delta_e
     if elem.type == "cavity":
         print elem.id, elem.v, elem.phi, "energy = ", E*1000, " MeV "
 
