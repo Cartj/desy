@@ -57,6 +57,8 @@ s = np.array([p.s for p in plist])
 
 pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
+
+
 x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
@@ -74,6 +76,12 @@ ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 #plt.show()
 
 resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+
+for cor in orb.hcors:
+    print cor.s,  cor.id, cor.phi_x/2./np.pi
+
+for cor in orb.vcors:
+    print cor.s,  cor.id, cor.phi_y/2./np.pi
 #print resp_mat
 orb.correction(lat)
 p = Particle(p=0.0, E=beam.E)
