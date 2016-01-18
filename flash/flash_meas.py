@@ -116,7 +116,7 @@ tws=twiss(lat, tw0)
 #        print tw.s, tw.beta_x, tw.beta_y
 plot_opt_func(lat, tws, top_plot=["E"])
 
-constr = {Q6TCOL:{'beta_x':38.25, 'beta_y':18.44}, Q8SMATCH:{'beta_x':14.657, 'beta_y':4.07}}
+constr = {Q5UND1:{'beta_x':12, 'beta_y':3}, Q5UND3:{'beta_x':12., 'beta_y':3}}
 vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
 match(lat, constr, vars, tw0, xtol=1e-5)
 
