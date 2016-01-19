@@ -57,8 +57,8 @@ s = np.array([p.s for p in plist])
 
 pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
-
-
+BPM2UBC2.weight = 100
+BPM1DBC2.weight = 100
 x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
