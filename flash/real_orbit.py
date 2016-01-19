@@ -104,9 +104,9 @@ read_bpms(lat, mi)
 #pi = Particle(p=0.0, E=beam.E)
 
 #x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
-s_bpm = [p.s for p in orb.bpms]
-x_bpm = [p.x for p in orb.bpms]
-y_bpm = [p.y for p in orb.bpms]
+s_bpm = np.array([p.s for p in orb.bpms])
+x_bpm = np.array([p.x for p in orb.bpms])
+y_bpm = np.array([p.y for p in orb.bpms])
 plt.figure(1)
 ax = plot_API(lat)
 ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
