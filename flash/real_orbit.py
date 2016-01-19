@@ -38,7 +38,7 @@ BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
 #lat = MagneticLattice(lattice, start=STARTACC39)
-lat = MagneticLattice(lattice, start=STARTACC39)
+lat = MagneticLattice(lattice)
 orb = Orbit(lat)
 
 
