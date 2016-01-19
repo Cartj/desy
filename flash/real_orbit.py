@@ -112,7 +112,10 @@ ax = plot_API(lat)
 ax.plot(s_bpm, x_bpm,  "ro-", label="X")
 #ax.plot(s, x, "r--", label=r"$\sigma_x=$"+"%.2f" % sigma_x+"mm")
 plt.legend(True)
+
+
 plt.figure(2)
+ax = plot_API(lat)
 ax.plot(s_bpm, y_bpm,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.legend(True)
