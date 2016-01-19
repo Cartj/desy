@@ -109,11 +109,11 @@ x_bpm = [p.x for p in orb.bpms]
 y_bpm = [p.y for p in orb.bpms]
 plt.figure(1)
 ax = plot_API(lat)
-ax.bar(s_bpm, x_bpm, 0.5, "r", label="X")
+ax.plot(s_bpm, x_bpm,  "ro-", label="X")
 #ax.plot(s, x, "r--", label=r"$\sigma_x=$"+"%.2f" % sigma_x+"mm")
 plt.legend(True)
 plt.figure(2)
-ax.bar(s_bpm, y_bpm,0.5,  "b", label="Y")
+ax.plot(s_bpm, y_bpm,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.legend(True)
 plt.show()
