@@ -103,6 +103,6 @@ def read_bpms(lat, mi):
                 X, Y = mi.get_bpms_xy([elem.mi_id])
                 elem.x = X[0]
                 elem.y = Y[0]
-                #print (elem.s, elem.x, elem.y)
+                print (elem.s, elem.x, elem.y)
             except:
                 print(name, "  CAN MOT FIND")

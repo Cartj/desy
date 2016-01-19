@@ -101,10 +101,12 @@ plot_opt_func(lat, tws, top_plot=["E"])
 
 read_bpms(lat, mi)
 
-pi = Particle(p=0.0, E=beam.E)
+#pi = Particle(p=0.0, E=beam.E)
 
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
+#x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
 s_bpm = [p.s for p in orb.bpms]
+x_bpm = [p.x for p in orb.bpms]
+y_bpm = [p.y for p in orb.bpms]
 ax = plot_API(lat)
 ax.plot(s_bpm, x_bpm, "r-")
 #ax.plot(s, x, "r--", label=r"$\sigma_x=$"+"%.2f" % sigma_x+"mm")
