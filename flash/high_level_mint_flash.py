@@ -96,7 +96,7 @@ def read_bpms(lat, mi):
     for elem in lat.sequence:
         if elem.type == "monitor":
             name = elem.id.replace("BPM", "")
-
+            print elem.id
             elem.mi_id = name
             #X, Y = mi.get_bpms_xy([bpm.mi_id])
             try:

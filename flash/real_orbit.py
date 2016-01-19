@@ -11,7 +11,7 @@ from copy import copy
 from high_level_mint_flash import *
 #import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
-from flash1_virtual_interface import *
+#from flash1_virtual_interface import *
 import pickle
 from converter import *
 from ocelot.rad.undulator_params import *
