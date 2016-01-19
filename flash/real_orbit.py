@@ -69,8 +69,8 @@ read_bpms(lat, mi)
 
 #setup.save_lattice(lat, "init.txt")
 #setup.load_lattice("init.txt", lat)
-tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["E"])
+#tws=twiss(lat, tw0)
+#plot_opt_func(lat, tws, top_plot=["E"])
 
 print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
 
@@ -96,8 +96,8 @@ for elem in lat.sequence:
 
 
 lat.update_transfer_maps()
-tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["E"])
+#tws=twiss(lat, tw0)
+#plot_opt_func(lat, tws, top_plot=["E"])
 
 
 read_bpms(lat, mi)
