@@ -123,6 +123,9 @@ resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
 pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
+
+read_bpms(lat, mi)
+
 orb.correction(lat)
 
 for elem in lat.sequence:
