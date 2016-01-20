@@ -105,7 +105,7 @@ for elem in lat.sequence:
 
 lat.update_transfer_maps()
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["E"])
+plot_opt_func(lat, tws, top_plot=["Dx"])
 
 orb = Orbit(lat)
 read_bpms(lat, mi)
@@ -142,11 +142,12 @@ for elem in lat.sequence:
 
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
 
-orb.read_virtual_orbit(lat, p_init=Particle(E=gun_energy))
+orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
 
 p = Particle()
 p.E = beam.E
 plist = lattice_track(lat, p, order=1)
+
 x = np.array([p.x for p in plist])
 y = np.array([p.y for p in plist])
 s = np.array([p.s for p in plist])
