@@ -701,7 +701,24 @@ D7ECOL = Bend(l = 0.446278, angle = -0.061087, e1 = -0.061087, e2 = 0, tilt = 0,
 D9SMATCH = Bend(l = 0.2, angle = 0, e1 = 0, e2 = 0, tilt = 0, fint = 0.0, id = 'D9SMATCH')
 D10SMATCH = Bend(l = 0.2, angle = 0, e1 = 0, e2 = 0, tilt = 0, fint = 0.0, id = 'D10SMATCH')
 
-# correctors 
+D1BC2.dev_type = "TDD"
+D2BC2.dev_type = "TDD"
+D3BC2.dev_type = "TDD"
+D4BC2.dev_type = "TDD"
+D1BC3.dev_type = "TDD"
+D4BC3.dev_type = "TDD"
+D5BC3.dev_type = "TDD"
+D10BC3.dev_type = "TDD"
+D11BC3.dev_type = "TDD"
+D14BC3.dev_type = "TDD"
+
+D1ECOL.dev_type = "TDA"
+D7ECOL.dev_type = "TDA"
+
+D9SMATCH.dev_type = "TDB"
+D10SMATCH.dev_type = "TDB"
+
+# correctors
 H1GUN = Hcor(l = 0.0225, angle = 0, id = 'H1GUN')
 V1GUN = Vcor(l = 0.0225, angle = 0, id = 'V1GUN')
 H2GUN = Hcor(l = 0.0225, angle = 0, id = 'H2GUN')

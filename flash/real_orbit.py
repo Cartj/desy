@@ -71,6 +71,7 @@ for elem in lat.sequence:
 
 
 read_quads(lat, mi, dp)
+read_bends(lat, mi, dp)
 read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
@@ -105,6 +106,11 @@ for elem in lat.sequence:
         print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
         elem.k2 = k2
         #print elem.id, elem.k2
+    elif elem.type in ["bend", "sbend", "rbend"]:
+        angle = tpi2k(elem.dev_type, elem.E, elem.I)
+        angle = abs(angle)*sign(elem.angle)
+        elem.angle = angle*np.pi/180.
+
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
     #    if angle == None:
