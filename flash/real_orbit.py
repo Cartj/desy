@@ -38,10 +38,8 @@ BPM1TCOL.weight = 0
 #BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
-#lat = MagneticLattice(lattice, start=STARTACC39)
-
-
-lat = MagneticLattice(lattice)
+lat = MagneticLattice(lattice, start=STARTACC39)
+#lat = MagneticLattice(lattice)
 
 V1ORS.type = "drift"
 H7ECOL.type = "drift"
@@ -130,7 +128,7 @@ lat.update_transfer_maps()
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
-
+"""
 constr = {Q5UND1:{'beta_x':12, 'beta_y':3}, Q5UND3:{'beta_x':27., 'beta_y':4}}
 vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
 match(lat, constr, vars, tw0, xtol=1e-5)
@@ -142,6 +140,7 @@ for elem in lat.sequence:
     if elem in constr.keys():
         constr_pos.append(L)
 print constr_pos
+"""
 
 tws=twiss(lat, tw0)
 #for tw in tws:
@@ -166,8 +165,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
+#resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
