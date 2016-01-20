@@ -117,8 +117,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
-pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
+#resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
+#pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 orb.correction(lat)
@@ -128,7 +128,7 @@ for elem in lat.sequence:
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle)
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI
 
-orb.read_virtual_orbit(lattice, p_init=Particle(E=gun_energy))
+orb.read_virtual_orbit(lat, p_init=Particle(E=gun_energy))
 
 p = Particle()
 p.E = beam.E
