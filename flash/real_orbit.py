@@ -77,9 +77,10 @@ print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=
 E = beam.E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
+    elem.E = E
     if elem.type == "quadrupole":
 
-        k1 = tpi2k(elem.dev_type, E, elem.I)
+        k1 = tpi2k(elem.dev_type, elem.E, elem.I)
         k1 = abs(k1)*sign(elem.k1)
         if elem.mi_id in ["Q4DBC2","Q9ACC2", 'Q3.5ECOL', 'Q5UND1.3.5', "Q5UND2.4", 'Q6UND1']:
             k1 = abs(k1)*sign(elem.k1)
@@ -96,8 +97,8 @@ for elem in lat.sequence:
 
 
 lat.update_transfer_maps()
-#tws=twiss(lat, tw0)
-#plot_opt_func(lat, tws, top_plot=["E"])
+tws=twiss(lat, tw0)
+plot_opt_func(lat, tws, top_plot=["E"])
 
 
 read_bpms(lat, mi)
@@ -123,3 +124,10 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 plt.show()
 
 resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
+
+orb.correction(lat)
+
+for elem in lat.sequence:
+    if elem.type in ["hcor", "vcor"]:
+        elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle)
+        print elem.id, "Angle=", elem.angle, "dI=", elem.dI
