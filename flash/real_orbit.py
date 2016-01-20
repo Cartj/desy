@@ -33,7 +33,7 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 gun_energy = 0.0053 #GeV
 tw0 = Twiss(beam)
 
-#BPM1TCOL.type="drift"
+BPM1TCOL.weight = 1
 #BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
@@ -122,4 +122,4 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 
 plt.show()
 
-resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
