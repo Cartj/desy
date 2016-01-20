@@ -54,7 +54,7 @@ ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
 
 print "energy gun = ", mi.get_gun_energy()
 
-beam.E = mi.get_gun_energy() #+ ampls1[0]*cos(phases1[0]*pi/180.)*0.001
+beam.E = mi.get_gun_energy() + ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 read_cavs(lat, mi)
 
