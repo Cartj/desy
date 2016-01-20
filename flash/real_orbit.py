@@ -169,8 +169,11 @@ resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
 #resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 #pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat1 = pickle.load(open("resp_mat.txt", "rb"))
-print resp_mat
-print resp_mat1
+for i in range(np.shape(resp_mat)[0]):
+    for j in range(np.shape(resp_mat)[1]):
+        print resp_mat[i, j], resp_mat1[i, j]
+#print resp_mat
+#print resp_mat1
 orb.resp = resp_mat
 
 read_bpms(lat, mi)
