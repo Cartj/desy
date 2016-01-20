@@ -71,11 +71,11 @@ for elem in lat.sequence:
 
 
 read_quads(lat, mi, dp)
-#read_sexts(lat, mi)
+read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
-#setup.save_lattice(lat, "init.txt")
+setup.save_lattice(lat, "init.txt")
 #setup.load_lattice("init.txt", lat)
 #tws=twiss(lat, tw0)
 #plot_opt_func(lat, tws, top_plot=["E"])
