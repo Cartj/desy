@@ -92,16 +92,21 @@ def read_cors(lat, mi):
                 elem.type = "drift"
 
 def read_sexts(lat, mi):
+    id2I_dict = {}
     for elem in lat.sequence:
         if elem.type =="sextupole":
             if elem.id == "S2ECOL":
                 elem.mi_id = "S2.6ECOL"
                 vals = mi.get_sext_current([elem.mi_id])
                 elem.I = vals[0]
+                id2I_dict[elem.mi_id] = elem.I
             elif elem.id == "S6ECOL":
                 elem.mi_id = "S2.6ECOL"
-                vals = mi.get_sext_current([elem.mi_id])
-                elem.I = -vals[0]
+                if elem.mi_id in id2I_dict.keys():
+                    elem.I = -id2I_dict[elem.mi_id]
+                else:
+                    vals = mi.get_sext_current([elem.mi_id])
+                    elem.I = -vals[0]
 
 
 def read_bpms(lat, mi):
