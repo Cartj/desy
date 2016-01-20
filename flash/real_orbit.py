@@ -98,9 +98,9 @@ for elem in lat.sequence:
         elem.k1 = k1
     elif elem.type == "sextupole":
         k2 = tpi2k(elem.dev_type, elem.E, elem.I)
-        print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
+        #print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
         elem.k2 = k2
-        print elem.id, elem.k2
+        #print elem.id, elem.k2
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
     #    if angle == None:
@@ -167,12 +167,12 @@ ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
 ax.plot(s_bpm_b, x_bpm_b, "bo--", label="X: bpm, line")
-#ax.plot(s, x, "r", label="X sim. tr.")
+ax.plot(s, x, "r", label="X sim. tr.")
 ax.legend()
 #plt.show()
 ax2 = plot_API(lat)
 ax2.plot(s_bpm, y_bpm, "ro--", label="Y: bpm, line")
 ax2.plot(s_bpm_b, y_bpm_b, "bo--", label="Y: bpm, line")
-#ax2.plot(s, y, "r", label="Y sim. tr.")
+ax2.plot(s, y, "r", label="Y sim. tr.")
 ax2.legend()
 plt.show()
