@@ -39,8 +39,13 @@ BPM1TCOL.weight = 1
 #BPM14SMATCH.type="drift"
 
 #lat = MagneticLattice(lattice, start=STARTACC39)
+
+
 lat = MagneticLattice(lattice)
 
+V1ORS.type = "drift"
+H7ECOL.type = "drift"
+H1ECOL.type = "drift"
 
 
 #lat = MagneticLattice(lattice)
@@ -125,7 +130,9 @@ resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 
 read_bpms(lat, mi)
-
+s_bpm_b = np.array([p.s for p in orb.bpms])
+x_bpm_b = np.array([p.x for p in orb.bpms])
+y_bpm_b = np.array([p.y for p in orb.bpms])
 orb.correction(lat)
 
 for elem in lat.sequence:
@@ -151,11 +158,13 @@ y_bpm = np.array([bpm.y for bpm in orb.bpms])
 ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
+ax.plot(s_bpm_b, x_bpm_b, "ro--", label="X: bpm, line")
 ax.plot(s, x, "r", label="X sim. tr.")
 ax.legend()
 #plt.show()
 ax2 = plot_API(lat)
 ax2.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
+ax2.plot(s_bpm_b, y_bpm_b, "bo--", label="Y: bpm, line")
 ax2.plot(s, y, "b", label="Y sim. tr.")
 ax2.legend()
 plt.show()
