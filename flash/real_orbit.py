@@ -71,7 +71,7 @@ for elem in lat.sequence:
 
 
 read_quads(lat, mi, dp)
-#read_sexts(lat, mi)
+read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
@@ -150,11 +150,15 @@ y_bpm_b = np.array([p.y for p in orb.bpms])
 orb.correction(lat)
 
 for elem in lat.sequence:
-    if elem.type in ["hcor", "vcor"]:
+    if elem.type == "hcor":
         #print elem.dev_type, elem.E, elem.angle*1000.
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-
-        print elem.id, "Angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
+        if abs(elem.dI) > 1.:
+            print "X:", elem.id, "angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
+    elif elem.type == "vcor":
+        elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        if abs(elem.dI) > 1.:
+            print "Y:", elem.id, "angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
 
 orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
 
