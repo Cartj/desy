@@ -71,7 +71,7 @@ for elem in lat.sequence:
 
 
 read_quads(lat, mi, dp)
-read_sexts(lat, mi)
+#read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
