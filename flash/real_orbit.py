@@ -70,7 +70,7 @@ for elem in lat.sequence:
 
 read_quads(lat, mi, dp)
 read_bends(lat, mi, dp)
-#read_sexts(lat, mi)
+read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
@@ -99,11 +99,11 @@ for elem in lat.sequence:
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
         elem.k1 = k1
     elif elem.type == "sextupole":
-        pass
+        #pass
 
-        #k2 = tpi2k(elem.dev_type, elem.E, elem.I)
-        #print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
-        #elem.k2 = k2
+        k2 = tpi2k(elem.dev_type, elem.E, elem.I)
+        print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
+        elem.k2 = k2
         #print elem.id, elem.k2
     elif elem.type in ["bend", "sbend", "rbend"]:
         try:
@@ -140,14 +140,14 @@ for elem in lat.sequence:
     if elem in constr.keys():
         constr_pos.append(L)
 print constr_pos
-"""
+
 
 tws=twiss(lat, tw0)
 #for tw in tws:
 #    if tw.s in constr_pos:
 #        print tw.s, tw.beta_x, tw.beta_y
 plot_opt_func(lat, tws, top_plot=["E"])
-
+"""
 
 read_bpms(lat, mi)
 
