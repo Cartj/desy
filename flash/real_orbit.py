@@ -165,8 +165,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-#resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
+resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 #pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat1 = pickle.load(open("resp_mat.txt", "rb"))
 
@@ -184,7 +184,7 @@ s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
 orb.correction(lat)
-"""
+
 for elem in lat.sequence:
     if elem.type == "hcor":
         #print elem.dev_type, elem.E, elem.angle*1000.
@@ -207,7 +207,7 @@ for elem in lat.sequence:
         if abs(elem.dI) > 1.:
             print elem.dev_type, elem.E, elem.angle*1000.
             print "Y:", elem.id, "angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
-"""
+
 orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
 
 p = Particle()
