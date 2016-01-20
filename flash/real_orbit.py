@@ -115,7 +115,7 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 orb = Orbit(lat)
 read_bpms(lat, mi)
-
+orb.set_ref_pos()
 #pi = Particle(p=0.0, E=beam.E)
 
 #x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
