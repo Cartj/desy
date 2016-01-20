@@ -107,6 +107,10 @@ for elem in lat.sequence:
         elem.k2 = k2
         #print elem.id, elem.k2
     elif elem.type in ["bend", "sbend", "rbend"]:
+        try:
+            elem.dev_type
+        except:
+            continue
         angle = tpi2k(elem.dev_type, elem.E, elem.I)
         angle = abs(angle)*sign(elem.angle)
         elem.angle = angle*np.pi/180.
