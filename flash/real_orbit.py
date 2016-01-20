@@ -165,8 +165,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-#resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
+resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
