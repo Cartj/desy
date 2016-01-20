@@ -17,12 +17,10 @@ def p1p(a, x):
 
 
 def p1inv(a, y):
-    print a, y
     return ( y - a[0] ) / a[1]
 
 
 def p3(a, x):
-    print a, x
     return a[0] + x*( a[1] + x*( a[2] + x* a[3] ) )
 
 
@@ -44,6 +42,7 @@ def p3inv(a, y): # // uses undamped Newton-Raphson
     #//  printf("p3inv: y=%f y0=%f r=%f y1=%f x=%f x1=%f\n",y,y0,r,y1,x,x1);
 
     while( r > tol ):
+        print r, tol
         y0 = p3(    a, x )
         y1 = p3p(   a, x )
         r  = y0 - y
