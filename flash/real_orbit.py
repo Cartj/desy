@@ -137,6 +137,7 @@ orb.correction(lat)
 
 for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
+        print elem.dev_type, elem.E, elem.angle*1000.
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI, "E=", elem.E

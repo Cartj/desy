@@ -77,7 +77,7 @@ ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 
 #resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-
+print resp_mat
 #for cor in orb.hcors:
 #    print cor.s,  cor.id, cor.phi_x/2./np.pi
 #
