@@ -17,10 +17,12 @@ def p1p(a, x):
 
 
 def p1inv(a, y):
+    print a, y
     return ( y - a[0] ) / a[1]
 
 
 def p3(a, x):
+    print a, x
     return a[0] + x*( a[1] + x*( a[2] + x* a[3] ) )
 
 
