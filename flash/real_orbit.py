@@ -184,7 +184,7 @@ s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
 orb.correction(lat)
-
+"""
 for elem in lat.sequence:
     if elem.type == "hcor":
         #print elem.dev_type, elem.E, elem.angle*1000.
@@ -207,7 +207,7 @@ for elem in lat.sequence:
         if abs(elem.dI) > 1.:
             #print elem.dev_type, elem.E, elem.angle*1000.
             print "Y:", elem.id, "angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
-
+"""
 orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
 
 p = Particle()
