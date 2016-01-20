@@ -72,7 +72,7 @@ read_bpms(lat, mi)
 #tws=twiss(lat, tw0)
 #plot_opt_func(lat, tws, top_plot=["E"])
 
-print ("Electron energy = ", lambda2Ebeam(Lambda=16.3e-9, lu=0.0272634730539, K=1.2392))
+print ("Electron energy = ", lambda2Ebeam(Lambda=25.8e-9, lu=0.0272634730539, K=1.2392))
 
 E = beam.E
 for elem in lat.sequence:
@@ -109,25 +109,47 @@ read_bpms(lat, mi)
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
 y_bpm = np.array([p.y for p in orb.bpms])
-plt.figure(1)
+
 ax = plot_API(lat)
 ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
 #ax.plot(s, x, "r--", label=r"$\sigma_x=$"+"%.2f" % sigma_x+"mm")
-
-
-
-plt.figure(2)
-ax = plot_API(lat)
 ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
-
 plt.show()
 
 resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
-
+pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
+resp_mat = pickle.load(open("resp_mat.txt", "rb"))
+orb.resp = resp_mat
 orb.correction(lat)
 
 for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle)
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI
+
+orb.read_virtual_orbit(Particle(E=gun_energy))
+
+p = Particle()
+p.E = beam.E
+plist = lattice_track(lat, p, order=1)
+x = np.array([p.x for p in plist])
+y = np.array([p.y for p in plist])
+s = np.array([p.s for p in plist])
+s_bpm = np.array([bpm.s for bpm in orb.bpms])
+x_bpm = np.array([bpm.x for bpm in orb.bpms])
+y_bpm = np.array([bpm.y for bpm in orb.bpms])
+#plt.plot(s, [p.E for p in plist])
+#plt.plot(s_bpm, [p.E for p in orb.bpms])
+#plt.show()
+ax = plot_API(lat)
+
+ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
+ax.plot(s, x, "r", label="X sim. tr.")
+ax.legend()
+#plt.show()
+ax2 = plot_API(lat)
+ax2.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
+ax2.plot(s, y, "b", label="Y sim. tr.")
+ax2.legend()
+plt.show()
