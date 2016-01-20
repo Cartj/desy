@@ -95,11 +95,11 @@ def read_sexts(lat, mi):
     for elem in lat.sequence:
         if elem.type =="sextupole":
             if elem.id == "S2ECOL":
-                elem.mi_id = "TTF2.MAGNETS/SEXT/S2.6ECOL"
+                elem.mi_id = "S2.6ECOL"
                 vals = mi.get_sext_current([elem.mi_id])
                 elem.I = vals[0]
             elif elem.id == "S6ECOL":
-                elem.mi_id = "TTF2.MAGNETS/SEXT/S2.6ECOL"
+                elem.mi_id = "S2.6ECOL"
                 vals = mi.get_sext_current([elem.mi_id])
                 elem.I = -vals[0]
 
