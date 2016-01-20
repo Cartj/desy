@@ -139,7 +139,7 @@ for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
-        print elem.id, "Angle=", elem.angle, "dI=", elem.dI
+        print elem.id, "Angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
 
 orb.read_virtual_orbit(lat, p_init=Particle(E=gun_energy))
 
@@ -159,12 +159,12 @@ ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
 ax.plot(s_bpm_b, x_bpm_b, "bo--", label="X: bpm, line")
-ax.plot(s, x, "r", label="X sim. tr.")
+#ax.plot(s, x, "r", label="X sim. tr.")
 ax.legend()
 #plt.show()
 ax2 = plot_API(lat)
 ax2.plot(s_bpm, y_bpm, "ro--", label="Y: bpm, line")
 ax2.plot(s_bpm_b, y_bpm_b, "bo--", label="Y: bpm, line")
-ax2.plot(s, y, "r", label="Y sim. tr.")
+#ax2.plot(s, y, "r", label="Y sim. tr.")
 ax2.legend()
 plt.show()
