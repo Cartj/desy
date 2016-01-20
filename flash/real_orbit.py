@@ -130,13 +130,14 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
-pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
+#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
+#pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 
 read_bpms(lat, mi)
 orb.set_ref_pos()
+
 s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
