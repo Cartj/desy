@@ -75,6 +75,9 @@ read_sexts(lat, mi)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
+orb = Orbit(lat)
+orb.set_ref_pos()
+
 setup.save_lattice(lat, "init.txt")
 #setup.load_lattice("init.txt", lat)
 #tws=twiss(lat, tw0)
@@ -113,7 +116,7 @@ lat.update_transfer_maps()
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
-orb = Orbit(lat)
+
 read_bpms(lat, mi)
 
 #pi = Particle(p=0.0, E=beam.E)
@@ -136,7 +139,9 @@ resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 
 read_bpms(lat, mi)
-orb.set_ref_pos()
+
+orb.minus_reference()
+
 
 s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
