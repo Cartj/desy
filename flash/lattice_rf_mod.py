@@ -1120,8 +1120,9 @@ BPM5UND6 = Monitor(id = 'BPM5UND6')
 
 # sextupoles 
 S2ECOL = Sextupole(l = 0.215, k2 = 167.261*0, tilt = 0, id = 'S2ECOL')
+S2ECOL.dev_type = "TSB"
 S6ECOL = Sextupole(l = 0.215, k2 = -167.261*0, tilt = 0, id = 'S6ECOL')
-
+S6ECOL.dev_type = "TSB"
 # octupole 
 
 # undulator 
