@@ -34,7 +34,7 @@ gun_energy = 0.0053 #GeV
 
 tw0 = Twiss(beam)
 
-BPM1TCOL.weight = 1
+BPM1TCOL.weight = 0
 #BPM2UND3.type="drift"
 #BPM14SMATCH.type="drift"
 
@@ -158,13 +158,13 @@ y_bpm = np.array([bpm.y for bpm in orb.bpms])
 ax = plot_API(lat)
 
 ax.plot(s_bpm, x_bpm, "ro--", label="X: bpm, line")
-ax.plot(s_bpm_b, x_bpm_b, "ro--", label="X: bpm, line")
+ax.plot(s_bpm_b, x_bpm_b, "bo--", label="X: bpm, line")
 ax.plot(s, x, "r", label="X sim. tr.")
 ax.legend()
 #plt.show()
 ax2 = plot_API(lat)
-ax2.plot(s_bpm, y_bpm, "bo--", label="Y: bpm, line")
+ax2.plot(s_bpm, y_bpm, "ro--", label="Y: bpm, line")
 ax2.plot(s_bpm_b, y_bpm_b, "bo--", label="Y: bpm, line")
-ax2.plot(s, y, "b", label="Y sim. tr.")
+ax2.plot(s, y, "r", label="Y sim. tr.")
 ax2.legend()
 plt.show()
