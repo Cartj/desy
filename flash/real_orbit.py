@@ -134,8 +134,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
-#pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
+resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
+pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 
@@ -151,7 +151,7 @@ orb.correction(lat)
 
 for elem in lat.sequence:
     if elem.type in ["hcor", "vcor"]:
-        print elem.dev_type, elem.E, elem.angle*1000.
+        #print elem.dev_type, elem.E, elem.angle*1000.
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
