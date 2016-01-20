@@ -8,7 +8,7 @@ converted to Python by Sergey Tomin XFEL
 
 from ocelot import *
 import numpy as np
-
+from scipy.optimize import newton
 def p1(a, x):
     return a[0] + a[1] * x
 
@@ -27,8 +27,16 @@ def p3(a, x):
 def p3p(a, x):
     return a[1] + x*( 2.0*a[2] + x* 3.0*a[3] )
 
+def p3inv(a, y):
+    tol=1.e-8
+    x1 = p1inv( a, y )
+    if a[2]==0.0 and a[3]==0.0:
+        return x1
+    func = lambda x: p3(a, x) - y
+    x = newton(func, x1, tol=tol)
+    return x
 
-def p3inv(a, y): # // uses undamped Newton-Raphson
+def p3inv_old(a, y): # // uses undamped Newton-Raphson
     tol=1.e-8
     x1 = p1inv( a, y )
     if a[2]==0.0 and a[3]==0.0:
@@ -42,7 +50,7 @@ def p3inv(a, y): # // uses undamped Newton-Raphson
     #//  printf("p3inv: y=%f y0=%f r=%f y1=%f x=%f x1=%f\n",y,y0,r,y1,x,x1);
 
     while( r > tol ):
-        print r, tol
+        #print r, tol
         y0 = p3(    a, x )
         y1 = p3p(   a, x )
         r  = y0 - y
@@ -167,6 +175,8 @@ def tpk2i(id, p, k):
         phi=k*1.e-3
         dk=2.0*np.sin(0.5*phi)/el
     di = p3inv( a, p*p2brho*dk/km )
+    di_old = p3inv_old( a, p*p2brho*dk/km )
+    print di, di_old
     return di
 
 if __name__ == "__main__":
