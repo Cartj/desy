@@ -94,8 +94,8 @@ for elem in lat.sequence:
 
         k1 = tpi2k(elem.dev_type, elem.E, elem.I)
         k1 = abs(k1)*sign(elem.k1)
-        if elem.mi_id in ["Q4DBC2","Q9ACC2", 'Q3.5ECOL', 'Q5UND1.3.5', "Q5UND2.4", 'Q6UND1']:
-            k1 = abs(k1)*sign(elem.k1)
+        #if elem.mi_id in ["Q4DBC2","Q9ACC2", 'Q3.5ECOL', 'Q5UND1.3.5', "Q5UND2.4", 'Q6UND1']:
+        #    k1 = abs(k1)*sign(elem.k1)
         #K1 = k1
         #print elem.id,  "i.k1=", elem.k1, " r.k1=", k1, "I=", elem.I, "E=", E
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
@@ -112,8 +112,10 @@ for elem in lat.sequence:
         except:
             continue
         angle = tpi2k(elem.dev_type, elem.E, elem.I)
-        angle = abs(angle)*sign(elem.angle)
-        elem.angle = angle*np.pi/180.
+        angle = abs(angle)*sign(elem.angle)*np.pi/180.
+        print elem.id,  "i.a=", elem.angle, " r.a=", angle, "I=", elem.I, "E=", E
+        elem.angle = angle
+
 
     #elif elem.type in ["hcor", "vcor"]:
     #    angle = tpi2k(elem.dev_type, E, elem.I)
