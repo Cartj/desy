@@ -40,7 +40,7 @@ BPM1TCOL.weight = 1
 
 #lat = MagneticLattice(lattice, start=STARTACC39)
 lat = MagneticLattice(lattice)
-orb = Orbit(lat)
+
 
 
 #lat = MagneticLattice(lattice)
@@ -102,7 +102,7 @@ lat.update_transfer_maps()
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
 
-
+orb = Orbit(lat)
 read_bpms(lat, mi)
 
 #pi = Particle(p=0.0, E=beam.E)

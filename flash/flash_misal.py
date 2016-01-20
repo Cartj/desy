@@ -32,7 +32,7 @@ X = []
 Y = []
 s = []
 n = 1
-
+"""
 for elem in lat.sequence:
     if elem.type in ["bend", "rbend", "sbend"]:
         elem.dx = tgauss(0, sigma=0.0001,trunc=3)
@@ -47,7 +47,7 @@ for elem in lat.sequence:
     if elem.id in ["V2DBC2","V4DBC2", "V6DBC2", "V10DBC2" ]:
         elem.type = "drift"
 lat.update_transfer_maps()
-
+"""
 p = Particle(p=0.0, E=beam.E)
 plist = lattice_track(lat, p, order=1)
 x = np.array([p.x for p in plist])
@@ -75,13 +75,14 @@ ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 
 #plt.show()
 
-resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+#resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
 
-for cor in orb.hcors:
-    print cor.s,  cor.id, cor.phi_x/2./np.pi
-
-for cor in orb.vcors:
-    print cor.s,  cor.id, cor.phi_y/2./np.pi
+#for cor in orb.hcors:
+#    print cor.s,  cor.id, cor.phi_x/2./np.pi
+#
+#for cor in orb.vcors:
+#    print cor.s,  cor.id, cor.phi_y/2./np.pi
 #print resp_mat
 orb.correction(lat)
 p = Particle(p=0.0, E=beam.E)
