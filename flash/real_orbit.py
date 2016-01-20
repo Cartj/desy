@@ -177,7 +177,7 @@ orb.resp = resp_mat
 
 read_bpms(lat, mi)
 
-orb.minus_reference()
+#orb.minus_reference()
 
 
 s_bpm_b = np.array([p.s for p in orb.bpms])
@@ -205,7 +205,7 @@ for elem in lat.sequence:
             print elem.id, elem.E, elem.angle*1000.
             elem.dI = None
         if abs(elem.dI) > 1.:
-            print elem.dev_type, elem.E, elem.angle*1000.
+            #print elem.dev_type, elem.E, elem.angle*1000.
             print "Y:", elem.id, "angle=", elem.angle, "dI=", elem.dI, "E=", elem.E
 
 orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
