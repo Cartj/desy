@@ -115,7 +115,7 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 orb = Orbit(lat)
 read_bpms(lat, mi)
-orb.set_ref_pos()
+
 #pi = Particle(p=0.0, E=beam.E)
 
 #x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
@@ -136,6 +136,7 @@ resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 
 read_bpms(lat, mi)
+orb.set_ref_pos()
 s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
