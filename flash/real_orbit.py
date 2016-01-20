@@ -93,11 +93,12 @@ for elem in lat.sequence:
         if elem.mi_id in ["Q4DBC2","Q9ACC2", 'Q3.5ECOL', 'Q5UND1.3.5', "Q5UND2.4", 'Q6UND1']:
             k1 = abs(k1)*sign(elem.k1)
         #K1 = k1
-        print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", k1, "I = ", elem.I, "E = ", E)
+        #print elem.id,  "i.k1=", elem.k1, " r.k1=", k1, "I=", elem.I, "E=", E
         #print(elem.id,  "ideal: k1 = ", elem.k1, " real k1 = ", K1, " dk/k = ", (K1-elem.k1)/elem.k1*100.)
         elem.k1 = k1
     elif elem.type == "sextupole":
         k2 = tpi2k(elem.dev_type, elem.E, elem.I)
+        print elem.id,  "i.k1=", elem.k2, " r.k1=", k2, "I=", elem.I, "E=", E
         elem.k2 = k2
         print elem.id, elem.k2
     #elif elem.type in ["hcor", "vcor"]:

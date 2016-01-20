@@ -117,9 +117,9 @@ def tpi2k(id, p, dI):
     a = table[id]["A"]
     el = table[id]["EL"]
     km = table[id]["KM"]
-    print magnet_type, a, el, km, p
+    #print magnet_type, a, el, km, p
     dk0 = p3(a, dI ) * km/(p*p2brho)
-    print dk0
+    #print dk0
     dk = 0.
     #print magnet_type, a, el, km, dk0
     if magnet_type == "S" or magnet_type == "Q":
