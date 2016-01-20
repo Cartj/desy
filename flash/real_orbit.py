@@ -31,6 +31,7 @@ beam.emit_yn = 1.5e-6
 beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 gun_energy = 0.0053 #GeV
+
 tw0 = Twiss(beam)
 
 BPM1TCOL.weight = 1
@@ -55,6 +56,7 @@ print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
 read_cavs(lat, mi)
 
 E = beam.E
+tw0.E = beam.E
 print "initial energy = ", E
 for elem in lat.sequence:
     E += elem.transfer_map.delta_e
@@ -117,8 +119,8 @@ ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 #ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 plt.show()
 
-#resp_mat = orb.measure_response_matrix(lat, Particle(E=gun_energy))
-#pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
+resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=0.005))
+pickle.dump(resp_mat, open("resp_mat.txt", "wb"))
 resp_mat = pickle.load(open("resp_mat.txt", "rb"))
 orb.resp = resp_mat
 orb.correction(lat)
