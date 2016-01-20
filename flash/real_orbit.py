@@ -128,7 +128,7 @@ for elem in lat.sequence:
         elem.dI = tpk2i(elem.dev_type, elem.E, elem.angle)
         print elem.id, "Angle=", elem.angle, "dI=", elem.dI
 
-orb.read_virtual_orbit(Particle(E=gun_energy))
+orb.read_virtual_orbit(lattice, p_init=Particle(E=gun_energy))
 
 p = Particle()
 p.E = beam.E
