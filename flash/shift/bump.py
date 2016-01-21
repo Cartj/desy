@@ -92,10 +92,10 @@ BPM9ACC4.x = x
 BPM9ACC5.x = x
 BPM9ACC6.x = x
 BPM11ACC7.x = 0.0000
-BPM3DBC3.weight = 1
-BPM9ACC5.weight = 1
-BPM9ACC4.weight = 1.
-BPM9ACC6.weight = 1
+BPM3DBC3.weight = 10
+BPM9ACC5.weight = 10
+BPM9ACC4.weight = 10.
+BPM9ACC6.weight = 10
 
 orb.correction(lat)
 
