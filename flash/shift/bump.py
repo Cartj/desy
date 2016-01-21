@@ -122,7 +122,7 @@ plt.show()
 for elem in lat.sequence:
     if elem.type == "hcor":
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.001:
+        if abs(dI) > 0.01:
             elem.dI = dI
             print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
