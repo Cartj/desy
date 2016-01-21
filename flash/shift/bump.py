@@ -40,6 +40,7 @@ KICKER2SFELC.type = "drift"
 KICKER6SMATCH.type = "drift"
 H1ECOL.type = "drift"
 H7ECOL.type = "drift"
+D12SMATCH.type = "drift"
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
@@ -90,7 +91,7 @@ BPM9ACC4.x = x
 BPM9ACC5.x = x
 BPM9ACC6.x = x
 BPM11ACC7.x = 0.0000
-BPM3DBC3.weight = 0
+BPM3DBC3.weight = 1
 BPM9ACC5.weight = 1
 BPM9ACC4.weight = 1.
 BPM9ACC6.weight = 1
