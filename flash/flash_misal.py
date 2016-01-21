@@ -32,7 +32,7 @@ X = []
 Y = []
 s = []
 n = 1
-"""
+
 for elem in lat.sequence:
     if elem.type in ["bend", "rbend", "sbend"]:
         elem.dx = tgauss(0, sigma=0.0001,trunc=3)
@@ -47,23 +47,24 @@ for elem in lat.sequence:
     if elem.id in ["V2DBC2","V4DBC2", "V6DBC2", "V10DBC2" ]:
         elem.type = "drift"
 lat.update_transfer_maps()
-"""
+
 p = Particle(p=0.0, E=beam.E)
 plist = lattice_track(lat, p, order=1)
 x = np.array([p.x for p in plist])
 y = np.array([p.y for p in plist])
 s = np.array([p.s for p in plist])
-
-
+plt.plot(s, x, s, y)
+plt.show()
 pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
-BPM2UBC2.weight = 100
-BPM1DBC2.weight = 100
+BPM2UBC2.weight = 1
+BPM1DBC2.weight = 1
 x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
 print "sigma_x = ", sqrt(sum(x_bpm**2/len(x_bpm))), "sigma_y = ", sqrt(sum(y_bpm**2/len(x_bpm)))
 s_bpm = [p.s for p in orb.bpms]
+
 ax = plot_API(lat)
 #plt.figure(1)
 ax.plot(s_bpm, x_bpm, "ro")
@@ -77,20 +78,42 @@ ax.plot(s, y, "b--", label=r"$\sigma_y=$"+"%.2f" % sigma_y+"mm")
 
 resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 #resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-print resp_mat
+#print resp_mat
 #for cor in orb.hcors:
 #    print cor.s,  cor.id, cor.phi_x/2./np.pi
 #
 #for cor in orb.vcors:
 #    print cor.s,  cor.id, cor.phi_y/2./np.pi
 #print resp_mat
-orb.correction(lat)
-p = Particle(p=0.0, E=beam.E)
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=copy(p))
+#x_bpm_b = x_bpm
+#y_bpm_b = y_bpm
+
+#for i in range(1):
+p0 = orb.correction(lat, p_init=Particle(E=beam.E))
+
+p0=Particle(E=beam.E)
+x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
+#plt.plot(s_bpm, x_bpm, "r")
+p0 = orb.correction(lat, p_init=Particle(E=beam.E))
+p0=Particle(E=beam.E)
+x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
+#plt.plot(s_bpm, x_bpm, "b")
+
+#x_bpm = np.array([p.x for p in orb.bpms])
+#y_bpm = np.array([p.y for p in orb.bpms])
+#x_bpm = (x_bpm_b + x_bpm_i)
+#y_bpm = (y_bpm_b + y_bpm_i)
+#sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000.
+#sigma_y = sqrt(sum(y_bpm**2/len(y_bpm)))*1000.
+#print "sigma_x=", sigma_x, "mm, sigma_y=", sigma_y," mm"
+#orb.set_bpm_signal(x_bpm=x_bpm, y_bpm=y_bpm)
+print "asdfsdaf"
+#p = Particle(p=0.0, E=beam.E)
+#x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=copy(p0))
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(y_bpm)))*1000
 print "sigma_x = ", sqrt(sum(x_bpm**2/len(x_bpm))), "sigma_y = ", sqrt(sum(y_bpm**2/len(x_bpm)))
-plist = lattice_track(lat, p, order=2)
+plist = lattice_track(lat, p0, order=1)
 x = np.array([p.x for p in plist])
 y = np.array([p.y for p in plist])
 s = np.array([p.s for p in plist])
