@@ -163,10 +163,10 @@ plt.show()
 alpha = 0.1
 
 for hcor in orb.hcors:
-    print hcor.id, "<-- ", hcor.I + hcor.dI, " was = ", hcor.I
+    print hcor.id, "<-- ", hcor.I + hcor.dI, " was = ", hcor.I, " dI = ", hcor.dI, "x", alpha
 
 
-inp = raw_input("Do you really want to apply current for X:? ")
+inp = raw_input("Do you really want to apply currents for X:? ")
 if inp == "yes":
     for hcor in orb.hcors:
         new_I = hcor.I + hcor.dI*alpha
@@ -176,9 +176,9 @@ if inp == "yes":
 
 
 for vcor in orb.hcors:
-    print vcor.id, "<-- ", vcor.I + vcor.dI, " was = ", vcor.I
+    print vcor.id, "<-- ", vcor.I + vcor.dI, " was = ", vcor.I, " dI = ", vcor.dI, "x", alpha
 
-inp = raw_input("Do you really want to apply current for Y:? ")
+inp = raw_input("Do you really want to apply currents for Y:? ")
 if inp == "yes":
 
     for vcor in orb.hcors:
