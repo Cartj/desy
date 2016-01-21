@@ -96,10 +96,10 @@ BPM9ACC4.x = x
 BPM9ACC5.x = x
 BPM9ACC6.x = x
 BPM11ACC7.x = 0.0000
-BPM3DBC3.weight = 10
-BPM9ACC5.weight = 10
-BPM9ACC4.weight = 10.
-BPM9ACC6.weight = 10
+BPM3DBC3.weight = 1
+BPM9ACC5.weight = 1
+BPM9ACC4.weight = 1.
+BPM9ACC6.weight = 1
 
 orb.correction(lat)
 
@@ -107,15 +107,15 @@ for elem in lat.sequence:
     if elem.type == "vcor":
         #print elem.id
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.005:
+        if abs(dI) > 0.001:
             elem.dI = dI
             print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
             elem.dI = 0.
-        elem.angle = 0.
+            elem.angle = 0.
     if elem.type == "hcor":
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.005:
+        if abs(dI) > 0.001:
             elem.dI = dI
             print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
