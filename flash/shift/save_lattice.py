@@ -22,7 +22,7 @@ mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
 lat = MagneticLattice(lattice)
-
+read_cavs(lat, mi)
 read_quads(lat, mi, dp)
 read_bends(lat, mi, dp)
 read_sexts(lat, mi)
