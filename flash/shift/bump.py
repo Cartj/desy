@@ -119,10 +119,10 @@ for elem in lat.sequence:
         else:
             elem.dI = 0.
         elem.angle = 0.
-    if elem.type == "hcor":
+    if elem.type == "hcor" :
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
-        if abs(dI) > 0.01:
+        if abs(dI) > 0.01 and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
             elem.dI = dI
             print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
             increm.append(elem.dI)
