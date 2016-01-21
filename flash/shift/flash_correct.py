@@ -54,7 +54,12 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 setup = log.MachineSetup()
 #setup.save_lattice(lat, "init.txt")
 lat_all = MagneticLattice(lattice)
+
 setup.load_lattice("init.txt", lat_all)
+
+
+orb = Orbit(lat)
+orb.set_ref_pos()
 
 setup.convert_currents(lat_all, init_energy=0.0053)
 
@@ -66,11 +71,8 @@ lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
-orb = Orbit(lat)
-orb.set_ref_pos()
+
 resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
-#resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
-#orb.read_virtual_orbit(lat, Particle(E=beam.E))
 read_bpms(lat, mi)
 
 s_bpm = np.array([p.s for p in orb.bpms])
@@ -87,23 +89,14 @@ plt.show()
 orb.minus_reference()
 
 s_bpm = np.array([p.s for p in orb.bpms])
-x_bpm = np.array([p.x for p in orb.bpms])
-y_bpm = np.array([p.y for p in orb.bpms])
+x_bpm_b = np.array([p.x for p in orb.bpms])
+y_bpm_b = np.array([p.y for p in orb.bpms])
 
 ax = plot_API(lat)
-ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
-ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
+ax.plot(s_bpm, x_bpm_b*1000.,  "ro-", label="X")
+ax.plot(s_bpm, y_bpm_b*1000.,   "bo-", label="Y")
 plt.show()
-x = 0.001
-BPM3DBC3.x = 0.000
-BPM9ACC4.x = x
-BPM9ACC5.x = x
-BPM9ACC6.x = x
-BPM11ACC7.x = 0.0000
-BPM3DBC3.weight = 1
-BPM9ACC5.weight = 1
-BPM9ACC4.weight = 1.
-BPM9ACC6.weight = 1
+
 
 orb.correction(lat)
 increm = []
@@ -115,17 +108,16 @@ for elem in lat.sequence:
     if elem.type == "vcor":
         #print elem.id
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.02:
+        if abs(dI) > 0.005:
             elem.dI = dI
             #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
             elem.dI = 0.
         elem.angle = 0.
     if elem.type == "hcor" :
-        print elem.id, elem.angle*1000.
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
-        if abs(dI) > 0.01 and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
+        if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
             elem.dI = dI
             print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
             increm.append(elem.dI)
@@ -157,8 +149,13 @@ s = np.array([p.s for p in plist])
 ax = plot_API(lat)
 ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
 ax.plot(s, x*1000.,  "r-", label="X")
-ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
-ax.plot(s, y*1000.,  "b-", label="Y")
+ax.plot(s_bpm, x_bpm_b*1000.,   "bo-", label="Y")
+plt.show()
+
+ax = plot_API(lat)
+ax.plot(s_bpm, y_bpm*1000.,  "ro-", label="X")
+ax.plot(s, y*1000.,  "r-", label="X")
+ax.plot(s_bpm, y_bpm_b*1000.,   "bo-", label="Y")
 plt.show()
 
 
