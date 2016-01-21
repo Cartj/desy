@@ -112,7 +112,7 @@ for elem in lat.sequence:
             print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
             elem.dI = 0.
-            elem.angle = 0.
+        elem.angle = 0.
     if elem.type == "hcor":
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
         if abs(dI) > 0.005:
