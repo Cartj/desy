@@ -126,10 +126,12 @@ for elem in lat.sequence:
         else:
             elem.dI = 0.
             elem.angle = 0.
-print
-print "names = ", names
-print "currents = ", cur
-print "dI = ", increm
+        if abs(dI) > 0.5:
+            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
+#print
+#print "names = ", names
+#print "currents = ", cur
+#print "dI = ", increm
 lat.update_transfer_maps()
 
 orb.read_virtual_orbit(lat, Particle(E=beam.E))
@@ -158,4 +160,29 @@ ax.plot(s, y*1000.,  "r-", label="X")
 ax.plot(s_bpm, y_bpm_b*1000.,   "bo-", label="Y")
 plt.show()
 
+alpha = 0.1
+
+for hcor in orb.hcors:
+    print hcor.id, "<-- ", hcor.I + hcor.dI, " was = ", hcor.I
+
+
+inp = raw_input("Do you really want to apply current for X:? ")
+if inp == "yes":
+    for hcor in orb.hcors:
+        new_I = hcor.I + hcor.dI*alpha
+        print hcor.id, "<-- ", new_I, hcor.I
+        mi.set_value(hcor.mi_id, new_I)
+
+
+
+for vcor in orb.hcors:
+    print vcor.id, "<-- ", vcor.I + vcor.dI, " was = ", vcor.I
+
+inp = raw_input("Do you really want to apply current for Y:? ")
+if inp == "yes":
+
+    for vcor in orb.hcors:
+        new_I = vcor.I + vcor.dI*alpha
+        print vcor.id, "<-- ", new_I, vcor.I
+        mi.set_value(vcor.mi_id, new_I)
 
