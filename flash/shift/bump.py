@@ -20,8 +20,8 @@ import machine_setup as log
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
-print "SASE=", mi.get_sase()
-print "get alarms = ", mi.get_alarms()
+#print "SASE=", mi.get_sase()
+#print "get alarms = ", mi.get_alarms()
 beam = Beam()
 beam.E = 450e-3 #in GeV ?!
 #beam.beta_x = 14.8821
@@ -102,9 +102,10 @@ BPM9ACC4.weight = 10.
 BPM9ACC6.weight = 10
 
 orb.correction(lat)
+
 for elem in lat.sequence:
     if elem.type == "vcor":
-        print elem.id
+        #print elem.id
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
         if abs(dI) > 0.005:
             elem.dI = dI
@@ -120,6 +121,7 @@ for elem in lat.sequence:
         else:
             elem.dI = 0.
             elem.angle = 0.
+
 orb.read_virtual_orbit(lat, Particle(E=beam.E))
 
 s_bpm = np.array([p.s for p in orb.bpms])
