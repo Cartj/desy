@@ -43,6 +43,9 @@ KICKER6SMATCH.type = "drift"
 H1ECOL.type = "drift"
 H7ECOL.type = "drift"
 D12SMATCH.type = "drift"
+FL2KICKER1.type = "drift"
+FL2KICKER2.type = "drift"
+FL2KICKER3.type = "drift"
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
