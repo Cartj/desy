@@ -21,6 +21,7 @@ mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
 print "SASE=", mi.get_sase()
+print "get alarms = ", mi.get_alarms()
 beam = Beam()
 beam.E = 450e-3 #in GeV ?!
 #beam.beta_x = 14.8821
@@ -121,6 +122,8 @@ ax.plot(s, y*1000.,  "b-", label="Y")
 plt.show()
 
 for elem in lat.sequence:
+    if elem.type == "vcor":
+        elem.dI = 0.
     if elem.type == "hcor":
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
         if abs(dI) > 0.01:
