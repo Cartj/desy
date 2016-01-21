@@ -25,7 +25,7 @@ tw0 = Twiss(beam)
 
 lat = MagneticLattice(lattice, start=STARTACC39)
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
+plot_opt_func(lat, tws, top_plot=["E"])
 
 
 X = []

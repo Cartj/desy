@@ -3,19 +3,11 @@ __author__ = 'Sergey Tomin'
 from lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 from ocelot import *
-#from ocelot.gui import *
-#from ocelot.cpbd.errors import *
-#from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
-#from copy import copy
 from high_level_mint_flash import *
-#import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
-#from flash1_virtual_interface import *
 import pickle
 from converter import *
-from ocelot.rad.undulator_params import *
-import copy
 import machine_setup as log
 
 mi = FLASH1MachineInterface()
@@ -33,7 +25,7 @@ read_bpms(lat, mi)
 setup = log.MachineSetup()
 setup.save_lattice(lat, "init.txt")
 
-setup.load_lattice("init.txt",lat)
+setup.load_lattice("init.txt", lat)
 
 setup.convert_currents(lat, init_energy=0.0053)
 
