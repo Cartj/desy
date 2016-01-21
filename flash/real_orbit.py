@@ -177,7 +177,7 @@ orb.resp = resp_mat
 
 read_bpms(lat, mi)
 
-#orb.minus_reference()
+orb.minus_reference()
 
 
 s_bpm_b = np.array([p.s for p in orb.bpms])
