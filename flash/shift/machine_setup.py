@@ -174,10 +174,10 @@ class MachineSetup:
                 elem.x = self.dict_orbit[elem.id]["x"]
                 elem.y = self.dict_orbit[elem.id]["y"]
 
-            if elem.type == "sextupole" and elem.id in self.dict_quad.keys():
-                elem.mi_id = self.dict_quad[elem.id]["mi_id"]
+            if elem.type == "sextupole" and elem.id in self.dict_sext.keys():
+                elem.mi_id = self.dict_sext[elem.id]["mi_id"]
                 elem.dev_type = self.dict_sext[elem.id]["dev_type"]
-                elem.I = self.dict_quad[elem.id]["I"]
+                elem.I = self.dict_sext[elem.id]["I"]
 
     def convert_currents(self, lat, init_energy):
         E = init_energy
