@@ -61,6 +61,8 @@ setup.convert_currents(lat_all, init_energy=0.0053)
 lat.update_transfer_maps()
 
 lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
+
+
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
@@ -102,26 +104,37 @@ BPM9ACC4.weight = 1.
 BPM9ACC6.weight = 1
 
 orb.correction(lat)
+increm = []
+cur = []
+names = []
 
 for elem in lat.sequence:
+
     if elem.type == "vcor":
         #print elem.id
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.001:
+        if abs(dI) > 0.02:
             elem.dI = dI
-            print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+            #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
             elem.dI = 0.
-            elem.angle = 0.
+        elem.angle = 0.
     if elem.type == "hcor":
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.001:
+
+        if abs(dI) > 0.01:
             elem.dI = dI
-            print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+            print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+            increm.append(elem.dI)
+            cur.append(elem.I)
+            names.append(elem.id)
         else:
             elem.dI = 0.
             elem.angle = 0.
-
+print
+print "names = ", names
+print "currents = ", cur
+print "dI = ", increm
 lat.update_transfer_maps()
 
 orb.read_virtual_orbit(lat, Particle(E=beam.E))
