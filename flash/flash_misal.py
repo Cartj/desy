@@ -88,7 +88,7 @@ orb.correction(lat)
 p = Particle(p=0.0, E=beam.E)
 x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=copy(p))
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
-sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
+sigma_y = sqrt(sum(y_bpm**2/len(y_bpm)))*1000
 print "sigma_x = ", sqrt(sum(x_bpm**2/len(x_bpm))), "sigma_y = ", sqrt(sum(y_bpm**2/len(x_bpm)))
 plist = lattice_track(lat, p, order=2)
 x = np.array([p.x for p in plist])
