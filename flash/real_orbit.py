@@ -183,7 +183,7 @@ s_bpm_b = np.array([p.s for p in orb.bpms])
 x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
 
-for i in range(4):
+for i in range(20):
     orb.correction(lat)
     orb.read_virtual_orbit(lat, p_init=Particle(E=beam.E))
     x_bpm_i = np.array([p.x for p in orb.bpms])
@@ -194,9 +194,9 @@ for i in range(4):
     sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000.
     sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000.
     print "sigma_x=", sigma_x, "mm, sigma_y=", sigma_y," mm"
-    plt.plot(s_bpm_b, x_bpm_b, "ro-")
-    plt.plot(s_bpm_b, x_bpm, "bo-")
-    plt.show()
+    #plt.plot(s_bpm_b, x_bpm_b, "ro-")
+    #plt.plot(s_bpm_b, x_bpm, "bo-")
+    #plt.show()
 
 """
 for elem in lat.sequence:
