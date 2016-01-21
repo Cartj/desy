@@ -122,6 +122,8 @@ for elem in lat.sequence:
             elem.dI = 0.
             elem.angle = 0.
 
+lat.update_transfer_maps()
+
 orb.read_virtual_orbit(lat, Particle(E=beam.E))
 
 s_bpm = np.array([p.s for p in orb.bpms])
