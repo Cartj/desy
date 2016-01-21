@@ -20,6 +20,7 @@ import machine_setup as log
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
+print "SASE=", mi.get_sase()
 beam = Beam()
 beam.E = 450e-3 #in GeV ?!
 #beam.beta_x = 14.8821
