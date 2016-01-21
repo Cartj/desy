@@ -62,7 +62,8 @@ orb = Orbit(lat)
 orb.set_ref_pos()
 
 setup.convert_currents(lat_all, init_energy=0.0053)
-
+S2ECOL.k2 = 0.
+S6ECOL.k2 = 0.
 lat.update_transfer_maps()
 
 lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
@@ -119,7 +120,7 @@ for elem in lat.sequence:
 
         if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
             elem.dI = dI
-            print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+            #print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
             increm.append(elem.dI)
             cur.append(elem.I)
             names.append(elem.id)
