@@ -176,7 +176,7 @@ def tpk2i(id, p, k):
         dk=2.0*np.sin(0.5*phi)/el
     di = p3inv( a, p*p2brho*dk/km )
     di_old = p3inv_old( a, p*p2brho*dk/km )
-    print di, di_old
+    #print di, di_old
     return di
 
 if __name__ == "__main__":
