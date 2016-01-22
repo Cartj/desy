@@ -39,11 +39,17 @@ orbit = {}
 
 
 
-orbit["correctors"] = ['H3SFELC', 'H4SFELC', 'H10SMATCH', 'D11SMATCH', 'H12SMATCH']
-orbit["correctors"] = ['V6_4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS', 'V2SFELC', 'V3SFELC','V4SFELC', 'V6SFELC', 'V7SMATCH', 'V14SMATCH']
+#orbit["correctors"] = ['H3SFELC', 'H4SFELC', 'H10SMATCH', 'D11SMATCH', 'H12SMATCH']
+#orbit["correctors"] = ['V6_4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS', 'V2SFELC', 'V3SFELC','V4SFELC', 'V6SFELC', 'V7SMATCH', 'V14SMATCH']
 
-bpms = ['13SMATCH','14SMATCH','2UND1','4UND1','5UND1','2UND2','4UND2','5UND2','2UND3','4UND3','5UND3','2UND4',
-'4UND4','5UND4','2UND5','4UND5','5UND5','2UND6','4UND6','5UND6']
+
+#bpms = ['13SMATCH','14SMATCH','2UND1','4UND1','5UND1','2UND2','4UND2','5UND2','2UND3','4UND3','5UND3','2UND4',
+#'4UND4','5UND4','2UND5','4UND5','5UND5','2UND6','4UND6','5UND6']
+
+
+orbit["correctors"] = [ 'H10SMATCH', 'H12SMATCH']
+orbit["correctors"] = ['V7SMATCH', 'V14SMATCH']
+bpms = ['13SMATCH','14SMATCH','5UND1','5UND2','5UND3','5UND4','5UND5','5UND6']
 
 setup = log.MachineSetup()
 lat_all = MagneticLattice(lattice)
