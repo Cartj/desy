@@ -174,7 +174,13 @@ if inp == "yes":
         print hcor.id, "<-- ", new_I, hcor.I
         mi.set_value(hcor.mi_id, new_I)
 
+inp2 = raw_input("Restore orbit for X:? ")
 
+if inp2 == "yes":
+    for hcor in orb.hcors:
+        new_I = hcor.I + hcor.dI*alpha
+        print hcor.id, "<-- ", hcor.I
+        mi.set_value(hcor.mi_id, hcor.I)
 
 for vcor in orb.hcors:
     print vcor.id, "<-- ", vcor.I + vcor.dI, " was = ", vcor.I, " dI = ", vcor.dI, "x", alpha
@@ -182,8 +188,14 @@ for vcor in orb.hcors:
 inp = raw_input("Do you really want to apply currents for Y:? ")
 if inp == "yes":
 
-    for vcor in orb.hcors:
+    for vcor in orb.vcors:
         new_I = vcor.I + vcor.dI*alpha
         print vcor.id, "<-- ", new_I, vcor.I
         mi.set_value(vcor.mi_id, new_I)
 
+inp2 = raw_input("Restore orbit for Y:? ")
+if inp2 == "yes":
+    for vcor in orb.vcors:
+        new_I = vcor.I + vcor.dI*alpha
+        print vcor.id, "<-- ", vcor.I
+        mi.set_value(vcor.mi_id, vcor.I)
