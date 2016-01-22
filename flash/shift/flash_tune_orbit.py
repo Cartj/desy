@@ -36,6 +36,9 @@ opt.timeout = 1.2
 
 
 orbit = {}
+
+
+
 orbit["correctors"] = ['H3SFELC', 'H4SFELC', 'H10SMATCH', 'D11SMATCH', 'H12SMATCH']
 orbit["correctors"] = ['V6_4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS', 'V2SFELC', 'V3SFELC','V4SFELC', 'V6SFELC', 'V7SMATCH', 'V14SMATCH']
 
