@@ -23,9 +23,9 @@ read_bpms(lat, mi)
 
 
 setup = log.MachineSetup()
-setup.save_lattice(lat, "start_6_35.txt")
+setup.save_lattice(lat, "start_7_00.txt")
 
-setup.load_lattice("start_6_35.txt", lat)
+setup.load_lattice("start_7_00.txt", lat)
 
 setup.convert_currents(lat, init_energy=0.0053)
 
