@@ -2,14 +2,13 @@
 main tuning script, LCLS
 '''
 
-from lattice_rf_red import *
-import ocelot
-from pylab import *
 import numpy as np
 
+from lattice_rf_red import *
 from ocelot.utils.mint.mint import Optimizer, Action, TestInterface
 from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, FLASH1DeviceProperties
-import machine_setup as log
+from ocelot.utils.mint import machine_setup as log
+
 #from flash1_interface import FLASH1DeviceProperties
 
 

@@ -4,19 +4,15 @@ from lattice_rf_red import *
 from ocelot.gui.accelerator import *
 from ocelot import *
 from ocelot.gui import *
-from ocelot.cpbd.errors import *
-from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
-from copy import copy
 from high_level_mint_flash import *
 #import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
-import pickle
 from converter import *
 from ocelot.rad.undulator_params import *
-import copy
-import machine_setup as log
+from ocelot.utils.mint import machine_setup as log
+
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
@@ -46,8 +42,9 @@ D12SMATCH.type = "drift"
 FL2KICKER1.type = "drift"
 FL2KICKER2.type = "drift"
 FL2KICKER3.type = "drift"
-
+H9ACC5.type = "drift"
 tws=twiss(lat, tw0)
+
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
@@ -56,7 +53,8 @@ setup = log.MachineSetup()
 lat_all = MagneticLattice(lattice)
 setup.load_lattice("init.txt", lat_all)
 
-setup.convert_currents(lat_all, init_energy=0.0053)
+#for elem in lat.sequence
+#setup.convert_currents(lat_all, init_energy=0.0053)
 
 lat.update_transfer_maps()
 
@@ -125,7 +123,7 @@ for elem in lat.sequence:
         print elem.id, elem.angle*1000.
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
-        if abs(dI) > 0.001:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
+        if abs(dI) > 0.001 and elem.mi_id in ['H3DBC3', 'H10ACC4', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
             elem.dI = dI
             print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
             increm.append(elem.dI)

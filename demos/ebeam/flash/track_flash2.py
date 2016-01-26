@@ -28,7 +28,7 @@ plot_opt_func(lat, tws, top_plot=["E"])
 
 for elem in lat.sequence:
     if elem.id == "C1_ACC39":
-        elem.v = elem.v*10
+        elem.v = elem.v
 
 lat.update_transfer_maps()
 

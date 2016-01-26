@@ -32,7 +32,7 @@ bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=2
 
 dz = 1.
 order = 2
-SC = True
+SC = False
 debug = False
 
 Z = np.linspace(0, lat.totalLen, num=int(lat.totalLen/dz))

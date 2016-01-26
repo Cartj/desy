@@ -2,28 +2,29 @@ __author__ = 'Sergey Tomin'
 
 from lattice_rf_red import *
 from ocelot.gui.accelerator import *
-from ocelot import *
 from ocelot.cpbd.orbit_correction import *
-from high_level_mint_flash import *
+from ocelot.utils.mint.machine_setup import *
 from ocelot.utils.mint.flash1_interface_pydoocs import *
-import pickle
-from converter import *
-import machine_setup as log
+from ocelot.utils.mint.flash1_converter import *
+
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
 lat = MagneticLattice(lattice)
-read_cavs(lat, mi)
-read_quads(lat, mi, dp)
-read_bends(lat, mi, dp)
-read_sexts(lat, mi)
-read_cors(lat, mi)
-read_bpms(lat, mi)
+
+hli = HighLevelInterface(lat, mi, dp)
+hli.read_all()
+#read_cavs(lat, mi)
+#read_quads(lat, mi, dp)
+#read_bends(lat, mi, dp)
+#read_sexts(lat, mi)
+#read_cors(lat, mi)
+#read_bpms(lat, mi)
 
 
-setup = log.MachineSetup()
-setup.save_lattice(lat, "start_7_00.txt")
+setup = MachineSetup()
+setup.save_lattice(lat, "test.txt")
 
 setup.load_lattice("start_7_00.txt", lat)
 

@@ -2,14 +2,8 @@
 main tuning script, LCLS
 '''
 
-from lattice_rf_red import *
-import ocelot
-from pylab import *
-import numpy as np
-
-from ocelot.utils.mint.mint import Optimizer, Action, TestInterface
+from ocelot.utils.mint.mint import Optimizer, Action
 from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, FLASH1DeviceProperties
-import machine_setup as log
 #from flash1_interface import FLASH1DeviceProperties
 
 
@@ -19,7 +13,7 @@ import machine_setup as log
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 #opt = Optimizer(mi, dp)
-opt = Optimizer(TestInterface(), dp)
+opt = Optimizer(mi, dp)
 opt.debug = True
 opt.logging = True
 opt.log_file = 'test.log'
@@ -28,7 +22,7 @@ opt.timeout = 1.2
 seq1 = [Action(func=opt.max_sase, args=[ ['H10SMATCH','H12SMATCH'], 'simplex'] ) ]
 
 seq2 = [Action(func=opt.max_sase, args=[ ['V14SMATCH','V7SMATCH'], 'simplex' ] )]
-seq3 = [Action(func=opt.max_sase, args=[ ['V14SMATCH','V7SMATCH','H10SMATCH','H12SMATCH'], 'simplex' ] )]
+seq3 = [Action(func=opt.max_sase, args=[ ['V14SMATCH','V7SMATCH','H10SMATCH','H12SMATCH'], 'simplex' , {'maxiter':60}] )]
 
 seq4 = [Action(func=opt.max_sase, args=[ ['Q13SMATCH','Q15SMATCH'], 'simplex' ] )]
 seq5 = [Action(func=opt.max_sase, args=[ ['H3DBC3','V3DBC3'], 'simplex' ] )]
@@ -45,11 +39,11 @@ seq10 = [Action(func=opt.max_sase, args=[ ['H3DBC3'], 'simplex' ] )]
 
 seq0 = [Action(func=opt.max_sase, args=[ ['H10SMATCH','H12SMATCH'], 'cg', {'maxiter':15}] ), 
         Action(func=opt.max_sase, args=[ ['H10SMATCH','H12SMATCH'], 'simplex', {'maxiter':25}] )]
+cors =  ['H3DBC3', 'H10ACC4', 'H10ACC5', 'H10ACC6', 'H10ACC7']
+seq12 = [Action(func=opt.max_sase, args=[ ['H3DBC3', 'H10ACC4', 'H10ACC5', 'H10ACC6', 'H10ACC7'], 'simplex' ] )]
 
-
-
-
-opt.eval(seq5)
+seq13 = [Action(func=opt.max_sase, args=[ ['V3DBC3', 'V10ACC4', 'V10ACC5', 'V10ACC7'], 'simplex' ] )]
+opt.eval(seq4)
 #apply_bump(cors, currents, dI, alpha=0.1)
 
 
