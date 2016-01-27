@@ -42,7 +42,7 @@ beam.E = lat.gun_energy
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
+plot_opt_func(lat, tws, top_plot=["E"])
 
 
 
