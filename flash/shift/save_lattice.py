@@ -9,8 +9,10 @@ from ocelot.utils.mint.flash1_converter import *
 
 
 
-filename = "test.txt"
-
+if len(sys.argv)>1:
+    filename = sys.argv[1]
+else:
+    filename = "test.txt"
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
