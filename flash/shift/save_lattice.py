@@ -8,28 +8,24 @@ from ocelot.utils.mint.flash1_interface_pydoocs import *
 from ocelot.utils.mint.flash1_converter import *
 
 
+
+filename = "test.txt"
+
+
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
 lat = MagneticLattice(lattice)
 
-hli = HighLevelInterface(lat, mi, dp)
-hli.read_all()
-#read_cavs(lat, mi)
-#read_quads(lat, mi, dp)
-#read_bends(lat, mi, dp)
-#read_sexts(lat, mi)
-#read_cors(lat, mi)
-#read_bpms(lat, mi)
-
-
 setup = MachineSetup(lat, mi, dp)
-setup.save_lattice("test.txt")
+setup.save_lattice(filename)
 
-setup.load_lattice("test.txt", lat)
 
-setup.convert_currents(lat, init_energy=0.0053)
-
+# read setup file
+setup.load_lattice(filename, lat)
+print ("gun energy: ", lat.gun_energy, " GeV")
+print ("SASE level: ", lat.sase, " uJ")
+setup.convert_currents(lat, init_energy=lat.gun_energy)
 lat.update_transfer_maps()
 
 
@@ -40,7 +36,7 @@ beam.beta_y = 18.8146
 beam.alpha_x =  -0.61309
 beam.alpha_y = -0.54569
 
-beam.E = 0.0053
+beam.E = lat.gun_energy
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)
