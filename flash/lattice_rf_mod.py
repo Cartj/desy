@@ -1136,31 +1136,37 @@ BPM4UND6 = Monitor(id = 'BPM4UND6')
 BPM5UND6 = Monitor(id = 'BPM5UND6')
 
 # sextupoles 
-S2ECOL = Sextupole(l = 0.215, k2 = 167.261*0, tilt = 0, id = 'S2ECOL')
+S2ECOL = Sextupole(l = 0.215, k2 = 167.261, tilt = 0, id = 'S2ECOL')
 S2ECOL.dev_type = "TSB"
-S6ECOL = Sextupole(l = 0.215, k2 = -167.261*0, tilt = 0, id = 'S6ECOL')
+S6ECOL = Sextupole(l = 0.215, k2 = -167.261, tilt = 0, id = 'S6ECOL')
 S6ECOL.dev_type = "TSB"
 # octupole 
 
 # undulator 
 UND3UND1_U = Undulator(lperiod = 0.0272634730539, nperiods = 84, Kx = 1.2392, Ky = 0, id = 'UND3UND1_U')
 UND3UND1_D = Undulator(lperiod = 0.0272634730539, nperiods = 83, Kx = 1.2392, Ky = 0, id = 'UND3UND1_D')
-
 UND3UND2_U = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND2_U')
 UND3UND2_D = Undulator(lperiod = 0.0272634730539, nperiods = 167/2, Kx = 1.2392, Ky = 0, id = 'UND3UND2b')
-
 UND3UND3_U = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND3_U')
 UND3UND3_D = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND3_D')
-
 UND3UND4_U = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND4_U')
 UND3UND4_D = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND4_D')
-
 UND3UND5_U = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND5_U')
 UND3UND5_D = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND5_D')
-
 UND3UND6_U = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND6_U')
 UND3UND6_D = Undulator(lperiod = 0.0272634730539, nperiods = 167/2., Kx = 1.2392, Ky = 0, id = 'UND3UND6_D')
-
+#UND3UND1_U.solver = "sym"
+#UND3UND1_D.solver = "sym"
+#UND3UND2_U.solver = "sym"
+#UND3UND2_D.solver = "sym"
+#UND3UND3_U.solver = "sym"
+#UND3UND3_D.solver = "sym"
+#UND3UND4_U.solver = "sym"
+#UND3UND4_D.solver = "sym"
+#UND3UND5_U.solver = "sym"
+#UND3UND5_D.solver = "sym"
+#UND3UND6_U.solver = "sym"
+#UND3UND6_D.solver = "sym"
 # cavity 
 C1_M1_ACC1 = Cavity(l = 1.0363, v = 1e-9*17222225.1892, delta_e = 0.0172222251892, freq = 1300000000, phi = 0.0, volterr = 0.0, id = 'C1_M1_ACC1')
 C2_M1_ACC1 = Cavity(l = 1.0363, v = 1e-9*17222225.1892, delta_e = 0.0172222251892, freq = 1300000000, phi = 0.0, volterr = 0.0, id = 'C2_M1_ACC1')

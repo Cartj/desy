@@ -59,7 +59,7 @@ pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
 BPM2UBC2.weight = 1
 BPM1DBC2.weight = 1
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
+x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=Particle(x = 0.001, y = -0.0005, E=beam.E))
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
 print "sigma_x = ", sqrt(sum(x_bpm**2/len(x_bpm))), "sigma_y = ", sqrt(sum(y_bpm**2/len(x_bpm)))
@@ -94,9 +94,9 @@ p0 = orb.correction(lat, p_init=Particle(E=beam.E))
 p0=Particle(E=beam.E)
 x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
 #plt.plot(s_bpm, x_bpm, "r")
-p0 = orb.correction(lat, p_init=Particle(E=beam.E))
-p0=Particle(E=beam.E)
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
+#p0 = orb.correction(lat, p_init=Particle(E=beam.E))
+#p0=Particle(E=beam.E)
+#x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
 #plt.plot(s_bpm, x_bpm, "b")
 
 #x_bpm = np.array([p.x for p in orb.bpms])

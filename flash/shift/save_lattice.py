@@ -23,10 +23,10 @@ hli.read_all()
 #read_bpms(lat, mi)
 
 
-setup = MachineSetup()
-setup.save_lattice(lat, "test.txt")
+setup = MachineSetup(lat, mi, dp)
+setup.save_lattice("test.txt")
 
-setup.load_lattice("start_7_00.txt", lat)
+setup.load_lattice("test.txt", lat)
 
 setup.convert_currents(lat, init_energy=0.0053)
 

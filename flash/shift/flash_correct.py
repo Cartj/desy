@@ -9,7 +9,7 @@ from high_level_mint_flash import *
 #import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
-from converter import *
+from ocelot.utils.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
 from ocelot.utils.mint import machine_setup as log
 
@@ -32,6 +32,7 @@ beam.alpha_y = -1.55018161694
 tw0 = Twiss(beam)
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
+
 
 KICKER4SFELC.type = "drift"
 KICKER2SFELC.type = "drift"
@@ -63,14 +64,14 @@ S6ECOL.k2 = 0.
 lat.update_transfer_maps()
 
 lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
-
+hli = log.HighLevelInterface(lat, mi, dp)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
-read_bpms(lat, mi)
+hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])

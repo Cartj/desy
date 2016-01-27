@@ -5,11 +5,11 @@ from ocelot.gui.accelerator import *
 from ocelot import *
 from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
-from high_level_mint_flash import *
+#from high_level_mint_flash import *
 #import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
-from converter import *
+from ocelot.utils.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
 from ocelot.utils.mint import machine_setup as log
 
@@ -18,8 +18,18 @@ dp = FLASH1DeviceProperties()
 
 #print "SASE=", mi.get_sase()
 #print "get alarms = ", mi.get_alarms()
+
+lat_ref = MagneticLattice(lattice)
+setup = log.MachineSetup(lat_ref, mi, dp)
+
+setup.load_lattice("../exp_files_22/start_7_00.txt", lat_ref)
+setup.convert_currents(lat_ref, init_energy=0.0053)
+setup.set_elem_energy(lat_ref, init_energy=0.0053)
+
+
+print "energy Q1DBC3_U = ", Q1DBC3_U.E
 beam = Beam()
-beam.E = 450e-3 #in GeV ?!
+beam.E = Q1DBC3_U.E #in GeV ?!
 #beam.beta_x = 14.8821
 #beam.beta_y = 18.8146
 #beam.alpha_x =  -0.61309
@@ -43,41 +53,46 @@ FL2KICKER1.type = "drift"
 FL2KICKER2.type = "drift"
 FL2KICKER3.type = "drift"
 H9ACC5.type = "drift"
-tws=twiss(lat, tw0)
 
+tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
-setup = log.MachineSetup()
+#setup = log.MachineSetup()
 #setup.save_lattice(lat, "init.txt")
-lat_all = MagneticLattice(lattice)
-setup.load_lattice("init.txt", lat_all)
+#lat_all = MagneticLattice(lattice)
+#setup.load_lattice("init.txt", lat_all)
 
 #for elem in lat.sequence
 #setup.convert_currents(lat_all, init_energy=0.0053)
 
-lat.update_transfer_maps()
+#lat.update_transfer_maps()
 
-lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
+#lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
 
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
 orb = Orbit(lat)
+
+s_bpm_b = np.array([p.s for p in orb.bpms])
+x_bpm_b = np.array([p.x for p in orb.bpms])
+y_bpm_b = np.array([p.y for p in orb.bpms])
 orb.set_ref_pos()
 resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 #resp_mat = orb.measure_response_matrix(lat, p_init=Particle(E=beam.E))
 #orb.read_virtual_orbit(lat, Particle(E=beam.E))
-read_bpms(lat, mi)
+setup.load_orbit("../exp_files_22/start_7_00.txt", lat)
+#read_bpms(lat, mi)
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
 y_bpm = np.array([p.y for p in orb.bpms])
 
 ax = plot_API(lat)
-ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
-ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
+ax.plot(s_bpm, (x_bpm - x_bpm)*1000.,  "ro-", label="X")
+ax.plot(s_bpm, (y_bpm - y_bpm)*1000.,   "bo-", label="Y")
 plt.show()
 
 
