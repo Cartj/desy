@@ -32,11 +32,18 @@ lat.update_transfer_maps()
 
 
 beam = Beam()
-beam.E = 148.3148e-3 #in GeV ?!
-beam.beta_x = 14.8821
-beam.beta_y = 18.8146
-beam.alpha_x =  -0.61309
-beam.alpha_y = -0.54569
+#beam.E = 148.3148e-3 #in GeV ?!
+#7.70182371485 7.77436018811 3.49750217404 3.56720701135
+#beam.beta_x = 14.8821
+#beam.beta_y = 18.8146
+#beam.alpha_x =  -0.61309
+#beam.alpha_y = -0.54569
+
+beam.beta_x = 7.70182371485
+beam.beta_y = 7.77436018811
+beam.alpha_x =  3.49750217404
+beam.alpha_y = 3.56720701135
+
 
 beam.E = lat.gun_energy
 
