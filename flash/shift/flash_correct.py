@@ -49,7 +49,7 @@ def angles2currents(lat):
             dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
             if abs(dI) > 0.005:
                 elem.dI = dI
-                if elem.id in ["V10ACC5", "V10ACC6"]:
+                if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC"]:
                     elem.dI = dI/2.
                 #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
             else:
@@ -123,7 +123,7 @@ orb.set_ref_pos()
 
 
 resp_mat = orb.linac_response_matrix(tw_init=tw0)
-resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
+#resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
 #setup.load_orbit("test.txt", lat)
 
 setup.hli.read_bpms()
