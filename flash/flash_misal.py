@@ -65,7 +65,7 @@ pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
 BPM2UBC2.weight = 1
 BPM1DBC2.weight = 1
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=Particle(x = 0.001, y = -0.0005, E=beam.E))
+x_bpm, y_bpm = orb.read_virtual_orbit( p_init=Particle(x = 0.001, y = -0.0005, E=beam.E))
 sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
 sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
 print "sigma_x = ", sqrt(sum(x_bpm**2/len(x_bpm))), "sigma_y = ", sqrt(sum(y_bpm**2/len(x_bpm)))
@@ -95,10 +95,10 @@ resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
 #y_bpm_b = y_bpm
 
 #for i in range(1):
-p0 = orb.correction(lat, p_init=Particle(E=beam.E))
+p0 = orb.correction(p_init=Particle(E=beam.E))
 
 p0=Particle(E=beam.E)
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
+x_bpm, y_bpm = orb.read_virtual_orbit(p_init=p0)
 #plt.plot(s_bpm, x_bpm, "r")
 #p0 = orb.correction(lat, p_init=Particle(E=beam.E))
 #p0=Particle(E=beam.E)

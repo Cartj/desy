@@ -54,8 +54,8 @@ ax.plot(s_bpm_b, y_bpm_b*1000., "bo-")
 plt.show()
 
 
-resp_mat1 = orb.linac_response_matrix(lat, tw_init=tw0)
-#resp_mat2 = orb.measure_response_matrix(lat, p_init = Particle(E=beam.E))
+resp_mat1 = orb.linac_response_matrix(tw_init=tw0)
+#resp_mat2 = orb.measure_response_matrix(p_init = Particle(E=beam.E))
 
 """
 
@@ -81,10 +81,10 @@ for i in range(s[0]):
 """
 setup.set_orbit(lat)
 
-p0 = orb.correction(lat, p_init=Particle(E=beam.E))
+p0 = orb.correction( p_init=Particle(E=beam.E))
 
 p0=Particle(E=beam.E)
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=p0)
+x_bpm, y_bpm = orb.read_virtual_orbit(p_init=p0)
 
 
 ax = plot_API(lat)

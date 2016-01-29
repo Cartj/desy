@@ -122,8 +122,9 @@ orb.set_ref_pos()
 
 
 
-resp_mat = orb.linac_response_matrix(tw_init=tw0)
-#resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
+#resp_mat = orb.linac_response_matrix(tw_init=tw0)
+#orb.read_virtual_orbit(Particle(E=beam.E))
+resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
 #setup.load_orbit("test.txt", lat)
 
 setup.hli.read_bpms()
