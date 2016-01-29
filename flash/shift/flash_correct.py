@@ -80,7 +80,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.save_lattice(filename="orbit1.txt")
+setup.save_lattice(filename="orbit1a.txt")
 
 
 # read setup file
@@ -124,9 +124,9 @@ orb.set_ref_pos()
 
 resp_mat = orb.linac_response_matrix(tw_init=tw0)
 orb.read_virtual_orbit(Particle(E=beam.E))
-#resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
+resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
 #setup.load_orbit("test.txt", lat)
-setup.save_lattice(filename="orbit2.txt")
+setup.save_lattice(filename="orbit2a.txt")
 setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
