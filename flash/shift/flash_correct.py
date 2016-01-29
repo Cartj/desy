@@ -111,7 +111,7 @@ setup.load_lattice("test.txt", lat)
 
 
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
+plot_opt_func(lat, tws, top_plot=["E"])
 
 
 orb = Orbit(lat)
@@ -120,8 +120,8 @@ orb.set_ref_pos()
 
 
 resp_mat = orb.linac_response_matrix(tw_init=tw0)
-
-setup.load_orbit("test.txt", lat)
+resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
+#setup.load_orbit("test.txt", lat)
 
 setup.hli.read_bpms()
 
@@ -130,8 +130,10 @@ x_bpm = np.array([p.x for p in orb.bpms])
 y_bpm = np.array([p.y for p in orb.bpms])
 
 ax = plot_API(lat)
+ax.set_title("absolute orbit")
 ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
 ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
+ax.legend()
 plt.show()
 
 
@@ -143,14 +145,16 @@ x_bpm_b = np.array([p.x for p in orb.bpms])
 y_bpm_b = np.array([p.y for p in orb.bpms])
 
 ax = plot_API(lat)
+ax.set_title("relative orbit")
 ax.plot(s_bpm, x_bpm_b*1000.,  "ro-", label="X")
 ax.plot(s_bpm, y_bpm_b*1000.,   "bo-", label="Y")
+ax.legend()
 plt.show()
 
 
 orb.correction(lat)
 
-angles2currents(lat)
+
 
 #print "names = ", names
 #print "currents = ", cur
@@ -172,20 +176,16 @@ y = np.array([p.y for p in plist])
 s = np.array([p.s for p in plist])
 
 ax = plot_API(lat)
-#ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
-#ax.plot(s, x*1000.,  "r-", label="X")
-ax.plot(s_bpm, (x_bpm+x_bpm_b)*1000.,   "bo-", label="Y")
-#plt.show()
-
-#ax = plot_API(lat)
-#ax.plot(s_bpm, y_bpm*1000.,  "ro-", label="X")
-#ax.plot(s, y*1000.,  "r-", label="X")
-ax.plot(s_bpm, (y_bpm_b+y_bpm)*1000.,   "bo-", label="Y")
+ax.set_title("corrected orbit")
+ax.plot(s_bpm, (x_bpm + x_bpm_b)*1000.,   "ro-", label="X")
+ax.plot(s_bpm, (y_bpm + y_bpm_b)*1000.,   "bo-", label="Y")
+ax.legend()
 plt.show()
 
+
+angles2currents(lat)
+
 alpha = 0.1
-
-
 
 show_currents(orb.hcors, alpha)
 
