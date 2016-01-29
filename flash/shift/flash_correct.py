@@ -10,6 +10,30 @@ from ocelot.utils.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
 from ocelot.utils.mint import machine_setup as log
 
+
+def show_currents(elems, alpha):
+    print "******* displaying currents - START ********"
+    for elem in elems:
+        n = len(elem.id)
+        n2 = len(str(elem.I + elem.dI))
+        n3 = len(str(elem.I))
+        print elem.id, " "*(10-n) + "<-- ", elem.I + elem.dI,  " "*(18-n2)+ " was = ", elem.I, " "*(18-n3) + " dI = ", elem.dI, "x", alpha
+    print "******* displaying currents - END ********"
+
+def set_currents(mi, elems, alpha):
+    for elem in elems:
+        n = len(elem.id)
+        new_I = elem.I + elem.dI*alpha
+        n2 = len(str(new_I))
+        print elem.id,  " "*(10-n) + "<-- ", new_I,  " "*(18-n2)+ " was = ", elem.I
+        mi.set_value(elem.mi_id, new_I)
+
+def restore_current(mi, elems):
+    for elem in elems:
+        n = len(elem.id)
+        print elem.id, " "*(10-n) +"<-- ", elem.I
+        mi.set_value(elem.mi_id, elem.I)
+
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
@@ -54,13 +78,15 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 orb = Orbit(lat)
-#orb.set_ref_pos()
+orb.set_ref_pos()
 
 
 
 resp_mat = orb.linac_response_matrix(tw_init=tw0)
 
 setup.load_orbit("test.txt", lat)
+
+setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
@@ -121,7 +147,7 @@ for elem in lat.sequence:
 #print "dI = ", increm
 lat.update_transfer_maps()
 
-orb.read_virtual_orbit(lat, Particle(E=beam.E))
+orb.read_virtual_orbit(Particle(E=beam.E))
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
@@ -149,39 +175,28 @@ plt.show()
 
 alpha = 0.1
 
-for hcor in orb.hcors:
-    print hcor.id, "<-- ", hcor.I + hcor.dI, " was = ", hcor.I, " dI = ", hcor.dI, "x", alpha
 
+
+show_currents(orb.hcors, alpha)
 
 inp = raw_input("Do you really want to apply currents for X:? ")
 if inp == "yes":
-    for hcor in orb.hcors:
-        new_I = hcor.I + hcor.dI*alpha
-        print hcor.id, "<-- ", new_I, hcor.I
-        mi.set_value(hcor.mi_id, new_I)
+    set_currents(mi, orb.hcors, alpha)
 
 inp2 = raw_input("Restore orbit for X:? ")
 
 if inp2 == "yes":
-    for hcor in orb.hcors:
-        new_I = hcor.I + hcor.dI*alpha
-        print hcor.id, "<-- ", hcor.I
-        mi.set_value(hcor.mi_id, hcor.I)
+    restore_current(mi, orb.hcors)
 
-for vcor in orb.hcors:
-    print vcor.id, "<-- ", vcor.I + vcor.dI, " was = ", vcor.I, " dI = ", vcor.dI, "x", alpha
+
+
+
+show_currents(orb.vcors, alpha)
 
 inp = raw_input("Do you really want to apply currents for Y:? ")
 if inp == "yes":
-
-    for vcor in orb.vcors:
-        new_I = vcor.I + vcor.dI*alpha
-        print vcor.id, "<-- ", new_I, vcor.I
-        mi.set_value(vcor.mi_id, new_I)
+    set_currents(mi, orb.vcors, alpha)
 
 inp2 = raw_input("Restore orbit for Y:? ")
 if inp2 == "yes":
-    for vcor in orb.vcors:
-        new_I = vcor.I + vcor.dI*alpha
-        print vcor.id, "<-- ", vcor.I
-        mi.set_value(vcor.mi_id, vcor.I)
+    restore_current(mi, orb.vcors)
