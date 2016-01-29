@@ -164,15 +164,15 @@ y = np.array([p.y for p in plist])
 s = np.array([p.s for p in plist])
 
 ax = plot_API(lat)
-ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
-ax.plot(s, x*1000.,  "r-", label="X")
-ax.plot(s_bpm, x_bpm_b*1000.,   "bo-", label="Y")
-plt.show()
+#ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
+#ax.plot(s, x*1000.,  "r-", label="X")
+ax.plot(s_bpm, (x_bpm+x_bpm_b)*1000.,   "bo-", label="Y")
+#plt.show()
 
-ax = plot_API(lat)
-ax.plot(s_bpm, y_bpm*1000.,  "ro-", label="X")
-ax.plot(s, y*1000.,  "r-", label="X")
-ax.plot(s_bpm, y_bpm_b*1000.,   "bo-", label="Y")
+#ax = plot_API(lat)
+#ax.plot(s_bpm, y_bpm*1000.,  "ro-", label="X")
+#ax.plot(s, y*1000.,  "r-", label="X")
+ax.plot(s_bpm, (y_bpm_b+y_bpm)*1000.,   "bo-", label="Y")
 plt.show()
 
 alpha = 0.1
