@@ -127,6 +127,8 @@ for elem in lat.sequence:
         else:
             elem.dI = 0.
             elem.angle = 0.
+        if abs(dI) > 0.5:
+            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
     if elem.type == "hcor" :
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
 
