@@ -1,6 +1,6 @@
 __author__ = 'Sergey Tomin'
 from ocelot import *
-from new_quads_params import *
+from desy.flash.lattices.new_quads_params import *
 L_000000 = Drift(l = 0.28475, id = 'L_000000')
 L_000001 = Drift(l = 0.0225, id = 'L_000001')
 L_000002 = Drift(l = 0.2095, id = 'L_000002')
@@ -765,14 +765,18 @@ H3DBC3 = Hcor(l = 0.1, angle = 0, id = 'H3DBC3')
 V3DBC3 = Vcor(l = 0.1, angle = 0, id = 'V3DBC3')
 V10ACC4 = Vcor(l = 0, angle = 0, id = 'V10ACC4')
 H10ACC4 = Hcor(l = 0, angle = 0, id = 'H10ACC4')
-V9ACC5 = Vcor(l = 0, angle = 0, id = 'V9ACC5')
-H9ACC5 = Hcor(l = 0, angle = 0, id = 'H9ACC5')
+
 V10ACC5 = Vcor(l = 0, angle = 0, id = 'V10ACC5')
 H10ACC5 = Hcor(l = 0, angle = 0, id = 'H10ACC5')
-V9ACC6 = Vcor(l = 0, angle = 0, id = 'V9ACC6')
-H9ACC6 = Hcor(l = 0, angle = 0, id = 'H9ACC6')
+V9ACC5 = V10ACC5 # Vcor(l = 0, angle = 0, id = 'V9ACC5')
+H9ACC5 = H10ACC5 # Hcor(l = 0, angle = 0, id = 'H9ACC5')
+
+
 V10ACC6 = Vcor(l = 0, angle = 0, id = 'V10ACC6')
 H10ACC6 = Hcor(l = 0, angle = 0, id = 'H10ACC6')
+V9ACC6 = V10ACC6 #Vcor(l = 0, angle = 0, id = 'V9ACC6')
+H9ACC6 = H10ACC6 #Hcor(l = 0, angle = 0, id = 'H9ACC6')
+
 V10ACC7 = Vcor(l = 0, angle = 0, id = 'V10ACC7')
 H10ACC7 = Hcor(l = 0, angle = 0, id = 'H10ACC7')
 #FL2KICKER1 = Vcor(l = 0.6, angle = 0, id = 'FL2KICKER1')
@@ -803,7 +807,7 @@ V5ORS = Vcor(l = 0.3, angle = 0, id = 'V5ORS')
 H5ORS = Hcor(l = 0.1, angle = 0, id = 'H5ORS')
 #V6ORS = Vcor(l = 0.3, angle = 0, id = 'V6ORS')
 V6ORS = Drift(l = 0.3, id = 'V6ORS')
-V6_4ORS = Vcor(l = 0.3, angle = 0, id = 'V6_4ORS')
+V6_4ORS = Vcor(l = 0.3, angle = 0, id = 'V6.4ORS')
 V7ORS = Vcor(l = 0.3, angle = 0, id = 'V7ORS')
 V9ORS = Vcor(l = 0.1, angle = 0, id = 'V9ORS')
 H10ORS = Hcor(l = 0.1, angle = 0, id = 'H10ORS')
@@ -815,10 +819,10 @@ V2SFELC = Vcor(l = 0.1, angle = 0, id = 'V2SFELC')
 #KICKER2SFELC = Hcor(l = 1, angle = 0, id = 'KICKER2SFELC')
 KICKER2SFELC = Drift(l = 1,  id = 'KICKER2SFELC')
 H3SFELC = Hcor(l = 0.1, angle = 0, id = 'H3SFELC')
-V3SFELC = Vcor(l = 0.1, angle = 0, id = 'V3SFELC')
+V3SFELC = V2SFELC #Vcor(l = 0.1, angle = 0, id = 'V3SFELC')
 V4SFELC = Vcor(l = 0.1, angle = 0, id = 'V4SFELC')
 H4SFELC = Hcor(l = 0.02, angle = 0, id = 'H4SFELC')
-#KICKER4SFELC = Drift(l = 1, angle = 0, id = 'KICKER4SFELC')
+#KICKER4SFELC = Hcor(l = 1, angle = 0, id = 'KICKER4SFELC')
 KICKER4SFELC = Drift(l = 1, id = 'KICKER4SFELC')
 V6SFELC = Vcor(l = 0.1, angle = 0, id = 'V6SFELC')
 #KICKER6SMATCH = Hcor(l = 0.65, angle = 0, id = 'KICKER6SMATCH')
@@ -831,11 +835,11 @@ D12SMATCH = Drift(l = 0.1, id = 'D12SMATCH')
 H12SMATCH = Hcor(l = 0.02, angle = 0, id = 'H12SMATCH')
 V14SMATCH = Vcor(l = 0.02, angle = 0, id = 'V14SMATCH')
 
-V9ACC5.mi_id = 'V10ACC5'
-H9ACC5.mi_id = 'H10ACC5'
-V9ACC6.mi_id = 'H10ACC6'
-H9ACC6.mi_id = 'V10ACC6'
-V3SFELC.mi_id = 'V2SFELC'
+#V9ACC5.mi_id = 'V10ACC5'
+#H9ACC5.mi_id = 'H10ACC5'
+#V9ACC6.mi_id = 'V10ACC6'  # changed
+#H9ACC6.mi_id = 'H10ACC6'  # changed
+#V3SFELC.mi_id = 'V2SFELC'
 #HCOR
 H1GUN.dev_type = 'HGUN'
 H2GUN.dev_type = 'HGUN'
@@ -875,15 +879,12 @@ H2ECOL.dev_type = 'TCA50'
 H4ECOL.dev_type = 'TCA50'
 H6ECOL.dev_type = 'TCA40'
 H7ECOL.dev_type = 'TRIMTDA'
-#H5ORS.dev_type = 'SBEND'
 H5ORS.dev_type = 'TCA40'
-#H10ORS.dev_type = 'SBEND'
 H10ORS.dev_type = 'TCA40'
 H3SFELC.dev_type = 'TCA40'
 H4SFELC.dev_type = 'TCA40S'
 KICKER6SMATCH.dev_type = 'KICKERSMATC'
 H10SMATCH.dev_type = 'TCA40S'
-#D11SMATCH.dev_type = 'SBEND'
 D11SMATCH.dev_type = 'TCA40'
 D12SMATCH.dev_type = 'TCA40'
 H12SMATCH.dev_type = 'TCA40S'
@@ -923,28 +924,17 @@ V4TCOL.dev_type = 'TCA40'
 V8TCOL.dev_type = 'TCA40'
 V4ECOL.dev_type = 'TCA50'
 V1ORS.dev_type = 'TCA100mm'
-#V5ORS.dev_type = 'SBEND'
 V5ORS.dev_type = 'CV'
-#V6ORS.dev_type = 'SBEND'
 V6ORS.dev_type = 'CV'
 V6_4ORS.dev_type = 'CV'
-#V7ORS.dev_type = 'SBEND'
 V7ORS.dev_type = 'CV'
-#V9ORS.dev_type = 'SBEND'
 V9ORS.dev_type = 'TCA40'
-#V10ORS.dev_type = 'SBEND'
 V10ORS.dev_type = 'TCA40'
-#V11ORS.dev_type = 'SBEND'
 V11ORS.dev_type = 'TCA40'
-#V12ORS.dev_type = 'SBEND'
 V12ORS.dev_type = 'TCA40'
-#V2SFELC.dev_type = 'SBEND'
 V2SFELC.dev_type = 'TCA40'
-#V3SFELC.dev_type = 'SBEND'
 V3SFELC.dev_type = 'TCA40'
-#V4SFELC.dev_type = 'SBEND'
 V4SFELC.dev_type = 'TCA40'
-#V6SFELC.dev_type = 'SBEND'
 V6SFELC.dev_type = 'TCA40'
 V7SMATCH.dev_type = 'TCA40S'
 V14SMATCH.dev_type = 'TCA40S'
@@ -952,6 +942,8 @@ V4DBC2.dev_type = 'TCA40S'
 V6DBC2.dev_type = 'TCA40S'
 V8DBC2.dev_type = 'TCA40S'
 V10DBC2.dev_type = 'TCA40S'
+
+
 # markers 
 ENDGUN =  Marker(id = 'ENDGUN')
 STARTACC1 = Marker(id = 'STARTACC1')
@@ -1124,10 +1116,12 @@ BPM1SFUND4 = Monitor(id = '1SFUND4')
 BPM1SFELC = Monitor(id = '1SFELC')
 BPM1SMATCH = Monitor(id = '1SMATCH')
 BPM6SMATCH = Monitor(id = '6SMATCH')
-BPM13SMATCH = Monitor(id = '13SMATCH')
-BPM13SMATCH.weight = 1
 
+BPM13SMATCH = Monitor(id = '13SMATCH')
 BPM14SMATCH = Monitor(id = '14SMATCH')
+
+
+"""
 BPM2UND1 = Monitor(id = '2UND1')
 BPM4UND1 = Monitor(id = '4UND1')
 BPM5UND1 = Monitor(id = '5UND1')
@@ -1146,11 +1140,21 @@ BPM5UND5 = Monitor(id = '5UND5')
 BPM2UND6 = Monitor(id = '2UND6')
 BPM4UND6 = Monitor(id = '4UND6')
 BPM5UND6 = Monitor(id = '5UND6')
+"""
+
+
+BPM5UND1 = Monitor(id = '5UND1')
+BPM5UND2 = Monitor(id = '5UND2')
+BPM5UND3 = Monitor(id = '5UND3')
+BPM5UND4 = Monitor(id = '5UND4')
+BPM5UND5 = Monitor(id = '5UND5')
+BPM5UND6 = Monitor(id = '5UND6')
+
 
 # sextupoles 
-S2ECOL = Sextupole(l = 0.215, k2 = 167.261*0, tilt = 0, id = 'S2ECOL')
+S2ECOL = Sextupole(l = 0.215, k2 = 167.261, tilt = 0, id = 'S2ECOL')
 S2ECOL.dev_type = "TSB"
-S6ECOL = Sextupole(l = 0.215, k2 = -167.261*0, tilt = 0, id = 'S6ECOL')
+S6ECOL = Sextupole(l = 0.215, k2 = -167.261, tilt = 0, id = 'S6ECOL')
 S6ECOL.dev_type = "TSB"
 # octupole 
 

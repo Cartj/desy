@@ -1,14 +1,10 @@
 __author__ = 'Sergey Tomin'
-from lattice_rf_mod import *
+from desy.flash.lattices.lattice_rf_mod import *
 from ocelot.gui.accelerator import *
-from ocelot import *
 from ocelot.gui import *
-from ocelot.cpbd.errors import *
-from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
 from ocelot.utils.mint.machine_setup import *
 from ocelot.utils.mint.flash1_converter import *
-from copy import copy
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 
 mi = FLASH1MachineInterface()
@@ -143,8 +139,8 @@ orb2.create_COR(lat, cor_list=correctors)
 
 resp_mat3 = orb2.linac_response_matrix(lat, tw_init=tw0)
 #print "beam.E = ", beam.E
-#resp_mat2 = orb2.measure_response_matrix(lat, p_init = Particle(E=beam.E), match_ic=False)
-
+resp_mat2 = orb2.measure_response_matrix(lat, p_init = Particle(E=beam.E), match_ic=False)
+#orb2.save_r_matrix()
 #print resp_mat3
 #print resp_mat2
 
@@ -170,22 +166,23 @@ x_bpm, y_bpm = orb2.read_virtual_orbit(lat, p_init=p0)
 
 
 ax = plot_API(lat)
-ax.plot(s_bpm_b, (y_bpm_c - y_bpm_b)*1000., "ro-")
-ax.plot(bpm_s_before, (y_bpm + bpm_y_before)*1000., "bo-")
+ax.plot(s_bpm_b, (x_bpm_c - x_bpm_b)*1000., "ro-", label="X:before")
+ax.plot(bpm_s_before, (x_bpm + bpm_x_before)*1000., "bo-", label="X:after")
+
+ax.plot(s_bpm_b, (y_bpm_c - y_bpm_b)*1000., "go-", label="Y:before")
+ax.plot(bpm_s_before, (y_bpm + bpm_y_before)*1000., "ko-", label="Y:after")
+ax.legend()
 plt.show()
 
 for cor in orb2.hcors:
     angle_0 = tpi2k(cor.dev_type, cor.E, cor.I)*0.001
     angle = angle_0 + cor.angle
-    print "old = ", angle_0, "new = ", angle
     I1 = tpk2i(cor.dev_type, cor.E, angle*1000.)
-    print I1
     print cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I
 for cor in orb2.vcors:
     angle_0 = tpi2k(cor.dev_type, cor.E, cor.I)*0.001
     angle = angle_0 + cor.angle
     I1 = tpk2i(cor.dev_type, cor.E, angle*1000.)
-    print I1
     print cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I
 
 setup.load_lattice("exp_files_22/4correct_after.txt", lat)

@@ -1,12 +1,11 @@
 __author__ = 'Sergey Tomin'
 
-from lattice_rf_red import *
+from desy.flash.lattices.lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 from ocelot.cpbd.orbit_correction import *
 from ocelot.utils.mint.machine_setup import *
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 from ocelot.utils.mint.flash1_converter import *
-
 
 
 if len(sys.argv)>1:
@@ -39,13 +38,11 @@ beam = Beam()
 #beam.alpha_x =  -0.61309
 #beam.alpha_y = -0.54569
 
-beam.beta_x = 7.70182371485
-beam.beta_y = 7.77436018811
-beam.alpha_x =  3.49750217404
-beam.alpha_y = 3.56720701135
-
-
 beam.E = lat.gun_energy
+beam.beta_x = 8.66
+beam.beta_y = 8.79
+beam.alpha_x =  3.9
+beam.alpha_y = 4.
 
 tw0 = Twiss(beam)
 tws=twiss(lat, tw0)

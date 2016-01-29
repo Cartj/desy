@@ -1,17 +1,10 @@
 __author__ = 'Sergey Tomin'
-from ocelot import *
-from ocelot.gui import *
 from ocelot.adaptors import *
-import csv
-import sys
-import numpy as np
-from desy.flash.converter import *
+from ocelot.utils.mint.flash1_converter import *
 from ocelot.utils.flash_read_log import *
-from ocelot.cpbd.elements import *
 from ocelot.rad.undulator_params import *
 from ocelot.cpbd.track import lattice_track
-from copy import copy
-from lattice_rf_mod import *
+from desy.flash.lattices.lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 
 #plot_log("exp_files/h3-v3dbc3_1.txt")

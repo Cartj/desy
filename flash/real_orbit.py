@@ -1,6 +1,6 @@
 __author__ = 'Sergey Tomin'
 
-from lattice_rf_mod import *
+from desy.flash.lattices.lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *

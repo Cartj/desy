@@ -1,5 +1,5 @@
 __author__ = 'Sergey Tomin'
-from lattice_rf_mod import *
+from desy.flash.lattices.lattice_rf_red import *
 from ocelot.gui.accelerator import *
 from ocelot import *
 from ocelot.gui import *
@@ -11,7 +11,7 @@ import pyqtgraph as pg
 
 
 beam = Beam()
-beam.E = 0.0053#148.3148e-3 #in GeV ?!
+beam.E = 0.005#148.3148e-3 #in GeV ?!
 beam.beta_x = 14.8821
 beam.beta_y = 18.8146
 beam.alpha_x =  -0.61309
@@ -23,16 +23,16 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
 
-lat = MagneticLattice(lattice, start=STARTACC39)
+#lat = MagneticLattice(lattice, start=STARTACC39)
 
-#lat = MagneticLattice(lattice)
-#constr = {STARTACC39:{'beta_x':14.8821, 'beta_y':18.8146, 'alpha_x': -0.61309, 'alpha_y':-0.54569}}
-#vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
-#match(lat, constr, vars, tw0, xtol=1e-5)
+lat = MagneticLattice(lattice)
+constr = {STARTACC39:{'beta_x':14.8821, 'beta_y':18.8146, 'alpha_x': -0.61309, 'alpha_y':-0.54569}}
+vars = [[tw0, 'beta_x'], [tw0, 'beta_y'], [tw0, 'alpha_x'], [tw0, 'alpha_y']]
+match(lat, constr, vars, tw0, xtol=1e-8)
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["E"])
-#print tws[0].beta_x, tws[0].beta_y, tws[0].alpha_x, tws[0].alpha_y,
+print tws[0].beta_x, tws[0].beta_y, tws[0].alpha_x, tws[0].alpha_y,
 
 X = []
 Y = []

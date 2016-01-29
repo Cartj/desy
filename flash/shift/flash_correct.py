@@ -1,12 +1,9 @@
 __author__ = 'Sergey Tomin'
 
-from lattice_rf_red import *
+from desy.flash.lattices.lattice_rf_red import *
 from ocelot.gui.accelerator import *
-from ocelot import *
 from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
-from high_level_mint_flash import *
-#import pyqtgraph as pg
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
 from ocelot.utils.mint.flash1_converter import *
@@ -34,33 +31,32 @@ tw0 = Twiss(beam)
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 
 
-KICKER4SFELC.type = "drift"
-KICKER2SFELC.type = "drift"
-KICKER6SMATCH.type = "drift"
-H1ECOL.type = "drift"
-H7ECOL.type = "drift"
-D12SMATCH.type = "drift"
-FL2KICKER1.type = "drift"
-FL2KICKER2.type = "drift"
-FL2KICKER3.type = "drift"
+#KICKER4SFELC.type = "drift"
+#KICKER2SFELC.type = "drift"
+#KICKER6SMATCH.type = "drift"
+#H1ECOL.type = "drift"
+#H7ECOL.type = "drift"
+#D12SMATCH.type = "drift"
+#FL2KICKER1.type = "drift"
+#FL2KICKER2.type = "drift"
+#FL2KICKER3.type = "drift"
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
 
-
-setup = log.MachineSetup()
-#setup.save_lattice(lat, "init.txt")
 lat_all = MagneticLattice(lattice)
+setup = log.MachineSetup(lat_all)
+#setup.save_lattice(lat, "init.txt")
 
 setup.load_lattice("init.txt", lat_all)
 
 
 orb = Orbit(lat)
-orb.set_ref_pos()
+#orb.set_ref_pos()
 
 setup.convert_currents(lat_all, init_energy=0.0053)
-S2ECOL.k2 = 0.
-S6ECOL.k2 = 0.
+#S2ECOL.k2 = 0.
+#S6ECOL.k2 = 0.
 lat.update_transfer_maps()
 
 lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)

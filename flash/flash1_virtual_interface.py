@@ -8,12 +8,9 @@ includes online optimizer, response measurement and other stuff
 #    import doocs
 #except:
 #    print 'error importing doocs library'
-from lattice_rf_mod import *
 import re
 #from pylab import *
-import numpy as np
 import converter
-from ocelot.cpbd.errors import *
 from ocelot.cpbd.orbit_correction import *
 
 class FLASH1VirtualInterface():
