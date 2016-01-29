@@ -71,6 +71,9 @@ def angles2currents(lat):
             if abs(elem.dI) > 0.5:
                 print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
 
+
+filename = "test2.txt"
+
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
@@ -81,7 +84,7 @@ setup = log.MachineSetup(lat_all, mi, dp)
 
 
 # read setup file
-setup.load_lattice("test.txt", lat_all)
+setup.load_lattice(filename, lat_all)
 print ("gun energy: ", lat_all.gun_energy, " GeV")
 print ("SASE level: ", lat_all.sase, " uJ")
 setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
@@ -107,7 +110,7 @@ tw0 = Twiss(beam)
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 
 setup = log.MachineSetup(lat, mi, dp)
-setup.load_lattice("test.txt", lat)
+setup.load_lattice(filename, lat)
 
 
 tws=twiss(lat, tw0)
