@@ -13,10 +13,24 @@ from ocelot.utils.mint import machine_setup as log
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
-#print "SASE=", mi.get_sase()
+lat_all = MagneticLattice(lattice)
+
+setup = log.MachineSetup(lat_all, mi, dp)
+#setup.save_lattice(filename="test.txt")
+
+
+# read setup file
+setup.load_lattice("test.txt", lat_all)
+print ("gun energy: ", lat_all.gun_energy, " GeV")
+print ("SASE level: ", lat_all.sase, " uJ")
+setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
+lat_all.update_transfer_maps()
+
+
+
 #print "get alarms = ", mi.get_alarms()
 beam = Beam()
-beam.E = 450e-3 #in GeV ?!
+beam.E = Q1DBC3_U.E
 #beam.beta_x = 14.8821
 #beam.beta_y = 18.8146
 #beam.alpha_x =  -0.61309
@@ -26,48 +40,27 @@ beam.alpha_x = -1.71640739021
 beam.beta_y =  34.1757857554
 beam.alpha_y = -1.55018161694
 
+print "starting energy = ", beam.E
 tw0 = Twiss(beam)
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 
+setup = log.MachineSetup(lat, mi, dp)
+setup.load_lattice("test.txt", lat)
 
-#KICKER4SFELC.type = "drift"
-#KICKER2SFELC.type = "drift"
-#KICKER6SMATCH.type = "drift"
-#H1ECOL.type = "drift"
-#H7ECOL.type = "drift"
-#D12SMATCH.type = "drift"
-#FL2KICKER1.type = "drift"
-#FL2KICKER2.type = "drift"
-#FL2KICKER3.type = "drift"
 
 tws=twiss(lat, tw0)
 plot_opt_func(lat, tws, top_plot=["Dx"])
-
-lat_all = MagneticLattice(lattice)
-setup = log.MachineSetup(lat_all)
-#setup.save_lattice(lat, "init.txt")
-
-setup.load_lattice("init.txt", lat_all)
 
 
 orb = Orbit(lat)
 #orb.set_ref_pos()
 
-setup.convert_currents(lat_all, init_energy=0.0053)
-#S2ECOL.k2 = 0.
-#S6ECOL.k2 = 0.
-lat.update_transfer_maps()
-
-lat = MagneticLattice(lat_all.sequence, start=Q1DBC3_U)
-hli = log.HighLevelInterface(lat, mi, dp)
-
-tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
-resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
-hli.read_bpms()
+resp_mat = orb.linac_response_matrix(tw_init=tw0)
+
+setup.load_orbit("test.txt", lat)
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
