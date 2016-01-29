@@ -14,6 +14,8 @@ from ocelot.utils.mint import machine_setup as log
 def show_currents(elems, alpha):
     print "******* displaying currents - START ********"
     for elem in elems:
+        if elem.dI == 0:
+            continue
         n = len(elem.id)
         n2 = len(str(elem.I + elem.dI))
         n3 = len(str(elem.I))
@@ -22,6 +24,8 @@ def show_currents(elems, alpha):
 
 def set_currents(mi, elems, alpha):
     for elem in elems:
+        if elem.dI == 0:
+            continue
         n = len(elem.id)
         new_I = elem.I + elem.dI*alpha
         n2 = len(str(new_I))
@@ -30,9 +34,42 @@ def set_currents(mi, elems, alpha):
 
 def restore_current(mi, elems):
     for elem in elems:
+        if elem.dI == 0:
+            continue
         n = len(elem.id)
         print elem.id, " "*(10-n) +"<-- ", elem.I
         mi.set_value(elem.mi_id, elem.I)
+
+
+def angles2currents(lat):
+    for elem in lat.sequence:
+
+        if elem.type == "vcor":
+            #print elem.id
+            dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+            if abs(dI) > 0.005:
+                elem.dI = dI
+                if elem.id in ["V10ACC5", "V10ACC6"]:
+                    elem.dI = dI/2.
+                #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+            else:
+                elem.dI = 0.
+                elem.angle = 0.
+            if abs(elem.dI) > 0.5:
+                print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
+        if elem.type == "hcor" :
+            dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+
+            if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
+                elem.dI = dI
+                #print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+                if elem.id in ["H10ACC5", "H10ACC6"]:
+                    elem.dI = dI/2.
+            else:
+                elem.dI = 0.
+                elem.angle = 0.
+            if abs(elem.dI) > 0.5:
+                print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
@@ -112,38 +149,9 @@ plt.show()
 
 
 orb.correction(lat)
-increm = []
-cur = []
-names = []
 
-for elem in lat.sequence:
+angles2currents(lat)
 
-    if elem.type == "vcor":
-        #print elem.id
-        dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.005:
-            elem.dI = dI
-            #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
-        else:
-            elem.dI = 0.
-            elem.angle = 0.
-        if abs(dI) > 0.5:
-            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
-    if elem.type == "hcor" :
-        dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-
-        if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
-            elem.dI = dI
-            #print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
-            increm.append(elem.dI)
-            cur.append(elem.I)
-            names.append(elem.id)
-        else:
-            elem.dI = 0.
-            elem.angle = 0.
-        if abs(dI) > 0.5:
-            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
-#print
 #print "names = ", names
 #print "currents = ", cur
 #print "dI = ", increm

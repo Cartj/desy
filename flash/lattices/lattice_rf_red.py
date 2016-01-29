@@ -769,14 +769,18 @@ H10ACC4 = Hcor(l = 0, angle = 0, id = 'H10ACC4')
 
 V10ACC5 = Vcor(l = 0, angle = 0, id = 'V10ACC5')
 H10ACC5 = Hcor(l = 0, angle = 0, id = 'H10ACC5')
-V9ACC5 = V10ACC5 # Vcor(l = 0, angle = 0, id = 'V9ACC5')
-H9ACC5 = H10ACC5 # Hcor(l = 0, angle = 0, id = 'H9ACC5')
-
+#V9ACC5 = Vcor(l = 0, angle = 0, id = 'V9ACC5')
+#H9ACC5 = Hcor(l = 0, angle = 0, id = 'H9ACC5')
+V9ACC5 = Drift(l = 0,  id = 'V9ACC5')
+H9ACC5 = Drift(l = 0,  id = 'H9ACC5')
 
 V10ACC6 = Vcor(l = 0, angle = 0, id = 'V10ACC6')
 H10ACC6 = Hcor(l = 0, angle = 0, id = 'H10ACC6')
-V9ACC6 = V10ACC6 #Vcor(l = 0, angle = 0, id = 'V9ACC6')
-H9ACC6 = H10ACC6 #Hcor(l = 0, angle = 0, id = 'H9ACC6')
+#V9ACC6 = Vcor(l = 0, angle = 0, id = 'V9ACC6')
+#H9ACC6 = Hcor(l = 0, angle = 0, id = 'H9ACC6')
+V9ACC6 = Drift(l = 0, id = 'V9ACC6')
+H9ACC6 = Drift(l = 0, id = 'H9ACC6')
+
 
 V10ACC7 = Vcor(l = 0, angle = 0, id = 'V10ACC7')
 H10ACC7 = Hcor(l = 0, angle = 0, id = 'H10ACC7')
