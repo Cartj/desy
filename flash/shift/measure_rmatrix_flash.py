@@ -97,7 +97,7 @@ orb = Orbit(lat)
 orb.create_COR(cor_list=np.append(horizantal, vertical))
 orb.create_BPM(bpm_list=bpms)
 #orb.export_response_matrix(rmatrix)
-rmatrix = orb.response_matrix(TestInterface(), dp)
+rmatrix = orb.response_matrix(mi, dp)
 rmatrix.save(rmat_filename)
 
 rmatrix.show()
