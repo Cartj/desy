@@ -10,8 +10,7 @@ from ocelot.utils.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
 from ocelot.utils.mint import machine_setup as log
 
-
-def show_currents(elems, alpha):
+def show_currents( elems, alpha):
     print "******* displaying currents - START ********"
     for elem in elems:
         if elem.dI == 0:
@@ -39,7 +38,7 @@ def restore_current(mi, elems):
         n = len(elem.id)
         print elem.id, " "*(10-n) +"<-- ", elem.I
         mi.set_value(elem.mi_id, elem.I)
-
+        
 
 def angles2currents(lat):
     for elem in lat.sequence:
@@ -72,7 +71,7 @@ def angles2currents(lat):
                 print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
 
 
-filename = "test2.txt"
+filename = "orbit1.txt"
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
@@ -80,7 +79,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.save_lattice(filename="orbit1a.txt")
+#setup.save_lattice(filename="orbit1a.txt")
 
 
 # read setup file
@@ -108,26 +107,30 @@ print "starting energy = ", beam.E
 tw0 = Twiss(beam)
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
-
+#S2ECOL.k2 = 0.
+#S6ECOL.k2 = 0.
 setup = log.MachineSetup(lat, mi, dp)
 setup.load_lattice(filename, lat)
 
 
 tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["E"])
+plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 orb = Orbit(lat)
 orb.set_ref_pos()
 
 
-
-resp_mat = orb.linac_response_matrix(tw_init=tw0)
+resp_mat1 = orb.linac_response_matrix(tw_init=tw0)
 orb.read_virtual_orbit(Particle(E=beam.E))
-resp_mat = orb.measure_response_matrix(p_init=Particle(E=beam.E))
-#setup.load_orbit("test.txt", lat)
-setup.save_lattice(filename="orbit2a.txt")
-setup.hli.read_bpms()
+
+resp_mat2 = orb.measure_response_matrix(p_init=Particle(E=beam.E), order=1)
+
+resp_mat2.compare(resp_mat1)
+resp_mat1.show()
+setup.load_orbit("orbit2.txt", lat)
+#setup.save_lattice(filename="orbit2a.txt")
+#setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
 x_bpm = np.array([p.x for p in orb.bpms])
