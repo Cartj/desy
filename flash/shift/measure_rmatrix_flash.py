@@ -12,7 +12,7 @@ from ocelot.utils.mint import machine_setup as log
 from ocelot.utils.mint.mint import TestInterface
 
 
-filename = "test.txt"
+filename = "orbit1.txt"
 rmat_filename = "test_rmatrix.txt"
 
 
@@ -22,9 +22,9 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.read_save_lattice(filename=filename)
+#setup.read_save_lattice(filename=filename)
 # read setup file
-#setup.load_lattice(filename, lat_all)
+setup.load_lattice(filename, lat_all)
 setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
 lat_all.update_transfer_maps()
 
