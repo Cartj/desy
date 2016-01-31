@@ -65,7 +65,7 @@ horizantal = [#'H3DBC3',
               #'H1TCOL', 'H4TCOL',
               #'H8TCOL',
               #'H2ECOL', 'H4ECOL', 'H6ECOL',                     # in dogleg
-              'H5ORS', 'H10ORS', 'H3SFELC', 'H4SFELC',
+              #'H5ORS', 'H10ORS', 'H3SFELC', 'H4SFELC',
               'H10SMATCH', 'H12SMATCH'
               ]
 
@@ -74,8 +74,8 @@ vertical = [#'V3DBC3',
             #'V1TCOL', 'V2TCOL', 'V4TCOL',
             #'V8TCOL',
             #'V4ECOL',                                                  #in dogleg
-            'V5ORS', 'V6.4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS',
-            'V2SFELC', 'V4SFELC', 'V6SFELC',
+            #'V5ORS', 'V6.4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS',
+            #'V2SFELC', 'V4SFELC', 'V6SFELC',
             'V7SMATCH', 'V14SMATCH'
             ]
 
