@@ -18,7 +18,7 @@ rmat_filename = "test_rmatrix.txt"
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
-"""
+
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
@@ -48,7 +48,7 @@ beam.alpha_y = -1.55018161694
 
 print "starting energy = ", beam.E
 tw0 = Twiss(beam)
-"""
+
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 #S2ECOL.k2 = 0.
 #S6ECOL.k2 = 0.
@@ -56,8 +56,8 @@ setup = log.MachineSetup(lat, mi, dp)
 setup.load_lattice(filename, lat)
 
 
-#tws=twiss(lat, tw0)
-#plot_opt_func(lat, tws, top_plot=["Dx"])
+tws=twiss(lat, tw0)
+plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 horizantal = [#'H3DBC3',
@@ -68,6 +68,7 @@ horizantal = [#'H3DBC3',
               #'H5ORS', 'H10ORS', 'H3SFELC', 'H4SFELC',
               'H10SMATCH', 'H12SMATCH'
               ]
+hcor_und = ["H3UND1", "H3UND2", "H3UND3", "H3UND4", "H3UND5", "H3UND6"]
 
 vertical = [#'V3DBC3',
             #'V10ACC4' 'V10ACC5', 'V10ACC6', 'V10ACC7',
