@@ -82,11 +82,15 @@ vertical = [#'V3DBC3',
 bpms = [#'1DBC3', '3DBC3', '9ACC4', '9ACC5', '9ACC6', '11ACC7', '15ACC7', '19ACC7',
         # '1TCOL', '6TCOL', '8TCOL',
          #'3ECOL', '5ECOL',                              # dogleg
-        '2ORS', '7ORS', '9ORS', '12ORS',
-        '1SFUND2', '1SFUND3', '1SFUND4', '1SFELC', '1SMATCH', '6SMATCH',
+        #'2ORS', '7ORS', '9ORS', '12ORS',
+        #'1SFUND2', '1SFUND3', '1SFUND4', '1SFELC', '1SMATCH', '6SMATCH',
         '13SMATCH', '14SMATCH', '5UND1', '5UND2', '5UND3', '5UND4', '5UND5', '5UND6'  #undulator section
         ]
 
+
+#rm = Response_matrix()
+#rm.load(rmat_filename)
+#print rm.matrix
 orb = Orbit(lat)
 
 #rmatrix = orb.measure_response_matrix(p_init=Particle(E=beam.E))
@@ -98,7 +102,7 @@ orb.create_COR(cor_list=np.append(horizantal, vertical))
 
 orb.create_BPM(bpm_list=bpms)
 #orb.export_response_matrix(rmatrix)
-rmatrix = orb.response_matrix(mi, dp)
+rmatrix = orb.response_matrix(mi, dp, timeout=0.5)
 rmatrix.save(rmat_filename)
 
 rmatrix.show()
