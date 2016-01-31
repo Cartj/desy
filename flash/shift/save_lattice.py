@@ -19,7 +19,7 @@ dp = FLASH1DeviceProperties()
 lat = MagneticLattice(lattice)
 
 setup = MachineSetup(lat, mi, dp)
-setup.save_lattice(filename)
+setup.read_save_lattice(filename)
 
 
 # read setup file

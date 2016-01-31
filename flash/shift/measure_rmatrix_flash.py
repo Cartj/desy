@@ -22,15 +22,15 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.save_lattice(filename=filename)
-
-
+setup.read_save_lattice(filename=filename)
 # read setup file
 #setup.load_lattice(filename, lat_all)
+setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
+lat_all.update_transfer_maps()
+
 print ("gun energy: ", lat_all.gun_energy, " GeV")
 print ("SASE level: ", lat_all.sase, " uJ")
-#setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
-#lat_all.update_transfer_maps()
+
 
 
 

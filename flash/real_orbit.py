@@ -73,7 +73,7 @@ read_bpms(lat, mi)
 orb = Orbit(lat)
 orb.set_ref_pos()
 
-setup.save_lattice(lat, "init.txt")
+setup.read_save_lattice(lat, "init.txt")
 #setup.load_lattice("init.txt", lat)
 #tws=twiss(lat, tw0)
 #plot_opt_func(lat, tws, top_plot=["E"])

@@ -67,7 +67,7 @@ read_quads(lat, mi, dp)
 read_cors(lat, mi)
 read_bpms(lat, mi)
 
-setup.save_lattice(lat, "init.txt")
+setup.read_save_lattice(lat, "init.txt")
 setup.load_lattice("init.txt", lat)
 #exit(0)
 #log.save_currents(lat, filename="curr.txt")
