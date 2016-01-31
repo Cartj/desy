@@ -916,6 +916,14 @@ H9DBC2.dev_type = 'TCA40S'
 H11DBC2.dev_type = 'TCA40S'
 KICKER2SFELC.dev_type = ""
 KICKER4SFELC.dev_type = ""
+H3UND1.dev_type = ""
+H3UND2.dev_type = ""
+H3UND3.dev_type = ""
+H3UND4.dev_type = ""
+H3UND5.dev_type = ""
+H3UND6.dev_type = ""
+
+
 #VCOR
 
 V1GUN.dev_type = 'VGUN'
