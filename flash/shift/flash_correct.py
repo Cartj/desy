@@ -40,38 +40,58 @@ def restore_current(mi, elems):
         mi.set_value(elem.mi_id, elem.I)
         
 
-def angles2currents(lat):
-    for elem in lat.sequence:
+def angles2currents(orb):
+    for elem in np.append(orb.hcors, orb.vcors):
 
-        if elem.type == "vcor":
-            #print elem.id
-            dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-            if abs(dI) > 0.005:
-                elem.dI = dI
-                if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC"]:
-                    elem.dI = dI/2.
-                #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
-            else:
-                elem.dI = 0.
-                elem.angle = 0.
-            if abs(elem.dI) > 0.5:
-                print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
-        if elem.type == "hcor" :
-            dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        #print elem.id
+        dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        if abs(dI) > 0.005:
+            elem.dI = dI
+            if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC", "H10ACC5", "H10ACC6"]:
+                elem.dI = dI/2.
+            #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+        else:
+            elem.dI = 0.
+            elem.angle = 0.
+        if abs(elem.dI) > 0.5:
+            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
 
-            if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
-                elem.dI = dI
-                #print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
-                if elem.id in ["H10ACC5", "H10ACC6"]:
-                    elem.dI = dI/2.
-            else:
-                elem.dI = 0.
-                elem.angle = 0.
-            if abs(elem.dI) > 0.5:
-                print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
+def currents2angles(lat):
+    for elem in np.append(orb.hcors, orb.vcors):
+
+        angle = tpi2k(elem.dev_type, elem.E, elem.dI)*0.001
+        print elem.id, elem.dI, angle, elem.E
+        elem.angle = angle
+        #dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        if abs(angle) > 1e-10:
+            elem.angle = angle
+            if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC", "H10ACC5", "H10ACC6"]:
+                elem.angle = angle*2.
+            #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+        else:
+            elem.dI = 0.
+            elem.angle = 0.
+        if abs(elem.angle) > 0.005:
+            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.angle
 
 
-filename = "orbit1.txt"
+
+        #if elem.type == "hcor" :
+        #    dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        #
+        #    if abs(dI) > 0.005:# and elem.mi_id in ['H3DBC3', 'H10ACC4','H9ACC5', 'H10ACC5', 'H9ACC6', 'H10ACC6', 'H10ACC7']:
+        #        elem.dI = dI
+        #        #print elem.id, "angle = ", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+        #        if elem.id in ["H10ACC5", "H10ACC6"]:
+        #            elem.dI = dI/2.
+        #    else:
+        #        elem.dI = 0.
+        #        elem.angle = 0.
+        #    if abs(elem.dI) > 0.5:
+        #        print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
+
+
+filename = "lattice_calc.txt"
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
@@ -79,7 +99,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-#setup.save_lattice(filename="orbit1a.txt")
+#setup.read_save_lattice(filename="lat_13_5.txt")
 
 
 # read setup file
@@ -118,18 +138,22 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 orb = Orbit(lat)
+orb.mode = "ampere"
+
+
+#resp_mat1 = orb.linac_response_matrix(tw_init=tw0)
+#orb.read_virtual_orbit(Particle(E=beam.E))
+#resp_mat2 = orb.measure_response_matrix(p_init=Particle(E=beam.E), order=1)
+#resp_mat2.compare(resp_mat1)
+#resp_mat1.show()
+
+resp_mat1 = Response_matrix()
+resp_mat1.load("s_rmat_m_A.txt")
+orb.export_response_matrix(resp_mat1)
 orb.set_ref_pos()
 
-
-resp_mat1 = orb.linac_response_matrix(tw_init=tw0)
-orb.read_virtual_orbit(Particle(E=beam.E))
-
-resp_mat2 = orb.measure_response_matrix(p_init=Particle(E=beam.E), order=1)
-
-resp_mat2.compare(resp_mat1)
-resp_mat1.show()
 setup.load_orbit("orbit2.txt", lat)
-#setup.save_lattice(filename="orbit2a.txt")
+#setup.read_save_lattice(filename="orbit2a.txt")
 #setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
@@ -144,7 +168,7 @@ ax.legend()
 plt.show()
 
 
-
+print [c.id for c in orb.hcors]
 orb.minus_reference()
 
 s_bpm = np.array([p.s for p in orb.bpms])
@@ -159,15 +183,20 @@ ax.legend()
 plt.show()
 
 
-orb.correction(lat)
+orb.correction()
 
 
 
 #print "names = ", names
 #print "currents = ", cur
 #print "dI = ", increm
-lat.update_transfer_maps()
+if orb.mode == "ampere":
+    currents2angles(orb)
 
+lat.update_transfer_maps()
+for cor in orb.hcors:
+    print cor.angle
+lat.update_transfer_maps()
 orb.read_virtual_orbit(Particle(E=beam.E))
 
 s_bpm = np.array([p.s for p in orb.bpms])
@@ -189,8 +218,8 @@ ax.plot(s_bpm, (y_bpm + y_bpm_b)*1000.,   "bo-", label="Y")
 ax.legend()
 plt.show()
 
-
-angles2currents(lat)
+if orb.mode == "radian":
+    angles2currents(orb)
 
 alpha = 0.1
 
