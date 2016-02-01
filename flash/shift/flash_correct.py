@@ -45,9 +45,10 @@ def angles2currents(orb):
 
         #print elem.id
         dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
-        if abs(dI) > 0.005:
+        #print elem.id, dI, elem.angle, elem.E
+        if abs(dI) > 0.00005:
             elem.dI = dI
-            if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC", "H10ACC5", "H10ACC6"]:
+            if elem.id in ['H10ACC5', 'H10ACC6', 'V10ACC5', 'V10ACC6', 'V2SFELC']:
                 elem.dI = dI/2.
             #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
@@ -56,16 +57,17 @@ def angles2currents(orb):
         if abs(elem.dI) > 0.5:
             print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.dI
 
-def currents2angles(lat):
+def currents2angles(orb):
     for elem in np.append(orb.hcors, orb.vcors):
 
         angle = tpi2k(elem.dev_type, elem.E, elem.dI)*0.001
-        print elem.id, elem.dI, angle, elem.E
+
+        #print elem.id, elem.dI, angle, elem.E
         elem.angle = angle
         #dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
         if abs(angle) > 1e-10:
             elem.angle = angle
-            if elem.id in ["V10ACC5", "V10ACC6", "V2SFELC", "H10ACC5", "H10ACC6"]:
+            if elem.id in ['H10ACC5', 'H10ACC6', 'V10ACC5', 'V10ACC6', 'V2SFELC']:
                 elem.angle = angle*2.
             #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
         else:
@@ -148,12 +150,13 @@ orb.mode = "ampere"
 #resp_mat1.show()
 
 resp_mat1 = Response_matrix()
-resp_mat1.load("s_rmat_m_A.txt")
+resp_mat1.load("c_rmat_m_rad.txt")
 orb.export_response_matrix(resp_mat1)
+#orb.mode = "ampere"
 orb.set_ref_pos()
 
-#setup.load_orbit("orbit2.txt", lat)
-setup.read_save_lattice(filename="lattice_calc2.txt")
+setup.load_orbit("lattice_calc2.txt", lat)
+#setup.read_save_lattice(filename="lattice_calc2.txt")
 #setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
@@ -161,7 +164,7 @@ x_bpm = np.array([p.x for p in orb.bpms])
 y_bpm = np.array([p.y for p in orb.bpms])
 
 ax = plot_API(lat)
-ax.set_title("absolute orbit")
+ax.set_title("absolute orbit. mm")
 ax.plot(s_bpm, x_bpm*1000.,  "ro-", label="X")
 ax.plot(s_bpm, y_bpm*1000.,   "bo-", label="Y")
 ax.legend()
@@ -191,11 +194,15 @@ orb.correction()
 #print "currents = ", cur
 #print "dI = ", increm
 if orb.mode == "ampere":
+    print "ampere %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
     currents2angles(orb)
+else:
+    angles2currents(orb)
 
 lat.update_transfer_maps()
-#for cor in orb.hcors:
-#    print cor.angle
+#for elem in lat.sequence:
+#    if elem.type in [ "vcor"]:
+#        print elem.id, elem.angle
 #lat.update_transfer_maps()
 orb.read_virtual_orbit(Particle(E=beam.E))
 

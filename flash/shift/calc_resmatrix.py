@@ -24,7 +24,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.read_save_lattice(filename=filename)
+#setup.read_save_lattice(filename=filename)
 
 # read setup file
 setup.load_lattice(filename, lat_all)
@@ -74,7 +74,7 @@ vertical = ['V3DBC3',
             'V1TCOL', 'V2TCOL', 'V4TCOL',
             'V8TCOL',
             'V4ECOL',                                                  #in dogleg
-            'V5ORS', 'V6.4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS',
+            #'V5ORS', 'V6.4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS',
             'V2SFELC', 'V4SFELC', 'V6SFELC',
             'V7SMATCH', 'V14SMATCH'
             ]
@@ -91,10 +91,10 @@ bpm_extr = ['2UND1', '4UND1', '2UND2', '4UND2', '2UND3', '4UND3', '2UND4', '4UND
 #print bpms+bpm_extr
 orb.create_COR(cor_list = np.append(horizantal, vertical))
 orb.create_BPM(bpm_list = bpms+bpm_extr)
-#rmatrix = orb.linac_response_matrix(tw_init=tw0)
-rmatrix = orb.measure_response_matrix(p_init=Particle(E=beam.E), match_ic=False, order=1)
+rmatrix = orb.linac_response_matrix(tw_init=tw0)
+#rmatrix = orb.measure_response_matrix(p_init=Particle(E=beam.E), match_ic=False, order=1)
 #rmat_filename = "calc_rmatrix.txt"
-rmatrix.save("s_rmat_m_rad.txt")
+rmatrix.save("c_rmat_m_rad.txt")
 
 rmatrix.show()
 
@@ -102,17 +102,20 @@ rmatrix.show()
 rmatrix2 = Response_matrix()
 rmatrix2.matrix = np.zeros_like(rmatrix.matrix)
 for i, cor in enumerate(np.append(orb.hcors, orb.vcors)):
-    angle = tpi2k(cor.dev_type, cor.E, 0.5)*0.001
+    angle1 = tpi2k(cor.dev_type, cor.E, 0.1)*0.001
     if cor.id in ['H10ACC5', 'H10ACC6', 'V10ACC5', 'V10ACC6', 'V2SFELC']:
-        cor.rad2amp = angle/0.5*2.
+        cor.rad2amp = angle1/0.1*2
     else:
-        cor.rad2amp = angle/0.5
-    #print cor.id, cor.rad2amp, tpi2k(cor.dev_type, cor.E, 1)
+        cor.rad2amp = angle1/0.1
+    #print cor.id, cor.rad2amp, tpi2k(cor.dev_type, cor.E, 1.), cor.E
     rmatrix2.matrix[:, i] = rmatrix.matrix[:, i]*cor.rad2amp
+    #print rmatrix2.matrix[:, i]
+    #print rmatrix.matrix[:, i]
+    rmatrix2.mode = "ampere"
 
 rmatrix2.bpm_names = [b.id for b in orb.bpms]
 rmatrix2.cor_names = np.append(np.array([c.id for c in orb.hcors]), np.array([c.id for c in orb.vcors]))
-rmatrix2.save("s_rmat_m_A.txt")
+rmatrix2.save("c_rmat_m_A.txt")
 
 rmatrix2.show()
 
