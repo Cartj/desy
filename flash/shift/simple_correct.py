@@ -39,7 +39,24 @@ def restore_current(mi, elems):
         print elem.id, " "*(10-n) +"<-- ", elem.I
         mi.set_value(elem.mi_id, elem.I)
 
+def currents2angles(orb):
+    for elem in np.append(orb.hcors, orb.vcors):
 
+        angle = tpi2k(elem.dev_type, elem.E, elem.dI)*0.001
+
+        #print elem.id, elem.dI, angle, elem.E
+        elem.angle = angle
+        #dI = tpk2i(elem.dev_type, elem.E, elem.angle*1000.)
+        if abs(angle) > 1e-10:
+            elem.angle = angle
+            if elem.id in ['H10ACC5', 'H10ACC6', 'V10ACC5', 'V10ACC6', 'V2SFELC']:
+                elem.angle = angle*2.
+            #print elem.id, "angle=", elem.angle, " dI = ", elem.dI, " I = ", elem.I
+        else:
+            elem.dI = 0.
+            elem.angle = 0.
+        if abs(elem.angle) > 0.005:
+            print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.angle
 
 filename = "lattice_calc.txt"
 
@@ -50,7 +67,7 @@ lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
 setup.load_lattice(filename, lat_all)
-
+setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 
@@ -76,6 +93,12 @@ orb.show_orbit("relative orbit")
 
 orb.correction()
 
+if orb.mode == "ampere":
+    currents2angles(orb)
+
+lat.update_transfer_maps()
+orb.read_virtual_orbit(Particle(E=Q1DBC3_U.E))
+orb.show_orbit("corrected orbit")
 
 alpha = 0.1
 
