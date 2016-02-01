@@ -83,7 +83,7 @@ orb.set_ref_pos()
 
 
 setup.hli.read_bpms()
-
+#plt.ion()
 orb.show_orbit("absolute orbit")
 
 orb.minus_reference()
@@ -93,12 +93,16 @@ orb.show_orbit("relative orbit")
 
 orb.correction()
 
+#  *************** Comment this
 if orb.mode == "ampere":
     currents2angles(orb)
-
 lat.update_transfer_maps()
 orb.read_virtual_orbit(Particle(E=Q1DBC3_U.E))
 orb.show_orbit("corrected orbit")
+plt.show()
+#  *************** Comment this
+
+
 
 alpha = 0.1
 
