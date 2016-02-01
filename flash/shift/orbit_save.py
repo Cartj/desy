@@ -34,3 +34,4 @@ while True:
     print_string(values_x)
     values_y = Y #[mi.get_value(name) for name in names]
     values_y.append( "Y")
+    print_string(values_y)
