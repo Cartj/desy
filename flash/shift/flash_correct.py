@@ -194,9 +194,9 @@ if orb.mode == "ampere":
     currents2angles(orb)
 
 lat.update_transfer_maps()
-for cor in orb.hcors:
-    print cor.angle
-lat.update_transfer_maps()
+#for cor in orb.hcors:
+#    print cor.angle
+#lat.update_transfer_maps()
 orb.read_virtual_orbit(Particle(E=beam.E))
 
 s_bpm = np.array([p.s for p in orb.bpms])
