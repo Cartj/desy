@@ -24,7 +24,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-#setup.read_save_lattice(filename=filename)
+setup.read_save_lattice(filename=filename)
 
 # read setup file
 setup.load_lattice(filename, lat_all)
@@ -88,12 +88,12 @@ bpms = ['1DBC3', '3DBC3', '9ACC4', '9ACC5', '9ACC6', '11ACC7', '15ACC7', '19ACC7
         ]
 
 bpm_extr = ['2UND1', '4UND1', '2UND2', '4UND2', '2UND3', '4UND3', '2UND4', '4UND4', '2UND5', '4UND5', '2UND6', '4UND6']
-print bpms+bpm_extr
+#print bpms+bpm_extr
 orb.create_COR(cor_list = np.append(horizantal, vertical))
 orb.create_BPM(bpm_list = bpms+bpm_extr)
 #rmatrix = orb.linac_response_matrix(tw_init=tw0)
 rmatrix = orb.measure_response_matrix(p_init=Particle(E=beam.E), match_ic=False, order=1)
-rmat_filename = "calc_rmatrix.txt"
+#rmat_filename = "calc_rmatrix.txt"
 rmatrix.save("s_rmat_m_rad.txt")
 
 rmatrix.show()
