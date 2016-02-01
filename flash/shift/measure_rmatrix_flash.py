@@ -19,10 +19,13 @@ rmat_filename = "test_rmatrix.txt"
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
 
+
+
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
 setup.read_save_lattice(filename=filename)
+"""
 # read setup file
 setup.load_lattice(filename, lat_all)
 setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
@@ -48,16 +51,18 @@ beam.alpha_y = -1.55018161694
 
 print "starting energy = ", beam.E
 tw0 = Twiss(beam)
+"""
+
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 #S2ECOL.k2 = 0.
 #S6ECOL.k2 = 0.
-setup = log.MachineSetup(lat, mi, dp)
-setup.load_lattice(filename, lat)
+#setup = log.MachineSetup(lat, mi, dp)
+#setup.load_lattice(filename, lat)
 
 
-tws=twiss(lat, tw0)
-plot_opt_func(lat, tws, top_plot=["Dx"])
+#tws=twiss(lat, tw0)
+#plot_opt_func(lat, tws, top_plot=["Dx"])
 
 
 horizantal = [#'H3DBC3',
@@ -88,7 +93,7 @@ bpms = [#'1DBC3', '3DBC3', '9ACC4', '9ACC5', '9ACC6', '11ACC7', '15ACC7', '19ACC
         '13SMATCH', '14SMATCH', '5UND1', '5UND2', '5UND3', '5UND4', '5UND5', '5UND6'  #undulator section
         ]
 
-
+V7SMATCH.dI = 0.1
 #rm = Response_matrix()
 #rm.load(rmat_filename)
 #print rm.matrix
@@ -103,7 +108,7 @@ orb.create_COR(cor_list=np.append(horizantal, vertical))
 
 orb.create_BPM(bpm_list=bpms)
 #orb.export_response_matrix(rmatrix)
-rmatrix = orb.response_matrix(mi, dp, timeout=0.5)
+rmatrix = orb.response_matrix(TestInterface(), dp, timeout=0.5, delta_i=0.05)
 rmatrix.save(rmat_filename)
 
 rmatrix.show()
