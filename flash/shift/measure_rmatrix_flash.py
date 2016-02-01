@@ -108,7 +108,8 @@ orb.create_COR(cor_list=np.append(horizantal, vertical))
 
 orb.create_BPM(bpm_list=bpms)
 #orb.export_response_matrix(rmatrix)
-rmatrix = orb.response_matrix(TestInterface(), dp, timeout=0.5, delta_i=0.05)
+#rmatrix = orb.response_matrix(TestInterface(), dp, timeout=0.5, delta_i=0.05)
+rmatrix = orb.response_matrix(mi, dp, timeout=0.5, delta_i=0.05)
 rmatrix.save(rmat_filename)
 
 rmatrix.show()
