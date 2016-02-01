@@ -113,8 +113,8 @@ rmatrix = orb.response_matrix(mi, dp, timeout=0.5, delta_i=0.05)
 rmatrix.save(rmat_filename)
 
 rmatrix.show()
-
-
+print
+print rmatrix.matrix
 
 #H10SMATCH.angle = 0.001
 
