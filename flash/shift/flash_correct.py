@@ -152,8 +152,8 @@ resp_mat1.load("s_rmat_m_A.txt")
 orb.export_response_matrix(resp_mat1)
 orb.set_ref_pos()
 
-setup.load_orbit("orbit2.txt", lat)
-#setup.read_save_lattice(filename="orbit2a.txt")
+#setup.load_orbit("orbit2.txt", lat)
+setup.read_save_lattice(filename="lattice_calc2.txt")
 #setup.hli.read_bpms()
 
 s_bpm = np.array([p.s for p in orb.bpms])
