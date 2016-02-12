@@ -12,7 +12,7 @@ from ocelot.utils.mint import machine_setup as log
 from ocelot.utils.mint.mint import TestInterface
 
 
-filename = "lattice_calc.txt"
+filename = "test.txt"
 
 
 
@@ -24,7 +24,7 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-#setup.read_save_lattice(filename=filename)
+setup.read_save_lattice(filename=filename)
 
 # read setup file
 setup.load_lattice(filename, lat_all)
@@ -74,7 +74,8 @@ vertical = ['V3DBC3',
             'V1TCOL', 'V2TCOL', 'V4TCOL',
             'V8TCOL',
             'V4ECOL',                                                  #in dogleg
-            'V5ORS', 'V6.4ORS', 'V7ORS', 'V9ORS', 'V11ORS', 'V12ORS',
+            #'V5ORS', 'V6.4ORS', 'V7ORS', 
+'V9ORS', 'V11ORS', 'V12ORS',
             'V2SFELC', 'V4SFELC', 'V6SFELC',
             'V7SMATCH', 'V14SMATCH'
             ]
@@ -94,7 +95,7 @@ orb.create_BPM(bpm_list = bpms+bpm_extr)
 rmatrix = orb.linac_response_matrix(tw_init=tw0)
 #rmatrix = orb.measure_response_matrix(p_init=Particle(E=beam.E), match_ic=False, order=1)
 #rmat_filename = "calc_rmatrix.txt"
-rmatrix.save("c_rmat_m_rad.txt")
+rmatrix.save("c_rmat_m_rad2.txt")
 
 rmatrix.show()
 
@@ -115,7 +116,7 @@ for i, cor in enumerate(np.append(orb.hcors, orb.vcors)):
 
 rmatrix2.bpm_names = [b.id for b in orb.bpms]
 rmatrix2.cor_names = np.append(np.array([c.id for c in orb.hcors]), np.array([c.id for c in orb.vcors]))
-rmatrix2.save("c_rmat_m_A.txt")
+rmatrix2.save("c_rmat_m_A2.txt")
 
 rmatrix2.show()
 

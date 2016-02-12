@@ -1,8 +1,8 @@
 __author__ = 'Sergey Tomin'
 
 from desy.flash.lattices.lattice_rf_red import *
-from ocelot.gui.accelerator import *
-from ocelot.gui import *
+#from ocelot.gui.accelerator import *
+#from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
@@ -58,7 +58,7 @@ def currents2angles(orb):
         if abs(elem.angle) > 0.005:
             print elem.id, " @@@@@@@@@@@@@@@@ HIGH CURRENT @@@@@@@@@@@@@@@ = ", elem.angle
 
-filename = "lattice_calc.txt"
+filename = "new_ref_orbit.txt"
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()
@@ -66,45 +66,60 @@ dp = FLASH1DeviceProperties()
 lat_all = MagneticLattice(lattice)
 
 setup = log.MachineSetup(lat_all, mi, dp)
-setup.load_lattice(filename, lat_all)
+setup.read_save_lattice("test.txt")
 setup.convert_currents(lat_all, init_energy=lat_all.gun_energy)
 
 lat = MagneticLattice(lattice, start=Q1DBC3_U)
 
 orb = Orbit(lat)
-
+bpms = [#'1DBC3', '3DBC3', '9ACC4', '9ACC5', '9ACC6', '11ACC7', '15ACC7', '19ACC7',
+        # '1TCOL', '6TCOL', '8TCOL',
+         #'3ECOL', '5ECOL',                              # dogleg
+        #'2ORS', '7ORS', '9ORS', '12ORS',
+        #'1SFUND2', '1SFUND3', '1SFUND4', '1SFELC', '1SMATCH', '6SMATCH',
+        '13SMATCH', '14SMATCH', '5UND1', '5UND2', '5UND3', '5UND4', '5UND5', '5UND6'  #undulator section
+        ]
 
 
 resp_mat1 = Response_matrix()
-resp_mat1.load("c_rmat_m_A.txt")
+#resp_mat1.load("rmatrix_new2.txt")
+
+#resp_mat2 = Response_matrix()
+resp_mat1.load("c_rmat_m_A2.txt")
+
+#resp_mat1.extract(cor_list=["H10SMATCH", "H12SMATCH"], bpm_list = bpms)
 orb.export_response_matrix(resp_mat1)
+setup.load_orbit(filename, lat)
+
 #orb.mode = "ampere"
 orb.set_ref_pos()
 
 
 setup.hli.read_bpms()
 #plt.ion()
-orb.show_orbit("absolute orbit")
+#orb.show_orbit("absolute orbit")
 
 orb.minus_reference()
 
-orb.show_orbit("relative orbit")
-
+#orb.show_orbit("relative orbit")
+#plt.show()
 
 orb.correction()
 
 #  *************** Comment this
+"""
 if orb.mode == "ampere":
     currents2angles(orb)
 lat.update_transfer_maps()
 orb.read_virtual_orbit(Particle(E=Q1DBC3_U.E))
 orb.show_orbit("corrected orbit")
 plt.show()
+"""
 #  *************** Comment this
 
 
 
-alpha = 0.1
+alpha = 0.5
 
 show_currents(orb.hcors, alpha)
 
@@ -116,6 +131,10 @@ inp2 = raw_input("Restore orbit for X:? ")
 
 if inp2 == "yes":
     restore_current(mi, orb.hcors)
+
+setup.hli.read_bpms()
+orb.minus_reference()
+orb.correction()
 
 
 show_currents(orb.vcors, alpha)
