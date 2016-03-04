@@ -31,4 +31,4 @@ plot_opt_func(lat, tws, top_plot=["E"])
 
 for elem in lat.sequence:
     if elem.type == "monitor":
-        print "'",elem.id,"'"," ",
+        print ("'",elem.id,"'"," ",)

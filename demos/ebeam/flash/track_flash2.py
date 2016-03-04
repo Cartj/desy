@@ -19,8 +19,10 @@ beam.emit_x = beam.emit_xn / (beam.E / m_e_GeV)
 beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
-from lattice_FLASH_S2E import *
+from desy.demos.ebeam.flash.lattice_FLASH_S2E import *
 #exec(open('lattice.inp'))
+#beam.beta_x = 23
+#beam.beta_y = 25
 lat = MagneticLattice(lattice)
 
 tws=twiss(lat, tw0, nPoints=None)
@@ -88,7 +90,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_001_w1.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "W1: ", L
+        print ("W1: ", L)
         plt.figure(20)
         plt.title("W1")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -105,7 +107,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_001_bc2.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "WATCHBC2: ", L
+        print ("WATCHBC2: ", L)
         plt.figure(21)
         plt.title("WATCHBC2")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -123,7 +125,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_002_bc2.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "WATCHBC2_2: ", L
+        print ("WATCHBC2_2: ", L)
         plt.figure(23)
         plt.title("WATCHBC2_2")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -141,7 +143,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_001_bc3.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "WATCHBC3: ", L
+        print ("WATCHBC3: ", L)
         plt.figure(31)
         plt.title("WATCHBC3")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -159,7 +161,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_002_bc3.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "WATCHBC3_2: ", L
+        print ("WATCHBC3_2: ", L)
         plt.figure(32)
         plt.title("WATCHBC3_2")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -176,7 +178,7 @@ for elem in lat.sequence:
         p_array_t, charge_array_t = astraBeam2particleArray(filename='elegant_files/PD/FLASH_S2E_002_w1.ast')
         bins_t, hist_2 = get_current(p_array_t, charge=charge_array_t[0], num_bins=200)
         bins, hist = get_current(p_array, charge=charge_array[0], num_bins=200)
-        print "W1_end: ", L
+        print ("W1_end: ", L)
         plt.figure(42)
         plt.title("W1_end")
         #plt.plot(p_array.tau(), p_array.p(), "r.", label="ocelot")
@@ -195,7 +197,7 @@ for elem in lat.sequence:
     tw = get_envelope(p_array, tws_i=tw0)
     L += elem.l
     tw.s += L
-    print tw.s
+    print (tw.s)
     tws_track.append(tw)
 
 # plot current at the beginning of accelerator

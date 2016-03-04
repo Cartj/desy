@@ -35,9 +35,9 @@ def phase_space(x_stable, y_stable):
 
 
 
-#exec( open("../../repository/siberia2/siberia2.inp" ))
-exec( open("siberia2.inp" ))
-#exec( open(sys.path[0][:ind] + "repository/siberia2/siberia2.inp" ))
+#exec( open("../../repository/siberia2/siberia2_lattice.py" ))
+exec( open("siberia2_lattice.py" ))
+#exec( open(sys.path[0][:ind] + "repository/siberia2/siberia2_lattice.py" ))
 tw0 = Twiss(beam)
 tw0.x = 0.1
 lat = MagneticLattice(superperiod)

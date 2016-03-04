@@ -1,6 +1,6 @@
 __author__ = 'Sergey Tomin'
 from ocelot import *
-from new_quads_params import *
+from desy.flash.lattices.new_quads_params import *
 L_000000 = Drift(l = 0.28475, id = 'L_000000')
 L_000001 = Drift(l = 0.0225, id = 'L_000001')
 L_000002 = Drift(l = 0.2095, id = 'L_000002')

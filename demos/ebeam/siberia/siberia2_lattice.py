@@ -1,7 +1,7 @@
 '''
 Lattice of Kurchatov Light Sourse "Siberia - 2"
 '''
-
+from ocelot import*
 beam = Beam()
 beam.E = 2.5
 beam.sigma_E = 0.001
@@ -17,8 +17,8 @@ D7 = Drift (l = 0.289, id = "D7")
 D8 = Drift (l = 0.399, id = "D8")
 D9 = Drift (l = 3.009, id = "D9")
 
-SF = Sextupole(l = 0, ms = 1.7673786254063251, id = "SF")
-SD = Sextupole(l = 0, ms = -3.6169817233025707, id = "SD")
+SF = Sextupole(l = 0.0001, k2 = 17673.786254063251*1, id = "SF")
+SD = Sextupole(l = 0.0001, k2 =-36169.817233025707*1, id = "SD")
 
 
 Q1 = Quadrupole (l = 0.293, k1 = 2.62, id = "Q1")

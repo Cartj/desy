@@ -1,18 +1,18 @@
 __author__ = 'Sergey Tomin'
-from copy import copy
+
 
 from desy.flash.lattices.lattice_rf_mod import *
 from ocelot.gui.accelerator import *
 from ocelot import *
 from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
-
+from copy import copy
 lat = MagneticLattice(lattice)
 for elem in lat.sequence:
     if elem.type == "quadrupole":
         name = elem.id.replace("_D", "")
         name = elem.id.replace("_U", "")
-        print "k1"+name, " = ", elem.k1
+        print( "k1"+name, " = ", elem.k1)
 
 
 
@@ -41,8 +41,8 @@ plot_opt_func(lat, tws, top_plot=["Dx"])
 pi = Particle(p=0.0, E=beam.E)
 orb = Orbit(lat)
 
-x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=pi)
-resp_mat = orb.linac_response_matrix(lat, tw_init=tw0)
+x_bpm, y_bpm = orb.read_virtual_orbit( p_init=pi)
+resp_mat = orb.linac_response_matrix(tw_init=tw0)
 ax = plot_API(lat)
 for x in linspace(-0.001, 0.001, num=11):
     for cor in orb.hcors:
@@ -60,7 +60,7 @@ for x in linspace(-0.001, 0.001, num=11):
     BPM9ACC6.weight = 1
     orb.correction(lat)
     p = Particle(p=0.0, E=beam.E)
-    x_bpm, y_bpm = orb.read_virtual_orbit(lat, p_init=copy(p))
+    x_bpm, y_bpm = orb.read_virtual_orbit( p_init=copy(p))
     #print y_bpm
     #sigma_x = sqrt(sum(x_bpm**2/len(x_bpm)))*1000
     #sigma_y = sqrt(sum(y_bpm**2/len(x_bpm)))*1000
