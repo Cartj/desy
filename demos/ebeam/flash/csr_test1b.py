@@ -10,20 +10,20 @@ from ocelot.cpbd.csr import *
 
 SRE = np.transpose([[0, 0, 0, 0, 1, 0, 0 ]])
 Delta_S = 0.5
-d_S=0.0002
+d_S=0.002
 R_vect = np.array([0, 0, 1.5])
 SRE = arcline(SRE, Delta_S, d_S, R_vect)
 #print SRE
 Delta_S=2.5
-d_S=0.0002
+d_S=0.002
 R_vect=[]
 SRE=arcline(SRE,Delta_S,d_S,R_vect)
 Delta_S=0.5
-d_S=0.0002
+d_S=0.002
 R_vect=[0, 0, -1.5]
 SRE=arcline(SRE,Delta_S,d_S,R_vect)
 Delta_S=3.5
-d_S=0.0002
+d_S=0.002
 R_vect=[]
 SRE=arcline(SRE,Delta_S,d_S,R_vect)
 #SRE_m = np.loadtxt("SRE.txt", unpack=True)

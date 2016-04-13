@@ -1,11 +1,18 @@
 """
-@ Martin Dohlus DESY, 2015
+Martin Dohlus DESY, 2015
 """
 import numpy as np
 
 from numpy.linalg import norm
 
 def arcline( SREin, Delta_S, dS, R_vect ):
+    """
+    :param SREin: in
+    :param Delta_S:
+    :param dS:
+    :param R_vect:
+    :return:
+    """
     #%arcline( sre0,Delta_S,dS,R_vect )
 
     epsilon = 1e-8
@@ -47,8 +54,8 @@ def arcline( SREin, Delta_S, dS, R_vect ):
         e2 = np.array([[n_vect[1]*e1[2] - n_vect[2]*e1[1]],
             [n_vect[2]*e1[0] - n_vect[0]*e1[2]],
             [n_vect[0]*e1[1] - n_vect[1]*e1[0]]])
-        si = np.sin(np.arange(1,N+1)*dS/R)
-        co = np.cos(np.arange(1,N+1)*dS/R)
+        si = np.sin(np.arange(1, N+1)*dS/R)
+        co = np.cos(np.arange(1, N+1)*dS/R)
         omco = 2*np.sin(np.arange(1, N+1)*dS/R/2)**2
         SRE2[2-1, :] = sre0[1] + R*(e1[0]*si + e2[0]*omco)
         SRE2[3-1, :] = sre0[2] + R*(e1[1]*si + e2[1]*omco)

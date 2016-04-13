@@ -73,6 +73,7 @@ line, = ax.plot(x[::10], lam_K1[::10])
 plt.ylim([-2.5e6, 2e6])
 plt.grid(True)
 #plt.show()
+print("s", SRE[0,-1])
 
 for s in np.linspace(0.05, SRE[0,-1], num=500):
     i=np.where(SRE[0,:]<=s)[0][-1]

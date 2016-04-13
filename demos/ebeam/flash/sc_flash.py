@@ -48,7 +48,7 @@ if debug:
 
 navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
-    print zi
+    print (zi)
     dz = zi - Z[i]
     track(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
     #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
