@@ -1,4 +1,6 @@
 __author__ = 'Sergey Tomin'
+
+
 import numpy as np
 from ocelot import *
 from ocelot.cpbd.high_order import *
@@ -72,17 +74,18 @@ for i, zi in enumerate(Z[1:]):
     if zi == csr_z - 0.1:
         particleArray2astraBeam(p_array, charge_array, filename="before_BC3.ast")
     if CSR and idx_start <= navi.n_elem <= idx_stop:
-        if zi-csr_z <=0:
+        if zi-csr_z <= 0:
             continue
         else:
             csr_apply(particle_list=p_array, charge_array=charge_array, delta_s=dz, s_cur=zi-csr_z, csr_traj=csr_traj)
         print(zi-csr_z, idx_start <= navi.n_elem <= idx_stop)
     print(np.around(zi, decimals=3))
     if np.around(zi, decimals=3) == 68.278:
-        particleArray2astraBeam(p_array,charge_array,  filename="after_BC3.ast")
+        particleArray2astraBeam(p_array, charge_array,  filename="after_BC3.ast")
+
 #bins_end, hist_end = get_current(p_array, charge=charge_array[0], num_bins=200)
 
-
+p_array_csrtr, charge_array_csrtr = astraBeam2particleArray(filename='elegant_files/bc2_out_CSR.ast')
 plt.figure(1)
 plt.title("Trajectory")
 plt.xlabel("z, m")
@@ -91,12 +94,14 @@ plt.grid(True)
 plt.plot(csr_traj[3,:], csr_traj[1,:], "r")
 
 plt.figure(2)
-plt.title("current: start")
-plt.plot(bins_start, hist_start)
+plt.title("energy: end")
+plt.plot(p_array_csrtr.particles[4::6], p_array_csrtr.particles[5::6], "r.")
+plt.plot(p_array.particles[4::6], p_array.particles[5::6], "b.")
 plt.xlabel("s, m")
-plt.ylabel("I, A")
+plt.ylabel("dp/p")
 plt.grid(True)
 
+p_array, charge_array = astraBeam2particleArray(filename='after_BC3.ast')
 plt.figure(4)
 plt.title("energy: end")
 plt.plot(p_array.particles[4::6], p_array.particles[5::6], "r.")

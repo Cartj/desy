@@ -99,7 +99,7 @@ setup.load_lattice("new_ref_orbit.txt", lat_all)
 
 orbit["bpms"] = get_dict(lat_all, bpms)
 
-print orbit["bpms"]
+print( orbit["bpms"])
 
 
 seq_min_orb = [Action(func=opt.min_orbit, args=[orbit, 'simplex' ] )]
