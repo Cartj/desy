@@ -3,7 +3,7 @@ main tuning script, LCLS
 '''
 
 from ocelot.utils.mint.mint import Optimizer, Action
-from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, FLASH1DeviceProperties
+from ocelot.utils.mint.flash1_interface_pydoocs3 import FLASH1MachineInterface, FLASH1DeviceProperties, TestInterface
 #from flash1_interface import FLASH1DeviceProperties
 
 
@@ -11,6 +11,7 @@ from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, F
 
 
 mi = FLASH1MachineInterface()
+mi = TestInterface()
 dp = FLASH1DeviceProperties()
 #opt = Optimizer(mi, dp)
 opt = Optimizer(mi, dp)
@@ -46,7 +47,5 @@ seq13 = [Action(func=opt.max_sase, args=[ ['V3DBC3', 'V10ACC4', 'V10ACC5', 'V10A
 opt.eval(seq4)
 #apply_bump(cors, currents, dI, alpha=0.1)
 
-
 #opt.eval(seq5 + seq3 + seq6 + seq8 + seq9)
- 
 

@@ -9,7 +9,7 @@ from high_level_mint_flash import *
 from ocelot.utils.mint.flash1_interface_pydoocs import *
 #from flash1_virtual_interface import *
 import pickle
-from converter import *
+from ocelot.utils.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
 from ocelot.utils.mint import machine_setup as log
 
@@ -48,10 +48,10 @@ setup = log.MachineSetup()
 ampls1, phases1 = mi.get_cavity_info(["M1.ACC1"])
 #ampls2, phases2 = mi.get_cavity_info(["M2.ACC1"])
 
-print "energy gun = ", mi.get_gun_energy()
+print ("energy gun = ", mi.get_gun_energy())
 
 beam.E = mi.get_gun_energy() + ampls1[0]*cos(phases1[0]*pi/180.)*0.001
-print "ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001
+print ("ACC1 = ", ampls1[0]*cos(phases1[0]*pi/180.)*0.001)
 read_cavs(lat, mi)
 
 E = beam.E
