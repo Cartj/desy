@@ -41,9 +41,11 @@ lat = MagneticLattice(lattice)
 tws=twiss(lat, tw0, nPoints=None)
 
 plot_opt_func(lat, tws, top_plot=["Dx"])
+
 #for i in range(10):
 #    Q1.k1 = -5+i
 #    lat.update_transfer_maps
+#    print("Q1.k1 = ", Q1.k1, "  R56 = ", lattice_transfer_map(lat, energy=beam.E)[4,5])
 
 print("Q1.k1 = ", Q1.k1, "  R56 = ", lattice_transfer_map(lat, energy=beam.E)[4,5])
 
