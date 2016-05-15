@@ -6,6 +6,13 @@ from ocelot.adaptors import *
 from ocelot.cpbd.sc import *
 from ocelot.adaptors.astra2ocelot import *
 
+def Filter(x,NF):
+    Ns=x.shape[0]
+    for i in range(NF):
+        x[1:Ns]=(x[1:Ns]+x[0:Ns-1])*0.5
+        x[0:Ns-1]=(x[1:Ns]+x[0:Ns-1])*0.5
+    return x
+
 def Der(x,y):
     #numerical derivative
     n=x.shape[0]
@@ -45,6 +52,10 @@ def s2current(P0,q,Ns,NF,v):
     Np=P0.shape[0]
     ds=(s1-s0)/(Ns-2-2*NF2)
     s=s0+np.arange(-NF2,Ns-NF2)*ds
+
+    # here we need a fast 1D linear interpolation of charges on the grid
+    # in sc.py we use a fast 3D "near-point" interpolation 
+    # we need a stand-alone module with 1D,2D,3D parricles-to-grid functions
     Ip=(P0-s0)/ds
     I0=np.floor(Ip)
     dI0=Ip-I0
@@ -56,9 +67,7 @@ def s2current(P0,q,Ns,NF,v):
         Ro[i0]=Ro[i0]+(1-di0)*q[i]
         Ro[i0+1]=Ro[i0+1]+di0*q[i]
     if NF>0:
-        for i in range(NF):
-            Ro[1:Ns]=(Ro[1:Ns]+Ro[0:Ns-1])*0.5
-            Ro[0:Ns-1]=(Ro[1:Ns]+Ro[0:Ns-1])*0.5;
+        Filter(Ro,NF)
     I=np.zeros([Ns,2])
     I[:,0]=s
     I[:,1]=Ro*v/ds
@@ -112,13 +121,8 @@ def AddWake (I,T):
       W=W-int_bunch*Cinv/c 
     return x,W
 
-def AddTotalWake (P,q,wakeFile,Ns,NF):
-    #function [Px Py Pz I00]=AddTotalWake (P,q,wakeFile,Ns,NF)
-    c=299792458;
-    X=P[:,0]
-    Y=P[:,1]
-    Z=-P[:,2]
-    Np=P.shape[0]
+def LoadWakeTable (wakeFile):
+    # return T- table of wakes coefs, H- matrix of the coefs place in T
     W=np.loadtxt(wakeFile)
     # head format %Nt 0 %N0 N1 %R L %C nm
     H=np.zeros([5,5])
@@ -150,6 +154,15 @@ def AddTotalWake (P,q,wakeFile,Ns,NF):
         else: 
             W1=0
         T=T+[(R,L,Cinv,nm,W0,N0,W1,N1)]
+    return T,H
+
+def AddTotalWake (P,q,T,H,Ns,NF):
+    #function [Px Py Pz I00]=AddTotalWake (P,q,wakeFile,Ns,NF)
+    c=299792458;
+    X=P[:,0]
+    Y=P[:,1]
+    Z=-P[:,2]
+    Np=P.shape[0]
     X2=X**2
     Y2=Y**2 
     XY=X*Y
@@ -259,10 +272,11 @@ x0=0.001e-6
 P[:,2]=P[:,2]-np.min(P[:,2])
 P[:,1]=P[:,1]+y0
 P[:,0]=P[:,0]+x0
-Ns=500 
-NF=20
+Ns=500              # wake sampling
+NF=20               # smoothing filter order       
 wakeFile=drive+'TEST_DECHIRPER/ECHO/Wakes/wake_vert.txt'
-Px,Py,Pz,I00=AddTotalWake (P,q,wakeFile,Ns,NF)
+Tv,Hv=LoadWakeTable (wakeFile)
+Px,Py,Pz,I00=AddTotalWake (P,q,Tv,Hv,Ns,NF)
 koef=np.min(Pz)/np.max(I00[:,1])
 wakefile=drive+'TEST_DECHIRPER\ECHO\Part4\WakeLQD.txt'
 w1=np.loadtxt(wakefile,comments='%')
