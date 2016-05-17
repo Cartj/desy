@@ -79,7 +79,6 @@ out=np.zeros((n_out,3))
 out[:,0]=s_p
 out[:,1]=[t.beta_x for t in tws_track]
 out[:,2]=[t.beta_y for t in tws_track]
-#np.savetxt('D:/pyoptics.txt',out)
 np.savetxt('pyoptics_withoutSC.txt',out)
 
 particleArray2astraBeam(p_array)
