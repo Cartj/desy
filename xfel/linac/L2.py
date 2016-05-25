@@ -1,3 +1,4 @@
+from ocelot import *
 tws_L2 = Twiss()
 tws_L2.beta_x = 9.736100000
 tws_L2.beta_y = 36.061400
@@ -80,9 +81,9 @@ l2_bpmc = Monitor(id = 'l2_bpmc')
 # undulator 
 
 # cavity 
-l2_c_a3 = Cavity(l = 1.0377, volt = 0.0177083333333*1e+9, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a3')
-l2_c_a4 = Cavity(l = 1.0377, volt = 0.0177083333333*1e+9, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a4')
-l2_c_a5 = Cavity(l = 1.0377, volt = 0.0177083333333*1e+9, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a5')
+l2_c_a3 = Cavity(l = 1.0377, v = 0.0177083333333, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a3')
+l2_c_a4 = Cavity(l = 1.0377, v = 0.0177083333333, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a4')
+l2_c_a5 = Cavity(l = 1.0377, v = 0.0177083333333, delta_e = 0.0177083333333, freq = 1300.0, phi = 0.0, volterr = 0.0, id = 'l2_c_a5')
 
 # rfcavity 
 

@@ -1,3 +1,4 @@
+from ocelot import *
 tws_T4 = Twiss()
 tws_T4.beta_x = 23.355200000
 tws_T4.beta_y = 60.234400

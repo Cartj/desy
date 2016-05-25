@@ -1,3 +1,4 @@
+from ocelot import *
 tws_B2 = Twiss()
 tws_B2.beta_x = 82.092900000
 tws_B2.beta_y = 87.406800
@@ -207,7 +208,7 @@ b2_bpms = Monitor(id = 'b2_bpms')
 # undulator 
 
 # cavity 
-b2_tdsb = Cavity(l = 1.5, volt = 0.0, delta_e = 0.0, freq = 2800.0, phi = 0.0, volterr = 0.0, id = 'b2_tdsb')
+b2_tdsb = Cavity(l = 1.5, v = 0.0, delta_e = 0.0, freq = 2800.0, phi = 0.0, volterr = 0.0, id = 'b2_tdsb')
 
 # rfcavity 
 
