@@ -1,6 +1,8 @@
+from ocelot import MagneticLattice
+
 __author__ = 'Sergey Tomin'
 from ocelot.adaptors import *
-from ocelot.utils.mint.flash1_converter import *
+from ocelot.mint.flash1_converter import *
 from ocelot.utils.flash_read_log import *
 from ocelot.rad.undulator_params import *
 from ocelot.cpbd.track import lattice_track

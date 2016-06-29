@@ -5,20 +5,18 @@ Created on Thu Apr 28 15:46:05 2016
 @author: tomins
 """
 
-import numpy as np
 from ocelot import *
-from ocelot.cpbd.high_order import *
-from ocelot.gui import *
 from ocelot.adaptors import *
 from ocelot.cpbd.track import*
+from ocelot.gui import *
 
-D1 = Drift(l=1., id="D1")
-D2 = Drift(l=2.5, id="D2")
+D1 = Drift(l=1., eid="D1")
+D2 = Drift(l=2.5, eid="D2")
 
-B1 = RBend(l = 0.3, angle=200e-6, id="B1")
-B2 = RBend(l = 0.3, angle=-200e-6, id="B2")
+B1 = RBend(l = 0.3, angle=200e-6, eid="B1")
+B2 = RBend(l = 0.3, angle=-200e-6, eid="B2")
 
-Q1 = Quadrupole(l=0.3, k1=2.5*0, id="Q1")
+Q1 = Quadrupole(l=0.3, k1=2.5*0, eid="Q1")
 
 lattice = [D1, B1, D2, Q1, D2, B2, D1]
 
@@ -69,7 +67,7 @@ ax2.plot(p_array.particles[0::6], p_array.particles[1::6], 'r.')
 
 navi = Navigator()
 for elem in lat.sequence:
-    track(lat=lat, particle_list=p_array, dz=elem.l, navi=navi, order=1)
+    tracking_step(lat=lat, particle_list=p_array, dz=elem.l, navi=navi, order=1)
 
 
 ax1.plot(p_array.particles[4::6], p_array.particles[5::6], 'b.')

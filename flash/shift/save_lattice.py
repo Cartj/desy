@@ -1,12 +1,10 @@
 __author__ = 'Sergey Tomin'
 
 from desy.flash.lattices.lattice_rf_mod import *
-from ocelot.gui.accelerator import *
 from ocelot.cpbd.orbit_correction import *
-from ocelot.utils.mint.machine_setup import *
-from ocelot.utils.mint.flash1_interface_pydoocs import *
-from ocelot.utils.mint.flash1_converter import *
-
+from ocelot.mint.flash1_converter import *
+from ocelot.mint.flash1_interface import *
+from ocelot.mint.machine_setup import *
 
 if len(sys.argv)>1:
     filename = sys.argv[1]

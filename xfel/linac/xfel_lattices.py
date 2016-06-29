@@ -1,8 +1,7 @@
-__author__ = 'Sergey Tomin'
-import sys
+from ocelot import MagneticLattice
 
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
+__author__ = 'Sergey Tomin'
+
 from ocelot.gui.accelerator import *
 
 #tws0 = Twiss()
@@ -32,7 +31,7 @@ from SA2 import *
 lat_i1 = MagneticLattice(gun_5MeV + i1_150M, stop=i1_starti1d)
 tws = twiss(lat_i1, tws_5M, nPoints=None)
 print( "'GUN': length = ", lat_i1.totalLen, "s = ", tws[-1].s)
-plot_opt_func(lat_i1, tws, top_plot=["Dx"], fig_name= "i1", legend=False)
+plot_opt_func(lat_i1, tws, top_plot=["E"], fig_name= "i1", legend=False)
 plt.show()
 
 

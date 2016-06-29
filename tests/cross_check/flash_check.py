@@ -1,11 +1,9 @@
 __author__ = 'Sergey Tomin'
 
 from ocelot.adaptors.elegant2ocelot import *
-from ocelot.cpbd.optics import *
 from ocelot.cpbd.beam import *
-from ocelot.gui.accelerator import *
-from ocelot.cpbd.io import *
 from ocelot.cpbd.track import *
+from ocelot.gui.accelerator import *
 
 #lat_def = read_lattice_elegant(file_flo="flash_s2e_flo.txt", file_par="flash_s2e_par.txt")
 #for elem in lat_def:

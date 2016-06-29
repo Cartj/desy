@@ -2,12 +2,11 @@
 MBA-type var delay achromat
 '''
 
+from common import show_optics
 
-import sys
+from ocelot.cpbd.e_beam_params import *
 from ocelot.cpbd.match import *
 from ocelot.gui.accelerator import *
-from ocelot.cpbd.e_beam_params import *
-from common import show_optics
 
 beam = Beam()
 beam.E = 6.0

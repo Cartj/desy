@@ -1,10 +1,9 @@
-__author__ = 'Sergey Tomin'
-import sys
+from ocelot import MagneticLattice
 
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
+__author__ = 'Sergey Tomin'
+
 from ocelot.gui.accelerator import *
-from ocelot.utils.mint.xfel_interface import *
+from ocelot.mint.xfel_interface import *
 #tws0 = Twiss()
 #tws0.beta_x = 29.171
 #tws0.beta_y = 29.171

@@ -1,16 +1,14 @@
 __author__ = 'Sergey Tomin'
 
 from desy.flash.lattices.lattice_rf_red import *
-from ocelot.gui.accelerator import *
-from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
 #from high_level_mint_flash import *
 #import pyqtgraph as pg
-from ocelot.utils.mint.flash1_interface_pydoocs import *
+from ocelot.mint.flash1_interface import *
 #from flash1_virtual_interface import *
-from ocelot.utils.mint.flash1_converter import *
+from ocelot.mint.flash1_converter import *
 from ocelot.rad.undulator_params import *
-from ocelot.utils.mint import machine_setup as log
+from ocelot.mint import machine_setup as log
 
 
 def currents2angles(orb):

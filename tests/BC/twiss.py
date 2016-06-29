@@ -1,11 +1,9 @@
-import sys
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
-from ocelot.gui.accelerator import plot_lattice, plot_opt_func
-
 from bc import *
 from pylab import *
 
+from ocelot import MagneticLattice
+from ocelot.cpbd.optics import *
+from ocelot.gui.accelerator import plot_lattice, plot_opt_func
 
 #lat = MagneticLattice(sase3_segment(n=7), energy=17.5)
 lat = MagneticLattice(bc2_l3, energy=2.4)

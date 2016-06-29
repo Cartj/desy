@@ -35,8 +35,8 @@ navi2 = Navigator()
 dz = 1.
 
 for i in range(int(lat.totalLen/dz)):
-    track(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
-    track(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
+    tracking_step(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
+    tracking_step(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
     P1.append(copy(p1))
     P2.append(copy(p2))
 
@@ -64,8 +64,8 @@ for xi, yi in zip(x,y):
 plist_1 = deepcopy(plist)
 navi = Navigator()
 # lat.totalLen
-track(lat, plist_1, dz=lat.totalLen, navi=copy(navi), order=3)
-track(lat, plist, dz=lat.totalLen, navi=copy(navi), order=1)
+tracking_step(lat, plist_1, dz=lat.totalLen, navi=copy(navi), order=3)
+tracking_step(lat, plist, dz=lat.totalLen, navi=copy(navi), order=1)
 #for i, p in enumerate(plist_1):
 #    print p.x, x[i], p.y, y[i]
 x2 = [f.x for f in plist]

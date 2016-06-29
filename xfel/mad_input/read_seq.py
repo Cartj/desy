@@ -1,15 +1,12 @@
+from ocelot import MagneticLattice
+
 __author__ = 'Sergey Tomin'
 import sys
 ind = sys.path[0].find("desy")
 sys.path.append(sys.path[0][:ind])
 print sys.path[0][:ind]
-from ocelot.adaptors.mad8 import lattice_str_from_mad8, save_lattice_str
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.io import lat2input
 from numpy import *
 from ocelot.cpbd.io import *
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
 from ocelot.gui.accelerator import *
 exec(open("injector.inp"))
 emass = 0.511e-3
@@ -156,11 +153,11 @@ def collect_drifts(lat):
             L += elem.l
             if i == len(lat.sequence) -1:
                 L =  around(L, decimals = 6)
-                seq.append(Drift(l = L, id = "d" + str(int(L*100000 + 10000000))[1:]))
+                seq.append(Drift(l = L, eid= "d" + str(int(L*100000 + 10000000))[1:]))
         else:
             if drift > 0 and L>0.:
                 L =  around(L, decimals = 6)
-                seq.append(Drift(l = L, id = "d" + str(int(L*100000 + 10000000))[1:]))
+                seq.append(Drift(l = L, eid= "d" + str(int(L*100000 + 10000000))[1:]))
                 drift = 0
             seq.append(elem)
             L = 0.

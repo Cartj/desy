@@ -1,9 +1,7 @@
+from ocelot import MagneticLattice
+
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.elements import *
-from numpy import *
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
 from ocelot.gui.accelerator import *
 
 

@@ -2,13 +2,14 @@
 tracking with space charge
 '''
 import time
+
 import matplotlib.pyplot as plt
-
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.optics import *
 from PhysConsts import *
-
 from space_charge import *
+
+from ocelot import MagneticLattice
+from ocelot.cpbd.optics import *
+
 
 def get_envelope(p_array):
     tws = Twiss()

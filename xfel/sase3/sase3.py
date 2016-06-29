@@ -6,31 +6,31 @@ from ocelot.cpbd.elements import *
 from ocelot.cpbd.beam import *
 import numpy as np
 
-und = Undulator(nperiods=73, lperiod=0.068, Kx=0.0, id = "und"); voodoo = 1.5
+und = Undulator(nperiods=73, lperiod=0.068, Kx=0.0, eid= "und"); voodoo = 1.5
 
 
 
-d = Drift (l=1.0, id = "d")
+d = Drift (l=1.0, eid= "d")
 
-d1 = Drift (l=0.55, id = "d1")
-d2 = Drift (l=2*und.lperiod, id = "d2")
-d3 = Drift (l=2*und.lperiod, id = "d0.05nm3")
+d1 = Drift (l=0.55, eid= "d1")
+d2 = Drift (l=2*und.lperiod, eid= "d2")
+d3 = Drift (l=2*und.lperiod, eid= "d0.05nm3")
 
 # phase shifter
 
-b1 = RBend (l=2*und.lperiod, angle=0.0, id = "b1")
-b2 = RBend (l=2*und.lperiod, angle=-0.0, id = "b2")
+b1 = RBend (l=2*und.lperiod, angle=0.0, eid= "b1")
+b2 = RBend (l=2*und.lperiod, angle=-0.0, eid= "b2")
 
 
 #psu=(b1,b2,b2,b1)
-psu= Drift (l=b1.l*2 + b2.l*2 + d3.l, id = "d1")
+psu= Drift (l=b1.l*2 + b2.l*2 + d3.l, eid= "d1")
 
-qf = Quadrupole (l=und.lperiod*5, id = "qf")
-qd = Quadrupole (l=und.lperiod*5, id = "qd")
+qf = Quadrupole (l=und.lperiod*5, eid= "qf")
+qd = Quadrupole (l=und.lperiod*5, eid= "qd")
 
 
-qfh = Quadrupole (l=qf.l / 2., id = "qfh")
-qdh = Quadrupole (l=qd.l / 2., id = "qdh")
+qfh = Quadrupole (l=qf.l / 2., eid= "qfh")
+qdh = Quadrupole (l=qd.l / 2., eid= "qdh")
 
 
 cell_ps = (und, d2, qf, psu, und, d2, qd, psu)
@@ -42,7 +42,7 @@ sase = sase3
 
 
 # self-seeding setup
-und2 = Undulator(nperiods=73, lperiod=0.068, Kx=1.e-9, id = "und2")
+und2 = Undulator(nperiods=73, lperiod=0.068, Kx=1.e-9, eid= "und2")
 sase3_ss_1 = (und2, d2, qd, psu, und2, d2, qf, psu, und2)
 
 sase3_ss_2 = (d2, qd, psu, und, d2, qf, psu)
@@ -51,12 +51,12 @@ lc = d2.l + qd.l + psu.l + und.l +  d2.l + qf.l +  psu.l
 lcm = psu.l +  und.l + d2.l
 
 
-d1_c = Drift (l=0.1, id = "d1_c")
-b1_c = Hcor (l=0.2, angle=1.e-5, id = "b1_c")
-b2_c = Hcor (l=0.2, angle=-1.e-5, id = "b2_c")
+d1_c = Drift (l=0.1, eid= "d1_c")
+b1_c = Hcor (l=0.2, angle=1.e-5, eid= "b1_c")
+b2_c = Hcor (l=0.2, angle=-1.e-5, eid= "b2_c")
 
-d2_c = Drift (l=(lcm - 2*d1_c.l - 2*b1_c.l - 2*b2_c.l)/3., id = "d2_c")
-d3_c = Drift (l=(lcm - 2*d1_c.l - 2*b1_c.l - 2*b2_c.l)/3., id = "d3_c")
+d2_c = Drift (l=(lcm - 2*d1_c.l - 2*b1_c.l - 2*b2_c.l)/3., eid= "d2_c")
+d3_c = Drift (l=(lcm - 2*d1_c.l - 2*b1_c.l - 2*b2_c.l)/3., eid= "d3_c")
 
 chic = (d2, qd, d1_c, b1_c, d2_c, b2_c, d3_c, b2_c, d2_c, b1_c, d1_c, qf, psu)
 sase3_ss_2m = chic

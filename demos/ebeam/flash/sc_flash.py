@@ -50,7 +50,7 @@ navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
     print (zi)
     dz = zi - Z[i]
-    track(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi)
     #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
     if SC:
         sc_apply(p_array, q_array=charge_array, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)

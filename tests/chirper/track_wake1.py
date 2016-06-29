@@ -65,7 +65,7 @@ if bWake:
 navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
     dz = zi - Z[i]
-    track(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
     
     if bWake:
         Px=0

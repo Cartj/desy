@@ -13,24 +13,24 @@ cm = 1.e-2
 mm = 1.e-3
 mum = 1.e-6
 
-und = Undulator (nperiods=125,lperiod=0.040,Kx=0.0, id = "und"); voodoo=0.69
+und = Undulator (nperiods=125,lperiod=0.040,Kx=0.0, eid= "und"); voodoo=0.69
 
-d = Drift (l=1.0, id = "d")
+d = Drift (l=1.0, eid= "d")
 
-d1 = Drift (l=0.55, id = "d1")
-d2 = Drift (l=0.45, id = "d2")
-d3 = Drift (l=0.27, id = "d0.05nm3")
+d1 = Drift (l=0.55, eid= "d1")
+d2 = Drift (l=0.45, eid= "d2")
+d3 = Drift (l=0.27, eid= "d0.05nm3")
 
-b1 = RBend (l=0.0575, angle=0.0, id = "b1")
-b2 = RBend (l=0.0575, angle=-0.0, id = "b2")
+b1 = RBend (l=0.0575, angle=0.0, eid= "b1")
+b2 = RBend (l=0.0575, angle=-0.0, eid= "b2")
 
 #psu=(b1,b2,b2,b1,d3)
-psu= Drift (l=b1.l*2 + b2.l*2 + d3.l, id = "d1")
+psu= Drift (l=b1.l*2 + b2.l*2 + d3.l, eid= "d1")
 
-qf = Quadrupole (l=0.1, id = "qf")
-qd = Quadrupole (l=0.1, id = "qd")
-qfh = Quadrupole (l=0.05, id = "qf")
-qdh = Quadrupole (l=0.05, id = "qf")
+qf = Quadrupole (l=0.1, eid= "qf")
+qd = Quadrupole (l=0.1, eid= "qd")
+qfh = Quadrupole (l=0.05, eid= "qf")
+qdh = Quadrupole (l=0.05, eid= "qf")
 
 cell_ps = (und, d2, qf, psu, und, d2, qd, psu)
 

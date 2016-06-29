@@ -2,17 +2,12 @@
 csr
 '''
 
-import matplotlib as mpl
-from mpl_toolkits.mplot3d import Axes3D
-import numpy as np
 import matplotlib.pyplot as plt
 
-from numpy import cos, sin, log, abs, exp
-
-from ocelot.cpbd.elements import *
+from ocelot import MagneticLattice
+from ocelot.cpbd import *
 from ocelot.cpbd.beam import *
 from ocelot.cpbd.optics import *
-from ocelot.cpbd import *
 from ocelot.gui.accelerator import plot_lattice
 
 

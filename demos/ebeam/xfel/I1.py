@@ -186,21 +186,21 @@ cix_118_i1 = Hcor(l=0.1, eid='CIX.118.I1')
 
 i1_cix_drift = Drift(l=0.1, eid="i1.cix.drift")
 # quadrupoles 
-i1_q_a1_1 = Quadrupole(l = 0.3, k1 = -1.537886, eid= 'Q.37.I1')
-i1_q_ah1_1 = Quadrupole(l = 0.3, k1 = 1.435078, eid= 'Q.38.I1')
-i1_qi_1 = Quadrupole(l = 0.2, k1 = -0.0932136,  eid= 'QI.46.I1')
-i1_qi_2 = Quadrupole(l = 0.2, k1 = 0.8875443,   eid= 'QI.47.I1')
-i1_qi_3 = Quadrupole(l = 0.2, k1 = -0.7654263,  eid= 'QI.50.I1')
-i1_qi_4 = Quadrupole(l = 0.2, k1 = -0.07117866, eid= 'QI.52.I1')
-i1_qi_5 = Quadrupole(l = 0.2, k1 = 2.494601,    eid= 'QI.53.I1')
-i1_qi_6 = Quadrupole(l = 0.2, k1 = 0.9480791,   eid= 'QI.54.I1')
-i1_qi_7 = Quadrupole(l = 0.2, k1 = -4.15374,    eid= 'QI.55.I1')
-i1_qi_8 = Quadrupole(l = 0.2, k1 = 4.15355,     eid= 'QI.57.I1')
-i1_qi_9 = Quadrupole(l = 0.2, k1 = -4.15374,    eid= 'QI.59.I1')
-i1_qi_11 = Quadrupole(l = 0.2, k1 = 2.128,      eid= 'QI.60.I1')
-i1_qi_12 = Quadrupole(l = 0.2, k1 = 0.933,      eid= 'QI.61.I1')
-i1_qi_13 = Quadrupole(l = 0.2, k1 = -2.2531364, eid= 'QI.63.I1')
-i1_qi_14 = Quadrupole(l = 0.2, k1 = 2.441008,   eid= 'QI.66.I1')
+q_37_i1 = Quadrupole(l=0.3, k1 = -1.537886,   eid= 'Q.37.I1')
+q_38_i1 = Quadrupole(l=0.3, k1 = 1.435078,    eid= 'Q.38.I1')
+qi_46_i1 = Quadrupole(l=0.2, k1 = -0.0932136,  eid= 'QI.46.I1')
+qi_47_i1 = Quadrupole(l=0.2, k1 = 0.8875443,   eid= 'QI.47.I1')
+qi_50_i1 = Quadrupole(l=0.2, k1 = -0.7654263,  eid= 'QI.50.I1')
+qi_52_i1 = Quadrupole(l=0.2, k1 = -0.07117866, eid= 'QI.52.I1')
+qi_53_i1 = Quadrupole(l=0.2, k1 = 2.494601,    eid= 'QI.53.I1')
+qi_54_i1 = Quadrupole(l=0.2, k1 = 0.9480791,   eid= 'QI.54.I1')
+qi_55_i1 = Quadrupole(l=0.2, k1 = -4.15374,    eid= 'QI.55.I1')
+qi_57_i1 = Quadrupole(l=0.2, k1 = 4.15355,     eid= 'QI.57.I1')
+qi_59_i1 = Quadrupole(l=0.2, k1 = -4.15374,    eid= 'QI.59.I1')
+qi_60_i1 = Quadrupole(l = 0.2, k1 = 2.128,      eid= 'QI.60.I1')
+qi_61_i1 = Quadrupole(l = 0.2, k1 = 0.933,      eid= 'QI.61.I1')
+qi_63_i1 = Quadrupole(l = 0.2, k1 = -2.2531364, eid= 'QI.63.I1')
+qi_66_i1 = Quadrupole(l = 0.2, k1 = 2.441008,   eid= 'QI.66.I1')
 
 i1_qi_15 = Quadrupole(l = 0.2, k1 = -2.559564,       eid= 'i1_qi_15')
 i1_qi_16 = Quadrupole(l = 0.2, k1 = 3.653292,        eid= 'i1_qi_16')
@@ -332,34 +332,34 @@ i1_c_a1)
 
 
 
-i1_150M = (d02043, ltwakecav, i1_q_a1_1, cx_37_i1, cy_37_i1, d0085, i1_bpmc,
+i1_150M = (d02043, ltwakecav, q_37_i1, cx_37_i1, cy_37_i1, d0085, i1_bpmc,
 d0085, d00729, d0300, i1_enac_a1_1, i1_vcst78t30, i1_stac_ah1_1, d00611, d0075, 
-d0085, i1_bpmr, d0085, i1_q_ah1_1, cx_39_i1, cy_39_i1, d0020, d0102,
+d0085, i1_bpmr, d0085, q_38_i1, cx_39_i1, cy_39_i1, d0020, d0102,
 d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, 
 ltwakecav3, d0102, miac, d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, 
 d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, 
 ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, 
 i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, ltwakecav3, 
 d0075, i1_enac_ah1_1, i1_vcst30t78, i1_ctbi, i1_vcst78t40, i1_end_l0, d12964, i1_tora, 
-d02519, d0100, i1_qi_1, d0105, i1_bam, d0090, d01275, i1_bpmf, 
-d0096, i1_mpbpmf, d00315, d00862, i1_dcm, d01423, i1_qi_2, d0100, 
+d02519, d0100, qi_46_i1, d0105, i1_bam, d0090, d01275, i1_bpmf,
+d0096, i1_mpbpmf, d00315, d00862, i1_dcm, d01423, qi_47_i1, d0100,
 i1_start_lh, i1_vcst40t35, d0051, i1_bl_1_1, cd0100i, i1_bl_1_2, d006075, d00315, 
 i1_mpbpmf, d0096, i1_bpmf, d01275, d014425, i1_otrl, d0064, d0100, 
 d0030, i1_undu, d0030, d0100, d0064, i1_otrl, d0120, i1_bl_3, 
-cd0100i, i1_bl_4, d0051, i1_vcst35t40, i1_end_lh, d0100, i1_qi_3, d010849, 
+cd0100i, i1_bl_4, d0051, i1_vcst35t40, i1_end_lh, d0100, qi_50_i1, d010849,
 d0100, i1_eod, d0200, ciy_51_i1, d0100, d0200, d0003, cix_51_i1,
-d0070, d01275, i1_bpmf, d0096, i1_mpbpmf, d00315, d0075, i1_qi_4, 
-d0070, i1_tdsa, d0070, i1_qi_5, d0122, d0175, i1_kax, d0105, 
-i1_qi_6, d0105, i1_kax, d0285, i1_start_dia, d0035, i1_otrc, d0125, 
-d0050, ciy_55_i1, d0150, i1_bpma, d0150, i1_qi_7, d0105, i1_kax,
+d0070, d01275, i1_bpmf, d0096, i1_mpbpmf, d00315, d0075, qi_52_i1,
+d0070, i1_tdsa, d0070, qi_53_i1, d0122, d0175, i1_kax, d0105,
+qi_54_i1, d0105, i1_kax, d0285, i1_start_dia, d0035, i1_otrc, d0125,
+d0050, ciy_55_i1, d0150, i1_bpma, d0150, qi_55_i1, d0105, i1_kax,
 d0285, d0035, i1_otrc, d0125, d0050, cix_57_i1, d0150, i1_bpma,
-d0150, i1_qi_8, d0105, i1_kax, d0285, d0035, i1_otrc, d0125, 
-d0150, ciy_58_i1, d0050, d0150, i1_qi_9, d0220, i1_bpma, d0380,
-i1_otrc, d0200, d0100, i1_qi_11, d0100, d01817, i1_tora, d00143, 
-d0350, i1_bpma, d0150, i1_bpma, d0054, d0200, i1_qi_12, d0150, 
+d0150, qi_57_i1, d0105, i1_kax, d0285, d0035, i1_otrc, d0125,
+d0150, ciy_58_i1, d0050, d0150, qi_59_i1, d0220, i1_bpma, d0380,
+i1_otrc, d0200, d0100, qi_60_i1, d0100, d01817, i1_tora, d00143,
+d0350, i1_bpma, d0150, i1_bpma, d0054, d0200, qi_61_i1, d0150,
 d0400, i1_starti1d, i1_bb_0, d0200, d0200, d0040, d0100, d0200, 
-ciy_63_i1, d0100, i1_qi_13, d0150, i1_bpma, d0150, d0400, i1_bseci,
-d0500, cix_65_i1, d0150, i1_vcbshut, d0200, i1_qi_14, d2900, i1_qi_15,
+ciy_63_i1, d0100, qi_63_i1, d0150, i1_bpma, d0150, d0400, i1_bseci,
+d0500, cix_65_i1, d0150, i1_vcbshut, d0200, qi_66_i1, d2900, i1_qi_15,
 d1800, i1_qi_16, d0700, i1_bpma, d0200, i1_qi_17, d0200, ciy_72_i1,
 d0200, cix_73i_i1, d0100, i1_start_dog, i1_qih_18, i1_qih_18, d02012268, i1_bl_6_1,
 i1_cbl, d0135, cix_73ii_i1, d0165, d00804818, i1_sc_1_1, d0100, i1_qi_19,

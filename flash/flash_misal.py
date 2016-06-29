@@ -1,14 +1,7 @@
 __author__ = 'Sergey Tomin'
 from desy.flash.lattices.lattice_rf_red import *
-from ocelot.gui.accelerator import *
 from ocelot import *
-from ocelot.gui import *
-from ocelot.cpbd.errors import *
-from ocelot.cpbd.track import *
 from ocelot.cpbd.orbit_correction import *
-from copy import copy
-import pyqtgraph as pg
-
 
 beam = Beam()
 beam.E = 0.005#148.3148e-3 #in GeV ?!

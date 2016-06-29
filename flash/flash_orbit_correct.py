@@ -1,32 +1,29 @@
 __author__ = 'Sergey Tomin'
 from desy.flash.lattices.lattice_rf_mod import *
-from ocelot.gui.accelerator import *
-from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
-from ocelot.utils.mint.machine_setup import *
-from ocelot.utils.mint.flash1_converter import *
-from ocelot.utils.mint.flash1_interface_pydoocs import *
+from ocelot.mint.flash1_interface import *
+from ocelot.mint.machine_setup import *
 
-mi = FLASH1MachineInterface()
-dp = FLASH1DeviceProperties()
+#mi = FLASH1MachineInterface()
+#dp = FLASH1DeviceProperties()
+#
+#lat_ref = MagneticLattice(lattice)
+#setup = MachineSetup(lat_ref, mi, dp)
+#
+#setup.load_lattice("exp_files_22/start_7_00.txt", lat_ref)
+#setup.set_elem_energy(lat_ref, init_energy=0.0053)
 
-lat_ref = MagneticLattice(lattice)
-setup = MachineSetup(lat_ref, mi, dp)
-
-setup.load_lattice("exp_files_22/start_7_00.txt", lat_ref)
-setup.set_elem_energy(lat_ref, init_energy=0.0053)
-
-print STARTACC39.E
+#print STARTACC39.E
 lat = MagneticLattice(lattice, start=STARTACC39)
-setup.load_lattice("exp_files_22/start_7_00.txt", lat)
-setup.convert_currents(lat, init_energy =STARTACC39.E)
+#setup.load_lattice("exp_files_22/start_7_00.txt", lat)
+#setup.convert_currents(lat, init_energy =STARTACC39.E)
 
 #S2ECOL.k2 = 0.
 #S6ECOL.k2 = 0.
 
 
 beam = Beam()
-beam.E = STARTACC39.E #in GeV ?!
+beam.E = 145.#STARTACC39.E #in GeV ?!
 beam.beta_x = 14.8821
 beam.beta_y = 18.8146
 beam.alpha_x =  -0.61309
@@ -178,16 +175,16 @@ for cor in orb2.hcors:
     angle_0 = tpi2k(cor.dev_type, cor.E, cor.I)*0.001
     angle = angle_0 + cor.angle
     I1 = tpk2i(cor.dev_type, cor.E, angle*1000.)
-    print cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I
+    print (cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I)
 for cor in orb2.vcors:
     angle_0 = tpi2k(cor.dev_type, cor.E, cor.I)*0.001
     angle = angle_0 + cor.angle
     I1 = tpk2i(cor.dev_type, cor.E, angle*1000.)
-    print cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I
+    print (cor.id, "angle = ", cor.angle, "Io = ", cor.I, "I = ", I1 - cor.I)
 
 setup.load_lattice("exp_files_22/4correct_after.txt", lat)
 
-print "H10SMATCH = ", H10SMATCH.I
-print "H12SMATCH = ", H12SMATCH.I
-print "V7SMATCH = ",  V7SMATCH.I
-print "V14SMATCH = ", V14SMATCH.I
+print ("H10SMATCH = ", H10SMATCH.I)
+print ("H12SMATCH = ", H12SMATCH.I)
+print ("V7SMATCH = ",  V7SMATCH.I)
+print ("V14SMATCH = ", V14SMATCH.I)

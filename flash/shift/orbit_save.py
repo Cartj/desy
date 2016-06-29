@@ -1,9 +1,10 @@
 __author__ = 'tomins'
-import os, sys
+
+from time import sleep, time
 
 from pylab import *
-from time import sleep, time
-from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface
+
+from ocelot.mint.flash1_interface import FLASH1MachineInterface
 from desy.flash.lattices.lattice_rf_red import *
 
 sys.path.append('../')
