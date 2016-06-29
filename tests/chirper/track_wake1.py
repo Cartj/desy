@@ -1,6 +1,6 @@
 ﻿__author__ = 'Igor Zagorodnov'
 
-from ocelot.cpbd.wake3D import *
+from ocelot.cpbd.wake3D_old import *
 from ocelot.gui import *
 
 drive='d:/'
@@ -20,15 +20,18 @@ beam.emit_y = beam.emit_yn / (beam.E / m_e_GeV)
 
 tw0 = Twiss(beam)
 from lattice0 import *
-lat = MagneticLattice(lattice)
+
+method = MethodTM()
+method.global_method = SecondTM
+lat = MagneticLattice(lattice, method=method)
 
 tws=twiss(lat, tw0, nPoints=None)
 #plot_opt_func(lat, tws, top_plot=["E"])
 
-drive='d:/'
-filename=drive+'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
-p_array, charge_array, z0,gamref = astraBeam2particleArray(filename)
-
+#drive='d:/'
+#filename=drive+'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
+#p_array, charge_array, z0,gamref = astraBeam2particleArray(filename)
+p_array, charge_array = astraBeam2particleArray("LCLS.ast")
 
 # plot current
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
@@ -56,16 +59,18 @@ Ps = p_array.particles.view()
 Np = len(Ps)/6
 Ps.shape = (Np, 6)
 if bWake:
-    wakeFile=drive+'TEST_DECHIRPER/ECHO/Wakes/wake_hor_1m.txt'
+    #wakeFile=drive+'TEST_DECHIRPER/ECHO/Wakes/wake_hor_1m.txt'
+    wakeFile = 'wake_hor_1m.txt'
     THh=LoadWakeTable (wakeFile)
-    wakeFile=drive+'TEST_DECHIRPER/ECHO/Wakes/wake_vert_1m.txt'
+    #wakeFile=drive+'TEST_DECHIRPER/ECHO/Wakes/wake_vert_1m.txt'
+    wakeFile = 'wake_vert_1m.txt'
     THv=LoadWakeTable (wakeFile)
 
 
 navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
     dz = zi - Z[i]
-    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi)
     
     if bWake:
         Px=0
@@ -106,7 +111,7 @@ out[:,2]=[t.beta_y for t in tws_track]
 #np.savetxt('D:/pyoptics.txt',out)
 np.savetxt('pyoptics_withoutSC.txt',out)
 
-particleArray2astraBeam(p_array,charge_array,0,'d:/ocelot.ast')
+particleArray2astraBeam(p_array,charge_array, 'ocelot.ast')
 
 # plot current at the beginning of accelerator
 #plt.figure(1)

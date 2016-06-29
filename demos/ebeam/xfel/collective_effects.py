@@ -1,7 +1,7 @@
 __author__ = 'tomins'
 
 from ocelot import *
-from ocelot.cpbd.sc2 import *
+from ocelot.cpbd.sc import *
 from ocelot.adaptors import *
 import matplotlib.pyplot as plt
 

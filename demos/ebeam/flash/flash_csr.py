@@ -7,7 +7,7 @@ from ocelot.adaptors import *
 #from desy.demos.ebeam.flash.BC2_csr import *
 from desy.demos.ebeam.flash.lattice_FLASH_S2E import *
 #from arcline import *
-from ocelot.cpbd.csr import *
+from ocelot.cpbd.csr_old import *
 
 
 

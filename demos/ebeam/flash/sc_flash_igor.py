@@ -3,7 +3,7 @@
 from ocelot import *
 from ocelot.gui import *
 from ocelot.adaptors import *
-from ocelot.cpbd.sc import *
+from ocelot.cpbd.sc_old import *
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!

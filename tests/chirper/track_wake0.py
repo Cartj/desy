@@ -1,6 +1,6 @@
 __author__ = 'Igor Zagorodnov'
 
-from ocelot.cpbd.wake3D import *
+from ocelot.cpbd.wake3D_old import *
 from ocelot.gui import *
 
 

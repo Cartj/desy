@@ -28,78 +28,26 @@ p_array, charge_array = astraBeam2particleArray(filename='elegant_files/flash_ou
 
 #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
 
-# plot current
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
 
 
-
-
-
-from ocelot.cpbd.sc import *
-
-
-#csr = SCRProcess()
-#csr.step = 2
+csr = CSR()
+csr.step = 1
 sc = SpaceCharge()
-
+sc.step = 20
 
 p_array.q_array = charge_array
 #p_array.list2array(p_list)
 
 navi = Navigator(lat)
 
-#navi.add_physics_proc(sc, lat.sequence[0], lat.sequence[-1])
-#navi.add_physics_proc(csr, d1, d2)
-navi.unit_step = 1.
+navi.add_physics_proc(sc, lat.sequence[0], lat.sequence[-1])
+navi.add_physics_proc(csr, D00982, WATCHBC3_2)
+
+navi.unit_step = 0.05
 
 tws_track, p_array = track(lat, p_array, navi)
 
-
-
-
-
-
-
-
-
-"""
-dz = 1.
-#order = 2
-SC = True
-debug = False
-
-Z = np.linspace(0, lat.totalLen, num=int(lat.totalLen/dz))
-
-twsi=twiss(lat, tw0, nPoints=len(Z) )
-tw0 = get_envelope(p_array, tws_i = twsi[0])
-tws_track = [tw0]
-
-if debug:
-    f=plt.figure()
-    plt.ion()
-    plt.hold(False)
-
-navi = Navigator(lattice=lat)
-for i, zi in enumerate(Z[1:]):
-    print (zi)
-    dz = zi - Z[i]
-    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi)
-    #p_array.particles[4::6] = sc.smooth_z(p_array.particles[4::6], mslice=10000)
-    if SC:
-        sc_apply(p_array, q_array=charge_array, zstep=dz, nmesh_xyz=[63, 63, 63], low_order_kick=True)
-    tw = get_envelope(p_array,tws_i=twsi[i+1])
-    #print "emit_x = ", tw.emit_y, beam.emit_y
-    tw.s = navi.z0
-    tws_track.append(tw)
-    if debug:
-        f.add_subplot(211)
-        plt.plot(p_array.particles[::6], p_array.particles[2::6], '.')
-        f.add_subplot(212)
-        plt.plot(p_array.particles[4::6],p_array.particles[5::6],'.')
-        plt.draw()
-        plt.pause(0.1)
-plt.ioff()
-"""
 
 # plot current at the beginning of accelerator
 plt.figure(1)
