@@ -61,7 +61,7 @@ navi = Navigator(lat)
 
 #navi.add_physics_proc(sc, lat.sequence[0], lat.sequence[-1])
 navi.add_physics_proc(csr, D00982, WATCHBC3_2)
-navi.unit_step = 0.200482459208
+navi.unit_step = 0.05
 print("### ", csr.z_csr_start, lat.totalLen)
 tws_track, p_array = track(lat, p_array, navi)
 
