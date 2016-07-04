@@ -39,6 +39,10 @@ d0080 = Drift(l = 0.08, eid= 'd0080')
 d01416 = Drift(l = 0.1416, eid= 'd01416')
 d02043 = Drift(l = 0.2043, eid= 'd02043')
 ltwakecav = Drift(l = 0.0, eid= 'ltwakecav')
+
+w_acc1_start = Marker(eid='w_acc1_start')
+w_acc1_stop = Marker(eid='w_acc1_stop')
+
 d0085 = Drift(l = 0.085, eid= 'd0085')
 d00729 = Drift(l = 0.0729, eid= 'd00729')
 d0300 = Drift(l = 0.3, eid= 'd0300')
@@ -127,6 +131,9 @@ d034903 = Drift(l = 0.34903, eid= 'd034903')
 d009115 = Drift(l = 0.09115, eid= 'd009115')
 d01628 = Drift(l = 0.1628, eid= 'd01628')
 d03522 = Drift(l = 0.3522, eid= 'd03522')
+
+w_acc39_start = Marker(eid="w_acc39_start")
+w_acc39_stop = Marker(eid="w_acc39_stop")
 
 # Correctors
 i1_ckx_23_i1 = Hcor(l=0.025, eid='CKX.23.I1')
@@ -303,20 +310,40 @@ i1_sc_2_2 = Sextupole(l=0.1, k2=59.4821133431, tilt = 1.5707963268, eid= 'i1_sc_
 
 # undulator 
 
-# cavity 
-i1_c_a1 = Cavity(l = 1.0377, v = 0.01815975, delta_e = 0.01815975, freq = 1300.0, phi = 0.0, volterr = 0.0, eid='C.A1.I1')
-#i1_c3_ah1 = Cavity(l = 0.346, v = -0.0024999884, delta_e = 0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, id = 'i1_c3_ah1')
-i1_c3_ah1 = Cavity(l = 0.346, v = 0.00249998841, delta_e = -0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, eid= 'C3.AH1.I1')
+# cavity
+
+c_a1_1_1_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.1.I1')
+c_a1_1_2_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.2.I1')
+c_a1_1_3_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.3.I1')
+c_a1_1_4_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.4.I1')
+c_a1_1_5_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.5.I1')
+c_a1_1_6_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.6.I1')
+c_a1_1_7_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.7.I1')
+c_a1_1_8_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.8.I1')
+
+c3_ah1_1_1_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.1.I1')
+c3_ah1_1_2_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.2.I1')
+c3_ah1_1_3_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.3.I1')
+c3_ah1_1_4_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.4.I1')
+c3_ah1_1_5_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.5.I1')
+c3_ah1_1_6_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.6.I1')
+c3_ah1_1_7_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.7.I1')
+c3_ah1_1_8_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.8.I1')
+
+#i1_c3_ah1 = Cavity(l = 0.346, v = 0.00249998841, delta_e = -0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, eid= 'C3.AH1.I1')
 i1_tdsa = Cavity(l = 0.7, v = 0.0, delta_e = 0.0, freq = 2800.0, phi = 0.0, volterr = 0.0, eid= 'TDSA.52.I1')
 
 # rfcavity 
 
 # Matrices 
-i1_undu = Matrix(l = 0.74, rm11 = 1.0, rm12 = 0.74, rm13 = 0.0, rm21 = 0.0, rm22 = 1.0, rm33 = 0.943430542565, rm34 = 0.725992855245, rm43 = -0.15143235992, rm44 = 0.943430542565, eid= 'i1_undu')
+i1_undu = Matrix(l=0.74, rm11=1.0, rm12=0.74, rm13=0.0,
+                 rm21=0.0, rm22=1.0,
+                 rm33=0.943430542565, rm34=0.725992855245,
+                 rm43=-0.15143235992, rm44=0.943430542565, eid='i1_undu')
 
 # Solenoids 
-i1_sola_1 = Solenoid(l = 0.0, k = 0.0, eid= 'SOLA.23.I1')
-i1_solb_1 = Solenoid(l = 0.0, k = 0.0, eid= 'SOLB.23.I1')
+i1_sola_1 = Solenoid(l=0.0, k=0.0, eid='SOLA.23.I1')
+i1_solb_1 = Solenoid(l=0.0, k=0.0, eid='SOLB.23.I1')
 
 # lattice 
 
@@ -325,22 +352,22 @@ d0050, i1_ckx_23_i1, i1_cky_23_i1, i1_kdc, d0050, i1_bpmg, d0150, i1_scrn,
 i1_fcup, d01988, i1_startdrm, d02292, d0100, i1_ckx_24_i1, i1_cky_24_i1, d0060,
 i1_tora, d0225, i1_scrn, i1_fcup, i1_dccol, d0088, i1_bpmg, d0111, 
 i1_dcm, d0050, i1_ckx_25_i1, i1_cky_25_i1, d03988, i1_start_l0, i1_vcst35t78, i1_cfbi,
-i1_stac_a1_1, d0080, d01416, i1_c_a1, d02043, ltwakecav, d01416, i1_c_a1, 
-d02043, ltwakecav, d01416, i1_c_a1, d02043, ltwakecav, d01416, i1_c_a1, 
-d02043, ltwakecav, miac, d01416, i1_c_a1, d02043, ltwakecav, d01416, 
-i1_c_a1, d02043, ltwakecav, d01416, i1_c_a1, d02043, ltwakecav, d01416, 
-i1_c_a1)
+i1_stac_a1_1, d0080, w_acc1_start, d01416, c_a1_1_1_i1, d02043, ltwakecav, d01416, c_a1_1_2_i1,
+d02043, ltwakecav, d01416, c_a1_1_3_i1, d02043, ltwakecav, d01416, c_a1_1_4_i1,
+d02043, ltwakecav, miac, d01416, c_a1_1_5_i1, d02043, ltwakecav, d01416,
+c_a1_1_6_i1, d02043, ltwakecav, d01416, c_a1_1_7_i1, d02043, ltwakecav, d01416,
+c_a1_1_8_i1)
 
 
 
-i1_150M = (d02043, ltwakecav, q_37_i1, cx_37_i1, cy_37_i1, d0085, i1_bpmc,
+i1_150M = (d02043, w_acc1_stop, q_37_i1, cx_37_i1, cy_37_i1, d0085, i1_bpmc,
 d0085, d00729, d0300, i1_enac_a1_1, i1_vcst78t30, i1_stac_ah1_1, d00611, d0075, 
-d0085, i1_bpmr, d0085, q_38_i1, cx_39_i1, cy_39_i1, d0020, d0102,
-d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, 
-ltwakecav3, d0102, miac, d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, 
-d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, 
-ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, 
-i1_c3_ah1, d0080, ltwakecav3, d0102, d0080, i1_c3_ah1, d0080, ltwakecav3, 
+d0085, i1_bpmr, d0085, q_38_i1, cx_39_i1, cy_39_i1, d0020, w_acc39_start, d0102,
+d0080, c3_ah1_1_1_i1, d0080, ltwakecav3, d0102, d0080, c3_ah1_1_2_i1, d0080,
+ltwakecav3, d0102, miac, d0080, c3_ah1_1_3_i1, d0080, ltwakecav3, d0102,
+d0080, c3_ah1_1_4_i1, d0080, ltwakecav3, d0102, d0080, c3_ah1_1_5_i1, d0080,
+ltwakecav3, d0102, d0080, c3_ah1_1_6_i1, d0080, ltwakecav3, d0102, d0080,
+c3_ah1_1_7_i1, d0080, ltwakecav3, d0102, d0080, c3_ah1_1_8_i1, d0080, w_acc39_stop,
 d0075, i1_enac_ah1_1, i1_vcst30t78, i1_ctbi, i1_vcst78t40, i1_end_l0, d12964, i1_tora, 
 d02519, d0100, qi_46_i1, d0105, i1_bam, d0090, d01275, i1_bpmf,
 d0096, i1_mpbpmf, d00315, d00862, i1_dcm, d01423, qi_47_i1, d0100,
