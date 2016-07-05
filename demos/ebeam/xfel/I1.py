@@ -312,26 +312,26 @@ i1_sc_2_2 = Sextupole(l=0.1, k2=59.4821133431, tilt = 1.5707963268, eid= 'i1_sc_
 
 # cavity
 
-c_a1_1_1_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.1.I1')
-c_a1_1_2_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.2.I1')
-c_a1_1_3_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.3.I1')
-c_a1_1_4_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.4.I1')
-c_a1_1_5_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.5.I1')
-c_a1_1_6_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.6.I1')
-c_a1_1_7_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.7.I1')
-c_a1_1_8_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0, phi=0.0, eid='C.A1.1.8.I1')
+c_a1_1_1_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.1.I1')
+c_a1_1_2_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.2.I1')
+c_a1_1_3_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.3.I1')
+c_a1_1_4_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.4.I1')
+c_a1_1_5_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.5.I1')
+c_a1_1_6_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.6.I1')
+c_a1_1_7_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.7.I1')
+c_a1_1_8_i1 = Cavity(l=1.0377, v=0.01815975, freq=1300.0*1e6, phi=0.0, eid='C.A1.1.8.I1')
 
-c3_ah1_1_1_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.1.I1')
-c3_ah1_1_2_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.2.I1')
-c3_ah1_1_3_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.3.I1')
-c3_ah1_1_4_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.4.I1')
-c3_ah1_1_5_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.5.I1')
-c3_ah1_1_6_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.6.I1')
-c3_ah1_1_7_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.7.I1')
-c3_ah1_1_8_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0, phi=180., eid='C3.AH1.1.8.I1')
+c3_ah1_1_1_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.1.I1')
+c3_ah1_1_2_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.2.I1')
+c3_ah1_1_3_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.3.I1')
+c3_ah1_1_4_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.4.I1')
+c3_ah1_1_5_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.5.I1')
+c3_ah1_1_6_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.6.I1')
+c3_ah1_1_7_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.7.I1')
+c3_ah1_1_8_i1 = Cavity(l=0.346, v=0.00249998841, freq=3900.0*1e6, phi=180., eid='C3.AH1.1.8.I1')
 
 #i1_c3_ah1 = Cavity(l = 0.346, v = 0.00249998841, delta_e = -0.0024999884, freq = 3900.0, phi = 180., volterr = 0.0, eid= 'C3.AH1.I1')
-i1_tdsa = Cavity(l = 0.7, v = 0.0, delta_e = 0.0, freq = 2800.0, phi = 0.0, volterr = 0.0, eid= 'TDSA.52.I1')
+i1_tdsa = Cavity(l=0.7, v=0.0, delta_e=0.0, freq=2800.0, phi=0.0, volterr=0.0, eid='TDSA.52.I1')
 
 # rfcavity 
 

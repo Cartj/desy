@@ -7,13 +7,7 @@ from ocelot.adaptors import *
 #tws0.beta_y = 29.171
 #tws0.alpha_x = 10.955
 #tws0.alpha_y = 10.955
-#
-#tws0.E = 0.005 * GeV
-#Q.37.I1  = -1.268015360852410
-#Q.38.I1  =  1.229893780868490
-#QI.46.I1 = -0.043222567265718
-#QI.47.I1 =  0.081570790435482
-#QI.50.I1 = -1.059084673457792
+
 
 # injector
 from desy.demos.ebeam.xfel.I1 import *
@@ -21,21 +15,17 @@ method = MethodTM()
 method.global_method = SecondTM
 lat = MagneticLattice(gun_5MeV + i1_150M, method=method)
 tws = twiss(lat, tws_5M, nPoints=None)
-print( "'GUN': length = ", lat.totalLen, "s = ", tws[-1].s)
+print("'GUN': length = ", lat.totalLen, "s = ", tws[-1].s)
 plot_opt_func(lat, tws, top_plot=["E"], fig_name="i1", legend=False)
 plt.show()
 
 
-
-
-#lat = MagneticLattice(i1_150M)
-#tws = twiss(lat, tws_150M, nPoints=1000)
-#print "I1 (from 150MeV) : length = ", lat.totalLen, "s = ", tws[-1].s
-#print( "I1 (from 150MeV) : delta on the end:  bx =", tws[-1].beta_x - tws_L1.beta_x , " by =", tws[-1].beta_y - tws_L1.beta_y)
-#plot_opt_func(lat, tws, top_plot=["E"], fig_name= "i1 from 150 MeV")
-#plt.show()
 p_array, charge_array = astraBeam2particleArray(filename='Exfel.0320.ast')
-#print(charge_array)
+p_array.s = 0.
+p_array.E = 0.005
+#p_array.particles[5::6] = p_array.particles[5::6]*3
+#p_array.particles[4::6] = p_array.particles[4::6]*5
+#print("energy = ", p_array.E)
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
 tau = np.array([p.tau for p in p_array])
 dp = np.array([p.p for p in p_array])
@@ -58,12 +48,30 @@ plt.show()
 
 method = MethodTM()
 method.global_method = SecondTM
-#q_37_i1.k1  = -1.268015360852410
-#q_38_i1.k1  =  1.229893780868490
-#qi_46_i1.k1 = -0.043222567265718
-#qi_47_i1.k1 =  0.081570790435482
-#qi_50_i1.k1 = -1.059084673457792
-lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, method=method)
+#method.global_method = TransferMap
+q_37_i1.k1  = -1.268015360852410
+q_38_i1.k1  =  1.229893780868490
+qi_46_i1.k1 = -0.043222567265718
+qi_47_i1.k1 =  0.081570790435482
+qi_50_i1.k1 = -1.059084673457792
+c_a1_1_1_i1.v = 18.455*1e-3; c_a1_1_1_i1.phi = 12
+c_a1_1_2_i1.v = 18.455*1e-3; c_a1_1_2_i1.phi = 12
+c_a1_1_3_i1.v = 18.455*1e-3; c_a1_1_3_i1.phi = 12
+c_a1_1_4_i1.v = 18.455*1e-3; c_a1_1_4_i1.phi = 12
+c_a1_1_5_i1.v = 18.455*1e-3; c_a1_1_5_i1.phi = 12
+c_a1_1_6_i1.v = 18.455*1e-3; c_a1_1_6_i1.phi = 12
+c_a1_1_7_i1.v = 18.455*1e-3; c_a1_1_7_i1.phi = 12
+c_a1_1_8_i1.v = 18.455*1e-3; c_a1_1_8_i1.phi = 12
+
+c3_ah1_1_1_i1.v = 20.2/8*1e-3
+c3_ah1_1_2_i1.v = 20.2/8*1e-3
+c3_ah1_1_3_i1.v = 20.2/8*1e-3
+c3_ah1_1_4_i1.v = 20.2/8*1e-3
+c3_ah1_1_5_i1.v = 20.2/8*1e-3
+c3_ah1_1_6_i1.v = 20.2/8*1e-3
+c3_ah1_1_7_i1.v = 20.2/8*1e-3
+c3_ah1_1_8_i1.v = 20.2/8*1e-3
+lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, stop=i1_vcst40t400y, method=method)
 #tws = twiss(lat, tws_5M, nPoints=None)
 #print( "'GUN': length = ", lat.totalLen, "s = ", tws[-1].s)
 #plot_opt_func(lat, tws, top_plot=["E"], fig_name="i1", legend=False)
@@ -92,25 +100,52 @@ navi.unit_step = 0.6
 
 #for elem in lat.sequence:
 #    print(elem.l, elem.eid)
+#tracking_step(lat=lat, particle_list=p_array, dz=lat.totalLen, navi=navi)
 
 tws_track, p_array = track(lat, p_array, navi)
 
-plot_opt_func(lat, tws_track, top_plot=["E"], fig_name= "i1", legend=False)
+plot_opt_func(lat, tws_track, top_plot=["E"], fig_name="i1", legend=False)
 plt.show()
 
 
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
 tau = np.array([p.tau for p in p_array])
 dp = np.array([p.p for p in p_array])
+x = np.array([p.x for p in p_array])
+y = np.array([p.y for p in p_array])
+
+#emit_x = np.array([p.emit_x for p in tws_track])
+#emit_y = np.array([p.emit_y for p in tws_track])
+#s_tws = np.array([p.s for p in tws_track])
+
 #print(tau[:5])
 plt.figure(1)
+plt.plot(tau*1000, x*1000, 'r.')
+plt.xlabel("s, mm")
+plt.ylabel("x, mm")
+plt.grid(True)
+
+plt.figure(2)
+plt.plot(tau*1000, y*1000, 'r.')
+plt.xlabel("s, mm")
+plt.ylabel("y, mm")
+plt.grid(True)
+
+plt.figure(3)
 plt.plot(tau*1000, dp, 'r.')
 plt.xlabel("s, mm")
 plt.ylabel("dp/p")
 plt.grid(True)
 
+#plt.figure(4)
+#plt.plot(s_tws, emit_x/emit_x[0], 'r')
+#plt.plot(s_tws, emit_y/emit_y[0], 'b')
+#plt.xlabel("S, m")
+#plt.ylabel("emit.norm.")
+#plt.legend(["hor", "ver"])
+#plt.grid(True)
 
-plt.figure(2)
+plt.figure(6)
 plt.title("current: end")
 plt.plot(bins_start*1000, hist_start)
 plt.xlabel("s, mm")
