@@ -1,17 +1,17 @@
 ﻿'''
 tracking with space charge
 '''
-import time
-import matplotlib.pyplot as plt
 
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.beam import *
-from ocelot.cpbd.optics import *
-from ocelot.cpbd.track import *
-from PhysConsts import *
-from ocelot.gui.accelerator import *
-from space_charge import *
 from math import *
+
+from PhysConsts import *
+from space_charge import *
+
+from ocelot.cpbd.beam import *
+from ocelot.cpbd.magnetic_lattice import MagneticLattice
+from ocelot.cpbd.track import *
+from ocelot.gui.accelerator import *
+
 
 def get_envelope(p_array):
     tws = Twiss()
@@ -203,38 +203,38 @@ while navi.z0 < z_stop:
         dz0=dz
     if (BC1[0]-navi.z0)<dz0 and navi.z0<BC1[0]:
         dz0=BC1[0]-navi.z0
-        track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+        tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
         if SC:
             SC_xxstg_update(P, Q, p_array.E / 0.000511, dz, True, nxnynz);
         dz0=BC1[1]-BC1[0]
         P00=np.copy(P[:,4:]);
-        track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+        tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
         compressor(P00,r56_1,t566_1,u5666_1)
         P[:,4]=P00[:,0];
     else:
         if (BC2[0]-navi.z0)<dz0 and navi.z0<BC2[0]:
             dz0=BC2[0]-navi.z0
-            track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+            tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
             if SC:
                 SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz);
             dz0=BC2[1]-BC2[0]
             P00=np.copy(P[:,4:]);
-            track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+            tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
             compressor(P00,r56_2,t566_2,u5666_2)
             P[:,4]=P00[:,0];
         else:
             if (DL[0]-navi.z0)<dz0 and navi.z0<DL[0]:
                 dz0=DL[0]-navi.z0
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+                tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 if SC:
                     SC_xxstg_update(P,Q,p_array.E / 0.000511,dz,True,nxnynz); #63
                 dz0=DL[1]-DL[0]
                 P00=np.copy(P[:,4:]);
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+                tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 compressor(P00,r56_3,t566_3,u5666_3)
                 P[:,4]=P00[:,0];
             else:
-                track(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
+                tracking_step(lat=lat, particle_list=p_array, dz=dz0, navi=navi, order=order)
                 t0=time.time()
                 if SC:
                     nxnynz=np.r_[63,63,63]

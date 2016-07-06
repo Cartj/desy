@@ -2,19 +2,18 @@
 emittance exchange
 '''
 
-import sys
 #sys.path.append('../utils/')
 #from xfel_utils import *
-from ocelot.gui.accelerator import *
-from ocelot.cpbd.match import *
-
 from p3fel import *
+
+from ocelot.cpbd.match import *
+from ocelot.gui.accelerator import *
 
 ang_total = 0.24 # rad, ~ 6 degree
 
 comp_ang = -0.021# middle magnet bend angle in opposite direction
 
-exch_b1 = RBend (l=6.0*m, angle=ang_total/2. - comp_ang / 2.0, id = "b1")
+exch_b1 = RBend (l=6.0*m, angle=ang_total/2. - comp_ang / 2.0, eid= "b1")
 exch_s1 = Solenoid(l=1.0, k = 1.0)
 
 
@@ -25,8 +24,8 @@ exch_q2 = Quadrupole(l=0.1, k1 = 2.0)
 exch_d1 = Drift(l=2.0*m)
 exch_d2 = Drift(l=0.5*m)
 exch_d3 = Drift(l=1.5*m)
-m1 = Monitor(id="start")
-m2 = Monitor(id="end")
+m1 = Monitor(eid="start")
+m2 = Monitor(eid="end")
 
 
 bc1 = (m1, exch_q1, exch_d1, exch_s1, exch_d1, exch_q2, exch_d1,m2)

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from arcline import arcline
-from ocelot.cpbd.csr import *
+from ocelot.cpbd.csr_old import *
 import matplotlib
 font = {'size'   : 20}
 matplotlib.rc('font', **font)

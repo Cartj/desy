@@ -1,30 +1,14 @@
-import sys
 #import ocelot.common.xio as xio
-from xdb import Xdb
-
 import time
 
-import numpy.fft as fft
-
-import scipy.special as sf
-import scipy.integrate as integrate
-from numpy.polynomial.chebyshev import *
-from numpy import *
-import numpy as np
-
-from ocelot.cpbd.elements import Element, Quadrupole, RBend, Drift, Undulator, MagneticLattice, Hcor, Vcor
-from ocelot.cpbd.beam import Beam, ParticleArray
-from ocelot.cpbd.optics import *
-
-from ocelot.common.screen import Screen
-from ocelot.common.xio import XIO
-
-from ocelot.rad.sr import *
 from ocelot.fel.fel import *
-from ocelot.adaptors.genesis import *
-from copy import deepcopy, copy
-
+from ocelot.rad.sr import *
 from pylab import *
+from xdb import Xdb
+
+from ocelot import MagneticLattice
+from ocelot.adaptors.genesis import *
+from ocelot.cpbd.optics import *
 
 
 sys.path.append('../utils/')

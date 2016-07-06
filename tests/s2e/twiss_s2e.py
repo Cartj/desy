@@ -1,10 +1,11 @@
 #from xls2xcode import *
+from ocelot.adaptors.eleg2xcode import *
 from pylab import *
 
-from ocelot.adaptors.eleg2xcode import *
+from ocelot import MagneticLattice
 from ocelot.cpbd.beam import *
-from ocelot.cpbd.optics import *
 from ocelot.cpbd.io import *
+from ocelot.cpbd.optics import *
 
 E00=5.109986258350895e+05
 

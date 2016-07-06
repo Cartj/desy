@@ -1,6 +1,7 @@
 '''
 statistical run SASE
 '''
+from ocelot import MagneticLattice
 from ocelot.gui.accelerator import *
 sys.path.append('../utils/')
 from xfel_utils import *

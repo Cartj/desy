@@ -1,3 +1,5 @@
+from ocelot import MagneticLattice
+
 __author__ = 'Sergey Tomin'
 import sys
 ind = sys.path[0].find("desy")
@@ -75,11 +77,11 @@ def collect_drifts(lat):
             L += elem.l
             if i == len(lat.sequence) -1:
                 L =  around(L, decimals = 6)
-                seq.append(Drift(l = L, id = "d" + str(int(L*100000 + 10000000))[1:]))
+                seq.append(Drift(l = L, eid= "d" + str(int(L*100000 + 10000000))[1:]))
         else:
             if drift > 0 and L>0.:
                 L =  around(L, decimals = 6)
-                seq.append(Drift(l = L, id = "d" + str(int(L*100000 + 10000000))[1:]))
+                seq.append(Drift(l = L, eid= "d" + str(int(L*100000 + 10000000))[1:]))
                 drift = 0
             seq.append(elem)
             L = 0.

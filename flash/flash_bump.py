@@ -1,12 +1,9 @@
 __author__ = 'Sergey Tomin'
 
-
 from desy.flash.lattices.lattice_rf_mod import *
-from ocelot.gui.accelerator import *
 from ocelot import *
-from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
-from copy import copy
+
 lat = MagneticLattice(lattice)
 for elem in lat.sequence:
     if elem.type == "quadrupole":

@@ -3,7 +3,7 @@
 from ocelot import *
 from ocelot.gui import *
 from ocelot.adaptors import *
-from ocelot.cpbd.sc import *
+from ocelot.cpbd.sc_old import *
 
 beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
@@ -52,7 +52,7 @@ navi = Navigator(lattice=lat)
 for i, zi in enumerate(Z[1:]):
     print (zi)
     dz = zi - Z[i]
-    track(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
+    tracking_step(lat=lat, particle_list=p_array, dz=dz, navi=navi, order=order)
     if SC:
         z_new= smooth_z(p_array.particles[4::6], mslice=10000)
         dz_new=z_new-p_array.particles[4::6]

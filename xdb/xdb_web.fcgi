@@ -5,21 +5,17 @@
 # sudo service apache2 restart
 
 from cgi import escape
-import sys, os
-from flup.server.fcgi import WSGIServer
 
-import ocelot.adaptors.genesis as genesis
-from ocelot.utils.xdb import Xdb
-from ocelot.cpbd.elements import Magnet, Quadrupole, RBend, Drift, Undulator, MagneticLattice
-from ocelot.cpbd.beam import Beam
-from ocelot.cpbd.optics import *
-
+import cStringIO
 import numpy as np
-from numpy import *
-
+from flup.server.fcgi import WSGIServer
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
-import cStringIO
+from numpy import *
+
+from ocelot import MagneticLattice
+from ocelot.cpbd.optics import *
+from ocelot.utils.xdb import Xdb
 
 
 def header():

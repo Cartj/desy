@@ -5,7 +5,7 @@ main tuning script, LCLS
 from pylab import *
 
 from ocelot.utils.mint.mint import Optimizer, TestInterface
-from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, FLASH1DeviceProperties
+from ocelot.mint.flash1_interface import FLASH1MachineInterface, FLASH1DeviceProperties
 #from flash1_interface import FLASH1DeviceProperties
 
 

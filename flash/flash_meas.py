@@ -1,15 +1,17 @@
+from ocelot import MagneticLattice
+
 __author__ = 'Sergey Tomin'
 
 from ocelot.gui.accelerator import *
 from ocelot.gui import *
 from high_level_mint_flash import *
 #import pyqtgraph as pg
-from ocelot.utils.mint.flash1_interface_pydoocs import *
+from ocelot.mint.flash1_interface import *
 from flash1_virtual_interface import *
 import pickle
 from converter import *
 from ocelot.rad.undulator_params import *
-from ocelot.utils.mint import machine_setup as log
+from ocelot.mint import machine_setup as log
 
 mi = FLASH1MachineInterface()
 dp = FLASH1DeviceProperties()

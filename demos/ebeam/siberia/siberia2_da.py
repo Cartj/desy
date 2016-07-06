@@ -42,7 +42,9 @@ def phase_space(x_stable, y_stable):
 #exec( open(sys.path[0][:ind] + "repository/siberia2/siberia2_lattice.py" ))
 tw0 = Twiss(beam)
 tw0.x = 0.1
-lat = MagneticLattice(superperiod)
+method = MethodTM()
+method.params[Sextupole] = "kick"
+lat = MagneticLattice(superperiod, method=method)
 R = lattice_transfer_map(lat, energy=2.5)
 print(R)
 #tws0 = Twiss()

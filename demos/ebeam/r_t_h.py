@@ -248,8 +248,8 @@ navi2 = Navigator()
 dz = 0.01
 
 for i in range(int(lat.totalLen/dz)):
-    track(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
-    track(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
+    step(lat, [p1], dz=dz, navi=navi1, order=1)  # R only
+    step(lat, [p2], dz=dz, navi=navi2, order=2)  # R + T
     P1.append(copy(p1))
     P2.append(copy(p2))
 
@@ -274,7 +274,7 @@ navi3 = Navigator()
 dz_test = 0.001
 
 for i in range(int(lat_test.totalLen/dz_test)):
-    track(lat_test, [p3], dz=dz, navi=navi3, order=2)
+    step(lat_test, [p3], dz=dz, navi=navi3, order=2)
     P3.append(copy(p3))
 s_test = [p.s for p in P3]
 x_test = [p.x for p in P3]

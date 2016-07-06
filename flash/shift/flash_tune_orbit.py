@@ -4,9 +4,9 @@ main tuning script, LCLS
 
 from desy.flash.lattices.lattice_rf_red import *
 
-from ocelot.utils.mint.mint import Optimizer, Action
-from ocelot.utils.mint.flash1_interface_pydoocs import FLASH1MachineInterface, FLASH1DeviceProperties
-from ocelot.utils.mint import machine_setup as log
+from ocelot.mint.mint import Optimizer, Action
+from ocelot.mint.flash1_interface import FLASH1MachineInterface, FLASH1DeviceProperties
+from ocelot.mint import machine_setup as log
 #from flash1_interface import FLASH1DeviceProperties
 
 

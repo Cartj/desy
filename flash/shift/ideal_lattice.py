@@ -2,7 +2,6 @@ __author__ = 'Sergey Tomin'
 
 from desy.flash.lattices.lattice_rf_red import *
 from ocelot import *
-from ocelot.gui import *
 from ocelot.cpbd.orbit_correction import *
 
 beam = Beam()

@@ -1,4 +1,4 @@
-import ocelot.adaptors.astra2ocelot
+from ocelot import MagneticLattice
 
 __author__ = 'Sergey Tomin'
 
@@ -11,7 +11,7 @@ beam = Beam()
 beam.E = 148.3148e-3 #in GeV ?!
 beam.beta_x = 14.8821
 beam.beta_y = 18.8146
-beam.alpha_x =  -0.61309
+beam.alpha_x = -0.61309
 beam.alpha_y = -0.54569
 beam.emit_xn = 1.5e-6
 beam.emit_yn = 1.5e-6
@@ -23,16 +23,19 @@ from desy.demos.ebeam.flash.lattice_FLASH_S2E import *
 #exec(open('lattice.inp'))
 #beam.beta_x = 23
 #beam.beta_y = 25
-lat = MagneticLattice(lattice)
+method = MethodTM()
+method.global_method = SecondTM
+#method.params[Quadrupole] = "kick"
+lat = MagneticLattice(lattice, method=method)
 
 tws=twiss(lat, tw0, nPoints=None)
 plot_opt_func(lat, tws, top_plot=["E"])
 
-for elem in lat.sequence:
-    if elem.id == "C1_ACC39":
-        elem.v = elem.v
+#for elem in lat.sequence:
+#    if elem.id == "C1_ACC39":
+#        elem.v = elem.v
 
-lat.update_transfer_maps()
+#lat.update_transfer_maps()
 
 tws=twiss(lat, tw0, nPoints=1000)
 plot_opt_func(lat, tws, top_plot="E")
@@ -82,6 +85,7 @@ for i, zi in enumerate(Z[1:]):
         plt.pause(0.1)
 plt.ioff()
 """
+print(p_array.E)
 L = 0.
 for elem in lat.sequence:
     #print elem.id, elem.id == "W1"
@@ -193,7 +197,9 @@ for elem in lat.sequence:
         plt.grid(True)
         # plt.show()
     tw0 = elem.transfer_map*tw0
-    elem.transfer_map.apply(p_array, order=2)
+    #if elem.__class__ == Cavity:
+    print(elem.transfer_map.__class__)
+    elem.transfer_map.apply(p_array)
     tw = get_envelope(p_array, tws_i=tw0)
     L += elem.l
     tw.s += L

@@ -5,33 +5,33 @@ MBA-type var delay achromat
 
 
 import sys
+
 sys.path.append('../utils/')
 from xfel_utils import *
-from ocelot.gui.accelerator import *
 from ocelot.cpbd.match import *
 
 from p3fel import *
 
 ang_total = 0.12 # rad, ~ 6 degree
 
-bc_b1 = RBend (l=6.0*m, angle=ang_total/2.0, id = "b1")
-bc_b2 = RBend (l=6.0*m, angle=ang_total/2.0, id = "b2")
+bc_b1 = RBend (l=6.0*m, angle=ang_total/2.0, eid= "b1")
+bc_b2 = RBend (l=6.0*m, angle=ang_total/2.0, eid= "b2")
 
-bc_q1 = Quadrupole(l=0.1, k1 = 1.0, id="q1")
-bc_q2 = Quadrupole(l=0.1, k1 = -1.0, id="q2")
-bc_q3 = Quadrupole(l=0.1, k1 = 1.0, id="q3")
-bc_q4 = Quadrupole(l=0.1, k1 = -1.0, id="q4")
-bc_q5 = Quadrupole(l=0.1, k1 = 1.0, id="q5")
-bc_q6 = Quadrupole(l=0.1, k1 = -1.0, id="q6")
+bc_q1 = Quadrupole(l=0.1, k1 = 1.0, eid="q1")
+bc_q2 = Quadrupole(l=0.1, k1 = -1.0, eid="q2")
+bc_q3 = Quadrupole(l=0.1, k1 = 1.0, eid="q3")
+bc_q4 = Quadrupole(l=0.1, k1 = -1.0, eid="q4")
+bc_q5 = Quadrupole(l=0.1, k1 = 1.0, eid="q5")
+bc_q6 = Quadrupole(l=0.1, k1 = -1.0, eid="q6")
 
 
 bc_d1 = Drift(l=1.0*m)
 bc_d2 = Drift(l=2.5*m)
 bc_d3 = Drift(l=1.5*m)
 
-m1 = Monitor(id="start")
-m2 = Monitor(id="end")
-m0 = Monitor(id="m0")
+m1 = Monitor(eid="start")
+m2 = Monitor(eid="end")
+m0 = Monitor(eid="m0")
 
  
 bc1 = (m1, (bc_b1, bc_d1, bc_q1, bc_d1, bc_b2, bc_d1, bc_q2, bc_d1), 

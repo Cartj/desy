@@ -3,17 +3,15 @@ hard x-ray self-seeding
 this is a template file
 please copy this file into your working directory and use it there
 '''
+from ocelot import MagneticLattice
 
 rep_dir = '/data/netapp/xfel/products/desy/xfel/'
 
-from ocelot import *
 from ocelot.utils.xfel_utils import *
 from ocelot.utils.hxrss_common import *
 from ocelot.utils.sim_info import *
 from ocelot.gui.accelerator import *
 
-from copy import copy
-import numpy.fft as fft
 import time
 
 launcher = get_genesis_launcher(384)

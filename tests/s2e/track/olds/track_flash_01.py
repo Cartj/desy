@@ -2,25 +2,15 @@
 tracking with space charge
 '''
 
-import matplotlib as mpl
-import numpy as np
-import matplotlib.pyplot as plt
 import time
 
-from numpy import cos, sin, log, abs, exp
-
-from ocelot.cpbd.elements import *
-from ocelot.cpbd.beam import *
-from ocelot.cpbd.optics import *
-
-from ocelot.cpbd import *
-from ocelot.gui.accelerator import plot_lattice
-
-
+import matplotlib.pyplot as plt
 from space_charge import SC_xxstg_update
 
-import sys
-
+from ocelot import MagneticLattice
+from ocelot.cpbd import *
+from ocelot.cpbd.beam import *
+from ocelot.cpbd.optics import *
 
 q0=1.60217733e-19
 me=9.10938188e-31

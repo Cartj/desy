@@ -1,10 +1,8 @@
 from ocelot.cpbd.tracking import *
-from ocelot.cpbd.chromaticity import *
-from time import time
-from ocelot.gui.accelerator import *
+
 from ocelot.cpbd.e_beam_params import *
 from ocelot.cpbd.match import *
-
+from ocelot.gui.accelerator import *
 
 beam = Beam()
 beam.E = 6.0

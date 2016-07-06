@@ -27,47 +27,47 @@ def read_lattice_elegant(file_flo, file_par):
         stype=v[i_ElementType];
         sname=sname.replace('-C','')
         if stype=='QUAD':
-            quad = Quadrupole(id=sname)
+            quad = Quadrupole(eid=sname)
             quad.s=eval(v[i_s])
             quad.z=eval(v[i_Z])
             lattice=lattice+[quad]
         elif stype=='SEXT':
-            sext = Sextupole(id=sname)
+            sext = Sextupole(eid=sname)
             sext.s=eval(v[i_s])
             sext.z=eval(v[i_Z])
             lattice=lattice+[sext]
         elif (stype=='CSBEND') or (stype == 'CSRCSBEND') or (stype == 'SBEN'):
-            sben = Bend(l=1,id=sname)
+            sben = Bend(l=1, eid=sname)
             sben.s=eval(v[i_s])
             sben.z=eval(v[i_Z])
             lattice=lattice+[sben]
         elif (stype=='CRBEND') or (stype=='CSRCRBEND'):
-            rben= RBend (id=sname)
+            rben= RBend (eid=sname)
             rben.s=eval(v[i_s])
             rben.z=eval(v[i_Z])
             lattice=lattice+[rben]
         elif stype=='WIGGLER':
-            undulator = Undulator(id=sname, lperiod=0, nperiods=0, Kx=0)
+            undulator = Undulator(eid=sname, lperiod=0, nperiods=0, Kx=0)
             undulator.s=eval(v[i_s])
             undulator.z=eval(v[i_Z])
             lattice=lattice+[undulator]   
         elif stype=='RFCA':
-            cavity = Cavity(id=sname, l=0)
+            cavity = Cavity(eid=sname, l=0)
             cavity.s=eval(v[i_s])
             cavity.z=eval(v[i_Z])
             lattice=lattice+[cavity]   
         elif stype=='HKICK':
-            hcor = Hcor(id=sname)
+            hcor = Hcor(eid=sname)
             hcor.s=eval(v[i_s])
             hcor.z=eval(v[i_Z])
             lattice=lattice+[hcor]
         elif stype=='VKICK':
-            vcor = Vcor(id=sname)
+            vcor = Vcor(eid=sname)
             vcor.s=eval(v[i_s])
             vcor.z=eval(v[i_Z])
             lattice=lattice+[vcor]
         elif stype=='MONI':
-            monitor = Monitor(id=sname)
+            monitor = Monitor(eid=sname)
             monitor.s=eval(v[i_s])
             monitor.z=eval(v[i_Z])
             lattice=lattice+[monitor]
@@ -133,7 +133,7 @@ def insert_drifts(z_start, z_stop, lat_def):
                 ds=elem.s-elem.l-s0
             if ds>0:
                 str_id=str(ds).replace('.','_')
-                lattice=lattice+[Drift(l=ds,id='DRIFT_'+str_id)]
+                lattice=lattice+[Drift(l=ds, eid='DRIFT_'+str_id)]
             lattice=lattice+[elem]
             print elem.id,elem.type,elem.z, elem.s, ds
             s0=elem.s
@@ -142,7 +142,7 @@ def insert_drifts(z_start, z_stop, lat_def):
     ds=z_stop-elem.z
     if ds>0:
         str_id=str(ds).replace('.','_')
-        lattice=lattice+[Drift(l=ds,id='DRIFT'+str_id)]
+        lattice=lattice+[Drift(l=ds, eid='DRIFT'+str_id)]
     return lattice
 
     

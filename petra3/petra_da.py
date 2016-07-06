@@ -1,8 +1,10 @@
 __author__ = 'Sergey Tomin'
 
-from ocelot.cpbd.track import *
 from time import time
+
 from mpi4py import MPI
+
+from ocelot.cpbd.track import *
 from ocelot.gui.accelerator import *
 
 mpi_comm = MPI.COMM_WORLD
@@ -15,7 +17,7 @@ beam.sigma_E = 0.001
 beam.I = 0.1
 
 def RFcavity(l, volt, lag, harmon, id):
-    rf = Cavity(l = l, id = id)
+    rf = Cavity(l = l, eid= id)
     rf.volt = volt
     rf.lag = lag
     rf.harmon = harmon
