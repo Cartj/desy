@@ -22,7 +22,7 @@ plt.show()
 
 p_array, charge_array = astraBeam2particleArray(filename='Exfel.0320.ast')
 p_array.s = 0.
-p_array.E = 0.005
+#p_array.E = 0.005
 #p_array.particles[5::6] = p_array.particles[5::6]*3
 #p_array.particles[4::6] = p_array.particles[4::6]*5
 #print("energy = ", p_array.E)
@@ -49,11 +49,11 @@ plt.show()
 method = MethodTM()
 method.global_method = SecondTM
 #method.global_method = TransferMap
-q_37_i1.k1  = -1.268015360852410
-q_38_i1.k1  =  1.229893780868490
-qi_46_i1.k1 = -0.043222567265718
-qi_47_i1.k1 =  0.081570790435482
-qi_50_i1.k1 = -1.059084673457792
+#q_37_i1.k1  = -1.268015360852410
+#q_38_i1.k1  =  1.229893780868490
+#qi_46_i1.k1 = -0.043222567265718
+#qi_47_i1.k1 =  0.081570790435482
+#qi_50_i1.k1 = -1.059084673457792
 c_a1_1_1_i1.v = 18.455*1e-3; c_a1_1_1_i1.phi = 12
 c_a1_1_2_i1.v = 18.455*1e-3; c_a1_1_2_i1.phi = 12
 c_a1_1_3_i1.v = 18.455*1e-3; c_a1_1_3_i1.phi = 12
@@ -63,15 +63,16 @@ c_a1_1_6_i1.v = 18.455*1e-3; c_a1_1_6_i1.phi = 12
 c_a1_1_7_i1.v = 18.455*1e-3; c_a1_1_7_i1.phi = 12
 c_a1_1_8_i1.v = 18.455*1e-3; c_a1_1_8_i1.phi = 12
 
-c3_ah1_1_1_i1.v = 20.2/8*1e-3
-c3_ah1_1_2_i1.v = 20.2/8*1e-3
-c3_ah1_1_3_i1.v = 20.2/8*1e-3
-c3_ah1_1_4_i1.v = 20.2/8*1e-3
-c3_ah1_1_5_i1.v = 20.2/8*1e-3
-c3_ah1_1_6_i1.v = 20.2/8*1e-3
-c3_ah1_1_7_i1.v = 20.2/8*1e-3
-c3_ah1_1_8_i1.v = 20.2/8*1e-3
-lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, stop=i1_vcst40t400y, method=method)
+#c3_ah1_1_1_i1.v = 20.2/8*1e-3
+#c3_ah1_1_2_i1.v = 20.2/8*1e-3
+#c3_ah1_1_3_i1.v = 20.2/8*1e-3
+#c3_ah1_1_4_i1.v = 20.2/8*1e-3
+#c3_ah1_1_5_i1.v = 20.2/8*1e-3
+#c3_ah1_1_6_i1.v = 20.2/8*1e-3
+#c3_ah1_1_7_i1.v = 20.2/8*1e-3
+#c3_ah1_1_8_i1.v = 20.2/8*1e-3
+#lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, stop=i1_vcst40t400y, method=method)
+lat = MagneticLattice(gun_5MeV, start=start_sim, method=method)
 #tws = twiss(lat, tws_5M, nPoints=None)
 #print( "'GUN': length = ", lat.totalLen, "s = ", tws[-1].s)
 #plot_opt_func(lat, tws, top_plot=["E"], fig_name="i1", legend=False)
@@ -104,8 +105,8 @@ navi.unit_step = 0.6
 
 tws_track, p_array = track(lat, p_array, navi)
 
-plot_opt_func(lat, tws_track, top_plot=["E"], fig_name="i1", legend=False)
-plt.show()
+plot_opt_func(lat, tws_track, top_plot=["E"], fig_name=0, legend=False)
+#plt.show()
 
 
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
