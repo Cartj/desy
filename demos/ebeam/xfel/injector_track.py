@@ -10,7 +10,8 @@ from ocelot.adaptors import *
 
 
 # injector
-from desy.demos.ebeam.xfel.I1 import *
+#from desy.demos.ebeam.xfel.I1 import *
+from I1 import *
 method = MethodTM()
 method.global_method = SecondTM
 lat = MagneticLattice(gun_5MeV + i1_150M, method=method)

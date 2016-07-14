@@ -16,8 +16,6 @@ tws_150M.alpha_y = -1.635400
 tws_150M.E = 0.1503
 tws_150M.s = 14.2441
 
-
-
 d0276 = Drift(l = 0.276, eid= 'd0276')
 d0324 = Drift(l = 0.324, eid= 'd0324')
 d0100 = Drift(l = 0.1, eid= 'd0100')
@@ -428,3 +426,8 @@ i1_qi_34, d01585, i1_bpma, d109132, i1_otra, d034903, i1_dcm, d009115,
 cix_118_i1, d0110, i1_qi_35, d01628, i1_bpma, d03522, i1_end_i1)
 
 i1 = (gun_5MeV, i1_150M)
+
+
+d20m = Drift(l = 20, eid= 'd20m')
+test01 = (start_sim,d20m)
+
