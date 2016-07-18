@@ -29,11 +29,11 @@ tws = twiss(lat, tw0, nPoints=None)
 plot_opt_func(lat, tws, top_plot=["E"])
 plt.show()
 
-#drive = 'd:/'
-#filename = drive + 'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
-#p_array, charge_array, z0, gamref = astraBeam2particleArray(filename)
+drive = 'd:/'
+filename = drive + 'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
+p_array, charge_array = astraBeam2particleArray(filename)
 #p_array, charge_array = astraBeam2particleArray(filename='/home/sergey/Dropbox/DESY/repository/desy/demos/ebeam/flash/elegant_files/flash_out_200000.ast')
-p_array, charge_array = astraBeam2particleArray(filename='LCLS.ast')
+#p_array, charge_array = astraBeam2particleArray(filename='LCLS.ast')
 
 # plot current
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)

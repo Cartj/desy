@@ -28,10 +28,10 @@ lat = MagneticLattice(lattice, method=method)
 tws=twiss(lat, tw0, nPoints=None)
 #plot_opt_func(lat, tws, top_plot=["E"])
 
-#drive='d:/'
-#filename=drive+'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
-#p_array, charge_array, z0,gamref = astraBeam2particleArray(filename)
-p_array, charge_array = astraBeam2particleArray("LCLS.ast")
+drive='d:/'
+filename=drive+'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
+p_array, charge_array = astraBeam2particleArray(filename)
+#p_array, charge_array = astraBeam2particleArray("LCLS.ast")
 
 # plot current
 bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
