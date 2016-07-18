@@ -71,33 +71,35 @@ c_a1_1_8_i1.v = 18.455*1e-3; c_a1_1_8_i1.phi = 12
 #c3_ah1_1_6_i1.v = 20.2/8*1e-3
 #c3_ah1_1_7_i1.v = 20.2/8*1e-3
 #c3_ah1_1_8_i1.v = 20.2/8*1e-3
-#lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, stop=i1_vcst40t400y, method=method)
-lat = MagneticLattice(gun_5MeV, start=start_sim, method=method)
+lat = MagneticLattice(gun_5MeV + i1_150M, start=start_sim, stop=w_acc1_stop, method=method)
+#lat = MagneticLattice(gun_5MeV, start=start_sim, method=method)
 #tws = twiss(lat, tws_5M, nPoints=None)
 #print( "'GUN': length = ", lat.totalLen, "s = ", tws[-1].s)
 #plot_opt_func(lat, tws, top_plot=["E"], fig_name="i1", legend=False)
 #plt.show()
 
 wake1 = Wake()
-wake1.wake_file = 'TESLA_MODULE_WAKE_TAYLOR.dat'
-wake1.step = 2
+wake1.wake_table = WakeTable('TESLA_MODULE_WAKE_TAYLOR.dat')
+wake1.step = 12
 wake1.factor = 1./11.0688
 
 wake2 = Wake()
-wake2.wake_file = 'THIRD_HARMONIC_SECTION_WAKE_TAYLOR.dat'
-wake2.step = 1
+wake2.wake_file = WakeTable('THIRD_HARMONIC_SECTION_WAKE_TAYLOR.dat')
+wake2.step = 6
 wake2.factor = 1./4.864
 
-
-
+sc = SpaceCharge()
+sc.step = 1
 navi = Navigator(lat)
 
-#navi.add_physics_proc(wake1, w_acc1_start, w_acc1_stop)
+navi.add_physics_proc(sc, lat.sequence[0], lat.sequence[-1])
+navi.add_physics_proc(wake1, w_acc1_start, w_acc1_stop)
 #navi.add_physics_proc(wake2, w_acc39_start, w_acc39_stop)
+
 #navi.add_physics_proc(wake2, w2_start, w2_stop)
 #navi.add_physics_proc(wake3, w3_start, w3_stop)
 
-navi.unit_step = 0.6
+navi.unit_step = 0.1
 
 #for elem in lat.sequence:
 #    print(elem.l, elem.eid)
