@@ -31,33 +31,51 @@ plt.show()
 
 drive = 'd:/'
 filename = drive + 'TEST_DECHIRPER/ASTRA/XFEL01_ideal/LCLS.ast'
-p_array, charge_array = astraBeam2particleArray(filename)
+#p_array = astraBeam2particleArray(filename)
 #p_array, charge_array = astraBeam2particleArray(filename='/home/sergey/Dropbox/DESY/repository/desy/demos/ebeam/flash/elegant_files/flash_out_200000.ast')
-#p_array, charge_array = astraBeam2particleArray(filename='LCLS.ast')
+p_array = astraBeam2particleArray(filename='LCLS.ast')
 
 # plot current
-bins_start, hist_start = get_current(p_array, charge=charge_array[0], num_bins=200)
+bins_start, hist_start = get_current(p_array, charge=p_array.q_array[0], num_bins=200)
 
 
+wk_vert = WakeTable('wake_vert_1m.txt')
+wk_hor = WakeTable('wake_hor_1m.txt')
 
 wake1 = Wake()
-wake1.wake_file = 'wake_vert_1m.txt'
+wake1.wake_table = wk_vert
 wake1.step = 1
 
+
 wake2 = Wake()
-wake2.wake_file = 'wake_hor_1m.txt'
+wake2.wake_table = wk_hor
 wake2.step = 1
 
 wake3 = Wake()
-wake3.wake_file = 'wake_vert_1m.txt'
+wake3.wake_table = wk_vert
 wake3.step = 1
 
+wake4 = Wake()
+wake4.wake_table = wk_hor
+wake4.step = 1
+
+wake5 = Wake()
+wake5.wake_table = wk_vert
+wake5.step = 1
+
+wake6 = Wake()
+wake6.wake_table = wk_hor
+wake6.step = 1
 
 navi = Navigator(lat)
 
 navi.add_physics_proc(wake1, w1_start, w1_stop)
 navi.add_physics_proc(wake2, w2_start, w2_stop)
 navi.add_physics_proc(wake3, w3_start, w3_stop)
+
+navi.add_physics_proc(wake4, w4_start, w4_stop)
+navi.add_physics_proc(wake5, w5_start, w5_stop)
+navi.add_physics_proc(wake6, w6_start, w6_stop)
 
 navi.unit_step = 0.2
 
@@ -79,7 +97,7 @@ out[:, 2] = [t.beta_y for t in tws_track]
 # np.savetxt('D:/pyoptics.txt',out)
 np.savetxt('pyoptics_withoutSC1.txt', out)
 
-particleArray2astraBeam(p_array, charge_array, 'ocelot.ast')
+particleArray2astraBeam(p_array, 'ocelot.ast')
 
 # plot current at the beginning of accelerator
 # plt.figure(1)
